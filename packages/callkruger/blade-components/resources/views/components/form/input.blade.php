@@ -1,0 +1,2 @@
+
+{!! Form::$type($name, $value, []) !!}

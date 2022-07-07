@@ -1,0 +1,23 @@
+@mixin timeline-grid-ready() {
+	display : grid;
+	height  : 100%;
+	width   : 100%;
+}
+
+@mixin timeline-grid($selector, $values, $gap: null) {
+	@include timeline-grid-ready;
+	
+}
+
+@mixin timeline-grid-column($slots) {
+	
+	@for $i from 1 through $slots {
+		&[data-slot-start="#{$i}"] {
+			grid-column-start : $i;
+		}
+		&[data-slot-end="#{$i}"] {
+			grid-column-end   : $i;
+		}
+	}
+	
+}

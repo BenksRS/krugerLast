@@ -1,0 +1,350 @@
+
+<div class="card-body">
+    <h4 class="card-title mb-4"># TARP INSPECTION</h4>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h5 class="card-title mb-4">Tarp Size</h5>
+
+            <form class="row gy-2 gx-3 align-items-center">
+                <div class="col-sm-auto">
+                    <label class="visually-hidden" for="autoSizingInput">width</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="width">
+                        <div class="input-group-text">ft</div>
+                    </div>
+                </div>
+                x
+                <div class="col-sm-auto">
+                    <label class="visually-hidden" for="autoSizingInputGroup">heigth</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="heigth">
+                        <div class="input-group-text">ft</div>
+                    </div>
+                </div>
+                -
+                <div class="col-sm-auto">
+                    <label class="visually-hidden" for="autoSizingInputGroup">Quantity</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="Qty">
+                        <div class="input-group-text">ft</div>
+                    </div>
+                </div>
+                <div class="col-sm-auto">
+                    <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                    <select class="form-select" id="autoSizingSelect">
+                        <option selected>Inventory...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-auto">
+                    <button type="submit" class="btn btn-primary w-md">Add Tarp Size</button>
+                </div>
+            </form>
+        </div>
+        <!-- end col -->
+        <div class="row">
+            <div class="card-body">
+                <h5> # - 40 ft x 60 ft - 1un ( Inventory: 20 ft x 30 ft )  </h5>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <form>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="formrow-firstname-input" class="form-label">Sandbags</label>
+                            <input type="number" class="form-control" id="formrow-firstname-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label>Service date</label>
+                            <div class="input-group" id="datepicker1">
+                                <input type="text" class="form-control" placeholder="dd M, yyyy"
+                                       data-date-format="dd M, yyyy" data-date-container='#datepicker1' data-provide="datepicker">
+
+                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                            </div><!-- input-group -->
+                        </div>
+                    </div>
+                </div>
+
+
+            <div class="row">
+                <div class="col-xl-3 col-sm-6">
+                    <div class="mt-4">
+                        <h5 class="font-size-14 mb-4">Tarp Situation</h5>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="radio" name="tarp_situation"
+                                   id="tarpsituation1" checked>
+                            <label class="form-check-label" for="tarpsituation1">
+                                Same tarp used
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="tarp_situation"
+                                   id="tarpsituation2">
+                            <label class="form-check-label" for="tarpsituation2">
+                                New Tarp installation
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+                <div class="row">
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="mt-4">
+                            <h5 class="font-size-14 mb-4">Anchoring Support Network</h5>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="formRadios"
+                                       id="formRadios1" checked>
+                                <label class="form-check-label" for="formRadios1">
+                                    No
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="formRadios"
+                                       id="formRadios2">
+                                <label class="form-check-label" for="formRadios2">
+                                    Yes
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="mt-4">
+                            <h5 class="font-size-14 mb-4">Tarp Alterations</h5>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="tarpalteration"
+                                       id="tarpalteration1" checked>
+                                <label class="form-check-label" for="tarpalteration1">
+                                    No
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="tarpalteration"
+                                       id="tarpalteration2">
+                                <label class="form-check-label" for="tarpalteration2">
+                                    Yes
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="mt-4">
+                            <h5 class="font-size-14 mb-4">Height Accommodation</h5>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="heightacomodation"
+                                       id="heightacomodation1" checked>
+                                <label class="form-check-label" for="heightacomodation1">
+                                    No
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="heightacomodation"
+                                       id="heightacomodation2">
+                                <label class="form-check-label" for="heightacomodation2">
+                                    Yes
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+
+
+
+                <hr>
+
+                <div class="row">
+
+                    <div class="col-xl-6 col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Job Report</label>
+
+                            <select class="select2 form-control select2-multiple"
+                                    multiple="multiple" data-placeholder="Choose ...">
+                                <optgroup label="Alaskan/Hawaiian Time Zone">
+                                    <option value="AK">Alaska</option>
+                                    <option value="HI">Hawaii</option>
+                                </optgroup>
+                                <optgroup label="Pacific Time Zone">
+                                    <option value="CA">California</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="WA">Washington</option>
+                                </optgroup>
+                                <optgroup label="Mountain Time Zone">
+                                    <option value="AZ">Arizona</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="WY">Wyoming</option>
+                                </optgroup>
+                                <optgroup label="Central Time Zone">
+                                    <option value="AL">Alabama</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="WI">Wisconsin</option>
+                                </optgroup>
+                                <optgroup label="Eastern Time Zone">
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WV">West Virginia</option>
+                                </optgroup>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+
+                    <div class="col-xl-6 col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Workers</label>
+
+                            <select class="select2 form-control select2-multiple"
+                                    multiple="multiple" data-placeholder="Choose ...">
+                                <optgroup label="Alaskan/Hawaiian Time Zone">
+                                    <option value="AK">Alaska</option>
+                                    <option value="HI">Hawaii</option>
+                                </optgroup>
+                                <optgroup label="Pacific Time Zone">
+                                    <option value="CA">California</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="WA">Washington</option>
+                                </optgroup>
+                                <optgroup label="Mountain Time Zone">
+                                    <option value="AZ">Arizona</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="WY">Wyoming</option>
+                                </optgroup>
+                                <optgroup label="Central Time Zone">
+                                    <option value="AL">Alabama</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="WI">Wisconsin</option>
+                                </optgroup>
+                                <optgroup label="Eastern Time Zone">
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WV">West Virginia</option>
+                                </optgroup>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="mb-3">
+                        <label class="form-label">Job Info</label>
+                        <div>
+                            <textarea required class="form-control" rows="6"></textarea>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div>
+                    <button type="submit" class="btn  btn-primary w-md pull-right">Save</button>
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+
+
+</div>

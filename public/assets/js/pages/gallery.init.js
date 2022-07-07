@@ -1,0 +1,11 @@
+dragula(
+    [
+        document.getElementById("front-pics"),
+        document.getElementById("inside-pics"),
+        document.getElementById("before-pics"),
+        document.getElementById("after-pics"),
+        document.getElementById("upcoming-task"),
+        document.getElementById("inprogress-task"),
+        document.getElementById("complete-task")
+    ]
+);

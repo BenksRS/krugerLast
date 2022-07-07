@@ -1,0 +1,22 @@
+{
+  "name":        "callkruger/packages",
+  "description": "",
+  "authors":     [
+    {
+      "name":  "CallKruger",
+      "email": "felipe@callkruger.com"
+    }
+  ],
+  "extra":       {
+    "laravel": {
+      "providers": [],
+      "aliases":   {
+      }
+    }
+  },
+  "autoload":    {
+    "psr-4": {
+      "Modules\\Packages\\": ""
+    }
+  }
+}

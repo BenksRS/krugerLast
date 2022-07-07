@@ -1,0 +1,315 @@
+.app-search{
+    input{
+        width: 500px!important;
+        background-color: rgba(141, 141, 141, 0.32) !important;
+    }
+    .search-box-result{
+        position: absolute;
+        top: 51px;
+        min-width: 1000px;
+        //height: 500px;
+        //background-color: #cccccc;
+        //border: 1px solid black;
+    }
+}
+.open{
+    background-color: #EA9999!important;
+    //test
+}
+
+.in_progress{
+    background-color: #FFFF00!important;
+    color: #0b0b0b!important;
+}
+.scheduled{
+    background-color: #00FFFF!important;
+    color: #0b0b0b!important;
+}
+.ready_to_bill{
+    background-color: #00FF00!important;
+    color: #0b0b0b!important;
+}
+.billed{
+    background-color: #FF00FF!important;
+    color: #0b0b0b!important;
+}
+.total_payment{
+    background-color: #FF9900 !important;
+    color: #0b0b0b!important;
+}
+.paid{
+    background-color: #FF9900 !important;
+    color: #0b0b0b!important;
+}
+.revise_payment{
+    background-color: #6e4403 !important;
+    color: #fbfbfb!important;
+}
+.refund_payment{
+    background-color: #0000FF !important;
+    color: #0b0b0b!important;
+}
+.closed{
+    background-color: #0000FF !important;
+    color: #0b0b0b!important;
+}
+.no_job{
+    background-color: #FF0000!important;
+    color: #0b0b0b!important;
+}
+.fee_payment{
+    background-color: #ff124b!important;
+    color: #0b0b0b!important;
+}
+.lien{
+    background-color: #ff124b!important;
+    color: #0b0b0b!important;
+}
+.partial_paid{
+    background-color: #ff460a!important;
+    color: #0b0b0b!important;
+}
+.partial_payment{
+    background-color: #ff460a!important;
+    color: #0b0b0b!important;
+}
+.take_action{
+    background-color: #00FFFF!important;
+    color: #0b0b0b!important;
+}
+.waiting_billing{
+    background-color: #FFFF00!important;
+    color: #0b0b0b!important;
+}
+.email_sent{
+    background-color: #00FF00!important;
+    color: #0b0b0b!important;
+}
+.lien_placed{
+    background-color: #ff124b!important;
+    color: #0b0b0b!important;
+}
+.left_message{
+    background-color: #ea709f!important;
+    color: #0b0b0b!important;
+}
+.pending_solution{
+    background-color: #ff6200!important;
+    color: #0b0b0b!important;
+}
+.called{
+    background-color: #ccffcc!important;
+    color: #0b0b0b!important;
+}
+.payment_agreement{
+    background-color: #FF9900!important;
+    color: #0b0b0b!important;
+}
+
+.open-reschedule{
+    background-color: #ea709f!important;
+    color: #0b0b0b!important;
+}
+.open-reschedule{
+    background-color: #ea709f!important;
+    color: #0b0b0b!important;
+}
+.pending{
+    background-color: #ea709f!important;
+    color: #0b0b0b!important;
+}
+.revise_to_bill{
+    background-color: #ff4e1d!important;
+    color: #0b0b0b!important;
+}
+.docusign_sent{
+    background-color: #ea709f!important;
+    color: #0b0b0b!important;
+}
+.uploading{
+    background-color: #FFFF00!important;
+    color: #0b0b0b!important;
+}
+.scheduled_partial{
+    background-color: #00FFFF!important;
+    color: #0b0b0b!important;
+}
+.review{
+    background-color: #ff6200!important;
+    color: #0b0b0b!important;
+}
+.ready_to_install{
+    background-color: #48840b!important;
+    color: #0b0b0b!important;
+}
+.ready_scheduled{
+    background-color: #00FFFF!important;
+    color: #0b0b0b!important;
+}
+.uploading_pics{
+    background-color: #CCCC00!important;
+    color: #0b0b0b!important;
+}
+.preparing_billing{
+    background-color: #ccffcc!important;
+    color: #0b0b0b!important;
+}
+.comparative{
+    background-color: #00AEFF!important;
+    color: #0b0b0b!important;
+}
+.nojob_review{
+    background-color: #FF0000!important;
+    color: #0b0b0b!important;
+}
+.tagable{
+    background-color: #fbfbfb!important;
+    border: 1px solid #00AEFF!important;
+    color: black;
+    i{
+        color: gray;
+        font-size: 14px;
+    }
+}
+
+.listtable{
+    td{
+        text-transform: uppercase!important;
+        font-weight: 400;
+    }
+    thead th{
+        background: #e7e7e7 !important;
+    }
+    tr:nth-child(even) {
+        background: #efefef !important;
+    }
+    th{
+        text-transform: uppercase!important;
+    }
+    small{
+        font-weight: 300;
+    }
+    .badge{
+        padding: 7px;
+        font-weight: 600;
+        color: #212121 !important;
+        min-width: 100px;
+    }
+    p{
+        font-size: 10px!important;
+    }
+
+}
+
+.not_found{
+    color: grey!important;
+    padding: 30px;
+}
+
+.label_disable{
+    opacity: 50%!important;
+}
+.noshow{
+    display: none!important;
+}
+.show{
+    display: block!important;
+}
+
+
+.accordion-button {
+
+    background-color: #ffffff !important;
+    border-color: #F8F8FB!important;
+}
+.accordion-button:not(.collapsed) {
+    color: #ffffff!important;
+    background-color: #556ee6 !important;
+}
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #939597;
+    color: #343a40;
+}
+
+.img-thumbnail-sign{
+    height: 100px!important;
+    //width: 200px!important;
+}
+.img-thumbnail{
+    z-index: 9999!important;
+    height: 152.5px!important;
+    width: 200px!important;
+}
+
+.draggable-mirror{
+    box-shadow: 10px 5px 5px #3b3a3a;
+}
+.hide{
+    display: none;
+}
+.image_handler{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    padding: 7px;
+    color: whitesmoke;
+    text-shadow: 1px 1px 1px black;
+    //border: 1px solid red;
+}
+.delete_image{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.zoom_image{
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+}
+
+.text-success{
+    color: #1f7556!important;
+}
+.text-danger{
+    color: #924040!important;
+}
+#picker-container .flatpickr-calendar{
+    top: 60px !important;
+    left: 0 !important;
+}
+
+.flatpickr-calendar.open{
+    background-color: white!important;
+}
+
+@keyframes placeHolderShimmer {
+    0% {
+        background-position: -1600px 0
+    }
+    100% {
+        background-position: 1600px 0
+    }
+}
+
+
+.animated-background {
+    animation-duration: 10s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    //background-color: #f6f7f8;
+    //background: linear-gradient(to right, #fbfbfb 8%, #e8e8e8 18%, #fbfbfb 33%);
+    background: rgb(213,213,215);
+    background: linear-gradient(90deg, rgba(213,213,215,1) 13%, rgba(250,250,250,1) 40%, rgba(250,250,250,1) 70%, rgba(213,213,215,1) 91%);
+    background-size: 1600px 104px;
+    height: 70px;
+    position: relative;
+}
+
+.teste-felipe {
+    height: 100px;
+    width: 100px;
+    border: blue 1px solid;
+
+}

@@ -1,0 +1,16 @@
+{
+  "name":        "Core",
+  "alias":       "core",
+  "description": "",
+  "keywords":    [],
+  "priority":    -1,
+  "providers":   [
+    "Modules\\Core\\Providers\\CoreServiceProvider",
+    "Modules\\Core\\Providers\\CollectionServiceProvider"
+  ],
+  "aliases":     { },
+  "files":       [
+    "Utils/Helpers/database.php"
+  ],
+  "requires":    []
+}

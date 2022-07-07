@@ -1,0 +1,307 @@
+@import 'variables', 'mixins';
+@import 'w';
+
+$timeline-interval : (
+	'days': 24,
+	'weeks': 7,
+);
+
+$treeview-width    : 400px;
+$border-color      : #EFF2F7;
+
+$content-width     : 6240px;
+$content-height    : 1920px;
+
+%e-wrap-sizes {
+	position   : absolute;
+	left       : 0;
+	top        : 0;
+	width      : $content-width;
+	min-height : 100%;
+}
+
+%e-schedule-grid {
+	
+	padding    : 0;
+	margin     : 0;
+	min-width  : 100%;
+	min-height : 100%;
+	max-width  : 100%;
+	max-height : 100%;
+	display    : grid;
+}
+
+.c-timeline {
+	--timeline-slot-duration : 2;
+	--timeline-slot-height   : 105px;
+	--timeline-slot-width    : 130px;
+	--timeline-sidebar-width : 400px;
+	
+	min-height               : 100%;
+	display                  : grid;
+	grid-gap                 : 1rem;
+	grid                 : {
+		template-columns : 1fr var(--timeline-sidebar-width);
+	}
+	
+	&-cell {
+		flex : 1;
+	}
+	
+	&-card {
+		background-color : #FFF;
+		display          : flex;
+		box-shadow       : 0 0.75rem 1.5rem rgb(18 38 63 / 3%);
+		position         : relative;
+		display          : flex;
+		flex-direction   : column;
+	}
+	
+	&-toolbar {
+		border              : solid 0 $border-color;
+		border-bottom-width : 1px;
+	}
+	
+	&-schedule {
+		flex    : 1;
+		display : grid;
+		grid                 : {
+			template-columns : 250px 1fr;
+			template-rows    : var(--timeline-slot-height) 1fr;
+		}
+		
+		[data-view] {
+			display        : flex;
+			flex-direction : column;
+		}
+		
+		[data-view='label'] {
+			grid-row : 1/-1;
+		}
+	}
+	
+	.e-schedule {
+		
+		&-container {
+			height                : 100%;
+			display               : grid;
+			grid-template-columns : 250px 1fr;
+			grid-template-rows    : var(--timeline-slot-height) 1fr;
+			
+			> * {
+				display : flex;
+			}
+		}
+		
+		&-slot {
+			border              : solid 0 $border-color;
+			border-right-width  : 1px;
+			border-bottom-width : 1px;
+			flex                : 1;
+		}
+		
+	}
+	
+	.e-header {
+		
+		&-container {
+			@include scrollbar-hidden('horizontal');
+		}
+		
+		&-wrap {
+			@extend %e-wrap-sizes;
+			height : 100%;
+		}
+		
+		&-scope {
+			--header-presentation : calc(var(--timeline-slot-width) * var(--timeline-slot-duration));
+			
+			@extend %e-schedule-grid;
+			grid-auto-flow        : column;
+			grid-template-columns : repeat(auto-fill, var(--header-presentation));
+			
+			> * {
+				display         : flex;
+				flex-direction  : column;
+				align-items     : center;
+				justify-content : center;
+				font-size       : 1.0rem;
+				font-weight     : 600;
+				line-height     : 1.1;
+				color           : var(--bs-dark);
+				
+				span {
+					font-size   : 0.7rem;
+					font-weight : 400;
+					color       : var(--bs-gray-500);
+				}
+			}
+			
+		}
+		
+	}
+	
+	.e-resource {
+		&-container {
+			@include scrollbar-hidden('vertical');
+		}
+		
+		&-wrap {
+			@extend %e-wrap-sizes;
+			width : 100%;
+			
+		}
+		
+		&-scope {
+			@extend %e-schedule-grid;
+			grid-auto-rows : var(--timeline-slot-height);
+			
+			> * {
+				display         : flex;
+				flex-direction  : column;
+				justify-content : center;
+				font-size       : 0.9rem;
+				align-items     : start;
+				font-weight     : 600;
+				line-height     : 1.1;
+				padding         : 0 20px;
+				color           : var(--bs-dark);
+				
+				span {
+					font-size   : 0.7rem;
+					font-weight : 400;
+					color       : var(--bs-gray-500);
+				}
+			}
+		}
+	}
+	
+	.e-content {
+		
+		&-wrap {
+			@extend %e-wrap-sizes;
+		}
+		
+		&-scope {
+			@extend %e-schedule-grid;
+			
+		}
+		
+		&-time {
+			@extend %e-schedule-grid;
+			position              : absolute;
+			grid-template-columns : repeat(auto-fill, var(--timeline-slot-width));
+			
+			> [role='presentation'] {
+				border             : solid 0 $border-color;
+				border-right-width : 1px;
+			}
+		}
+		
+		&-resource {
+			@extend %e-schedule-grid;
+			position       : relative;
+			z-index        : 8;
+			grid-auto-flow : row;
+			grid-auto-rows : var(--timeline-slot-height);
+			
+			> [role='presentation'] {
+				@extend %e-schedule-grid;
+				z-index               : 1;
+				position              : relative;
+				border                : solid 0 $border-color;
+				border-bottom-width   : 1px;
+				grid-auto-flow        : column;
+				grid-template-rows    : var(--timeline-slot-height);
+				grid-template-columns : repeat(auto-fill, var(--timeline-slot-width));
+			}
+		}
+		
+	}
+	
+	.e-event {
+		/*		@include timeline-grid-column(49);*/
+		
+		--timeline-event-start : auto;
+		--timeline-event-end   : span 2;
+		
+		display                : flex;
+		margin                 : 10px;
+		grid-column            : var(--timeline-event-start) / var(--timeline-event-end);
+		
+		&-data {
+			height      : calc(var(--timeline-slot-height) - 20px);
+			flex        : 1;
+			margin      : 0;
+			position    : relative;
+			color       : rgba(0, 0, 0, 0.50);
+			font-size   : 0.75rem;
+			font-weight : 600;
+			display     : flex;
+			align-items : center;
+			line-height : 20px;
+			
+		}
+	}
+	
+	&-assignment {
+		@extend %e-assignment;
+		display        : flex;
+		flex-direction : column;
+		height         : 100%;
+		
+		> * {
+			border              : solid 0 $border-color;
+			border-bottom-width : 1px;
+		}
+	}
+}
+
+%e-assignment .e-assignment {
+	
+	&-addresses {
+	}
+	
+	&-status {
+	}
+	
+	&-events {
+		flex       : 1;
+		overflow-x : hidden;
+		
+		.content-wrapper {
+			@extend %e-wrap-sizes;
+			width                 : 100%;
+			display               : grid;
+			grid-row-gap          : 8px;
+			grid-template-columns : 1fr;
+			min-height            : auto;
+			
+			.e-event {
+				margin : 0;
+				margin    : {
+					left  : 8px;
+					right : 3px;
+				}
+			}
+		}
+	}
+	
+}
+
+/*
+.e-events {
+	display : flex;
+	
+	&-group {
+		@extend %e-schedule-grid
+	}
+	
+	&-slot {
+	
+	}
+	
+	&-data {
+	
+	}
+}*/

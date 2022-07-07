@@ -1,0 +1,15 @@
+@mixin scrollbar-hidden($orientation: null) {
+
+	$data        : ('horizontal': horizontal, 'x': horizontal, 'vertical': vertical, 'y': vertical);
+	$orientation : map_get($data, $orientation);
+
+	@if $orientation {
+		&::-webkit-scrollbar:#{$orientation} {
+			display : none;
+		}
+	} @else {
+		&::-webkit-scrollbar {
+			display : none;
+		}
+	}
+}

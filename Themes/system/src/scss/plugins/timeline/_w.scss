@@ -1,0 +1,211 @@
+/* ==========================================================================
+   Code Variables
+   ========================================================================== */
+$timeline-variable : 'tl';
+
+$timeline-options  : (
+	'slot': (
+		'time-duration': 2,
+		'time-interval': 60,
+	),
+	'cell': (
+		'width': 110px,
+		'height': 80px,
+	),
+	'resource': (
+		'width': 240px,
+	),
+) !default;
+
+/* ==========================================================================
+   Root Variables
+   ========================================================================== */
+:root {
+	@each $group, $data in $timeline-options {
+		@each $name, $value in $data {
+			--#{$timeline-variable}-#{$group}-#{$name}: #{$value};
+		}
+	}
+	--#{$timeline-variable}-label-width : calc(var(--tl-cell-width) * var(--tl-slot-time-duration));
+}
+
+$side-width        : 240px;
+$slot-width        : 220px;
+$slot-height       : 80px;
+$full-width        : $slot-width * 24;
+$full-height       : $slot-height * 24;
+$border-color      : #EFF2F7;
+
+/* ==========================================================================
+   Placeholder Selectors
+   ========================================================================== */
+%border {
+	border-color : $border-color;
+	border-style : solid;
+	border-width : 0;
+}
+
+%border-right {
+	@extend %border;
+	border-right-width : 1px;
+}
+
+%border-bottom {
+	@extend %border;
+	border-bottom-width : 1px;
+}
+
+%border-rb {
+	@extend %border-right, %border-bottom;
+}
+
+%slot-data {
+	display         : flex;
+	flex-direction  : column;
+	align-items     : center;
+	justify-content : center;
+	font-size       : 1.0rem;
+	font-weight     : 600;
+	line-height     : 1.1;
+	color           : var(--bs-dark);
+	
+	span {
+		font-size   : 0.7rem;
+		font-weight : 400;
+		color       : var(--bs-gray-500);
+	}
+}
+
+%grid-resource-row {
+	width          : 100%;
+	display        : grid;
+	grid-auto-flow : row;
+	grid-auto-rows : var(--tl-cell-height);
+}
+
+%grid-resource-column {
+	display           : grid;
+	grid-auto-flow    : column;
+	grid-auto-columns : var(--tl-label-width);
+}
+
+.timeline-control {
+	height             : 100%;
+	display            : grid;
+	grid-template-rows : minmax(var(--tl-cell-height), auto) 1fr;
+	
+	.control-row {
+		position              : relative;
+		display               : grid;
+		grid-template-columns : minmax(var(--tl-resource-width), auto) 1fr;
+		
+		&:first-child {
+			@extend %border-bottom;
+			box-shadow : -1px 5px 20px -10px #E7E7E7;
+			z-index    : 10;
+		}
+	}
+	
+	.control-column {
+		overflow : hidden;
+		
+		&:nth-child(odd) {
+			@extend %border;
+			border-style       : double;
+			border-right-width : 4px;
+		}
+	}
+}
+
+.timeline-box {
+	@include position(relative);
+	
+	.box-content {
+		@include position(absolute, $top : 0, $left : 0);
+		display : flex;
+	}
+}
+
+.timeline-label {
+	@include scrollbar-hidden('horizontal');
+	
+	.label-resource {
+		@extend %grid-resource-column;
+	}
+	
+	.slot-data {
+		@extend %border-right, %slot-data
+	}
+}
+
+.timeline-collections {
+	@include scrollbar-hidden('vertical');
+	
+	.collections-resource {
+		@extend %grid-resource-row;
+	}
+	
+	.slot-data {
+		@extend %border-bottom, %slot-data;
+		padding     : 0 20px;
+		font-size   : 0.9rem;
+		align-items : start;
+	}
+}
+
+.timeline-events {
+	.box-content {
+		width  : $full-width;
+		height : $full-height;
+	}
+	
+	.events-resource {
+		@include position(absolute, $top : 0, $bottom : 0);
+		display : grid;
+		
+		&--vertically {
+			@extend %grid-resource-column;
+			
+			.slot-data {
+				@extend %border-right;
+				display : flex;
+				
+				span {
+					@extend %border-right;
+					flex : 1;
+					
+					&:last-child {
+						border-color : transparent;
+					}
+				}
+			}
+		}
+		
+		&--horizontally {
+			@extend %grid-resource-row;
+			
+			.slot-data {
+				@extend %border-bottom;
+				display           : grid;
+				grid-auto-flow    : dense;
+				grid-auto-columns : var(--tl-cell-width);
+				max-width         : $full-width;
+				
+				div {
+					margin          : 7px;
+					display         : flex;
+					flex-direction  : column;
+					justify-content : center;
+					
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
+

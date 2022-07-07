@@ -1,0 +1,27 @@
+{
+  "name":              "callkruger/blade-components",
+  "description":       "description",
+  "minimum-stability": "dev",
+  "license":           "MIT",
+  "authors":           [
+    {
+      "name":  "Michel Vieira",
+      "email": "michelvieira@outlook.com.com"
+    }
+  ],
+  "require":           {
+  },
+  "autoload":          {
+    "psr-4": {
+      "CallKruger\\BladeComponents\\": "src/"
+    }
+  },
+  "extra":             {
+    "laravel": {
+      "providers": [
+        "CallKruger\\BladeComponents\\ServiceProvider"
+      ],
+      "aliases": {}
+    }
+  }
+}

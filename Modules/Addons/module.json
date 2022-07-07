@@ -1,0 +1,13 @@
+{
+    "name": "Addons",
+    "alias": "addons",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Addons\\Providers\\AddonsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

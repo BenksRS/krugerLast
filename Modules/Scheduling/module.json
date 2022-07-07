@@ -1,0 +1,17 @@
+{
+  "name":        "Scheduling",
+  "alias":       "scheduling",
+  "description": "",
+  "keywords":    [],
+  "priority":    0,
+  "providers":   [
+    "Modules\\Scheduling\\Providers\\SchedulingServiceProvider"
+  ],
+  "aliases":     {
+    "Timeline": "Modules\\Scheduling\\Support\\Facades\\Timeline"
+  },
+  "files":       [
+    "Support/helpers.php"
+  ],
+  "requires":    []
+}

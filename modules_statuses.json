@@ -1,0 +1,15 @@
+{
+    "Core": true,
+    "User": true,
+    "Assignments": true,
+    "Referrals": true,
+    "Notes": true,
+    "Element": true,
+    "Theme": true,
+    "Component": true,
+    "Addons": true,
+    "Scheduling": true,
+    "Dashboard": true,
+    "Packages": true,
+    "Reports": true
+}

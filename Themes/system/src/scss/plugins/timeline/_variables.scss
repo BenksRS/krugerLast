@@ -1,0 +1,11 @@
+$timeline-card-width : 350px;
+
+$timeline-grid       : (
+	'timeline': (
+		'template-columns' : 1fr 350px,
+	),
+	'content': (
+		'template-rows' : auto 1fr,
+		'template-columns' : 280px 1fr,
+	),
+);

@@ -1,0 +1,21 @@
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+    position   : $position;
+    top        : $top;
+    right      : $right;
+    bottom     : $bottom;
+    left       : $left;
+    min-width  : 100%;
+    min-height : 100%;
+}
+
+@mixin border($style: solid, $color: #EFF2F7, $width: 0, $top: null, $right: null, $bottom: null, $left: null) {
+    border: {
+        width:        $width;
+        top-width:    $top;
+        right-width:  $right;
+        bottom-width: $bottom;
+        left-width:   $left;
+        style:        $style;
+        color:        $color;
+    }
+}
