@@ -12,6 +12,7 @@ use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsEvents;
 use Modules\Assignments\Entities\Gallery;
 use Modules\Assignments\Entities\Signdata;
+use Modules\Assignments\Repositories\AssignmentFirebaseRepository;
 use Modules\Gdrive\Entities\gdrive;
 use Modules\Gdrive\Entities\QueeDir;
 use Modules\Gdrive\Entities\QueeFiles;
@@ -848,6 +849,13 @@ class GdriveController extends Controller
 // updates Scripts
 
 
+    public function scripts($id){
+
+        $job=AssignmentFirebaseRepository::find($id);
+
+        dump($job->firebase);
+
+    }
     public function marketing_rep()
     {
         $base_path="DB/scripts/";
