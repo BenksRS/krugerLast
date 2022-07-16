@@ -1,0 +1,13 @@
+{
+    "name": "Gdrive",
+    "alias": "gdrive",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Gdrive\\Providers\\GdriveServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

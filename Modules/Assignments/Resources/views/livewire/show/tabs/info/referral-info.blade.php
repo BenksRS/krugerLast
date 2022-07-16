@@ -84,32 +84,47 @@
 
                         <div class="col-lg-12">
                             <div class="row">
-                                <div class="col-md-12" wire:ignore>
-                                    <label class="form-label">Referral:</label>
-                                    <select class="form-control select2 select_referral_id" name="referral_id">
 
-                                        @foreach($referralList as $ref_id => $ref_name)
-                                            <option {{($referral_id == $ref_id ) ? 'selected': '' }} value="{{$ref_id}}">{{"$ref_name"}}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="col-lg-12">
+                                    <div class="mb-3" wire:ignore>
+                                        <label class="form-label">Referral</label>
+                                        <select class="select2 form-control select2-multiple select_referral"
+                                                name="referral_id" data-placeholder="Select ...">
+                                            <option selected>chose...</option>
+                                            @foreach($allReferrals as $ref)
+
+                                                @if($ref)
+                                                    <option {{$referralSelected == $ref->id ? ' selected': ' '}}  value="{{$ref->id}}">{{$ref->full_name}}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('reportSelected')
+                                    <div class="invalid-feedback show">
+                                        Please select a report valid option.
+                                    </div>
+                                    @enderror
                                 </div>
 
+                                @if($showCarrierSelect)
+                                    <div class="col-lg-12">
+                                        <div class="mb-3" >
+                                            <label class="form-label">Carrier</label>
+                                            <select class=" form-control select2-multiple select_carrier"
+                                                    name="carrier_id" data-placeholder="Select ...">
+                                                <option selected>chose...</option>
+                                                @foreach($carrierLists as $carr)
 
-                                    <div wire:key="carrier">
-                                        @if($referral_type_id == 9)
-                                        <div class="col-md-12 select_carrier mt-2" wire:ignore>
+                                                    @if($carr)
+                                                        <option {{$carrierSelected == $carr->id ? ' selected': ' '}}  value="{{$carr->id}}">{{$carr->full_name}}</option>
 
-                                            <label class="form-label">Carrier:</label>
-                                            <select class="form-control select2 select_carrier_id" name="carrier_id">
-                                                <option>Select Carrier...</option>
-                                                @foreach($cList as $row)
-                                                    <option {{($row->id == $assignment->carrier_id ) ? 'selected' : ''}}   value="{{$row->id}}">{{"$row->full_name"}}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
-                                        @endif
-                                    </div>
 
+                                    </div>
+                                @endif
 
 
                                 @if($referral_type_id != 9)
@@ -145,11 +160,18 @@
 
                                 </div>
                                 <div class="col-md-12 mt-2">
-                                    <label>Date of Loss:</label>
-                                    <div class="input-group" id="datepicker1">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy"  name="date_of_loss"
-                                               data-date-format="mm/dd/yyyy" data-date-container='#datepicker1' data-provide="datepicker" wire:model="date_of_loss" >
-                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                    <div class="mb-3 mt-2">
+
+                                        <label class="form-label">Date of loss</label>
+                                        <div class="input-group" id="end_time-input-group" wire:ignore>
+                                            <x-flatpickr  class="flatpickr_date"  id="date_of_loss" name="date_of_loss" show-time :time24hr="false" alt-format="m/d/Y h:i K" wire:model="date_of_loss"   value="{{$date_of_loss}}"  />
+                                            <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
+                                        </div>
+                                        @error('end_date')
+                                        <div class="invalid-feedback show">
+                                            Please select a valid datetime.
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -199,42 +221,46 @@
         <script>
             $(function (){
                 $('.select2').select2();
-
+                $('#date_of_loss').on('change.datetimepicker', function (e){
+                    let data = $(this).val();
+                    @this.set('date_dol', data);
+                });
 
             });
 
             document.addEventListener('livewire:load', function (event) {
-                @this.on('referralUpdate', function () {
-                   console.log('referralUpdate');
+                @this.on('editReferralinfo', function () {
 
+                    console.log('editReferralinfo');
                     setTimeout(function(){
                         $('.select2').select2();
-                        $('.select_referral_id').on('change', function (e){
-                            @this.set('referral_id', e.target.value);
-                            console.log("referral_id edit : "+e.target.value);
+                        $('.select_referral').on('change', function (e){
+                            let data = $(this).val();
+                            @this.set('referralSelected', data);
                         });
+
                     },500);
 
                 });
-                @this.on('editEmit', function () {
-                    // alert('test');
-                    console.log('referralUpdate');
+                @this.on('contentChange', function () {
+
+                    console.log('contentChange');
                     setTimeout(function(){
                         $('.select2').select2();
-                        $('.select_referral_id').on('change', function (e){
-                            @this.set('referral_id', e.target.value);
-                            console.log("referral_id edit : "+e.target.value);
+                        $('.select_referral').on('change', function (e){
+                            let data = $(this).val();
+                            @this.set('referralSelected', data);
                         });
 
                     },500);
-
-
 
                 });
             });
 
         </script>
     @endpush
+
+
 </div>
 
 

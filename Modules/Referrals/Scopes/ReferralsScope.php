@@ -13,4 +13,14 @@ trait ReferralsScope
                 $query->whereIn('id', collect($carrier_id))->whereNotNull('id');
             });
     }
+    public function scopeSearchtopref (Builder $query, $search){
+        return $query
+            ->when($search, function ($query, $search) {
+                $query
+                    ->where('company_entity', 'like', '%' .$search . '%')
+                    ->orWhere('company_fictitions', 'like', '%' .$search . '%');
+//                    ->orWhere('id', 'like', '%' .$search . '%')
+//                    ->orWhere('id', $search);
+            });
+    }
 }

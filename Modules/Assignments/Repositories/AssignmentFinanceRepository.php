@@ -51,11 +51,13 @@ class AssignmentFinanceRepository extends Assignment {
         //check status
         if($total_invoice > 0 ){
             // billed
-            $status=5;
+//            $status=5;
             $status_collection=5;
+            $status = $this->status_id;
 
             switch ($this->status_id){
                 case 5:
+
                     // check paid
                     $status = ($total_invoice == $total_payment) ? 6 : $status;
                     $status_collection = ($total_invoice == $total_payment) ? 6 : $status;
@@ -75,7 +77,6 @@ class AssignmentFinanceRepository extends Assignment {
                     $status_collection = 6;
                     break;
                 default:
-                    $status=$this->status_id;
                     $status_collection=$this->status_collection_id;
                     break;
             }

@@ -4,6 +4,7 @@ namespace Modules\Assignments\Http\Livewire\Show\Tabs\Info;
 
 use Carbon\Carbon;
 use Livewire\Component;
+use Manny\Manny;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Referrals\Entities\Referral;
 
@@ -14,9 +15,16 @@ class ReferralInfo extends Component
         'jobtypeUpdate' => 'processJobtype',
         'referralUpdate' => 'processReferral',
         'editReferralinfo' => 'edit',
+        'contentChange' => 'processContent',
     ];
+
     public $assignment;
     public $carrier;
+
+    public $referralSelected;
+    public $carrierSelected;
+    public $carrierLists;
+    public $showCarrierSelect = true;
 
     public $referralList;
     public $carrierList = array();
@@ -47,38 +55,50 @@ class ReferralInfo extends Component
         $this->carrier = $this->assignment->carrier()->first();
 
         $this->referral_id = $this->assignment->referral->id;
+        $this->referralSelected = $this->assignment->referral->id;
+        if($this->carrier){
+            $this->carrierSelected = $this->carrier->id;
+        }
+
+
         $this->referral_type_id = $this->assignment->referral->referral_type_id;
-        $this->date_of_loss = $this->assignment->dol_date;
+        $this->date_of_loss = $this->assignment->date_of_loss;
         $this->adjuster_info = $this->assignment->adjuster_info;
         $this->carrier_info = $this->assignment->carrier_info;
         $this->claim_number = $this->assignment->claim_number;
 
-        $this->referralList =  Referral::get(['id', 'company_entity', 'company_fictitions'])
-            ->pluck("full_name", "id")
-            ->toArray();
+        $this->allReferrals = Referral::all();
 
-        $this->validCarrierList($this->assignment->referral_id);
+        $this->processCarrier($this->referral_id);
+//        $this->validCarrierList($this->assignment->referral_id);
+
+    }
+
+
+    public function processContent(){
+        $this->carrierLists=[];
+        $this->processCarrier($this->referralSelected);
 
     }
     public function togglePolling()
     {
         $this->polling = !$this->polling;
     }
+    public function processCarrier($id){
+        $this->referral = Referral::find($id);
+        $this->carrierLists = $this->referral->carriers;
 
+        if(count($this->carrierLists) > 0){
+            $this->showCarrierSelect = true;
+        }else{
+            $this->showCarrierSelect = false;
+        }
+    }
     public function validCarrierList($referral_id){
         $this->referral = Referral::find($referral_id);
 
-        if($this->referral->referral_type_id == 9){
+        $this->carrierList = $this->referral->carriers;
 
-            $this->carrierList = $this->referral->carriers;
-
-        }else{
-
-            $this->carrierList = [];
-        }
-
-
-//        dd($this->carrierList );
     }
     public function edit(){
 
@@ -87,18 +107,15 @@ class ReferralInfo extends Component
     }
     public function updated($field)
     {
-        if ($field == 'referral_id')
+        if ($field == 'referralSelected')
         {
-
-            $this->referral= Referral::find($this->referral_id);
-            $this->referral_type_id = $this->referral->referral_type_id;
-
-            $this->emit('referralUpdate', $this->referral_id);
+//            dd('aqui');
+            $this->emit('contentChange');
         }
     }
     public function processReferral($id){
         $this->referral = Referral::find($id);
-        $this->referral_type_id = $this->referral->referral_type_id;
+
         $this->validCarrierList($id);
 
     }
@@ -106,13 +123,12 @@ class ReferralInfo extends Component
         $this->assignment = Assignment::find($id);
     }
     public function update($formData){
-       $this->validate();
+        $this->validate();
 
-//dd($formData);
-       if($formData['date_of_loss']){
-           $formData['date_of_loss'] = Carbon::createFromFormat('m/d/Y', $formData['date_of_loss'])->format('Y-m-d H:i:s');
-       }
-//       dd($formData['date_of_loss']);
+        if($formData['date_of_loss'] == ''){
+            $formData['date_of_loss'] = null;
+        }
+
         $errors = $this->getErrorBag();
 
         $id =  $this->assignment->id;

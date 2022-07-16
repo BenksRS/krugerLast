@@ -16,9 +16,9 @@ class AuthorizationController extends AdminController
     public function index()
     {
         $page_info = (object)[
-            'title' => 'Authorizathion List',
+            'title' => 'Authorizations List',
             'back' => url('/referrals/authorizations'),
-            'back_title' => 'Authorizathion List'
+            'back_title' => 'Authorizations List'
         ];
         \session()->flash('page',$page_info);
         $page =\session()->get('page');
@@ -37,9 +37,9 @@ class AuthorizationController extends AdminController
     public function auth_new ()
     {
         $page_info = (object)[
-            'title' => 'New Authorizathion',
+            'title' => 'New Authorization',
             'back' => url('/referrals/authorizations'),
-            'back_title' => 'Authorizathion List'
+            'back_title' => 'Authorization List'
         ];
         \session()->flash('page',$page_info);
         $page =\session()->get('page');
@@ -66,9 +66,9 @@ class AuthorizationController extends AdminController
     public function show($id)
     {
         $page_info = (object)[
-            'title' => 'Edit Authorizathion',
+            'title' => 'Edit Authorization',
             'back' => url('/referrals/authorizations'),
-            'back_title' => 'Authorizathion List'
+            'back_title' => 'Authorizations List'
         ];
         \session()->flash('page',$page_info);
         $page =\session()->get('page');

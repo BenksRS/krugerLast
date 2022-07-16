@@ -5,7 +5,9 @@ namespace Modules\Dashboard\Http\Livewire;
 use Livewire\Component;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\FinanceBilling;
+use Modules\Assignments\Repositories\AssignmentRepository;
 use Modules\Referrals\Entities\Referral;
+use Modules\Referrals\Repositories\ReferralsRepository;
 
 class Search extends Component
 {
@@ -19,18 +21,18 @@ class Search extends Component
         $list = $refs = $invs = [];
         if($this->searchAll != ''){
             $searchAll = "%$this->searchAll%";
-            $list=Assignment::whereLike('id',$searchAll)
-                ->whereLike('street',$searchAll)
-                ->whereLike('first_name',$searchAll)
-                ->whereLike('last_name',$searchAll)
-                ->get();
 
-            $refs = Referral::whereLike('company_entity',$searchAll)
-                ->whereLike('company_fictitions',$searchAll)
-                ->whereLike('street',$searchAll)
-                ->get();
-
-            $invs = FinanceBilling::whereLike('invoice_id',$searchAll)->get();
+//            $list=AssignmentRepository::Search($searchAll)->get();
+            $list = AssignmentRepository::searchtop($this->searchAll)->get();
+//            dd($list);
+//            $refs = ReferralsRepository::searchtopref($this->searchAll)->get();
+//            dd($refs);
+//            $refs = Referral::whereLike('company_entity',$searchAll)
+//                ->whereLike('company_fictitions',$searchAll)
+//                ->whereLike('street',$searchAll)
+//                ->get();
+//
+//            $invs = FinanceBilling::whereLike('invoice_id',$searchAll)->get();
 
         }
 

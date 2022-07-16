@@ -18,7 +18,18 @@ trait AssignmentScope {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
 
     }
-
+    public function scopeSearchtop (Builder $query, $search){
+        return $query
+            ->when($search, function ($query, $search) {
+                $query
+                    ->where('first_name', 'like', '%' .$search . '%')
+                    ->orWhere('last_name', 'like', '%' .$search . '%')
+                    ->orWhere('id', 'like', '%' .$search . '%')
+                    ->orWhere('email', 'like', '%' .$search . '%')
+                    ->orWhere('street', 'like', '%' .$search . '%')
+                    ->orWhere('claim_number', 'like', '%' .$search . '%');
+            });
+    }
     public function scopeSearch (Builder $query, $search){
         return $query
             ->when($search, function ($query, $search) {

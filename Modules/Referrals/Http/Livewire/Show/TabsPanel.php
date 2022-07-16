@@ -16,7 +16,7 @@ class TabsPanel extends Component
     ];
 
     public $referral;
-    public $isActive = 'authorizations';
+    public $isActive = 'info-details';
     public $navs = [
         [
             'title' => 'Info Details',

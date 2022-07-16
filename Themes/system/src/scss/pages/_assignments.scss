@@ -5,6 +5,7 @@
     }
     .search-box-result{
         position: absolute;
+
         top: 51px;
         min-width: 1000px;
         //height: 500px;
@@ -239,10 +240,17 @@
     z-index: 9999!important;
     height: 152.5px!important;
     width: 200px!important;
+    border-color: rgba(141, 141, 141, 0.32);
+    cursor: move!important;
 }
 
+
 .draggable-mirror{
-    box-shadow: 10px 5px 5px #3b3a3a;
+    box-shadow: 10px 5px 5px rgba(52, 52, 52, 0.32);
+    //button{
+    //    display: none!important;
+    //}
+    //border: #6f42c1 solid 1px ;
 }
 .hide{
     display: none;
@@ -254,6 +262,7 @@
     padding: 7px;
     color: whitesmoke;
     text-shadow: 1px 1px 1px black;
+
     //border: 1px solid red;
 }
 .delete_image{
@@ -261,12 +270,24 @@
     top: 5px;
     right: 5px;
 }
+.edit_image{
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
 .zoom_image{
     position: absolute;
     bottom: 5px;
     left: 5px;
 }
-
+.imagem_label {
+    .zoom_image{
+        bottom: 24px;
+    }
+    .edit_image{
+        bottom: 24px;
+    }
+}
 .text-success{
     color: #1f7556!important;
 }

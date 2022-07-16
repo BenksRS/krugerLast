@@ -17,8 +17,6 @@
     </ul>
 
 
-
-
     {{--<!-- Tab panes -->--}}
     <div class="tab-content p-3 text-muted">
         @foreach($navs as $nav)

@@ -3,6 +3,19 @@
 
 
         <div class="col-lg-8">
+            @if($showUploading)
+                <form wire:submit.prevent="save" >
+
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" wire:model="newauth" name="newauth">
+                        <button class="btn btn-primary" type="submit" id="inputGroupFileAddon04">Upload new Authorization</button>
+                    </div>
+                    @error('newauth')<span class="alert-danger error">{{ $message }}</span> @enderror
+
+                </form>
+            @else
+                <button type="button" class="btn btn-warning btn-sm float-end" wire:click="$emit('uploadAuth')"><i class="fas fa-plus"></i> <i class="fas fa-file-pdf"></i> Authorization</button>
+            @endif
 
         </div>
         <div class="col-lg-4 float-end " >

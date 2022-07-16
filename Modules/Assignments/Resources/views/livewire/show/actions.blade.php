@@ -1,5 +1,5 @@
 <div>
-
+{{--@dump($assignment->finance)--}}
         @if(session()->has('missingAuth'))
             <div  class="alert alert-{{session('missingAuth')['class']}}" x-init="setTimeout(() => show = false, 3000)">
                 {!! nl2br(session('missingAuth')['message']) !!}

@@ -12,6 +12,8 @@ class ReferralAuthorization extends Model
     protected $table = 'referral_authorizations';
     protected $fillable = [
         'description',
+        'b64',
+        'active',
         'name'
     ];
 //    protected $with = ['referrals'];

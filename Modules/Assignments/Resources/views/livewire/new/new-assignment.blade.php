@@ -201,7 +201,7 @@
 
                                     <label class="form-label">Date of loss</label>
                                     <div class="input-group" id="end_time-input-group" wire:ignore>
-                                        <x-flatpickr   id="date_of_loss" name="date_of_loss" show-time :time24hr="false" alt-format="m/d/Y h:i K"    />
+                                        <x-flatpickr  class="flatpickr_date"  id="date_of_loss" name="date_of_loss" show-time :time24hr="false" alt-format="m/d/Y h:i K"    />
                                         <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
                                     </div>
                                     @error('end_date')

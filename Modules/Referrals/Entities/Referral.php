@@ -25,6 +25,9 @@ class Referral extends Model
         'status' ,
         'email',
         'created_at',
+        'marketing_id',
+        'updated_by',
+        'created_by',
         'updated_at'
 
     ];

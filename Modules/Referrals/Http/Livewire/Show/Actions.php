@@ -71,7 +71,7 @@ class Actions extends Component
         }
 
         if($message){
-            session()->flash('alert' ,[
+            session()->flash('alertAuth' ,[
                 'class' => 'danger',
                 'message' => $message
             ]);

@@ -2,18 +2,20 @@
 
 namespace Modules\Assignments\Http\Controllers;
 
+use Barryvdh\Debugbar\Storage\SocketStorage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\Signdata;
 use Modules\Core\Http\Controllers\AdminController;
 use Modules\Referrals\Entities\FieldAuthorizations;
 use Modules\Referrals\Entities\Referral;
 use Illuminate\Support\Facades\File;
-
+use League\Flysystem\Filesystem;
 use Modules\Referrals\Entities\ReferralAuthorization;
 
 class AssignmentsController extends Controller {
@@ -28,6 +30,13 @@ class AssignmentsController extends Controller {
      * Display a listing of the resource.
      * @return Renderable
      */
+    public function gdrive (){
+
+
+
+
+
+    }
     public function index ()
     {
 
@@ -223,7 +232,49 @@ class AssignmentsController extends Controller {
 //        }
 //        echo "<br><br>";
     }
+    public function pdfgallerylabel($id)
+    {
 
+        $data = Assignment::find($id);
+        $pdf = PDF::loadView('assignments::pdflabel', compact('data'));
+        $pdf->setPaper('A4', 'portrait')->setWarnings(false);
+
+        return $pdf->stream("After & Before - $data->last_name , $data->first_name.pdf");
+
+
+    }
+    public function pdfgallery($id)
+    {
+        $data = Assignment::find($id);
+        $pdf = PDF::loadView('assignments::pdfgallery', compact('data'));
+        $pdf->setPaper('A4', 'portrait')->setWarnings(false);
+
+        return $pdf->stream("After & Before - $data->last_name , $data->first_name.pdf");
+
+
+    }
+    public function pdfgalleryafter($id)
+    {
+        $data = Assignment::find($id);
+        $pdf = PDF::loadView('assignments::pdfafter', compact('data'));
+        $pdf->setPaper('A4', 'portrait')->setWarnings(false);
+
+        return $pdf->stream("After - $data->last_name , $data->first_name.pdf");
+
+
+    }
+    public function pdfgallerybefore($id)
+    {
+
+
+        $data = Assignment::find($id);
+        $pdf = PDF::loadView('assignments::pdfbefore', compact('data'));
+        $pdf->setPaper('A4', 'portrait')->setWarnings(false);
+
+        return $pdf->stream("Before - $data->last_name , $data->first_name.pdf");
+
+
+    }
     /**
      * Show the form for editing the specified resource.
      *

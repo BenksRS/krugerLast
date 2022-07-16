@@ -17,6 +17,8 @@ class Images extends Component
     public $showFront, $showInside, $showBefore, $showAfter = false;
     public $assignment;
     public $gallery;
+    public $allCategorys;
+    public $gallery_category_id;
 
 
 
@@ -26,9 +28,20 @@ class Images extends Component
         ini_set('memory_limit','1G');
 
         $this->assignment = $assignment;
-        $this->tasks = GalleryCategory::all();
+        $this->allCategorys = GalleryCategory::all();
         $this->gallery = Gallery::where('assignment_id', $this->assignment->id)->get();
 
+    }
+
+    public function changeLabel($category_id, $image_id )
+    {
+//        dd("$image_id,  $category_id");
+        $Image = Gallery::find($image_id);
+        $update=[
+            'category_id' =>$category_id
+        ];
+        $Image->update($update);
+        $this->gallery = Gallery::where('assignment_id', $this->assignment->id)->get();
     }
     public function updateTaskOrder($galleryReturn){
 //dd($galleryReturn);

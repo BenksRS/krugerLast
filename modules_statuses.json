@@ -11,5 +11,6 @@
     "Scheduling": true,
     "Dashboard": true,
     "Packages": true,
-    "Reports": true
+    "Reports": true,
+    "Gdrive": true
 }

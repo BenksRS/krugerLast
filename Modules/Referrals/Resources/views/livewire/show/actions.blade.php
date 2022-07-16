@@ -1,7 +1,7 @@
 <div>
-    @if(session()->has('alert'))
-        <div  class="alert alert-{{session('alert')['class']}}" x-init="setTimeout(() => show = false, 3000)">
-            {!! nl2br(session('alert')['message']) !!}
+    @if(session()->has('alertAuth'))
+        <div  class="alert alert-{{session('alertAuth')['class']}}" x-init="setTimeout(() => show = false, 3000)">
+            {!! nl2br(session('alertAuth')['message']) !!}
         </div>
         <script>
             setTimeout(function() {
