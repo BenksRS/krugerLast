@@ -5,7 +5,7 @@ namespace Modules\Gdrive\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class gdrive extends Model
+class Gdrive extends Model
 {
     use HasFactory;
     protected $table    = 'gdrive';
