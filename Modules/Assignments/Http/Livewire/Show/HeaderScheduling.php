@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Livewire\Component;
 use Modules\Addons\Entities\Assignment\AssignmentStatus;
 use Modules\Assignments\Entities\Assignment;
+use Modules\Assignments\Entities\AssignmentsJobTypes;
 use Modules\Assignments\Entities\AssignmentsScheduling;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
 use Modules\User\Entities\Techs;
@@ -15,9 +16,11 @@ class HeaderScheduling extends Component
 {
     protected $listeners = [
         'showButtons' => 'toggleButtons',
+        'showDuplicate' => 'toggleDuplicate',
     ];
 
     public $showButtons= true;
+    public $showDuplicate=true;
 
     public $assignment;
     public $showChangeTech = false;
@@ -33,6 +36,10 @@ class HeaderScheduling extends Component
 
     public $user;
 
+    public $jbSelected;
+    public $jbSelectedSingle;
+    public $jobTypes;
+    public $jtDuplicate;
 
     public $schedule_start;
 
@@ -42,19 +49,110 @@ class HeaderScheduling extends Component
         $this->assignment = $assignment;
         $this->techs =Techs::all();
         $this->user = Auth::user();
+
+        $this->jbSelected = $this->assignment->job_types;
+
+//        dd($this->jbSelected);
+        $this->jbSelectedSingle = $this->assignment->job_types()->where('type', 'S')->get();
+
+        $this->jobTypes = AssignmentsJobTypes::where('active', 'y')->get();
+
         $this->checkButons();
 
     }
+
+
+    public function updateJD($id){
+
+//        dd($this->jtDuplicate);
+        if(in_array($id, $this->jtDuplicate)){
+//            dd('remove');
+            $this->jtDuplicate=array_diff($this->jtDuplicate, $id);
+        }else{
+
+            $this->jtDuplicate=array_unshift($this->jtDuplicate, $id);
+
+        }
+    }
+    public function toggleDuplicate(){
+        $this->showDuplicate = !$this->showDuplicate;
+//        $this->showButtons = !$this->showButtons;
+    }
     public function toggleButtons($info){
         $this->showButtons = !$this->showButtons;
+        $this->showDuplicate =true;
         $this->typeForm =  $info;
         if($info == 'full'){
             $this->showFormDate = true;
+
         }else{
             $this->showFormDate = false;
         }
     }
 
+    public function duplicate(){
+
+        $duplicate = $this->assignment;
+        $old_id = $duplicate->id;
+        $duplicate->load('phones', 'notes');
+        //remove dados fixos
+        unset($duplicate->id);
+        unset($duplicate->follow_up);
+        unset($duplicate->event_id);
+        unset($duplicate->inside_info);
+        unset($duplicate->created_at);
+        unset($duplicate->updated_at);
+        $duplicate->date_assignment=Carbon::now();
+        $duplicate->created_by=$this->user->id;
+        $duplicate->updated_by=$this->user->id;
+        $duplicate->status_id=1;
+        $duplicate->status_collection_id=3;
+
+
+        $clone = $duplicate->replicate();
+        $clone->save();
+
+        // add job type
+        $clone->job_types()->attach($this->jtDuplicate);
+
+        // phones
+        foreach ($duplicate->phones as $phone){
+//            dd($phone);
+            $phone->assignment_id = $clone->id;
+            unset($phone->id);
+            $clone_phone =  $phone->replicate();
+            $clone_phone->save();
+        }
+        // notes
+        foreach ($duplicate->notes as $note){
+//            dd($phone);
+
+            if($note->type == 'assignment'){
+                $note->notable_id = $clone->id;
+                unset($note->id);
+                $clone_note =  $note->replicate();
+                $clone_note->save();
+            }
+        }
+
+        // add cloning note
+            $text = "Job duplicated from #$old_id";
+        $clone->notes()->create([
+            'text'=> $text,
+            'notable_id'=> $clone->id,
+            'created_by'=> $this->user->id,
+            'type'=> 'assignment',
+            'notable_type'=>  Assignment::class,
+        ]);
+
+
+
+
+            return $this->redirect("/assignments/show/$clone->id");
+
+
+
+    }
     public function schedule(){
         $Schedule=AssignmentsScheduling::where('assignment_id', $this->assignment->id)->first();
 

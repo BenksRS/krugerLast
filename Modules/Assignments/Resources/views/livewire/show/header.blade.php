@@ -137,7 +137,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="btn-group float-end">
-                                        <button type="button" class="btn btn-secondary dropdown-toggle " data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                        <button type="button" class="btn btn-sm btn-secondary dropdown-toggle " data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                                             <i class="bx bx-dots-horizontal align-middle"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-lg-end">
