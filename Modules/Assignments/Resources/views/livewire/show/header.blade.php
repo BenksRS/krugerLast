@@ -9,7 +9,7 @@
                                 <div class="flex-grow-1 align-self-center">
 
                                     @if($show)
-                                    <button type="button" class="btn btn-info btn-sm float-end" wire:click="$emit('showUpdateinfo')"><i class="fas fa-edit"></i> Edit</button></p>
+                                    <button type="button" class="btn btn-primary btn-sm float-end" wire:click="$emit('showUpdateinfo')"><i class="fas fa-edit"></i> Edit</button></p>
                                     <div class="text-muted">
                                         <p class="mb-0">
                                             <?php $count=0;?>
@@ -125,17 +125,15 @@
                                 <p class="mb-0 text-info ">TAGS:  <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".small_tag_modal"><i class="fas fa-exchange-alt
 " ></i></button></p>
                                     @foreach($this->selectedTags  as $tags)
-                                        <span class="badge tagable float-start p-2 m-1">{{$tags->name}}<a href="javascript:void(0);" wire:click="removeTag({{$tags->id}})"  alt="Remove Tag"> <i class="bx bx-x "></i></a></span>
+                                        <span class="badge tagable float-start p-1 me-1 mt-1">{{$tags->name}}<a href="javascript:void(0);" wire:click="removeTag({{$tags->id}})"  alt="Remove Tag"> <i class="bx bx-x "></i></a></span>
                                     @endforeach
                             </div>
                         </div>
                         <div class="col-lg-3 d-none d-lg-block">
                             <div class="clearfix mt-4 mt-lg-0 ">
                                 <div class="row">
-                              <div class="col-lg-10">
-                                @livewire('assignments::show.header-scheduling', ['assignment' => $assignment->id], key('assignment_header_scheduling'))
-                                </div>
-                                <div class="col-lg-2">
+                              <div class="col-lg-12">
+
                                     <div class="btn-group float-end">
                                         <button type="button" class="btn btn-sm btn-secondary dropdown-toggle " data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                                             <i class="bx bx-dots-horizontal align-middle"></i>
@@ -150,7 +148,11 @@
                                             <li><button class="dropdown-item" wire:click="setPreStatus(8)" type="button">NO JOB</button></li>
                                         </ul>
                                     </div>
+                                  <div class="float-end">
+                                      @livewire('assignments::show.header-scheduling', ['assignment' => $assignment->id], key('assignment_header_scheduling'))
+                                  </div>
                                 </div>
+
 
                                 </div>
 

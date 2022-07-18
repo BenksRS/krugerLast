@@ -3,15 +3,15 @@
         <div class="col-lg-12">
             <div class="row {{($showButtons) ? 'show' : 'hide' }}">
                 <div class="col-lg-12 ">
-                    <button type="button" class="btn btn-sm btn-warning  waves-effect waves-light  me-2 float-end" wire:click="$emit('showDuplicate')"> <i class="bx bxs-duplicate font-size-16 align-middle "></i> DUPLICATE</button>
+                    <button type="button" class="btn btn-sm btn-warning  waves-effect waves-light  me-1 float-end" wire:click="$emit('showDuplicate')"> <i class="bx bxs-duplicate font-size-16 align-middle "></i> DUPLICATE</button>
                     @if($showChangeTech)
-                        <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-end" wire:click="$emit('showButtons','tech')"> <i class="bx bx-calendar-alt font-size-16 align-middle me-2"></i>C. Tech</button>
+                        <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-1 float-end" wire:click="$emit('showButtons','tech')"> <i class="bx bx-calendar-alt font-size-16 align-middle me-2"></i>C. Tech</button>
                     @endif
                     @if($showSched)
-                        <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-end" wire:click="$emit('showButtons','full')"> <i class="bx bx-calendar-alt font-size-16 align-middle me-2"></i>Schedule</button>
+                        <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light   me-1 float-end" wire:click="$emit('showButtons','full')"> <i class="bx bx-calendar-alt font-size-16 align-middle me-2"></i>Schedule</button>
                     @endif
                     @if($showChangeSched)
-                        <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-end"  wire:click="$emit('showButtons','full')"> <i class="bx bx-calendar-alt font-size-16 align-middle me-2"></i>C. Scheduled</button>
+                        <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-1 float-end"  wire:click="$emit('showButtons','full')"> <i class="bx bx-calendar-alt font-size-16 align-middle me-2"></i>C. Scheduled</button>
                     @endif
 
                 </div>
