@@ -13,7 +13,7 @@ use Modules\Assignments\Entities\AssignmentsEvents;
 use Modules\Assignments\Entities\Gallery;
 use Modules\Assignments\Entities\Signdata;
 use Modules\Assignments\Repositories\AssignmentFirebaseRepository;
-use Modules\Gdrive\Entities\gdrive;
+use Modules\Gdrive\Entities\Gdrive;
 use Modules\Gdrive\Entities\QueeDir;
 use Modules\Gdrive\Entities\QueeFiles;
 use Modules\Referrals\Entities\FieldAuthorizations;

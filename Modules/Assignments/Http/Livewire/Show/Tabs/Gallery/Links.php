@@ -5,7 +5,7 @@ namespace Modules\Assignments\Http\Livewire\Show\Tabs\Gallery;
 use Carbon\Carbon;
 use Livewire\Component;
 use Modules\Assignments\Entities\Assignment;
-use Modules\Gdrive\Entities\gdrive;
+use Modules\Gdrive\Entities\Gdrive;
 use Modules\Gdrive\Entities\QueeDir;
 use Modules\Gdrive\Entities\QueeFiles;
 
