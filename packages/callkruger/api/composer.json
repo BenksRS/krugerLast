@@ -1,0 +1,43 @@
+ {
+    "name":        "callkruger/api",
+    "description": "",
+    "license":     "MIT",
+    "type":        "library",
+    "authors":     [
+        {
+            "name":  "Michel Vieira",
+            "email": "michelvieira@outlook.com"
+        }
+    ],
+    "autoload":    {
+        "files": [
+            "src/Support/Helpers/helpers.php",
+            "src/Support/Helpers/manager.php",
+            "src/Support/Helpers/callkruger.php"
+        ],
+        "psr-4": {
+            "Callkruger\\Api\\": "src/"
+        }
+    },
+    "require":     {
+        "guzzlehttp/guzzle":       "^6.0 || ^7.0",
+        "kreait/laravel-firebase": "^2.4.0 || ^3.1.0",
+        "awobaz/compoships":       "^2.1"
+    },
+    "config":      {
+        "sort-packages": true
+    },
+    "extra":       {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel":      {
+            "providers": [
+                "Callkruger\\Api\\Support\\Providers\\ServiceProvider"
+            ],
+            "aliases":   {
+                "Manager": "Callkruger\\Api\\Support\\Facades\\Manager"
+            }
+        }
+    }
+}
