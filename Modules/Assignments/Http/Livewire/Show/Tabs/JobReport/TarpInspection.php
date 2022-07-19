@@ -95,9 +95,6 @@ class TarpInspection extends Component
             $this->job_info = $this->jobReport->job_info;
             $this->pitch = $this->jobReport->pitch;
             $this->service_date = $this->jobReport->service_date;
-//            $this->workersDB = $this->jobReport->workers->pluck('id');
-//            $this->reportsDB = $this->jobReport->reports->pluck('id');
-
         }
 
         $this->getCheckboxInfo();

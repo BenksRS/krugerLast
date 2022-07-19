@@ -849,25 +849,46 @@ class GdriveController extends Controller
 // updates Scripts
 
 
-    public function scripts($id){
-
-        $job=AssignmentFirebaseRepository::find($id);
-
-        dump($job->firebase);
-
-    }
+//    public function scripts($id){
+//
+////        $job=AssignmentFirebaseRepository::find($id);
+//dd(/test===)
+////        dump($job->firebase);
+//
+//    }
     public function marketing_rep()
     {
+//        dd('sddsdsdds');
         $base_path="DB/scripts/";
         $file_open = fopen(base_path("$base_path/referrals_marketingrep.csv"), "r");
         $firstline = true;
         while (($data = fgetcsv($file_open, 2000, ",")) !== FALSE) {
             if (!$firstline) {
 
+
+                switch($data['1']){
+                    case 10:
+                        $marketing_rep=11;
+                        break;
+                    case 17:
+                        $marketing_rep=16;
+                        break;
+                    case 45:
+                        $marketing_rep=50;
+                        break;
+                    case 44:
+                        $marketing_rep=49;
+                        break;
+                    default:
+                        $marketing_rep=null;
+                        break;
+                }
+
+
                 $referral= Referral::find($data['0']);
                 if($referral){
                     $update=[
-                        'marketing_id' => $data['1']
+                        'marketing_id' => $marketing_rep
                     ];
                     $referral->update($update);
                 }

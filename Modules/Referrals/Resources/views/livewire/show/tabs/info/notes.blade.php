@@ -9,7 +9,6 @@
         <div class="card-body">
 
             @if($show)
-
                 <div>
                     <div class="d-flex">
                         <textarea class="form-control  me-2" wire:model="notetext"  rows="5" placeholder="Enter note here..."></textarea>

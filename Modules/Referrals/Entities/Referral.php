@@ -2,10 +2,12 @@
 
 namespace Modules\Referrals\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Notes\Entities\Note;
 use Modules\Referrals\Entities\ReferralAuthorization;
+use Modules\User\Entities\User;
 
 class Referral extends Model
 {
@@ -32,7 +34,7 @@ class Referral extends Model
 
     ];
 //    protected $with = ['type','carriers','phones'];
-    protected $appends  = ['address', 'full_name'];
+    protected $appends  = ['address', 'full_name', 'created_date','updated_date'];
 
 
     public function phones()
@@ -56,6 +58,37 @@ class Referral extends Model
     {
         return $this->belongsToMany(ReferralAuthorization::class,'referral_authorization_pivots','referral_id','referral_authorizathion_id','id');
     }
+
+    public function marketing()
+    {
+        return $this->belongsTo(User::class, 'marketing_id', 'id');
+    }
+    public function user_created()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function user_updated ()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
+    public function getCreatedDateAttribute (){
+
+        $return = "-";
+        if($this->created_at){
+            $return = Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('m/d/Y');
+        }
+        return $return;
+    }
+    public function getUpdatedDateAttribute (){
+
+        $return = "-";
+        if($this->updated_at){
+            $return = Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->format('m/d/Y');
+        }
+        return $return;
+    }
+
 //    public function authorizathionsCarriers()
 //    {
 //        return $this->hasMany(ReferralAuthorizations::class,'referral_id','id');

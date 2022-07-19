@@ -57,6 +57,7 @@
                             <input type="text" class="form-control" placeholder="Search..." wire:model="searchAssignment">
                         </div>
                     </div>
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
 
                     <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100 listtable">
                         <thead>
@@ -185,6 +186,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    </div>
                     <div class="float-start">
                         Total jobs: {{$list->total()}}
                     </div>

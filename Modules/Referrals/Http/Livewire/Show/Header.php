@@ -5,6 +5,7 @@ namespace Modules\Referrals\Http\Livewire\Show;
 use Livewire\Component;
 use Modules\Referrals\Entities\Referral;
 use Modules\Referrals\Entities\ReferralType;
+use Auth;
 
 class Header extends Component
 {
@@ -21,6 +22,7 @@ class Header extends Component
     public $company_fictitions;
     public $referral_type_id;
     public $status;
+    public $user;
 
 
     protected $rules = [
@@ -39,6 +41,7 @@ class Header extends Component
         $this->company_fictitions = $referral->company_fictitions;
         $this->referral_type_id = $referral->referral_type_id;
         $this->status = $referral->status;
+        $this->user = Auth::user();
 
         $this->types = ReferralType::all();
 
@@ -60,8 +63,12 @@ class Header extends Component
 
 
         $errors = $this->getErrorBag();
-//        dd( $errors);
+
         $id =  $this->referral->id;
+//        $formData
+//        $formData->merge(['updated_by' => $this->user->id]);
+        $formData['updated_by']=$this->user->id;
+//        dd($formData);
         $update = $this->referral->update($formData);
 
         $this->referral = Referral::find($id);
