@@ -317,14 +317,14 @@ class AssignmentsController extends Controller {
         $pdf = Pdf::loadView('assignments::pdf', compact('data', 'sign', 'page', 'fields', 'assignmentview'));
 
         $pdf->setPaper('A4', 'portrait');
-
-        $path2 = public_path('kruger_jobs/' . $data->id . '/pdf');
-        if (!File::exists($path2)) {
-
-            File::makeDirectory($path2, $mode = 0777, true, true);
-        }
-
-        $pdf->save(public_path("kruger_jobs/$data->id/pdf/$page->filename - $data->last_name , $data->first_name.pdf"));
+//
+//        $path2 = public_path('kruger_jobs/' . $data->id . '/pdf');
+//        if (!File::exists($path2)) {
+//
+//            File::makeDirectory($path2, $mode = 0777, true, true);
+//        }
+//
+//        $pdf->save(public_path("kruger_jobs/$data->id/pdf/$page->filename - $data->last_name , $data->first_name.pdf"));
 
         return $pdf->stream("$page->filename - $data->last_name , $data->first_name.pdf");
 

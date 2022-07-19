@@ -24,10 +24,10 @@ trait AssignmentScope {
                 $query
                     ->where('first_name', 'like', '%' .$search . '%')
                     ->orWhere('last_name', 'like', '%' .$search . '%')
-                    ->orWhere('id', 'like', '%' .$search . '%')
-                    ->orWhere('email', 'like', '%' .$search . '%')
-                    ->orWhere('street', 'like', '%' .$search . '%')
-                    ->orWhere('claim_number', 'like', '%' .$search . '%');
+                    ->orWhere('id', 'like', '%' .$search . '%');
+//                    ->orWhere('email', 'like', '%' .$search . '%')
+//                    ->orWhere('street', 'like', '%' .$search . '%')
+//                    ->orWhere('claim_number', 'like', '%' .$search . '%');
             });
     }
     public function scopeSearch (Builder $query, $search){
