@@ -12,5 +12,6 @@
     "Dashboard": true,
     "Packages": true,
     "Reports": true,
-    "Gdrive": true
+    "Gdrive": true,
+    "Employees": true
 }
