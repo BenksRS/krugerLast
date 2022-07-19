@@ -5,7 +5,7 @@
                 <div class="card-body">
                     <div class="row">
 
-                        <div class="col-md-2">
+                        <div class="col-md-5 col-lg-2">
                             <div class="mb-3 mt-2">
                                 <label class="form-label">From:</label>
 
@@ -21,7 +21,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-5 col-lg-2">
                             <div class="mb-3 mt-2">
 
                                 <label class="form-label">To:</label>
