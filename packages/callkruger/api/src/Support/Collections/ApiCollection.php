@@ -24,7 +24,7 @@ class ApiCollection {
 
     public function __construct (string $provider = NULL)
     {
-        $this->config   = collect(config('callkruger-api.providers'));
+        $this->config   = collect(config('callkruger-api.models'));
         $this->provider = $provider;
     }
 

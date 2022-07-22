@@ -29,6 +29,9 @@ class Actions extends Component
         $this->assignment = $assignment;
         $this->user = Auth::user();
 
+//        dump(callkruger('jobs')->sync($this->assignment->id));
+
+
 //        dd($assignment->finance);
         $this->checkFinance();
         $this->checkAuthorizations();

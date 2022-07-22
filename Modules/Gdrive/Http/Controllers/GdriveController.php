@@ -56,8 +56,6 @@ class GdriveController extends Controller
                 } catch (Exception $e) {
                     $this->errorHistoryFiles($queue->assignment_id, 'on upload Forms pdf`s:', $e->getMessage());
                 }
-
-
                 $this->updateHistoryFiles($queue->assignment_id, 'Done:');
                 $queue->update(['status' => 'complete']);
 
@@ -297,7 +295,6 @@ class GdriveController extends Controller
             $this->errorHistoryFiles($id, 'on uploading new Kruger inside pictures:', $e->getMessage());
         }
 
-
         // Kruger before pictures
         // removing old Kruger before pictures
         try {
@@ -495,7 +492,7 @@ class GdriveController extends Controller
         try {
             $this->updateHistoryDir($id, 'Creating Forms dir:');
             $this->createforms($id);
-        } catch (Exception $e) {
+        }catch (Exception $e) {
             $this->errorHistoryDir($id, 'create Forms dir:', $e->getMessage());
         }
 

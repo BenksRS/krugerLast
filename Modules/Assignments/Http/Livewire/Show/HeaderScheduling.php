@@ -192,6 +192,8 @@ class HeaderScheduling extends Component
 
         $this->techSelected = $this->schedule_start = null;
 
+
+
         $this->emit('updateScheduling');
         $this->toggleButtons('back');
 
@@ -225,6 +227,9 @@ class HeaderScheduling extends Component
             'updated_by'  => $this->user->id,
         ];
         $this->assignment->update($update_status);
+
+
+
 
         $this->emit('updateScheduling');
         $this->toggleButtons('back');
