@@ -670,6 +670,7 @@ class GdriveController extends Controller
 
         $pics_before_path=$dir_cliente_pictures_before['basename'];
 //        dump($pics_before_path);
+
         //// Pictures -1- Pics - After
         $pictures_after = "2- Pics - After";
         $storage->makeDirectory("$dir_pictures_path/$pictures_after");

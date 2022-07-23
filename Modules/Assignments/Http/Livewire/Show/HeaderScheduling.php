@@ -64,9 +64,8 @@ class HeaderScheduling extends Component
 
     public function updateJD($id){
 
-//        dd($this->jtDuplicate);
         if(in_array($id, $this->jtDuplicate)){
-//            dd('remove');
+
             $this->jtDuplicate=array_diff($this->jtDuplicate, $id);
         }else{
 
@@ -76,7 +75,7 @@ class HeaderScheduling extends Component
     }
     public function toggleDuplicate(){
         $this->showDuplicate = !$this->showDuplicate;
-//        $this->showButtons = !$this->showButtons;
+
     }
     public function toggleButtons($info){
         $this->showButtons = !$this->showButtons;
@@ -95,6 +94,7 @@ class HeaderScheduling extends Component
         $duplicate = $this->assignment;
         $old_id = $duplicate->id;
         $duplicate->load('phones', 'notes');
+
         //remove dados fixos
         unset($duplicate->id);
         unset($duplicate->follow_up);
@@ -102,12 +102,12 @@ class HeaderScheduling extends Component
         unset($duplicate->inside_info);
         unset($duplicate->created_at);
         unset($duplicate->updated_at);
+
         $duplicate->date_assignment=Carbon::now();
         $duplicate->created_by=$this->user->id;
         $duplicate->updated_by=$this->user->id;
         $duplicate->status_id=1;
         $duplicate->status_collection_id=3;
-
 
         $clone = $duplicate->replicate();
         $clone->save();
@@ -125,7 +125,6 @@ class HeaderScheduling extends Component
         }
         // notes
         foreach ($duplicate->notes as $note){
-//            dd($phone);
 
             if($note->type == 'assignment'){
                 $note->notable_id = $clone->id;
@@ -144,9 +143,6 @@ class HeaderScheduling extends Component
             'type'=> 'assignment',
             'notable_type'=>  Assignment::class,
         ]);
-
-
-
 
             return $this->redirect("/assignments/show/$clone->id");
 
@@ -185,8 +181,6 @@ class HeaderScheduling extends Component
             $AssignmentsScheduling['start_date']=$data_start;
             $AssignmentsScheduling['end_date']=$data_end;
         }
-
-
 
         $Schedule->update($AssignmentsScheduling);
 
