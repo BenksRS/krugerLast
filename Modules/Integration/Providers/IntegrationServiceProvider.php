@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 use Modules\Integration\Repositories\AssignmentRepository;
 use Modules\Integration\Repositories\UserRepository;
+use Modules\Integration\Repositories\WorkerRepository;
 
 class IntegrationServiceProvider extends ServiceProvider {
 
@@ -34,6 +35,7 @@ class IntegrationServiceProvider extends ServiceProvider {
 
         Relation::morphMap([
             'users'       => UserRepository::class,
+            'workers'     => WorkerRepository::class,
             'assignments' => AssignmentRepository::class,
         ]);
     }
