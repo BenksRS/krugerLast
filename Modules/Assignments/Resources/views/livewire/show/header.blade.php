@@ -1,10 +1,10 @@
 <div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-5">
+                        <div class="col-md-5">
                             <div class="d-flex">
                                 <div class="flex-grow-1 align-self-center">
 
@@ -44,9 +44,9 @@
                                         <form class="needs-validation  was-validated" action="" wire:submit.prevent="update(Object.fromEntries(new FormData($event.target)))"  novalidate>
                                             <div class="row">
 
-                                                <div class="col-lg-12">
+                                                <div class="col-md-12">
                                                     <div class="row">
-                                                        <div class="col-lg-12">
+                                                        <div class="col-md-12">
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <div class="mb-3 ">
@@ -83,7 +83,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div  class="col-lg-10">
+                                                <div  class="col-md-10">
                                                     <h5 class="font-size-14 mb-4">Job TYPES</h5>
 
 
@@ -91,7 +91,7 @@
 
                                                 </div>
 
-                                                <div  class="col-lg-2">
+                                                <div  class="col-md-2">
 
                                                     <button class="btn btn-lg btn-success m-2"   type="submit"   >SAVE</button>
                                                 </div>
@@ -109,7 +109,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-1 align-self-right">
+                        <div class="col-md-1 align-self-right">
                             <div class="text-lg-center mt-4 mt-lg-0">
                                 <p class="mb-0 text-info ">  EVENT:  <button type="button" class="btn btn-info btn-sm" ><i class="fas fa-exchange-alt
 " ></i></button></p>
@@ -120,7 +120,7 @@
 
                             </div>
                         </div>
-                        <div class="col-lg-3 align-self-left">
+                        <div class="col-md-3 align-self-left">
                             <div class="text-lg-left mt-4 mt-lg-0">
                                 <p class="mb-0 text-info ">TAGS:  <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".small_tag_modal"><i class="fas fa-exchange-alt
 " ></i></button></p>
@@ -129,10 +129,10 @@
                                     @endforeach
                             </div>
                         </div>
-                        <div class="col-lg-3 d-none d-lg-block">
+                        <div class="col-md-3">
                             <div class="clearfix mt-4 mt-lg-0 ">
                                 <div class="row">
-                              <div class="col-lg-12">
+                              <div class="col-md-12">
 
                                     <div class="btn-group float-end">
                                         <button type="button" class="btn btn-sm btn-secondary dropdown-toggle " data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
@@ -161,8 +161,8 @@
                         </div>
                         @switch( $this->preStatus)
                             @case(7)
-                                <div class="col-lg-6"></div>
-                                <div class="col-lg-6 ">
+                                <div class="col-md-6"></div>
+                                <div class="col-md-6 ">
                                     <hr>
                                     <div>
                                         <h5 class="modal-title" id="change_status_modal_pending">Explain why do you want to Close this job? </h5>
@@ -175,8 +175,8 @@
                                 </div>
                                 @break
                             @case(8)
-                                <div class="col-lg-6"></div>
-                                <div class="col-lg-6 ">
+                                <div class="col-md-6"></div>
+                                <div class="col-md-6 ">
                                     <hr>
                                     <div>
                                         <h5 class="modal-title" id="change_status_modal_pending">Explain why do you this job is a NO JOB? </h5>
@@ -189,8 +189,8 @@
                                 </div>
                                 @break
                             @case(11)
-                                <div class="col-lg-6"></div>
-                                <div class="col-lg-6 ">
+                                <div class="col-md-6"></div>
+                                <div class="col-md-6 ">
                                     <hr>
                                     <div>
                                         <h5 class="modal-title" id="change_status_modal_pending">Explain why do you want to change this job to Open Reschedule? </h5>
@@ -203,8 +203,8 @@
                                 </div>
                                 @break
                             @case(12)
-                                <div class="col-lg-6"></div>
-                                <div class="col-lg-6 ">
+                                <div class="col-md-6"></div>
+                                <div class="col-md-6 ">
                                     <hr>
                                     <div>
                                         <h5 class="modal-title" id="change_status_modal_pending">Explain why do you want to change this job to Pending? </h5>

@@ -145,6 +145,9 @@ class Header extends Component
     public function processScheduling(){
         $this->assignment = Assignment::find($this->assignment->id);
 
+        //sync app
+//        callkruger('jobs')->sync($this->assignment->id);
+
     }
     public function processShowinfo(){
         $this->show = false;

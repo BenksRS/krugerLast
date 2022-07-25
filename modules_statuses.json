@@ -12,5 +12,7 @@
     "Dashboard": true,
     "Packages": true,
     "Reports": true,
-    "Integration": true
+    "Integration": true,
+    "Gdrive": true,
+    "Employees": true
 }

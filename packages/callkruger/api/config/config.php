@@ -47,9 +47,9 @@ return [
     */
     'models'      => [
         Models\ApiToken::class        => 'tokens',
-        Models\Admin\User::class      => 'users',
-        Models\Admin\Employee::class  => 'employees',
-        Models\Admin\Worker::class    => 'workers',
+        Models\Admin\User::class      => 'use4rs',
+//        Models\Admin\Employee::class  => 'employees',
+//        Models\Admin\Worker::class    => 'workers',
         Models\Admin\Job\Job::class   => 'jobs',
         Models\Admin\Picture::class   => 'pictures',
         Models\Admin\Signature::class => 'signatures',
