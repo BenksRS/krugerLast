@@ -35,7 +35,7 @@ class Manager {
                 $key   = $item->sync->uuid;
                 $child = $reference->child($key);
 
-                if ( $delete === TRUE ) {
+                if ( !empty($resource['sync_delete']) && $resource['sync_delete'] === TRUE ) {
                     $child->remove();
                 } else {
                     $child->update($resource);

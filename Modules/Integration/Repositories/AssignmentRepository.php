@@ -114,6 +114,7 @@ class AssignmentRepository extends Assignment {
             'nojob_data'           => [
                 'info' => NULL,
             ],
+            'sync_delete'          => $status == 'delete' ? TRUE : FALSE,
         ];
 
         return $firebase;
