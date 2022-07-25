@@ -2,6 +2,7 @@
 
 use Modules\Integration\Repositories\AssignmentRepository;
 use Modules\Integration\Repositories\UserRepository;
+use Modules\Integration\Repositories\WorkerRepository;
 
 return [
     'name' => 'Integration',
@@ -17,7 +18,7 @@ return [
         ],
 
         'workers' => [
-            'model'    => '',
+            'model'    => WorkerRepository::class,
             'database' => 'workers',
             'events '  => [
                 'publish' => ['create', 'update', 'delete'],
