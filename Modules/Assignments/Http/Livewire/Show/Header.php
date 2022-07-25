@@ -83,6 +83,8 @@ class Header extends Component
         $this->changeStatus($newStatus);
         $this->assignment = Assignment::find($this->assignment->id);
         $this->preStatus = $this->changeStatustext = null;
+
+
         $this->emit('updateNotes');
     }
     public function changeStatusNotes($newStatus){
@@ -95,6 +97,15 @@ class Header extends Component
             'type'=> 'assignment',
             'notable_type'=>  Modules\Assignments\Entities\Assignment::class,
         ]);
+
+        if(in_array($newStatus, [11,12])){
+            if($this->assignment->scheduling){
+                $this->assignment->scheduling->delete();
+            }
+
+        }
+
+
         $this->changeStatus($newStatus);
         $this->assignment = Assignment::find($this->assignment->id);
         $this->preStatus = $this->changeStatustext = null;
@@ -139,6 +150,8 @@ class Header extends Component
             $this->assignment->update($update_status);
 
             $this->assignment = AssignmentFinanceRepository::find($this->assignment->id);
+
+            integration()->sync('assignments', $this->assignment->id);
             $this->emit('updateScheduling');
         }
     }
