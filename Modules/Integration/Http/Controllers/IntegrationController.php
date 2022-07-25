@@ -27,7 +27,7 @@ class IntegrationController extends Controller {
     public function index ()
     {
 
-        integration('assignments', '31206');
+        integration()->sync('assignments', '31206');
 
         /*        $push = $this->service->reference('users')->push($user->resources());*/
 
