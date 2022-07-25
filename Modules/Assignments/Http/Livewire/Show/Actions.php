@@ -29,7 +29,6 @@ class Actions extends Component
         $this->assignment = $assignment;
         $this->user = Auth::user();
 
-//        dump(callkruger('jobs')->sync($this->assignment->id));
 
 
 //        dd($assignment->finance);
@@ -162,6 +161,7 @@ class Actions extends Component
             $this->assignment->update($update_status);
 
             $this->assignment = AssignmentFinanceRepository::find($this->assignment->id);
+            integration()->sync('assignments', $this->assignment->id);
             $this->emit('updateScheduling');
         }
     }
