@@ -17,6 +17,7 @@ class HeaderScheduling extends Component
     protected $listeners = [
         'showButtons' => 'toggleButtons',
         'showDuplicate' => 'toggleDuplicate',
+        'updateNotes',
     ];
 
     public $showButtons= true;
@@ -62,6 +63,11 @@ class HeaderScheduling extends Component
     }
 
 
+    public function updateNotes(){
+        $this->assignment = Assignment::find($this->assignment->id);
+        $this->showChangeTech = $this->showChangeSched= $this->showSched = false ;
+        $this->checkButons();
+    }
     public function updateJD($id){
 
         if(in_array($id, $this->jtDuplicate)){
@@ -159,7 +165,7 @@ class HeaderScheduling extends Component
             // insert
             $this->scheduleInsert();
         }
-
+        $this->updateNotes();
     }
 
 
@@ -184,12 +190,31 @@ class HeaderScheduling extends Component
 
         $Schedule->update($AssignmentsScheduling);
 
+        // $AssignmentStatus
+        $AssignmentStatus=[
+            'assignment_id'  => $this->assignment->id,
+            'assignment_status_id'  => 2,
+            'created_by'  => $this->user->id,
+        ];
+        AssignmentsStatusPivot::create($AssignmentStatus);
+
+        $update_status=[
+            'status_id'  => 2,
+            'updated_by'  => $this->user->id,
+        ];
+        $this->assignment->update($update_status);
+
+
+
+
         $this->techSelected = $this->schedule_start = null;
 
 
-
+        $this->assignment = Assignment::find($this->assignment->id);
         $this->emit('updateScheduling');
         $this->toggleButtons('back');
+
+        integration()->sync('assignments', $this->assignment->id);
 
     }
     public function scheduleInsert(){
@@ -222,11 +247,13 @@ class HeaderScheduling extends Component
         ];
         $this->assignment->update($update_status);
 
-
-
+        $this->assignment = Assignment::find($this->assignment->id);
 
         $this->emit('updateScheduling');
         $this->toggleButtons('back');
+
+
+        integration()->sync('assignments', $this->assignment->id);
     }
     public function checkButons(){
         switch ($this->assignment->status->class){

@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    <button type="button" class="btn btn-sm btn-success float-end m-2" wire:click="schedule" {{ ( $schedule_start != null && $techSelected != null )  ? '' : 'disabled' }} ><i class="bx bxs-save font-size-16 align-middle "></i> SAVE</button>
+                    <button type="button" class="btn btn-sm btn-success float-end m-2" wire:click="schedule" {{ ( $techSelected != null )  ? '' : 'disabled' }} ><i class="bx bxs-save font-size-16 align-middle "></i> SAVE</button>
                     <button type="button" class="btn btn-sm btn-secondary float-end m-2" wire:click="$emit('showButtons','back')"><i class="fas fa-chevron-left font-size-16 align-middle "></i>CANCEL</button>
 
                 </div>
