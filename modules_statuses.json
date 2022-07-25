@@ -12,5 +12,5 @@
     "Dashboard": true,
     "Packages": true,
     "Reports": true,
-    "Gdrive": true
+    "Integration": true
 }
