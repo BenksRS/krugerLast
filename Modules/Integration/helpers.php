@@ -2,10 +2,10 @@
 
 
 if ( !function_exists('integration') ) {
-    function integration ($connection, $id, $delete = false)
+    function integration ()
     {
-        $manager = app(Modules\Integration\Manager::class);
+        return app(Modules\Integration\Manager::class);
 
-        return $manager->sync($connection, $id, $delete);
+/*        return $manager->sync($connection, $id, $delete);*/
     }
 }

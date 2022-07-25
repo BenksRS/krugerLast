@@ -13,7 +13,7 @@ class Manager {
         $this->service = $service;
     }
 
-    public function sync ($connection, $id, $delete = false)
+    public function sync ($connection, $id, $delete = FALSE)
     {
         $config = config('integration.connection.' . $connection);
 
@@ -40,6 +40,25 @@ class Manager {
                 } else {
                     $child->update($resource);
                 }
+            }
+        }
+    }
+
+    public function syncAll ($connection)
+    {
+        $config = config('integration.connection.' . $connection);
+
+        $model = app($config['model']);
+
+        $users = $model->notSynced()->get();
+
+        foreach ( $users as $user ) {
+            $push = $this->service->reference($config['database'])->push($user->resources());
+
+            $key = $push->getKey();
+
+            if ( $key ) {
+                $user->sync()->create(['uuid' => $key]);
             }
         }
     }
