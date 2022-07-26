@@ -27,7 +27,13 @@ class IntegrationController extends Controller {
     public function index ()
     {
 
-        integration()->sync('assignments', '31206');
+        integration()->syncAll('users');
+
+/*        $pictures =  $this->service->reference('pictures')->snapshot()->getValue();
+
+        dump($pictures);*/
+
+/*        integration()->sync('assignments', '31206');*/
 
         /*        $push = $this->service->reference('users')->push($user->resources());*/
 
