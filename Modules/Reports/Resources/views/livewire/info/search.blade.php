@@ -37,49 +37,49 @@
                             </div>
                         </div>
 
-                       <div class="col-md-6">
+                        <div class="col-md-6">
 
-                           <div class="mt-0">
-                               <h5 class="font-size-14 mb-3">Date Filter By:</h5>
-                               <div class="form-check-inline">
-                                   <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
-                                          id="filter_date_c" value="created">
-                                   <label class="form-check-label" for="filter_date_c">
-                                       Jobs Created
-                                   </label>
-                               </div>
-                               <div class="form-check-inline mt-1">
-                                   <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
-                                          id="filter_date_s" value="schedulled" checked>
-                                   <label class="form-check-label" for="filter_date_s">
-                                       Jobs Schedulled
-                                   </label>
-                               </div>
-                               <div class="form-check-inline mt-1">
-                                   <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
-                                          id="filter_date_b" value="billed">
-                                   <label class="form-check-label" for="filter_date_b">
-                                      Jobs Billed
-                                   </label>
-                               </div>
-                               <div class="form-check-inline mt-1">
-                                   <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
-                                          id="filter_date_p" value="paid">
-                                   <label class="form-check-label" for="filter_date_p">
-                                       Jobs Paid
-                                   </label>
-                               </div>
-                               @error('tarp_situation')
-                               <div class="invalid-feedback show">
-                                   Please select a valid option.
-                               </div>
-                               @enderror
-                           </div>
-                       </div>
-                            <div class="col-md-2 ">
-                                <button class="btn btn-lg btn-info m-2 " wire:click="search"
-                                                                                type="submit"><i class="bx bx-search"></i> Search  </button>
+                            <div class="mt-0">
+                                <h5 class="font-size-14 mb-3">Date Filter By:</h5>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
+                                           id="filter_date_c" value="created">
+                                    <label class="form-check-label" for="filter_date_c">
+                                        Jobs Created
+                                    </label>
+                                </div>
+                                <div class="form-check-inline mt-1">
+                                    <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
+                                           id="filter_date_s" value="schedulled" checked>
+                                    <label class="form-check-label" for="filter_date_s">
+                                        Jobs Schedulled
+                                    </label>
+                                </div>
+                                <div class="form-check-inline mt-1">
+                                    <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
+                                           id="filter_date_b" value="billed">
+                                    <label class="form-check-label" for="filter_date_b">
+                                        Jobs Billed
+                                    </label>
+                                </div>
+                                <div class="form-check-inline mt-1">
+                                    <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
+                                           id="filter_date_p" value="paid">
+                                    <label class="form-check-label" for="filter_date_p">
+                                        Jobs Paid
+                                    </label>
+                                </div>
+                                @error('tarp_situation')
+                                <div class="invalid-feedback show">
+                                    Please select a valid option.
+                                </div>
+                                @enderror
                             </div>
+                        </div>
+                        <div class="col-md-2 ">
+                            <button class="btn btn-lg btn-info m-2 " wire:click="search"
+                                    type="submit"><i class="bx bx-search"></i> Search  </button>
+                        </div>
 
                     </div>
 
@@ -91,7 +91,31 @@
         </div>
     </div>
 
+
+
+
+    <div wire:loading class="row">
+        <div class="spinner-border text-primary " role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div wire:loading.remove>
+        @if($list)
+{{--            @livewire('reports::info.finance',['test' =>$list], key('reports_finance'))--}}
+
+            @switch($filter_type)
+                @case('jobs')
+                    @livewire('reports::info.jobs',['test' =>$list], key('reports_jobs'))
+                @break
+                @case('referral')
+                    @livewire('reports::info.referrals',['test' =>$list], key('reports_referrals'))
+                @break
+            @endswitch
+        @endif
+    </div>
 </div>
+
 @push('js')
     <script>
         $(document).ready(function() {

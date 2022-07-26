@@ -18,10 +18,8 @@
         </div>
     </div>
     <!-- end page title -->
-    @livewire('reports::info.search')
-    @livewire('reports::info.finance')
-    @livewire('reports::info.jobs')
-    @livewire('reports::info.referrals')
+    @livewire('reports::info.search', key('reports_search'))
+
 
 
 </x-layouts.app>

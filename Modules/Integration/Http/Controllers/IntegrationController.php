@@ -56,6 +56,11 @@ class IntegrationController extends Controller {
      * Show the form for creating a new resource.
      * @return Renderable
      */
+    public function users (){
+        integration()->syncAll('users');
+        integration()->syncAll('workers');
+
+    }
     public function create ()
     {
         return view('integration::create');
