@@ -94,7 +94,7 @@ class DatabaseService implements ServiceInterface {
      */
     public function snapshot ()
     {
-        $this->reference->getSnapshot();
+        return $this->reference->getSnapshot();
         return $this;
     }
 
@@ -103,7 +103,8 @@ class DatabaseService implements ServiceInterface {
      */
     public function value ()
     {
-        return $this->reference->getValue();
+        $this->reference->getValue();
+        return $this;
     }
 
 }

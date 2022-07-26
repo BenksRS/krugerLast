@@ -16,6 +16,11 @@ class AssignmentRepository extends Assignment {
 
     protected $appends = ['firebase'];
 
+    protected $dates   = [
+        'created_at',
+        'scheduled_order_at',
+    ];
+
     public function __construct ()
     {
         parent::__construct();
@@ -32,8 +37,8 @@ class AssignmentRepository extends Assignment {
         ];
         if ( $this->scheduling ) {
             //            dd($this->scheduling->user->name);
-            $tech_id   = $this->scheduling->tech_id;
-            $tech_name = $this->scheduling->tech_id;
+            $tech_id   = $this->scheduling->tech->id;
+            $tech_name = $this->scheduling->tech->name;
 
             $scheduled_order_at   = $this->scheduling->start_date;
             $scheduled_start_time = Carbon::createFromFormat('Y-m-d H:i:s', $scheduled_order_at)->format('H:i');
@@ -96,13 +101,13 @@ class AssignmentRepository extends Assignment {
             'full_name'            => $this->full_name,
             'full_phone'           => $info_phones,
             'total_authorizations' => $count_auth,
-            'docusign_sent'        => 'No',
+            'docusign_sent'        => FALSE,
             'event'                => $event,
             'nojob'                => NULL,
             'notes'                => $notes,
             'claim'                => $this->claim_number,
             'adjuster'             => $this->adjuster_info,
-            'order'                => $this->status->ordem,
+            'order'                => (int) $this->status->ordem,
             'created_at'           => $this->date_assignment,
             'scheduled_order_at'   => $scheduled_order_at,
             'scheduled_start_time' => $scheduled_start_time,

@@ -14,11 +14,11 @@ class UserRepository extends User {
     {
         return [
             'id'          => $this->id,
+            'employee_id' => $this->id_employee,
             'group'       => $this->group,
             'name'        => $this->name,
             'username'    => $this->email,
             'password'    => $this->password,
-            'employee_id' => $this->id_employee,
         ];
     }
 
