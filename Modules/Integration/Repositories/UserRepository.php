@@ -14,8 +14,8 @@ class UserRepository extends User {
     {
         return [
             'id'          => $this->id,
-            'employee_id' => $this->id_employee,
-            'group'       => $this->group,
+            'employee_id' => $this->id,
+            'group'       => 'admin',
             'name'        => $this->name,
             'username'    => $this->email,
             'password'    => $this->password,
