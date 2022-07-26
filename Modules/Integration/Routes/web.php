@@ -13,4 +13,5 @@
 
 Route::prefix('integration')->group(function() {
     Route::get('/', 'IntegrationController@index');
+    Route::get('/users/', 'IntegrationController@users');
 });

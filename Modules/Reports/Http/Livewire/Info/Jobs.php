@@ -19,12 +19,13 @@ class Jobs extends Component
 
     public $columns = ['Name','Job Type','Schedule','Status','Referral','City','State', 'Created At','invoice`s', 'Billied Date', 'Total Invoice Amount', 'Paid Date', 'Paid Amount', 'Balance Amount'];
     public $selectedColumns = [];
-    public $selectedRows = 500;
+    public $selectedRows = 100;
     public $searchInfo;
+    public $jobs;
 
 
-    public function mount()
-    {
+    public function mount($test){
+        $this->list= $test;
         $this->selectedColumns = $this->columns;
 
     }
@@ -47,19 +48,21 @@ class Jobs extends Component
     public function render()
     {
 
-     if($this->searchInfo){
-         $list =  $this->getResults($this->searchInfo);
-         $list= $list->sortBy('start_date')->sortBy('order_status');
-         $this->emit('balanceInfo', $list);
 
-     }else{
-         $list =[];
-     }
+            $list =  $this->list;
+            $list= $list->sortBy('start_date')->sortBy('order_status');
+
+            $items = $list->forPage($this->page, $this->selectedRows);
+
+        $listaall = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
+
+
+
 
 
         return view('reports::livewire.info.jobs',[
-                'list'=>$list
-        ]
+                'listALl'=>$listaall
+            ]
         );
     }
 }
