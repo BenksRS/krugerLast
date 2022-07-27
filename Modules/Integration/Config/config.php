@@ -13,7 +13,7 @@ return [
     'connection' => [
 
         'users' => [
-            'model'  => Repositories\IntegrationUserRepository::class,
+            'model'  => Repositories\UserRepository::class,
             'table'  => 'users',
             'queues' => [
                 'set' => TRUE,
@@ -23,7 +23,7 @@ return [
         ],
 
         'workers' => [
-            'model'  => Repositories\IntegrationWorkerRepository::class,
+            'model'  => Repositories\WorkerRepository::class,
             'table'  => 'workers',
             'queues' => [
                 'set' => TRUE,
@@ -33,7 +33,7 @@ return [
         ],
 
         'assignments' => [
-            'model'  => Repositories\IntegrationAssignmentRepository::class,
+            'model'  => Repositories\AssignmentRepository::class,
             'table'  => 'jobs',
             'queues' => [
                 'set' => FALSE,
@@ -48,7 +48,7 @@ return [
         ],
 
         'pictures' => [
-            'model'  => Repositories\IntegrationPictureRepository::class,
+            'model'  => Repositories\PictureRepository::class,
             'table'  => 'pictures',
             'queues' => [
                 'set' => FALSE,
@@ -58,7 +58,7 @@ return [
         ],
 
         'signatures' => [
-            'model'  => Repositories\IntegrationSignatureRepository::class,
+            'model'  => Repositories\SignatureRepository::class,
             'table'  => 'signatures',
             'queues' => [
                 'set' => FALSE,
@@ -68,13 +68,18 @@ return [
         ],
 
         'reports' => [
-            'model'   => '',
-            'table'   => 'reports',
-            'queues'  => [
+            'model'     => Repositories\Report\ReportRepository::class,
+            'relations' => [
+                Repositories\Report\ReportReportRepository::class,
+                Repositories\Report\ReportTarpSizeRepository::class,
+                Repositories\Report\ReportWorkerRepository::class,
+            ],
+            'table'     => 'reports',
+            'queues'    => [
                 'set' => FALSE,
                 'get' => TRUE,
             ],
-            'events ' => ['local.create', 'remote.delete'],
+            'events'    => ['local.create', 'remote.delete'],
         ],
     ],
 ];

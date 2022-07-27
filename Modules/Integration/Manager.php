@@ -77,6 +77,8 @@ class Manager {
                 $resources = $model->setData($item);
                 $dot       = Arr::dot($item);
 
+                dump($events);
+
                 if ( $events ) {
                     foreach ( $events as $event ) {
                         switch ( $event ) {
@@ -99,6 +101,16 @@ class Manager {
                             break;
                         }
                     }
+
+                    if ( !empty($config['relations']) ) {
+                        foreach ( $config['relations'] as $relation ) {
+                            $relationModel     = app($relation);
+                            $relationResources = $relationModel->setData($item);
+                            $relationModel->upsert($relationResources, []);
+                        }
+
+                    }
+
                 }
             }
         }

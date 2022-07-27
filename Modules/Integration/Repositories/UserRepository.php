@@ -4,7 +4,7 @@ namespace Modules\Integration\Repositories;
 
 use Modules\User\Entities\User;
 
-class IntegrationUserRepository extends User {
+class UserRepository extends User {
 
     use IntegrationRepository;
 

@@ -5,9 +5,9 @@ namespace Modules\Integration\Providers;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-use Modules\Integration\Repositories\IntegrationAssignmentRepository;
-use Modules\Integration\Repositories\IntegrationUserRepository;
-use Modules\Integration\Repositories\IntegrationWorkerRepository;
+use Modules\Integration\Repositories\AssignmentRepository;
+use Modules\Integration\Repositories\UserRepository;
+use Modules\Integration\Repositories\WorkerRepository;
 
 class IntegrationServiceProvider extends ServiceProvider {
 
@@ -34,9 +34,9 @@ class IntegrationServiceProvider extends ServiceProvider {
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
 
         Relation::morphMap([
-            'users'       => IntegrationUserRepository::class,
-            'workers'     => IntegrationWorkerRepository::class,
-            'assignments' => IntegrationAssignmentRepository::class,
+            'users'       => UserRepository::class,
+            'workers'     => WorkerRepository::class,
+            'assignments' => AssignmentRepository::class,
         ]);
     }
 
