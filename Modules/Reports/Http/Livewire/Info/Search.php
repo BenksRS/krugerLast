@@ -5,16 +5,30 @@ namespace Modules\Reports\Http\Livewire\Info;
 use Carbon\Carbon;
 use Livewire\Component;
 use Manny\Manny;
+use Modules\Assignments\Entities\AssignmentsEvents;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
 use Modules\Assignments\Repositories\AssignmentRepository;
+use Modules\Referrals\Entities\Referral;
 use Modules\User\Entities\Techs;
 
 class Search extends Component
 {
+    protected $listeners = [
+        'search'
+    ];
     public $filter_date='schedulled';
-    public $filter_type='referral';
+    public $filter_type='jobs';
 
     public $techs;
+    public $techSelected;
+    public $events;
+    public $eventSelected;
+
+    public $allReferrals;
+    public $allCarriers;
+    public $referralSelected;
+    public $carrierSelected;
+
     public $date_from;
     public $date_from_edit;
     public $date_to;
@@ -22,37 +36,51 @@ class Search extends Component
     public $list;
 
     public  function mount(){
-
+        $this->techs = Techs::all();
+        $this->events = AssignmentsEvents::all();
+        $this->allReferrals = Referral::all();
+        $this->allCarriers = Referral::all();
     }
     public function updated($field)
     {
-        if ($field == 'date_to' || $field == 'date_from')
-        {
+//        if ($field == 'date_to' || $field == 'date_from' || $field == 'techSelected' )
+//        {
             $this->list = [];
-        }
+//        }
     }
 
+    public function clear($field){
+
+        $this->$field=null;
+        $this->list = [];
+    }
     public function search()
     {
-
-
         $date_from = strtotime($this->date_from);
         $date_from = date('Y-m-d', $date_from);
         $date_to = strtotime($this->date_to);
         $date_to =  date('Y-m-d', $date_to);
 
+
+
+//        dump("date_from - $date_to / $this->techSelected");
+
         switch ($this->filter_type){
-            case 'referral':
-                $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to)->selectRaw('referral_id ,carrier_id ,count(id) as total_jobs')->groupBy('referral_id')->groupBy('carrier_id')->get();
-                break;
             case 'jobs':
-                $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to)->get();
+                $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected)->get();
+                if($this->eventSelected){
+                    $this->list=$this->list->where('event_id', $this->eventSelected);
+                }
+                if($this->referralSelected){
+                    $this->list=$this->list->where('referral_id', $this->referralSelected);
+                }
+                if($this->carrierSelected){
+                    $this->list=$this->list->where('carrier_id', $this->carrierSelected);
+
+                }
                 break;
         }
-//        $teste =  $this->list;
-//        foreach ($teste as $row){
-//            dump($row->referral->company_fictitions);
-//        }
+
 
     }
     public function render()

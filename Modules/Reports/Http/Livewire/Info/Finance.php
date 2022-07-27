@@ -17,8 +17,7 @@ class Finance extends Component
 
 
     public function mount($test){
-    $this->list=$test;
-//dd($this->list);
+        $this->list=$test;
 
         $this->balanceInfo();
     }
@@ -46,14 +45,24 @@ class Finance extends Component
             $total_jobs_billed=count($jobs_billed);
 
             $total_billing=$this->result->sum('finance.invoices.total');
-            $media_jobs_billed=$total_billing/$total_jobs_billed;
+            if($total_billing == 0){
+                $media_jobs_billed=0;
+            }else{
+                $media_jobs_billed=$total_billing/$total_jobs_billed;
+            }
+
 
             // paid
             $jobs_paid=$this->result->whereIn('status_id',[6,9,10,24]);
             $total_jobs_paid=count($jobs_paid);
 //dump(total_billing)
             $total_paid=$this->result->sum('finance.payments.total');
-            $media_jobs_paid=$total_paid/$total_jobs_paid;
+
+            if($total_paid == 0){
+                $media_jobs_paid=0;
+            }else{
+                $media_jobs_paid=$total_paid/$total_jobs_paid;
+            }
 
 
 

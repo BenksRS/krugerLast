@@ -77,14 +77,80 @@
                             </div>
                         </div>
                         <div class="col-md-2 ">
-                            <button class="btn btn-lg btn-info m-2 " wire:click="search"
+                            <button class="btn btn-lg btn-info m-2 " wire:click="$emit('search')"
                                     type="submit"><i class="bx bx-search"></i> Search  </button>
+                        </div>
+
+                        <div class="col-md-5 col-lg-6">
+                            <div class="mb-3" wire:ignore>
+                                <label class="form-label">Referral  </label>
+                                <a href="#" wire:click.prevent="clear('referralSelected')"  onClick="clearReferral()" class="float-end">clear</a>
+                                <select class="select2 form-control select2-multiple select_referral"
+                                        name="reportSelected" data-placeholder="Select ...">
+                                    <option selected>chose...</option>
+                                    @foreach($allReferrals as $ref)
+
+                                        @if($ref)
+                                            <option  value="{{$ref->id}}">{{$ref->full_name}}</option>
+                                        @else
+                                            <option  value="{{$ref->id}}">{{$ref->full_name}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-lg-6">
+                            <div class="mb-3" wire:ignore>
+                                <label class="form-label">Carrier</label>
+                                <a href="#" wire:click="clear('carrierSelected')" onClick="clearCarrier()" class="float-end">clear</a>
+                                <select class="select2 form-control select2-multiple select_carrier"
+                                        name="reportSelected" data-placeholder="Select ...">
+                                    <option selected>chose...</option>
+                                    @foreach($allCarriers as $carrier)
+
+                                        @if($carrier)
+                                            <option  value="{{$carrier->id}}">{{$carrier->full_name}}</option>
+                                        @else
+                                            <option  value="{{$carrier->id}}">{{$carrier->full_name}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-lg-2">
+                            <div class="mb-3" >
+                                <label class="form-label">Technician</label>
+                                <a href="#" wire:click="clear('techSelected')"  class="float-end">clear</a>
+                                <select class=" form-control select2-multiple select_carrier"
+                                        name="carrierSelected" wire:model="techSelected" data-placeholder="Select ...">
+                                    <option selected>chose...</option>
+                                    @foreach($techs as $tech)
+                                            <option  value="{{$tech->id}}">{{$tech->user->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-lg-2">
+                            <div class="mb-3" >
+                                <label class="form-label">Events</label>
+                                <a href="#" wire:click="clear('eventSelected')"  class="float-end">clear</a>
+                                <select class=" form-control select2-multiple select_carrier"
+                                        name="carrierSelected" wire:model="eventSelected" data-placeholder="Select ...">
+                                    <option selected>chose...</option>
+                                    @foreach($events as $event)
+                                        <option  value="{{$event->id}}">{{$event->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
                     </div>
 
 
-
+{{--@dump($this->filter_date)--}}
+{{--@dump($this->date_to)--}}
+{{--@dump($techSelected)--}}
+{{--@dump($eventSelected)--}}
 
                 </div>
             </div>
@@ -102,15 +168,15 @@
 
     <div wire:loading.remove>
         @if($list)
-{{--            @livewire('reports::info.finance',['test' =>$list], key('reports_finance'))--}}
+            @livewire('reports::info.finance',['test' =>$list], key('reports_finance'))
 
             @switch($filter_type)
                 @case('jobs')
                     @livewire('reports::info.jobs',['test' =>$list], key('reports_jobs'))
                 @break
-                @case('referral')
-                    @livewire('reports::info.referrals',['test' =>$list], key('reports_referrals'))
-                @break
+{{--                @case('referral')--}}
+{{--                    @livewire('reports::info.referrals',['test' =>$list], key('reports_referrals'))--}}
+{{--                @break--}}
             @endswitch
         @endif
     </div>
@@ -127,6 +193,25 @@
                 let data = $(this).val();
                 @this.set('date_to', data);
             });
+            $('.select2').select2({
+                placeholder: "chose..."
+            });
+
+            $('.select_referral').on('change', function (e){
+                let data = $(this).val();
+                @this.set('referralSelected', data);
+            });
+            $('.select_carrier').on('change', function (e){
+                let data = $(this).val();
+                @this.set('carrierSelected', data);
+            });
+
         });
+        function clearReferral(){
+            $('.select_referral').val('').trigger('change');
+        }
+        function clearCarrier(){
+            $('.select_carrier').val('').trigger('change');
+        }
     </script>
 @endpush

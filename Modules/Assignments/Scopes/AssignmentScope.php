@@ -53,15 +53,30 @@ trait AssignmentScope {
     {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
-    public function scopeDateSchedulled (Builder $query, $date_from, $date_to)
+    public function scopeDateSchedulled (Builder $query, $date_from, $date_to, $tech_id=null)
     {
         return $query
             ->with('scheduling')
+            ->whereHas('scheduling', function (Builder $q) use ($tech_id) {
+                if($tech_id != null){
+                    $q->where('tech_id','=', $tech_id);
+                }
+            })
             ->whereHas('scheduling', function (Builder $q) use ($date_from) {
                 $q->whereDate('start_date','>=', $date_from);
             })
             ->whereHas('scheduling', function (Builder $q) use ($date_to) {
                 $q->whereDate('start_date','<=', $date_to);
+            });
+
+
+    }
+    public function scopeTech (Builder $query, $tech_id)
+    {
+        return $query
+            ->with('scheduling')
+            ->whereHas('scheduling', function (Builder $q) use ($tech_id) {
+                $q->where('tech_id','=', $tech_id);
             });
 
 
