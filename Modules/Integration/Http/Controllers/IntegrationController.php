@@ -29,6 +29,8 @@ class IntegrationController extends Controller {
 
         integration(['assignments'])->get();
 
+        integration(['users', 'workers'])->set();
+
 /*        $pictures =  $this->service->reference('pictures')->snapshot()->getValue();
 
         dump($pictures);*/

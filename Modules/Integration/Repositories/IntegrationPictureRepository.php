@@ -16,7 +16,7 @@ class IntegrationPictureRepository extends Gallery {
     {
         return [
             'assignment_id' => $data['job_id'],
-            'category_id'   => 1,
+            'category_id'   => $data['label'] ?? 25,
             'img_id'        => $data['id'],
             'b64'           => $data['file'],
             'type'          => $data['type'],
