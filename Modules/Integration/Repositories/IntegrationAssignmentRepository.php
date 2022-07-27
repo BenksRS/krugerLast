@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Scopes\AssignmentScope;
 
-class AssignmentRepository extends Assignment {
+class IntegrationAssignmentRepository extends Assignment {
 
     use IntegrationRepository;
 
@@ -26,7 +26,7 @@ class AssignmentRepository extends Assignment {
         parent::__construct();
     }
 
-    public function resources ()
+    public function getData ()
     {
 
         $address = [

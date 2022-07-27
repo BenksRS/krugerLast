@@ -1,55 +1,80 @@
 <?php
 
-use Modules\Integration\Repositories\AssignmentRepository;
-use Modules\Integration\Repositories\UserRepository;
-use Modules\Integration\Repositories\WorkerRepository;
+use Modules\Integration\Repositories;
 
 return [
     'name' => 'Integration',
 
+    'actions' => [
+        'local'  => ['create', 'update', 'delete'],
+        'remote' => ['create', 'update', 'delete'],
+    ],
+
     'connection' => [
 
         'users' => [
-            'model'    => UserRepository::class,
-            'database' => 'users',
-            'events '  => [
-                'publish' => ['create', 'update', 'delete'],
+            'model'  => Repositories\IntegrationUserRepository::class,
+            'table'  => 'users',
+            'queues' => [
+                'set' => TRUE,
+                'get' => FALSE,
             ],
+            'events' => [],
         ],
 
         'workers' => [
-            'model'    => WorkerRepository::class,
-            'database' => 'workers',
-            'events '  => [
-                'publish' => ['create', 'update', 'delete'],
+            'model'  => Repositories\IntegrationWorkerRepository::class,
+            'table'  => 'workers',
+            'queues' => [
+                'set' => TRUE,
+                'get' => FALSE,
             ],
+            'events' => [],
         ],
 
         'assignments' => [
-            'model'    => AssignmentRepository::class,
-            'database' => 'jobs',
-            'events '  => [
-                'publish'   => ['create', 'update', 'delete'],
-                'subscribe' => ['update'],
+            'model'  => Repositories\IntegrationAssignmentRepository::class,
+            'table'  => 'jobs',
+            'queues' => [
+                'set' => FALSE,
+                'get' => TRUE,
+            ],
+            'events' => ['local.update'],
+            'rules'  => [
+                'local.update' => [
+                    'status.new' => ['in_progress', 'uploading', 'uploading_pics'],
+                ],
             ],
         ],
 
         'pictures' => [
-            'model'    => '',
-            'database' => 'pictures',
-            'events '  => [
-                'publish'   => ['delete'],
-                'subscribe' => ['create'],
+            'model'  => Repositories\IntegrationPictureRepository::class,
+            'table'  => 'pictures',
+            'queues' => [
+                'set' => FALSE,
+                'get' => TRUE,
             ],
+            'events' => ['local.create', 'remote.delete'],
+        ],
+
+        'signatures' => [
+            'model'  => Repositories\IntegrationSignatureRepository::class,
+            'table'  => 'signatures',
+            'queues' => [
+                'set' => FALSE,
+                'get' => TRUE,
+            ],
+            'events' => ['local.create', 'remote.delete'],
         ],
 
         'reports' => [
-            'model'    => '',
-            'database' => 'reports',
-            'events'   => [
-                'publish'   => ['delete'],
-                'subscribe' => ['create', 'update', 'delete'],
+            'model'   => '',
+            'table'   => 'reports',
+            'queues'  => [
+                'set' => FALSE,
+                'get' => TRUE,
             ],
+            'events ' => ['local.create', 'remote.delete'],
         ],
     ],
 ];

@@ -5,7 +5,7 @@ namespace Modules\Integration\Repositories;
 use Illuminate\Database\Eloquent\Model;
 use Modules\User\Entities\User;
 
-class WorkerRepository extends Model {
+class IntegrationWorkerRepository extends Model {
 
     use IntegrationRepository;
 
@@ -16,7 +16,7 @@ class WorkerRepository extends Model {
         return $this->belongsTo(User::class);
     }
 
-    public function resources ()
+    public function getData ()
     {
         return [
             'id'   => $this->id,

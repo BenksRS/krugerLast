@@ -1,11 +1,9 @@
 <?php
 
-
 if ( !function_exists('integration') ) {
-    function integration ()
+    function integration (mixed $connection = NULL)
     {
-        return app(Modules\Integration\Manager::class);
-
-/*        return $manager->sync($connection, $id, $delete);*/
+        return new Modules\Integration\Manager($connection);
+        /*        return $manager->sync($connection, $id, $delete);*/
     }
 }

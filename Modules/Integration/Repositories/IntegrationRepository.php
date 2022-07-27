@@ -17,4 +17,14 @@ trait IntegrationRepository {
         return $query->doesntHave('sync');
     }
 
+    public function setData ()
+    {
+        return [];
+    }
+
+    public function getData ()
+    {
+        return [];
+    }
+
 }

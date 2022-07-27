@@ -2,63 +2,177 @@
 
 namespace Modules\Integration;
 
+use Kreait\Firebase\Database;
+use Modules\Integration\Entities\IntegrationFailedJob;
 use Modules\Integration\Services\Firebase\DatabaseService;
 
 class Manager {
 
-    public DatabaseService $service;
+    /**
+     * @var null
+     */
+    public mixed                $connections;
 
-    public function __construct (DatabaseService $service)
+    public IntegrationFailedJob $failedJob;
+
+    protected Database          $database;
+
+    /**
+     * @param                 $connections
+     * @param DatabaseService $database
+     */
+    public function __construct ($connections = NULL)
     {
-        $this->service = $service;
+        $this->connections = $connections;
+        $this->database    = app(Database::class);
+        $this->failedJob   = app(IntegrationFailedJob::class);
     }
 
-    public function sync ($connection, $id, $delete = FALSE)
+    protected function getConfig ($connection)
     {
-        $config = config('integration.connection.' . $connection);
+        return config('integration.connection.' . $connection);
+    }
 
-        $model = app($config['model']);
+    public function set ($id = NULL)
+    {
+        if ( !$this->connections ) {
+            return;
+        }
 
-        $item = $model->find($id);
-
-        if ( $item ) {
-            $resource  = $item->resources();
-            $reference = $this->service->reference($config['database']);
-
-            if ( empty($item->sync) ) {
-                $child = $reference->push($resource);
-                $key   = $child->getKey();
-                if ( $key ) {
-                    $item->sync()->create(['uuid' => $key]);
+        if ( $id ) {
+            $connection = is_array($this->connections) ? $this->connections[0] : $this->connections;
+            $this->hasSync($connection, $id);
+        } else {
+            if ( is_array($this->connections) ) {
+                foreach ( $this->connections as $connection ) {
+                    $this->hasNotSynced($connection);
                 }
             } else {
-                $key   = $item->sync->uuid;
-                $child = $reference->child($key);
-
-                if ( !empty($resource['sync_delete']) && $resource['sync_delete'] === TRUE ) {
-                    $child->remove();
-                } else {
-                    $child->update($resource);
-                }
+                $this->hasNotSynced($this->connections);
             }
         }
     }
 
-    public function syncAll ($connection)
+    public function get ()
     {
-        $config = config('integration.connection.' . $connection);
+        if ( !$this->connections ) {
+            return;
+        }
+
+        $connection = is_array($this->connections) ? $this->connections[0] : $this->connections;
+
+        $config = $this->getConfig($connection);
+
+        $model  = app($config['model']);
+        $events = $config['events'];
+        $rules  = $config['rules'];
+
+        $reference = $this->database->getReference($config['table']);
+
+        $items = $reference->getValue();
+
+        if ( $items ) {
+            foreach ( $items as $key => $item ) {
+                $resources = $model->setData($item);
+
+                if ( $events ) {
+                    foreach ( $events as $event ) {
+                        switch ( $event ) {
+                            case 'local.create':
+                                $model->create($resources);
+                            break;
+                            case 'local.update':
+                                foreach ($rules[$event] as $rule => $status) {
+                                    if ( data_get($item[$rule], $status) ) {
+                                        dump($item[$rule]);
+                                      /*  $model->update($resources, $rule);*/
+                                    }
+                                }
+                                /* $model->update($resources);*/
+                            break;
+                            case 'remote.delete':
+                                $reference->getChild($key)->remove();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    /**
+     * @param $connection
+     * @param $id
+     *
+     * @return void
+     */
+    protected function hasSync ($connection, $id)
+    {
+        $config = $this->getConfig($connection);
 
         $model = app($config['model']);
+        $item  = $model->find($id);
 
-        $users = $model->notSynced()->get();
+        $reference = $this->database->getReference($config['table']);
+        $resources = $item->getData();
+        if ( empty($item->sync) ) {
 
-        foreach ( $users as $user ) {
-            $push = $this->service->reference($config['database'])->push($user->resources());
+            try {
 
-            $key = $push->getKey();
+                $data = $reference->push($resources);
+                $key  = $data->getKey();
 
-            if ( $key ) {
-                $user->sync()->create(['uuid' => $key]);
+                $item->sync()->create(['uuid' => $key]);
+
+            } catch ( \Exception $e ) {
+                $this->failedJob->create([
+                    'queue'     => $connection,
+                    'payload'   => $resources,
+                    'exception' => $e->getMessage(),
+                ]);
+            }
+        } else {
+            $key  = $item->sync->uuid;
+            $data = $reference->getChild($key);
+
+            if ( isset($resources['sync_delete']) && $resources['sync_delete'] === TRUE ) {
+                $data->remove();
+            } else {
+                $data->update($resources);
+            }
+        }
+    }
+
+    /**
+     * @param $connection
+     *
+     * @return void
+     */
+    protected function hasNotSynced ($connection)
+    {
+        $config = $this->getConfig($connection);
+
+        $model = app($config['model']);
+        $items = $model->notSynced()->get();
+
+        $reference = $this->database->getReference($config['table']);
+
+        foreach ( $items as $item ) {
+            $resources = $item->getData();
+
+            try {
+                $data = $reference->push($resources);
+                $key  = $data->getKey();
+
+                $item->sync()->create(['uuid' => $key]);
+
+            } catch ( \Exception $e ) {
+                $this->failedJob->create([
+                    'queue'     => $connection,
+                    'payload'   => $resources,
+                    'exception' => $e->getMessage(),
+                ]);
             }
         }
     }

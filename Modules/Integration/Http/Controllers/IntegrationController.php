@@ -5,15 +5,15 @@ namespace Modules\Integration\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Integration\Repositories\AssignmentRepository;
-use Modules\Integration\Repositories\UserRepository;
+use Modules\Integration\Repositories\IntegrationAssignmentRepository;
+use Modules\Integration\Repositories\IntegrationUserRepository;
 use Modules\Integration\Services\Firebase\DatabaseService;
 
 class IntegrationController extends Controller {
 
     public DatabaseService $service;
 
-    public function __construct (DatabaseService $service, UserRepository $repository, AssignmentRepository $assignmentRepository)
+    public function __construct (DatabaseService $service, IntegrationUserRepository $repository, IntegrationAssignmentRepository $assignmentRepository)
     {
         $this->service              = $service;
         $this->repository           = $repository;
@@ -27,7 +27,7 @@ class IntegrationController extends Controller {
     public function index ()
     {
 
-        integration()->syncAll('users');
+        integration(['assignments'])->get();
 
 /*        $pictures =  $this->service->reference('pictures')->snapshot()->getValue();
 
