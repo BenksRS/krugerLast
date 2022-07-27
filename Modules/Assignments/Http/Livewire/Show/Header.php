@@ -151,7 +151,7 @@ class Header extends Component
 
             $this->assignment = AssignmentFinanceRepository::find($this->assignment->id);
 
-            integration()->sync('assignments', $this->assignment->id);
+            integration('assignments')->set($this->assignment->id);
             $this->emit('updateScheduling');
         }
     }
