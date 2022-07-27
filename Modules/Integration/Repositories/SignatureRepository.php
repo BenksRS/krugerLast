@@ -2,9 +2,9 @@
 
 namespace Modules\Integration\Repositories;
 
-use Modules\Assignments\Entities\Gallery;
+use Modules\Assignments\Entities\Signdata;
 
-class IntegrationPictureRepository extends Gallery {
+class SignatureRepository extends Signdata {
 
     use IntegrationRepository;
 
@@ -16,12 +16,11 @@ class IntegrationPictureRepository extends Gallery {
     {
         return [
             'assignment_id' => $data['job_id'],
-            'category_id'   => $data['label'] ?? 25,
-            'img_id'        => $data['id'],
             'b64'           => $data['file'],
-            'type'          => $data['type'],
+            'date_sign'     => $data['uploaded_at'],
+            'type'          => 'app',
+            'preferred'     => 'N',
             'created_by'    => 73,
-            'updated_by'    => 73,
         ];
     }
 

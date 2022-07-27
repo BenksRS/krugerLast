@@ -593,16 +593,12 @@ class FirebaseSync {
             "job_type" => 2,
             "report"   => [
                 "checklist"      => [
-                    ["name" => "height_accommodation", "value" => 1],
-                    ["name" => "tarp_alterations", "value" => 0],
+                    ["name" => "height_accommodation", "value" => 'Y'],
+                    ["name" => "tarp_alterations", "value" => 'N'],
                 ],
                 "elements"       => [
                     "infos"    => "Teste",
                     "sandbags" => "203",
-                ],
-                "fields"         => [
-                    ["name" => "sandbags", "value" => "203"],
-                    ["name" => "infos", "value" => "Teste"],
                 ],
                 "report_options" => [13, 3, 16],
                 "tarp_size"      => [

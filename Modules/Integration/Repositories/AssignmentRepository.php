@@ -7,7 +7,7 @@ use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsStatus;
 use Modules\Assignments\Scopes\AssignmentScope;
 
-class IntegrationAssignmentRepository extends Assignment {
+class AssignmentRepository extends Assignment {
 
     use IntegrationRepository;
 

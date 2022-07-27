@@ -5,7 +5,7 @@ namespace Modules\Integration\Repositories;
 use Illuminate\Database\Eloquent\Model;
 use Modules\User\Entities\User;
 
-class IntegrationWorkerRepository extends Model {
+class WorkerRepository extends Model {
 
     use IntegrationRepository;
 
