@@ -2,6 +2,7 @@
 
 namespace Modules\Integration;
 
+use Illuminate\Support\Arr;
 use Kreait\Firebase\Database;
 use Modules\Integration\Entities\IntegrationFailedJob;
 use Modules\Integration\Services\Firebase\DatabaseService;
@@ -74,6 +75,7 @@ class Manager {
         if ( $items ) {
             foreach ( $items as $key => $item ) {
                 $resources = $model->setData($item);
+                $dot       = Arr::dot($item);
 
                 if ( $events ) {
                     foreach ( $events as $event ) {
@@ -82,13 +84,11 @@ class Manager {
                                 $model->create($resources);
                             break;
                             case 'local.update':
-                                foreach ($rules[$event] as $rule => $status) {
-                                    if ( data_get($item[$rule], $status) ) {
-                                        dump($item[$rule]);
-                                      /*  $model->update($resources, $rule);*/
+                                foreach ( $rules[$event] as $rule => $status ) {
+                                    if ( in_array($dot[$rule], $status) ) {
+                                        $model->find($item['job_id'])->update($resources);
                                     }
                                 }
-                                /* $model->update($resources);*/
                             break;
                             case 'remote.delete':
                                 $reference->getChild($key)->remove();

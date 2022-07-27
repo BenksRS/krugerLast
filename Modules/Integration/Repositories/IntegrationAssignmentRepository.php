@@ -4,6 +4,7 @@ namespace Modules\Integration\Repositories;
 
 use Carbon\Carbon;
 use Modules\Assignments\Entities\Assignment;
+use Modules\Assignments\Entities\AssignmentsStatus;
 use Modules\Assignments\Scopes\AssignmentScope;
 
 class IntegrationAssignmentRepository extends Assignment {
@@ -24,6 +25,15 @@ class IntegrationAssignmentRepository extends Assignment {
     public function __construct ()
     {
         parent::__construct();
+    }
+
+    public function setData ($data)
+    {
+        $status = AssignmentsStatus::where('name', $data['status']['new'])->first();
+
+        return [
+            'status_id' => $status->id,
+        ];
     }
 
     public function getData ()
