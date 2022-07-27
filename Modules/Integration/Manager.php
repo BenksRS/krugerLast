@@ -66,7 +66,7 @@ class Manager {
 
         $model  = app($config['model']);
         $events = $config['events'];
-        $rules  = $config['rules'];
+        $rules  = $config['rules'] ?? [];
 
         $reference = $this->database->getReference($config['table']);
 
@@ -84,10 +84,14 @@ class Manager {
                                 $model->create($resources);
                             break;
                             case 'local.update':
-                                foreach ( $rules[$event] as $rule => $status ) {
-                                    if ( in_array($dot[$rule], $status) ) {
-                                        $model->find($item['job_id'])->update($resources);
+                                if ( isset($rules) ) {
+                                    foreach ( $rules[$event] as $rule => $status ) {
+                                        if ( in_array($dot[$rule], $status) ) {
+                                            $model->find($item['job_id'])->update($resources);
+                                        }
                                     }
+                                } else {
+                                    $model->find($item['job_id'])->update($resources);
                                 }
                             break;
                             case 'remote.delete':
