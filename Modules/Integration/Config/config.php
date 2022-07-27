@@ -20,6 +20,7 @@ return [
                 'get' => FALSE,
             ],
             'events' => [],
+            'rules'  => [],
         ],
 
         'workers' => [
@@ -30,6 +31,7 @@ return [
                 'get' => FALSE,
             ],
             'events' => [],
+            'rules'  => [],
         ],
 
         'assignments' => [
@@ -55,6 +57,7 @@ return [
                 'get' => TRUE,
             ],
             'events' => ['local.create', 'remote.delete'],
+            'rules'  => [],
         ],
 
         'signatures' => [
@@ -65,6 +68,7 @@ return [
                 'get' => TRUE,
             ],
             'events' => ['local.create', 'remote.delete'],
+            'rules'  => [],
         ],
 
         'reports' => [
@@ -75,6 +79,7 @@ return [
                 'get' => TRUE,
             ],
             'events ' => ['local.create', 'remote.delete'],
+            'rules'  => [],
         ],
     ],
 ];

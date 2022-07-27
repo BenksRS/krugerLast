@@ -214,7 +214,7 @@ class HeaderScheduling extends Component
         $this->emit('updateScheduling');
         $this->toggleButtons('back');
 
-        integration()->sync('assignments', $this->assignment->id);
+        integration('assignments')->set($this->assignment->id);
 
     }
     public function scheduleInsert(){
@@ -253,7 +253,7 @@ class HeaderScheduling extends Component
         $this->toggleButtons('back');
 
 
-        integration()->sync('assignments', $this->assignment->id);
+        integration('assignments')->set($this->assignment->id);
     }
     public function checkButons(){
         switch ($this->assignment->status->class){

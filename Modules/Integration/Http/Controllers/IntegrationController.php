@@ -57,9 +57,17 @@ class IntegrationController extends Controller {
      * @return Renderable
      */
     public function users (){
-        integration()->syncAll('users');
-        integration()->syncAll('workers');
+        integration(['users','workers'])->set();
 
+    }
+    public function gallery (){
+        integration(['pictures'])->get();
+    }
+    public function signature (){
+        integration(['signatures'])->get();
+    }
+    public function jobs (){
+        integration(['assignments'])->get();
     }
     public function create ()
     {
