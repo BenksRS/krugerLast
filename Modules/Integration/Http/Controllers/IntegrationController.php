@@ -71,6 +71,9 @@ class IntegrationController extends Controller {
     public function jobs (){
         integration(['assignments'])->get();
     }
+    public function reports (){
+        integration(['reports'])->get();
+    }
     public function create ()
     {
         return view('integration::create');

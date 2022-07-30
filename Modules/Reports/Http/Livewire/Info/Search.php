@@ -45,6 +45,9 @@ class Search extends Component
     {
 //        if ($field == 'date_to' || $field == 'date_from' || $field == 'techSelected' )
 //        {
+
+
+
             $this->list = [];
 //        }
     }
@@ -62,19 +65,19 @@ class Search extends Component
         $date_to =  date('Y-m-d', $date_to);
 
 
-
-//        dump("date_from - $date_to / $this->techSelected");
-
         switch ($this->filter_type){
             case 'jobs':
                 $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected)->get();
                 if($this->eventSelected){
+//                    dd('eventSelected');
                     $this->list=$this->list->where('event_id', $this->eventSelected);
                 }
                 if($this->referralSelected){
+//                    dd('referralSelected');
                     $this->list=$this->list->where('referral_id', $this->referralSelected);
                 }
                 if($this->carrierSelected){
+//                    dd($this->carrierSelected);
                     $this->list=$this->list->where('carrier_id', $this->carrierSelected);
 
                 }

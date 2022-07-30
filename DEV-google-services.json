@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "604281855504",
+    "firebase_url": "https://krugerapp-9bc10-default-rtdb.firebaseio.com",
+    "project_id": "krugerapp-9bc10",
+    "storage_bucket": "krugerapp-9bc10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604281855504:android:4c588e38b6098a79e4b495",
+        "android_client_info": {
+          "package_name": "com.callkruger.system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604281855504-1vu89eae517si4ig6losg0srip2sf8tj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0EO2BvrXNL9s5FlMIjzhk7AB6yGtXEWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604281855504-1vu89eae517si4ig6losg0srip2sf8tj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "604281855504-3vfcsmg31n27cpfq8fme8o8nk8voh6gn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.callkruger.system"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

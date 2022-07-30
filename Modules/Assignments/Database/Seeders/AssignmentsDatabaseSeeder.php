@@ -74,8 +74,8 @@ class AssignmentsDatabaseSeeder extends Seeder
         AssignmentsEvents::truncate();
 //        AssignmentsEventPivot::truncate();
         AssignmentsScheduling::truncate();
-        GalleryCategory::truncate();
-        Gallery::truncate();
+//        GalleryCategory::truncate();
+//        Gallery::truncate();
         JobReport::truncate();
         JobReportOptions::truncate();
         JobReportOptionsPivot::truncate();
@@ -481,89 +481,89 @@ class AssignmentsDatabaseSeeder extends Seeder
 
 
 
-        $gallery_categories = [
-            [
-                'id' => 1,
-                'name' => 'LIVING ROOM',
-                'active' => 'Y',
-            ],
-            [
-                'id' => 2,
-                'name' => 'KITCHEN',
-                'active' => 'Y',
-            ],
-            [
-                'id' => 111,
-                'name' => 'NOT SELECTED',
-                'active' => 'Y',
-            ],
-        ];
+//        $gallery_categories = [
+//            [
+//                'id' => 1,
+//                'name' => 'LIVING ROOM',
+//                'active' => 'Y',
+//            ],
+//            [
+//                'id' => 2,
+//                'name' => 'KITCHEN',
+//                'active' => 'Y',
+//            ],
+//            [
+//                'id' => 111,
+//                'name' => 'NOT SELECTED',
+//                'active' => 'Y',
+//            ],
+//        ];
 
-        GalleryCategory::insert($gallery_categories);
-
-        //   $gallery
-        $gallery_file = fopen(base_path("$base_path/db_040_gallery.csv"), "r");
-        $firstline = true;
-        while (($data = fgetcsv($gallery_file, 2000, ",")) !== FALSE) {
-            if (!$firstline) {
-
-
-
-
-                $gallery[] =[
-                    'assignment_id' => $data['0'],
-                    'category_id' => $data['1'],
-                    'created_by' => $data['2'],
-                    'updated_by' => $data['3'],
-                    'img_id' => $data['4'],
-                    'b64' => $data['5'],
-                    'type' => $data['6'],
-                ];
-            }
-            $firstline = false;
-        }
-
-        fclose($gallery_file);
-
-        Gallery::insert($gallery);
-
-        //$job_report
-        $job_report_file = fopen(base_path("$base_path/db_031_job_report.csv"), "r");
-        $firstline = true;
-        while (($data = fgetcsv($job_report_file, 2000, ",")) !== FALSE) {
-            if (!$firstline) {
-
-                $tarp_situation=$data['7'];
-                if($tarp_situation == 2 || $tarp_situation == 4){
-                    $tarp_situation='Y';
-                }else{
-                    $tarp_situation='N';
-                }
-
-
-                $job_report =[
-                    'assignment_id' => $data['0'],
-                    'assignment_job_type_id' => $data['1'],
-                    'service_date' => $data['2'],
-                    'pitch' => $data['3'],
-                    'sandbags' => $data['4'],
-                    'created_by' => $data['5'],
-                    'updated_by' => $data['6'],
-                    'tarp_situation' => $tarp_situation,
-                    'plywoods' => $data['8'],
-                    's2x4x8' => $data['9'],
-                    's2x4x12' => $data['10'],
-                    's2x4x16' => $data['11'],
-                    'job_info' => $data['12'],
-                ];
-                JobReport::insert($job_report);
-
-            }
-            $firstline = false;
-
-        }
-
-        fclose($job_report_file);
+//        GalleryCategory::insert($gallery_categories);
+//
+//        //   $gallery
+//        $gallery_file = fopen(base_path("$base_path/db_040_gallery.csv"), "r");
+//        $firstline = true;
+//        while (($data = fgetcsv($gallery_file, 2000, ",")) !== FALSE) {
+//            if (!$firstline) {
+//
+//
+//
+//
+//                $gallery[] =[
+//                    'assignment_id' => $data['0'],
+//                    'category_id' => $data['1'],
+//                    'created_by' => $data['2'],
+//                    'updated_by' => $data['3'],
+//                    'img_id' => $data['4'],
+//                    'b64' => $data['5'],
+//                    'type' => $data['6'],
+//                ];
+//            }
+//            $firstline = false;
+//        }
+//
+//        fclose($gallery_file);
+//
+//        Gallery::insert($gallery);
+//
+//        //$job_report
+//        $job_report_file = fopen(base_path("$base_path/db_031_job_report.csv"), "r");
+//        $firstline = true;
+//        while (($data = fgetcsv($job_report_file, 2000, ",")) !== FALSE) {
+//            if (!$firstline) {
+//
+//                $tarp_situation=$data['7'];
+//                if($tarp_situation == 2 || $tarp_situation == 4){
+//                    $tarp_situation='Y';
+//                }else{
+//                    $tarp_situation='N';
+//                }
+//
+//
+//                $job_report =[
+//                    'assignment_id' => $data['0'],
+//                    'assignment_job_type_id' => $data['1'],
+//                    'service_date' => $data['2'],
+//                    'pitch' => $data['3'],
+//                    'sandbags' => $data['4'],
+//                    'created_by' => $data['5'],
+//                    'updated_by' => $data['6'],
+//                    'tarp_situation' => $tarp_situation,
+//                    'plywoods' => $data['8'],
+//                    's2x4x8' => $data['9'],
+//                    's2x4x12' => $data['10'],
+//                    's2x4x16' => $data['11'],
+//                    'job_info' => $data['12'],
+//                ];
+//                JobReport::insert($job_report);
+//
+//            }
+//            $firstline = false;
+//
+//        }
+//
+//        fclose($job_report_file);
 
 
         $stock_tarps = [

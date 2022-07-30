@@ -16,5 +16,6 @@ Route::prefix('integration')->group(function() {
     Route::get('/users/', 'IntegrationController@users');
     Route::get('/gallery/', 'IntegrationController@gallery');
     Route::get('/signature/', 'IntegrationController@signature');
+    Route::get('/reports/', 'IntegrationController@reports');
     Route::get('/jobs/', 'IntegrationController@jobs');
 });

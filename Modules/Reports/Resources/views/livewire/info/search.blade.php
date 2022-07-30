@@ -121,8 +121,8 @@
                             <div class="mb-3" >
                                 <label class="form-label">Technician</label>
                                 <a href="#" wire:click="clear('techSelected')"  class="float-end">clear</a>
-                                <select class=" form-control select2-multiple select_carrier"
-                                        name="carrierSelected" wire:model="techSelected" data-placeholder="Select ...">
+                                <select class=" form-control select2-multiple "
+                                        name="techSelected" wire:model="techSelected" data-placeholder="Select ...">
                                     <option selected>chose...</option>
                                     @foreach($techs as $tech)
                                             <option  value="{{$tech->id}}">{{$tech->user->name}}</option>
@@ -134,8 +134,8 @@
                             <div class="mb-3" >
                                 <label class="form-label">Events</label>
                                 <a href="#" wire:click="clear('eventSelected')"  class="float-end">clear</a>
-                                <select class=" form-control select2-multiple select_carrier"
-                                        name="carrierSelected" wire:model="eventSelected" data-placeholder="Select ...">
+                                <select class=" form-control select2-multiple "
+                                        name="eventSelected" wire:model="eventSelected" data-placeholder="Select ...">
                                     <option selected>chose...</option>
                                     @foreach($events as $event)
                                         <option  value="{{$event->id}}">{{$event->name}}</option>
@@ -208,10 +208,10 @@
 
         });
         function clearReferral(){
-            $('.select_referral').val('').trigger('change');
+            $('.select_referral').empty().trigger('change');
         }
         function clearCarrier(){
-            $('.select_carrier').val('').trigger('change');
+            $('.select_carrier').empty().trigger('change');
         }
     </script>
 @endpush
