@@ -85,6 +85,7 @@ class AssignmentRepository extends Assignment {
         //            }
 
         $count_auth = count($this->authorizations);
+        $count_auth= 1;
         $event      = "";
         if ( $this->event ) {
             $event = $this->event->name;
