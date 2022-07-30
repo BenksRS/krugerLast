@@ -1,6 +1,6 @@
 <h4 class="card-title mb-4">Authorizations List </h4>
 
-
+{{--kk--}}
 
 @if($referral->authorizathions->isNotEmpty())
         <div class="row">

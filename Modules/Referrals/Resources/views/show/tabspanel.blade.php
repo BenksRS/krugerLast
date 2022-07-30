@@ -1,7 +1,7 @@
 
 <!-- Nav panes -->
 <ul class="nav nav-pills nav-justified" role="tablist" >
-
+    {{--kk--}}
     @foreach($navs as $nav)
         @if($nav['category'] == 'all' or $nav['category'] == $referral->referral_type_id)
         <li class="nav-item waves-effect waves-light mx-2 card">

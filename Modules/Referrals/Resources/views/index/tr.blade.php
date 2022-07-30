@@ -11,6 +11,6 @@
 {{--    <td>FL</td>--}}
 {{--    <td><small>(504) 264-8448</small></td>--}}
 {{--    <td></td>--}}
-{{--    <td><small>Kyle Bauer</small></td>--}}
+{{--    <td><small>Kyle Bauer</small></td>--}}{{--kk--}}
 {{--    <td><h5 class="font-size-14" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Dol Date"><small><i class="bx bx-calendar me-1 text-muted"></i>20 Oct, 2021</h5></small></td>--}}
 </tr>
