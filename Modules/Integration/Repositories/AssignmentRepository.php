@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsStatus;
 use Modules\Assignments\Scopes\AssignmentScope;
+use Modules\Notes\Entities\Note;
 
 class AssignmentRepository extends Assignment {
 
@@ -13,7 +14,7 @@ class AssignmentRepository extends Assignment {
 
     use AssignmentScope;
 
-    protected $with    = ['scheduling', 'referral', 'carrier', 'status', 'event', 'phones', 'user_updated', 'user_created', 'job_types', 'notes'];
+    protected $with    = ['scheduling', 'referral', 'carrier', 'status', 'event', 'phones', 'user_updated', 'user_created', 'job_types'];
 
     protected $appends = ['firebase'];
 
@@ -77,11 +78,17 @@ class AssignmentRepository extends Assignment {
             $info_phones = NULL;
         }
 
-        $notes="";
-                    if($this->notes->where('type','tech')){
-                        foreach ($this->notes->where('type','tech') as $nota){
+        $notes="teste";
+
+
+
+        $notesTech = Note::where('notable_id', $this->id)->where('type','tech')->get();
+
+                    if(count($notesTech) > 0){
+
+                        foreach ($notesTech as $nota){
                             $user=$nota->user->name;
-                            $notes="$notes $nota->text - ($user - $nota->created_datetime)\n";
+                            $notes=$notes."$nota->text - ($user - $nota->created_datetime)\n";
                         }
                     }
 

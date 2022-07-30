@@ -62,6 +62,10 @@ class Address extends Component
         $this->address_target = $this->assignment->address->target;
         $this->address_message = $this->assignment->address->message;
 
+        if(in_array($this->assignment->status_id, [2,3])){
+            integration('assignments')->set($this->assignment->id);
+        }
+
         $this->show = true;
 
     }

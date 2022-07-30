@@ -69,6 +69,10 @@ class Phones extends Component
         $this->contact_edit = null;
         $this->phone_edit = null;
         $this->listPhones = $this->assignment->phones;
+
+        if(in_array($this->assignment->status_id, [2,3])){
+            integration('assignments')->set($this->assignment->id);
+        }
     }
 
     public function deletePhone($id_delete){
@@ -92,6 +96,10 @@ class Phones extends Component
         $this->contact = $this->phone = '';
         $this->assignment = Assignment::find($this->assignment->id);
         $this->listPhones = $this->assignment->phones;
+
+        if(in_array($this->assignment->status_id, [2,3])){
+            integration('assignments')->set($this->assignment->id);
+        }
 
     }
 

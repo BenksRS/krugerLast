@@ -23,7 +23,7 @@ class Notes extends Component
     {
         $this->assignment = $assignment;
         $this->notesList = $this->assignment->notes->where('type','tech');
-
+//dd($this->notesList);
         $this->user = Auth::user();
     }
     public function showAdd(){
@@ -48,6 +48,10 @@ class Notes extends Component
 
         $this->assignment = Assignment::find($this->assignment->id);
         $this->notesList = $this->assignment->notes->where('type','tech');
+
+        if(in_array($this->assignment->status_id, [2,3])){
+            integration('assignments')->set($this->assignment->id);
+        }
 
     }
     public function render()
