@@ -17,7 +17,7 @@ class Readytobill extends Component
     public $searchAssignment;
     public $columns = ['Name','Job Type','Schedule','Status','Referral','Address','Street','City','State', 'Phone', 'Created by', 'Created At', 'Update By','Update At'];
     public $selectedColumns = [];
-    public $selectedRows = 10;
+    public $selectedRows = 100;
 
     public function mount()
     {

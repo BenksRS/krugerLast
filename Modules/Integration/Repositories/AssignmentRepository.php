@@ -77,12 +77,13 @@ class AssignmentRepository extends Assignment {
             $info_phones = NULL;
         }
 
-        $notes = " Teste <br> teste foi ";
-        //            if($this->notes->where('type','tech')){
-        //                foreach ($this->notes->where('type','tech') as $note){
-        //
-        //                }
-        //            }
+        $notes="";
+                    if($this->notes->where('type','tech')){
+                        foreach ($this->notes->where('type','tech') as $nota){
+                            $user=$nota->user->name;
+                            $notes="$notes $nota->text - ($user - $nota->created_datetime)\n";
+                        }
+                    }
 
         $count_auth = count($this->authorizations);
         $count_auth= 1;

@@ -23,6 +23,7 @@ class Notes extends Component
     {
         $this->assignment = $assignment;
         $this->notesList = $this->assignment->notes->where('type','tech');
+
         $this->user = Auth::user();
     }
     public function showAdd(){

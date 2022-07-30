@@ -18,7 +18,7 @@ class Collection extends Component
     public $searchAssignment;
     public $columns = ['Billed Date','Status Collection','Name','Invoices', 'Status','days_from_billing','days_from_service', 'Referral','City','State', 'Phone'];
     public $selectedColumns = [];
-    public $selectedRows = 10;
+    public $selectedRows = 100;
 
     public $total_collection;
 

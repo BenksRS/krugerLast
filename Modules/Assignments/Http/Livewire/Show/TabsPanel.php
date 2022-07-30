@@ -13,7 +13,7 @@ class TabsPanel extends Component
     ];
 
     public $assignment;
-    public $isActive = 'finance';
+    public $isActive = 'info-details';
 
     public $navs = [
         [
