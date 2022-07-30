@@ -1,5 +1,5 @@
 <x-layouts.app layout="horizontal">
-    <!-- start page title -->
+    <!-- start page title teste -->
 
     <div class="row">
         <div class="col-12">
