@@ -1,0 +1,12 @@
+rm -rf Modules/Reports/Http/Livewire/Info/Finance.php
+rm -rf Modules/Reports/Http/Livewire/Info/Jobs.php
+rm -rf Modules/Reports/Http/Livewire/Info/Referrals.php
+rm -rf Modules/Reports/Http/Livewire/Info/Search.php
+rm -rf Modules/Reports/Resources/views/info.blade.php
+rm -rf Modules/Reports/Resources/views/livewire/info/jobs.blade.php
+rm -rf Modules/Reports/Resources/views/livewire/info/referrals.blade.php
+rm -rf Modules/Reports/Resources/views/livewire/info/search.blade.php
+rm -rf Themes/system/views/components/layouts/app.blade.php
+rm -rf composer.json
+rm -rf composer.lock
+rm -rf modules_statuses.json
