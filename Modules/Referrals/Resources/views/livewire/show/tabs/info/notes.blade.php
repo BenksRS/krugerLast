@@ -7,7 +7,7 @@
     <h4 class="card-title mb-4">General Notes</h4>
     <div class="card">
         <div class="card-body">
-
+            {{--kk--}}
             @if($show)
                 <div>
                     <div class="d-flex">

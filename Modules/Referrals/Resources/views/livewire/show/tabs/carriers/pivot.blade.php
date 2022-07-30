@@ -1,6 +1,6 @@
 <div>
     <h4 class="card-title  mb-4">Carriers List</h4>
-
+    {{--kk--}}
     @if($carriersList->isNotEmpty())
         @foreach($carriersList as $carrier)
             <div class="card" id="boxcarrier{{$carrier->id}}">

@@ -1,6 +1,6 @@
 <div>
     @if($showEditAuth)
-
+        {{--kk--}}
 {{--    <h4 class="card-title mb-4">Edit Authorizathion  </h4>--}}
 {{--        <input type="text" class="form-control" name="name"  wire:model.debounce.500ms="auth_name"  value="{{$field->height}}" >--}}
     <div class="card">

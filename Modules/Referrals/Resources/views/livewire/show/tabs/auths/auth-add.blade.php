@@ -1,5 +1,5 @@
 <div>
-
+    {{--kk--}}
     <h4 class="card-title  mb-4">All AUthorizations</h4>
     <div class="card">
         <div class="card-body">

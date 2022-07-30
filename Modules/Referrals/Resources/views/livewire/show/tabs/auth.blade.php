@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="row">
-
+        {{--kk--}}
         <div class="col-lg-8 auth_list" >
 {{--            @include('referrals::show.tabs.auth.auth_list')--}}
 

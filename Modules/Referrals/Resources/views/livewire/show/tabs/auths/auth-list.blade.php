@@ -1,7 +1,7 @@
 <div>
     <div class="row">
         <h4 class="card-title mb-4">Authorizations List </h4>
-
+        {{--kk--}}
 {{--                @if($carriersList)--}}
         <div class="accordion accordion-flush" id="accordionAuthorizathions" >
             <div class="accordion-item">
