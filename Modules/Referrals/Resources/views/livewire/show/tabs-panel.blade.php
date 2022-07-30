@@ -1,5 +1,5 @@
 <div>
-    {{--{{$referral->type->name}}--}}
+    {{--{{$referral->type->name}}--}}{{--kk--}}
     <!-- Nav panes -->
     <ul class="nav nav-pills nav-justified" role="tablist" >
 

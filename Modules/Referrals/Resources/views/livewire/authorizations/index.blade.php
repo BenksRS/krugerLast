@@ -1,7 +1,7 @@
 <div>
     <div class="row">
 
-
+{{--kk--}}
         <div class="col-lg-8">
             @if($showUploading)
                 <form wire:submit.prevent="save" >
