@@ -13,7 +13,7 @@ class AssignmentRepository extends Assignment {
 
     use AssignmentScope;
 
-    protected $with    = ['scheduling', 'referral', 'carrier', 'status', 'event', 'phones', 'user_updated', 'user_created', 'job_types'];
+    protected $with    = ['scheduling', 'referral', 'carrier', 'status', 'event', 'phones', 'user_updated', 'user_created', 'job_types', 'notes'];
 
     protected $appends = ['firebase'];
 
