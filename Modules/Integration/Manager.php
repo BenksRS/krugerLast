@@ -96,9 +96,8 @@ class Manager {
                                     $model->find($item['job_id'])->update($resources);
                                 }
 
-                                if (
-                                    (isset($item['sync_delete']) && $item['sync_delete'] === TRUE) ||
-                                    $item['status']['new'] == 'uploading_pics' ) {
+                                if ( (isset($item['sync_delete']) && $item['sync_delete'] === TRUE) ||
+                                     (isset($item['status']['new']) && $item['status']['new'] == 'uploading_pics') ) {
                                     $reference->getChild($key)->remove();
                                 }
                             break;
