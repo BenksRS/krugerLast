@@ -63,7 +63,7 @@ class AssignmentFinanceRepository extends Assignment {
                     $status_collection = ($total_invoice == $total_payment) ? 6 : $status;
 
 
-//            // revise_payment
+                    // revise_payment
                     $status = ($total_payment > $total_invoice) ? 24 : $status;
 
                     // partial payment
