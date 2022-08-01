@@ -5,8 +5,10 @@ namespace Modules\Gdrive\Http\Controllers;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsEvents;
@@ -857,6 +859,7 @@ class GdriveController extends Controller
     public function marketing_rep()
     {
 //        dd('sddsdsdds');
+
         $base_path="DB/scripts/";
         $file_open = fopen(base_path("$base_path/referrals_marketingrep.csv"), "r");
         $firstline = true;
@@ -897,8 +900,91 @@ class GdriveController extends Controller
 
 
     }
+    public function adjust_gdrive()
+    {
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '2512M');
+        $base_path="DB/1/";
+
+        //   Gdrive
+        $adjust_gdrive = fopen(base_path("$base_path/ajust_gdrive.csv"), "r");
+        $firstline = true;
+        while (($data = fgetcsv($adjust_gdrive, 2000, ",")) !== FALSE) {
+            if (!$firstline) {
+                $gdrive=[
+                    "assignment_id" => $data['0'],
+                    "job_path" => $data['1'],
+                    "kruger_pictures_path" => $data['2'],
+                    "pics_front_kruger_path" => $data['3'],
+                    "pics_inside_kruger_path" => $data['4'],
+                    "pics_before_kruger_path" => $data['5'],
+                    "pics_after_kruger_path" => $data['6'],
+                    "pictures_path" => $data['7'],
+                    "pics_before_path" => $data['8'],
+                    "pics_after_path" => $data['9'],
+                    "forms_path" => $data['10'],
+                    "job_link" => $data['11'],
+                    "pics_link" => $data['12'],
+                    "kruger_pictures_link" => $data['13']
+                ];
+                Gdrive::insert($gdrive);
+            }
+            $firstline = false;
+
+
+        }
+        fclose($adjust_gdrive);
 
 
 
+
+
+    }
+
+    public function adjust_images()
+    {
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '2512M');
+
+
+        $base_path="DB/1/";
+
+        //   $adjust_images
+        $adjust_images = fopen(base_path("$base_path/import_pictures.csv"), "r");
+        $firstline = true;
+        while (($data = fgetcsv($adjust_images, 20000, ",")) !== FALSE) {
+            if (!$firstline) {
+
+
+
+                    if(is_null($data['7']) || empty($data['7'])){
+                        $category_id = 25;
+                    }else{
+                        $category_id = $data['7'];
+                    }
+
+                    $gallery=[
+                        "assignment_id" => $data['3'],
+                        "category_id" => $category_id,
+                        "created_by" => 73,
+                        "updated_by" => 73,
+                        "img_id" => $data['1'],
+                        "b64" => $data['2'],
+                        "type" => $data['6']
+                    ];
+                    Gallery::insert($gallery);
+                }
+
+
+            $firstline = false;
+
+
+        }
+        fclose($adjust_images);
+
+
+
+
+    }
 
 }

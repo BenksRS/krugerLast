@@ -6,37 +6,37 @@
                 <span class="bx bx-search-alt"></span>
             </div>
 
-{{--            @if($searchAll)--}}
-{{--                <div class="search-box-result">--}}
-{{--                    <div class="card">--}}
-{{--                        <div class="card-body">--}}
-{{--                            <div class="row">--}}
-{{--                                <div class="col-lg-12">--}}
+            @if($searchAll)
+                <div class="search-box-result">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
 
-{{--                                    @if($jobs->isNotEmpty())--}}
-{{--                                        <div class="col-lg-3">--}}
-{{--                                            <h4>Jobs</h4>--}}
-{{--                                            <table class="table table-sm m-0">--}}
-{{--                                                <tbody>--}}
-{{--                                                @foreach($jobs as $job)--}}
-{{--                                                    <tr>--}}
-{{--                                                        <th scope="row"><a href="{{url('assignments/show/'.$job->id)}}">{{$job->full_name}}</a></th>--}}
-{{--                                                    </tr>--}}
-{{--                                                @endforeach--}}
-{{--                                                </tbody>--}}
-{{--                                            </table>--}}
-{{--                                        </div>--}}
-{{--                                    @endif--}}
+                                    @if($jobs->isNotEmpty())
+                                        <div class="col-lg-3">
+                                            <h4>Jobs</h4>
+                                            <table class="table table-sm m-0">
+                                                <tbody>
+                                                @foreach($jobs as $job)
+                                                    <tr>
+                                                        <th scope="row"><a href="{{url('assignments/show/'.$job->id)}}">{{$job->full_name}}</a></th>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    @endif
 
-{{--                                </div>--}}
-
-
+                                </div>
 
 
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--            @endif--}}
+
+
+                            </div>
+                        </div>
+                    </div>
+            @endif
 
         </form>
     </form>

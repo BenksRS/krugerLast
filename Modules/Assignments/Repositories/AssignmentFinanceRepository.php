@@ -77,6 +77,7 @@ class AssignmentFinanceRepository extends Assignment {
                     $status_collection = 6;
                     break;
                 default:
+                    $status = ($total_invoice > 0 && $total_payment == 0) ? 5 : $status;
                     $status_collection=$this->status_collection_id;
                     break;
             }

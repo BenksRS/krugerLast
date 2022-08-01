@@ -87,7 +87,11 @@ class Balance extends Component
 
 
     public function changeStatusStatus(){
-//
+
+
+
+
+
 //        // check if job is already billed
 //        if( $this->total_invoices_amount_calc > 0){
 //

@@ -133,6 +133,8 @@ class Actions extends Component
         $status_finance= $this->assignment->finance->balance->status;
         $this->dateupdate = Carbon::now();
 
+//        dd($this->assignment->finance);
+
         if($status_finance!='pending'){
             $this->changeStatus($status_finance);
         }
