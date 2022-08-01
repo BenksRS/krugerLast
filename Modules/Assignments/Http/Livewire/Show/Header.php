@@ -84,6 +84,7 @@ class Header extends Component
         $this->assignment = Assignment::find($this->assignment->id);
         $this->preStatus = $this->changeStatustext = null;
 
+        integration('assignments')->set($this->assignment->id);
 
         $this->emit('updateNotes');
     }
@@ -109,6 +110,7 @@ class Header extends Component
         $this->changeStatus($newStatus);
         $this->assignment = Assignment::find($this->assignment->id);
         $this->preStatus = $this->changeStatustext = null;
+        integration('assignments')->set($this->assignment->id);
         $this->emit('updateNotes');
 
     }
@@ -125,6 +127,7 @@ class Header extends Component
         $this->changeStatus($newStatus);
         $this->assignment = Assignment::find($this->assignment->id);
         $this->preStatus = $this->changeStatustext = null;
+        integration('assignments')->set($this->assignment->id);
         $this->emit('updateNotes');
 
     }
