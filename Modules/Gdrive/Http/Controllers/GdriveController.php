@@ -941,7 +941,7 @@ class GdriveController extends Controller
 
     }
 
-    public function adjust_images()
+    public function adjust_images($id)
     {
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', '2512M');
@@ -950,7 +950,7 @@ class GdriveController extends Controller
         $base_path="DB/1/";
 
         //   $adjust_images
-        $adjust_images = fopen(base_path("$base_path/import_pictures.csv"), "r");
+        $adjust_images = fopen(base_path("$base_path/import_pictures_$id.csv"), "r");
         $firstline = true;
         while (($data = fgetcsv($adjust_images, 20000, ",")) !== FALSE) {
             if (!$firstline) {

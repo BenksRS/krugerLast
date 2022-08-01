@@ -17,7 +17,7 @@ Route::prefix('/gdrive')->name('gdrive.')->group(function () {
     // Assignments
     Route::get('/', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'index'])->name('index');
     Route::get('/adjust_gdrive/', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'adjust_gdrive'])->name('adjust_gdrive');
-    Route::get('/adjust_images/', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'adjust_images'])->name('adjust_images');
+    Route::get('/adjust_images/{id}', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'adjust_images'])->name('adjust_images');
     Route::get('/queue_dir/', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'queue_dir'])->name('queue_dir');
     Route::get('/queue_files/', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'queue_files'])->name('queue_files');
     Route::get('/create/{id}', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'create'])->name('create');
