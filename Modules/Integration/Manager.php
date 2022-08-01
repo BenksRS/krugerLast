@@ -95,6 +95,10 @@ class Manager {
                                 } else {
                                     $model->find($item['job_id'])->update($resources);
                                 }
+
+                                if ( isset($item['sync_delete']) && $item['sync_delete'] === TRUE ) {
+                                    $reference->getChild($key)->remove();
+                                }
                             break;
                             case 'remote.delete':
                                 $reference->getChild($key)->remove();
