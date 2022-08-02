@@ -47,6 +47,20 @@ class ReferralController extends AdminController
 
     }
 
+    public function new_prospect()
+    {
+        $page_info = (object)[
+            'title' => 'New Prospect',
+            'back' => url('Prospect'),
+            'back_title' => 'Prospect List'
+        ];
+        \session()->flash('page',$page_info);
+        $page =\session()->get('page');
+
+        return view('referrals::new_prospect', compact('page'));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      * @return Renderable
