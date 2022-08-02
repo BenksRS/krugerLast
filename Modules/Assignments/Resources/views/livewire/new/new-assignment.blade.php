@@ -270,7 +270,7 @@
                         <div class="col-lg-12">
                             <div class="mb-3">
                                 <label for="claim_info" class="form-label">Claim #</label>
-                                <input type="text" class="form-control" id="claim_info" wire:model="claim_info" placeholder="claim info ..." autocomplete="nope">
+                                <input type="text" class="form-control" id="claim_info" wire:model="claim_info" placeholder="claim number ..." autocomplete="nope">
                             </div>
                         </div>
                         <div class="col-lg-12">
