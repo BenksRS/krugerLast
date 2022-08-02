@@ -80,7 +80,7 @@ class Payment extends Component
     }
     public function partial_payment_invoice($invoice_id){
 
-        $partialPaids = FinancePayment::where('invoice_id', $invoice_id)->where('type', 'active')->get();
+        $partialPaids = FinancePayment::where('assignment_id', '=',$this->assignment->id)->where('invoice_id', $invoice_id)->where('type', 'active')->get();
 //        dd($partialPaids->sum('amount'));
         $this->partial_payment_total = $partialPaids->sum('amount');
     }

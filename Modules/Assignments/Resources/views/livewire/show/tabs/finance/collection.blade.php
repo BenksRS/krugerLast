@@ -5,7 +5,7 @@
             <div class="row">
             <div class="col-lg-7">
 
-                <div class="text-muted mt-3">
+                <div class="text-muted ">
                     @if($showFollowUp)
                         <h6>Follow up date:<button type="button" class="btn btn-primary btn-sm float-end" wire:click="toggleFollowup"><i class="fas fa-edit"></i> Edit</button></h6>
                     <p>{{$assignment->follow_up_date}}</p>
@@ -55,15 +55,34 @@
 {{--                <button type="button" wire:click="showAdd" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-end"> <i class="bx bx-flag font-size-16 align-middle "></i> </button>--}}
             </div>
         </div>
+
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-5">
+
+                        <div class="text-muted mt-3">
+                            <h6>Days from Billed:
+                            @if(isset($assignment->finance->collection->days_from_billing))
+                                    <small class="text-muted">{{$assignment->finance->collection->days_from_billing }} days</small>
+                            @endif
+                            </h6>
+                        </div>
+
+
+                        <div class="text-muted mt-3">
+
+                            <h6>Days from Service:
+                            @if(isset($assignment->finance->collection->days_from_service))
+                           <small class="text-muted"> {{$assignment->finance->collection->days_from_service }} days</small>
+                            @endif
+                            </h6>
+                        </div>
+
+
+                </div>
+                <div class="col-lg-7">
                     <div class="text-muted mt-3">
                         <h6>Lien Date :</h6>
                         <p></p>
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <div class="text-muted mt-3">
                         <h6>Lien Info:</h6>
                         <p></p>
                     </div>

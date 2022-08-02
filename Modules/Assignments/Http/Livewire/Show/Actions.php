@@ -8,6 +8,7 @@ use Modules\Assignments\Entities\Assignment;
 use Auth;
 use Modules\Assignments\Entities\AssignmentFinance;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
+use Modules\Assignments\Entities\Signdata;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
 use Modules\Referrals\Entities\Referral;
 use Modules\Referrals\Entities\ReferralAuthorizationPivot;
@@ -31,27 +32,77 @@ class Actions extends Component
 
 
 
-//        dd($assignment->finance);
+//        dd($assignment->finance); dssd
         $this->checkFinance();
+        $this->checkSign();
         $this->checkAuthorizations();
 
     }
+    public function reloadForms()
+    {
+        $ref_id= $this->assignment->referral->id;
+        $ref_type_id= $this->assignment->referral->referral_type_id;
+        $carrier_default = ($ref_type_id == 9) ? 583 :582 ;
+        $carrier_id= isset($this->assignment->carrier_id) ? $this->assignment->carrier_id : $carrier_default;
 
+        $rule_carrier = ReferralCarriersPivot::where('referral_vendor_id',$ref_id)->where('referral_carrier_id',$carrier_id)->first();
+
+        $auths_total=ReferralAuthorizationPivot::where('referral_id',$ref_id)->get();
+
+
+        if($rule_carrier){
+            // AUTH NEEDED - YES
+            if($rule_carrier->auth == 'Yes'){
+
+                // remove auths atual
+                $this->assignment->authorizations()->detach();
+
+                // ADD carrier Auths
+                if($carrier_id != $carrier_default){
+                    $this->addAuths($carrier_id, $ref_id);
+                }
+
+
+                // USE DEFAULT - YES
+                if($rule_carrier->default == 'Yes'){
+                    // ADD default referral
+
+                    $this->addAuths($ref_id, $ref_id);
+                }
+            }
+            $this->assignment = Assignment::find($this->assignment->id);
+            $this->authorizations = $this->assignment->authorizations;
+        }else{
+
+
+        }
+
+
+    }
+    public function addAuths($carrier_id, $ref_id){
+
+        $auths= ReferralAuthorizationPivot::where('referral_id', $ref_id)->where('carrier_id',$carrier_id)->get();
+        foreach ($auths as $auth){
+            $this->assignment->authorizations()->attach($auth->referral_authorizathion_id);
+        }
+    }
     public function checkHasAuthorizations(){
         $message="";
         $total_auths=$this->assignment->authorizations;
 
-        if(count($total_auths) == 0){
-            $message= "<b>!!! NO AUTHORISATION`S FOUND FOR THIS JOB !!!</b>
-            Please check Forms!";
-        }
+        $this->reloadForms();
 
-        if($message){
-            session()->flash('hasAuth' ,[
-                'class' => 'danger',
-                'message' => $message
-            ]);
-        }
+//        if(count($total_auths) == 0){
+//            $message= "<b>!!! NO AUTHORISATION`S FOUND FOR THIS JOB !!!</b>
+//            Please check Forms!";
+//        }
+//
+//        if($message){
+//            session()->flash('hasAuth' ,[
+//                'class' => 'danger',
+//                'message' => $message
+//            ]);
+//        }
     }
     public function checkAuthorizations(){
         $ref_id= $this->assignment->referral->id;
@@ -128,10 +179,26 @@ class Actions extends Component
             ]);
         }
     }
+    public function checkSign(){
+        $signatureALl = Signdata::where('assignment_id', $this->assignment->id)->get();
+        $signaturePreferred =Signdata::where('assignment_id', $this->assignment->id)->where('preferred', 'Y')->get();
+        if(count($signatureALl) > 0){
+            if(count($signaturePreferred) == 0){
+                $sign = Signdata::where('assignment_id', $this->assignment->id)->first();
+                $sign->update([
+                    "preferred" => 'Y',
+                ]);
+            }
+
+
+        }
+    }
     public function checkFinance()
     {
         $status_finance= $this->assignment->finance->balance->status;
         $this->dateupdate = Carbon::now();
+
+//        dd($this->assignment->finance);
 
         if($status_finance!='pending'){
             $this->changeStatus($status_finance);

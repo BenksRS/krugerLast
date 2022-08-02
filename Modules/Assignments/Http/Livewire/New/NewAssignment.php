@@ -124,7 +124,8 @@ class NewAssignment extends Component
             'email' => $this->email,
             'adjuster_info' => $this->adjuster_info,
             'date_assignment' => $this->date_create,
-            'date_of_loss' => $this->date_dol,
+            'status_id' => 1,
+            'status_collection_id' => 3,
 //
 //            'phone' => $this->phone,
 //            'phone_alternative' => $this->phone_alternative,

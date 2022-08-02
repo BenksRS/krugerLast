@@ -24,10 +24,11 @@ trait AssignmentScope {
                 $query
                     ->where('first_name', 'like', '%' .$search . '%')
                     ->orWhere('last_name', 'like', '%' .$search . '%')
-                    ->orWhere('id', 'like', '%' .$search . '%');
+                    ->orWhere('id', 'like', '%' .$search . '%')
+                ->orWhere('claim_number', 'like', '%' .$search . '%');
 //                    ->orWhere('email', 'like', '%' .$search . '%')
 //                    ->orWhere('street', 'like', '%' .$search . '%')
-//                    ->orWhere('claim_number', 'like', '%' .$search . '%');
+//
             });
     }
     public function scopeSearch (Builder $query, $search){
@@ -68,15 +69,38 @@ trait AssignmentScope {
             ->whereHas('scheduling', function (Builder $q) use ($date_to) {
                 $q->whereDate('start_date','<=', $date_to);
             });
-
-
     }
-    public function scopeTech (Builder $query, $tech_id)
+
+    public function scopeDateBilled (Builder $query, $date_from, $date_to, $tech_id=null)
+    {
+        return $query
+            ->with('invoices')
+            ->whereHas('invoices', function (Builder $q) use ($date_from) {
+                $q->whereDate('billed_date','>=', $date_from);
+            })
+            ->whereHas('invoices', function (Builder $q) use ($date_to) {
+                $q->whereDate('billed_date','<=', $date_to);
+            });
+    }
+    public function scopeDatePaid (Builder $query, $date_from, $date_to)
+    {
+        return $query
+            ->with('payments')
+            ->whereHas('payments', function (Builder $q) use ($date_from) {
+                $q->whereDate('payment_date','>=', $date_from);
+            })
+            ->whereHas('payments', function (Builder $q) use ($date_to) {
+                $q->whereDate('payment_date','<=', $date_to);
+            });
+    }
+    public function scopeTech (Builder $query, $tech_id = null)
     {
         return $query
             ->with('scheduling')
             ->whereHas('scheduling', function (Builder $q) use ($tech_id) {
-                $q->where('tech_id','=', $tech_id);
+                if($tech_id != null){
+                    $q->where('tech_id','=', $tech_id);
+                }
             });
 
 

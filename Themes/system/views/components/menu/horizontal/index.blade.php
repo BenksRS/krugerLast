@@ -44,9 +44,8 @@
                         <a class="nav-link dropdown-toggle arrow-none" target="_blan" href="{{ url('/schedulling/') }}" id="topnav-dashboard" role="button"
                         >
                             <i class="bx bx-grid me-2"></i>
-                           Schedulling
+                           Scheduling
                         </a>
-
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-dashboard" role="button"

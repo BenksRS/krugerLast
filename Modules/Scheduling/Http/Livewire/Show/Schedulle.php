@@ -340,6 +340,8 @@ class Schedulle extends Component
                                 ];
                                 AssignmentsStatusPivot::create($AssignmentStatus);
 
+                                integration('assignments')->set($assignment_id);
+
                             }else{
                                 $message_error= "<b>ERROR #$assignment_id</b> - This Technician already have a job at this time!";
                             }
@@ -376,7 +378,7 @@ class Schedulle extends Component
                             ];
                             $assignment->update($updateAssignment);
 
-
+                            integration('assignments')->set($assignment_id);
 
                             $message= "<b>#$assignment_id</b> - Schedulled to $start_date";
                         }else{

@@ -5,14 +5,19 @@ namespace Modules\Gdrive\Http\Controllers;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsEvents;
+use Modules\Assignments\Entities\AssignmentsStatusPivot;
 use Modules\Assignments\Entities\Gallery;
+use Modules\Assignments\Entities\JobReport;
 use Modules\Assignments\Entities\Signdata;
 use Modules\Assignments\Repositories\AssignmentFirebaseRepository;
+use Modules\Assignments\Repositories\AssignmentRepository;
 use Modules\Gdrive\Entities\Gdrive;
 use Modules\Gdrive\Entities\QueeDir;
 use Modules\Gdrive\Entities\QueeFiles;
@@ -64,6 +69,55 @@ class GdriveController extends Controller
 
     }
 
+    public function add_queue_files(){
+
+        $list = AssignmentRepository::where('status_id', 20)->get();
+        foreach ($list as $item) {
+
+            $now = Carbon::now();
+            QueeFiles::where('assignment_id', $item->id)->delete();
+
+            $history = "<b># Added to queue</b> - $now";
+            QueeFiles::create([
+                'assignment_id' => $item->id,
+                'order' => 50,
+                'status' => 'pending',
+                'history' => $history
+            ])->save();
+
+            // change status
+            AssignmentsStatusPivot::create([
+                'assignment_id'=> $item->id,
+                'assignment_status_id'=> 4,
+                'created_by'=> 73,
+            ]);
+            $update_status=[
+                'status_id'  => 4,
+                'updated_by'  => 73,
+            ];
+
+            $item->update($update_status);
+
+
+
+        }
+    }
+    public function add_queue_dir(){
+        $list = AssignmentRepository::open()->get();
+        foreach ($list as $item){
+            $queue=QueeDir::where('assignment_id',$item->id)->first();
+            if(!isset($queue)){
+                $now=Carbon::now();
+                $history= "<b># Added to queue</b> - $now";
+                QueeDir::create([
+                    'assignment_id' =>$item->id,
+                    'order' =>50,
+                    'status' =>'pending',
+                    'history' =>$history
+                ])->save();
+            }
+        }
+    }
     public function queue_dir()
     {
         $queue=QueeDir::whereIn('status',['pending', 'processing'])->orderBy('order')->first();
@@ -83,12 +137,14 @@ class GdriveController extends Controller
         $auths = $data->authorizations;
 
 
+        $sign = Signdata::where('assignment_id',$id)->where('preferred','Y')->first();
 
-        if(count($auths) > 0){
+
+        if(count($auths) > 0 && isset($sign)){
             $this->updateHistoryFiles($id, 'creating Forms:');
            foreach ($auths as $auth){
                // gera auth
-               $sign = Signdata::where('assignment_id',$id)->where('preferred','Y')->first();
+
 
                if($sign == null){
                    $sign = Signdata::where('assignment_id',$id)->latest('id')->first();
@@ -131,7 +187,7 @@ class GdriveController extends Controller
 
            }
         }else{
-            $this->updateHistoryFiles($id, 'No Forms Found:');
+            $this->updateHistoryFiles($id, 'No Forms or Signature Found:');
         }
 
     }
@@ -148,7 +204,7 @@ class GdriveController extends Controller
         // remove Pics only pdfs
         try {
             $this->updateHistoryFiles($id, 'removing Pics only pdfs:');
-            $files = $storage->files($gdrive->pics_front_kruger_path);
+            $files = $storage->files($gdrive->kruger_pictures_path);
             foreach ($files as $file){
                 $storage->delete($file);
             }
@@ -339,7 +395,7 @@ class GdriveController extends Controller
             $this->updateHistoryFiles($id, 'uploading new Kruger after pictures:');
             $count=1;
             foreach ($gallery->where('type','pics_after') as $img){
-                $filename ="$gdrive->pics_after_kruger_path/before_$count.jpg";
+                $filename ="$gdrive->pics_after_kruger_path/after_$count.jpg";
                 @list($type, $file_data) = explode(';', $img->b64);
                 @list(, $file_data) = explode(',', $file_data);
                 $storage->put($filename,base64_decode($file_data));
@@ -842,21 +898,104 @@ class GdriveController extends Controller
         //
     }
 
+    public function job_report_import(){
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '2512M');
+        $base_path="DB/1/";
+                //$job_report
+        $job_report_file = fopen(base_path("$base_path/db_031_job_report_new.csv"), "r");
+        $firstline = true;
+        while (($data = fgetcsv($job_report_file, 2000, ",")) !== FALSE) {
+            if (!$firstline) {
+
+                $tarp_situation=$data['7'];
+                if($tarp_situation == 2 || $tarp_situation == 4){
+                    $tarp_situation='Y';
+                }else{
+                    $tarp_situation='N';
+                }
+
+                if(empty($data['4']) || is_null($data['4'])){
+                    $sandbag=0;
+                }else{
+                    $sandbag=$data['4'];
+                }
 
 
-// updates Scripts
 
 
-//    public function scripts($id){
-//
-////        $job=AssignmentFirebaseRepository::find($id);
-//dd(/test===)
-////        dump($job->firebase);
-//
-//    }
+                $job= JobReport::where('assignment_id', $data['0'])->where('assignment_job_type_id', $data['1'])->first();
+                if($job) {
+                    $job_report = [
+                        'assignment_id' => $data['0'],
+                        'assignment_job_type_id' => $data['1'],
+                        'service_date' => $data['2'],
+                        'pitch' => $data['3'],
+                        'sandbags' => $sandbag,
+                        'created_by' => $data['5'],
+                        'updated_by' => $data['6'],
+                        'tarp_situation' => $tarp_situation,
+                        'plywoods' => $data['8'],
+                        's2x4x8' => $data['9'],
+                        's2x4x12' => $data['10'],
+                        's2x4x16' => $data['11'],
+                        'job_info' => $data['12'],
+                    ];
+
+                    $job->update($job_report);
+                }else{
+                    $job_report = [
+                        'assignment_id' => $data['0'],
+                        'assignment_job_type_id' => $data['1'],
+                        'service_date' => $data['2'],
+                        'pitch' => $data['3'],
+                        'sandbags' => $sandbag,
+                        'created_by' => $data['5'],
+                        'updated_by' => $data['6'],
+                        'tarp_situation' => $tarp_situation,
+                        'plywoods' => $data['8'],
+                        's2x4x8' => $data['9'],
+                        's2x4x12' => $data['10'],
+                        's2x4x16' => $data['11'],
+                        'job_info' => $data['12'],
+                    ];
+
+                    JobReport::insert($job_report);
+                }
+
+
+            }
+            $firstline = false;
+
+        }
+
+        fclose($job_report_file);
+
+    }
+    public function claim_import(){
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '2512M');
+        $base_path="DB/1/";
+        $file_open = fopen(base_path("$base_path/claim_number.csv"), "r");
+        $firstline = true;
+        while (($data = fgetcsv($file_open, 20000, ",")) !== FALSE) {
+            if (!$firstline) {
+                $job= Assignment::find($data['0']);
+                if($job){
+                    $update=[
+                        'claim_number' => $data['1']
+                    ];
+                    $job->update($update);
+                }
+            }
+            $firstline = false;
+        }
+        fclose($file_open);
+
+    }
     public function marketing_rep()
     {
-//        dd('sddsdsdds');
+
         $base_path="DB/scripts/";
         $file_open = fopen(base_path("$base_path/referrals_marketingrep.csv"), "r");
         $firstline = true;
@@ -897,8 +1036,88 @@ class GdriveController extends Controller
 
 
     }
+    public function adjust_gdrive()
+    {
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '2512M');
+        $base_path="DB/1/";
+
+        //   Gdrive
+        $adjust_gdrive = fopen(base_path("$base_path/ajust_gdrive.csv"), "r");
+        $firstline = true;
+        while (($data = fgetcsv($adjust_gdrive, 2000, ",")) !== FALSE) {
+            if (!$firstline) {
+                $gdrive=[
+                    "assignment_id" => $data['0'],
+                    "job_path" => $data['1'],
+                    "kruger_pictures_path" => $data['2'],
+                    "pics_front_kruger_path" => $data['3'],
+                    "pics_inside_kruger_path" => $data['4'],
+                    "pics_before_kruger_path" => $data['5'],
+                    "pics_after_kruger_path" => $data['6'],
+                    "pictures_path" => $data['7'],
+                    "pics_before_path" => $data['8'],
+                    "pics_after_path" => $data['9'],
+                    "forms_path" => $data['10'],
+                    "job_link" => $data['11'],
+                    "pics_link" => $data['12'],
+                    "kruger_pictures_link" => $data['13']
+                ];
+                Gdrive::insert($gdrive);
+            }
+            $firstline = false;
+
+
+        }
+        fclose($adjust_gdrive);
+
+
+    }
+
+    public function adjust_images($id)
+    {
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '2512M');
+
+
+        $base_path="DB/1/";
+
+        //   $adjust_images
+        $adjust_images = fopen(base_path("$base_path/import_pictures_$id.csv"), "r");
+        $firstline = true;
+        while (($data = fgetcsv($adjust_images, 20000, ",")) !== FALSE) {
+            if (!$firstline) {
 
 
 
+                    if(is_null($data['7']) || empty($data['7'])){
+                        $category_id = 25;
+                    }else{
+                        $category_id = $data['7'];
+                    }
+
+                    $gallery=[
+                        "assignment_id" => $data['3'],
+                        "category_id" => $category_id,
+                        "created_by" => 73,
+                        "updated_by" => 73,
+                        "img_id" => $data['1'],
+                        "b64" => $data['2'],
+                        "type" => $data['6']
+                    ];
+                    Gallery::insert($gallery);
+                }
+
+
+            $firstline = false;
+
+
+        }
+        fclose($adjust_images);
+
+
+
+
+    }
 
 }
