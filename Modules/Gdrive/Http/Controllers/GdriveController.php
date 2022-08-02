@@ -394,7 +394,7 @@ class GdriveController extends Controller
             $this->updateHistoryFiles($id, 'uploading new Kruger after pictures:');
             $count=1;
             foreach ($gallery->where('type','pics_after') as $img){
-                $filename ="$gdrive->pics_after_kruger_path/before_$count.jpg";
+                $filename ="$gdrive->pics_after_kruger_path/after_$count.jpg";
                 @list($type, $file_data) = explode(';', $img->b64);
                 @list(, $file_data) = explode(',', $file_data);
                 $storage->put($filename,base64_decode($file_data));
