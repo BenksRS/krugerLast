@@ -14,6 +14,7 @@ use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsEvents;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
 use Modules\Assignments\Entities\Gallery;
+use Modules\Assignments\Entities\JobReport;
 use Modules\Assignments\Entities\Signdata;
 use Modules\Assignments\Repositories\AssignmentFirebaseRepository;
 use Modules\Assignments\Repositories\AssignmentRepository;
@@ -203,7 +204,7 @@ class GdriveController extends Controller
         // remove Pics only pdfs
         try {
             $this->updateHistoryFiles($id, 'removing Pics only pdfs:');
-            $files = $storage->files($gdrive->pics_front_kruger_path);
+            $files = $storage->files($gdrive->kruger_pictures_path);
             foreach ($files as $file){
                 $storage->delete($file);
             }
@@ -897,6 +898,74 @@ class GdriveController extends Controller
         //
     }
 
+    public function job_report_import(){
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '2512M');
+        $base_path="DB/1/";
+                //$job_report
+        $job_report_file = fopen(base_path("$base_path/db_031_job_report.csv"), "r");
+        $firstline = true;
+        while (($data = fgetcsv($job_report_file, 2000, ",")) !== FALSE) {
+            if (!$firstline) {
+
+                $tarp_situation=$data['7'];
+                if($tarp_situation == 2 || $tarp_situation == 4){
+                    $tarp_situation='Y';
+                }else{
+                    $tarp_situation='N';
+                }
+
+
+
+
+                $job= JobReport::where('assignment_id', $data['0'])->where('assignment_job_type_id', $data['1'])->first();
+                if($job) {
+                    $job_report = [
+                        'assignment_id' => $data['0'],
+                        'assignment_job_type_id' => $data['1'],
+                        'service_date' => $data['2'],
+                        'pitch' => $data['3'],
+                        'sandbags' => $data['4'],
+                        'created_by' => $data['5'],
+                        'updated_by' => $data['6'],
+                        'tarp_situation' => $tarp_situation,
+                        'plywoods' => $data['8'],
+                        's2x4x8' => $data['9'],
+                        's2x4x12' => $data['10'],
+                        's2x4x16' => $data['11'],
+                        'job_info' => $data['12'],
+                    ];
+
+                    $job->update($job_report);
+                }else{
+                    $job_report = [
+                        'assignment_id' => $data['0'],
+                        'assignment_job_type_id' => $data['1'],
+                        'service_date' => $data['2'],
+                        'pitch' => $data['3'],
+                        'sandbags' => $data['4'],
+                        'created_by' => $data['5'],
+                        'updated_by' => $data['6'],
+                        'tarp_situation' => $tarp_situation,
+                        'plywoods' => $data['8'],
+                        's2x4x8' => $data['9'],
+                        's2x4x12' => $data['10'],
+                        's2x4x16' => $data['11'],
+                        'job_info' => $data['12'],
+                    ];
+
+                    JobReport::insert($job_report);
+                }
+
+
+            }
+            $firstline = false;
+
+        }
+
+        fclose($job_report_file);
+
+    }
     public function claim_import(){
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', '2512M');
