@@ -14,13 +14,14 @@
                                 <div class="col-lg-12">
 
                                     @if($jobs->isNotEmpty())
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-6">
                                             <h4>Jobs</h4>
                                             <table class="table table-sm m-0">
                                                 <tbody>
                                                 @foreach($jobs as $job)
                                                     <tr>
-                                                        <th scope="row"><a href="{{url('assignments/show/'.$job->id)}}">{{$job->full_name}}</a></th>
+                                                        <td ><a href="{{url('assignments/show/'.$job->id)}}">{{$job->full_name}}</a> </td>
+                                                        <td > {{$job->claim_number}} </td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
