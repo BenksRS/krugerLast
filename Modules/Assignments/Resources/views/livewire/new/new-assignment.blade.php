@@ -259,14 +259,14 @@
                         @endif
 
 
-                        @if($showCarrierInfo)
-                        <div class="col-lg-12">
-                            <div class="mb-3">
-                                <label for="carrier_info" class="form-label">Carrier Info</label>
-                                <input type="text" class="form-control" id="carrier_info" wire:model="carrier_info" placeholder="Carrier info..." autocomplete="nope">
-                            </div>
-                        </div>
-                        @endif
+{{--                        @if($showCarrierInfo)--}}
+{{--                        <div class="col-lg-12">--}}
+{{--                            <div class="mb-3">--}}
+{{--                                <label for="carrier_info" class="form-label">Carrier Info</label>--}}
+{{--                                <input type="text" class="form-control" id="carrier_info" wire:model="carrier_info" placeholder="Carrier info..." autocomplete="nope">--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        @endif--}}
                         <div class="col-lg-12">
                             <div class="mb-3">
                                 <label for="claim_info" class="form-label">Claim #</label>

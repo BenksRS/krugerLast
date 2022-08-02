@@ -8,6 +8,7 @@ use Modules\Assignments\Entities\Assignment;
 use Auth;
 use Modules\Assignments\Entities\AssignmentFinance;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
+use Modules\Assignments\Entities\Signdata;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
 use Modules\Referrals\Entities\Referral;
 use Modules\Referrals\Entities\ReferralAuthorizationPivot;
@@ -33,6 +34,7 @@ class Actions extends Component
 
 //        dd($assignment->finance); dssd
         $this->checkFinance();
+        $this->checkSign();
         $this->checkAuthorizations();
 
     }
@@ -175,6 +177,20 @@ class Actions extends Component
                 'class' => 'danger',
                 'message' => $message
             ]);
+        }
+    }
+    public function checkSign(){
+        $signatureALl = Signdata::where('assignment_id', $this->assignment->id)->get();
+        $signaturePreferred =Signdata::where('assignment_id', $this->assignment->id)->where('preferred', 'Y')->get();
+        if(count($signatureALl) > 0){
+            if($signaturePreferred == 0){
+                $sign = Signdata::where('assignment_id', $this->assignment->id)->first();
+                $sign->update([
+                    "preferred" => 'Y',
+                ]);
+            }
+
+
         }
     }
     public function checkFinance()

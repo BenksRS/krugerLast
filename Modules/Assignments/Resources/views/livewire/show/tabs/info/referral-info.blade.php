@@ -59,7 +59,7 @@
                             <td><h5 class="font-size-14" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Dol Date"><i class="bx bx-calendar me-1 text-muted"></i>{{$assignment->dol_date}}</h5></td>
                         </tr>
                         <tr>
-                            <th scope="row">Create at:</th>
+                            <th scope="row">Created:</th>
                             <td><h5 class="font-size-14" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Dol Date"><i class="bx bx-calendar me-1 text-muted"></i>{{$assignment->created_date}} - {{$assignment->user_created->name}}</h5></td>
                         </tr>
                         <tr>

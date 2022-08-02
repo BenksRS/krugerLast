@@ -897,18 +897,6 @@ class GdriveController extends Controller
         //
     }
 
-
-
-// updates Scripts
-
-
-//    public function scripts($id){
-//
-////        $job=AssignmentFirebaseRepository::find($id);
-//dd(/test===)
-////        dump($job->firebase);
-//
-//    }
     public function claim_import(){
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', '2512M');
