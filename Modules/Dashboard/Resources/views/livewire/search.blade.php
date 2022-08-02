@@ -2,7 +2,7 @@
     <form class="app-search d-none d-lg-block">
         <form class="app-search d-lg-grid">
             <div class="position-relative col-lg-12">
-                <input type="text" class="form-control input-group-lg" wire:model="searchAll" placeholder="Search here.. #Job ID  #Name" >
+                <input type="text" class="form-control input-group-lg" wire:model="searchAll" placeholder="Search here.. #Job ID  #Name #Claim Number" >
                 <span class="bx bx-search-alt"></span>
             </div>
 
