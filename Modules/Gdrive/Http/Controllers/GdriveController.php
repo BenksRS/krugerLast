@@ -936,9 +936,6 @@ class GdriveController extends Controller
         fclose($adjust_gdrive);
 
 
-
-
-
     }
 
     public function adjust_images($id)

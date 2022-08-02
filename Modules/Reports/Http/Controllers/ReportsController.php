@@ -19,7 +19,6 @@ class ReportsController extends Controller
      */
     public function index()
     {
-
         $page_info = (object)[
             'title' => 'Reports Info',
             'back' => url('reports'),
@@ -88,6 +87,6 @@ class ReportsController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }

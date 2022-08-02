@@ -67,7 +67,34 @@ class Search extends Component
 
         switch ($this->filter_type){
             case 'jobs':
-                $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected)->get();
+
+
+
+                switch ($this->filter_date){
+                    case 'created':
+                        $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected)->get();
+                        break;
+                    case 'schedulled':
+                        $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected)->get();
+                        break;
+                    case 'billed':
+                        $this->list=AssignmentFinanceRepository::DateBilled($date_from,$date_to)->get();
+                        if($this->techSelected){
+                            $this->list=$this->list->where('scheduling.tech_id', $this->techSelected);
+                        }
+
+                        break;
+                    case 'paid':
+                        $this->list=AssignmentFinanceRepository::DatePaid($date_from,$date_to)->get();
+
+
+                        break;
+                }
+
+
+
+
+
                 if($this->eventSelected){
 //                    dd('eventSelected');
                     $this->list=$this->list->where('event_id', $this->eventSelected);
