@@ -34,7 +34,7 @@ class Actions extends Component
 
 //        dd($assignment->finance); dssd
         $this->checkFinance();
-//        $this->checkSign();
+        $this->checkSign();
         $this->checkAuthorizations();
 
     }
@@ -183,7 +183,7 @@ class Actions extends Component
         $signatureALl = Signdata::where('assignment_id', $this->assignment->id)->get();
         $signaturePreferred =Signdata::where('assignment_id', $this->assignment->id)->where('preferred', 'Y')->get();
         if(count($signatureALl) > 0){
-            if($signaturePreferred == 0){
+            if(count($signaturePreferred) == 0){
                 $sign = Signdata::where('assignment_id', $this->assignment->id)->first();
                 $sign->update([
                     "preferred" => 'Y',
