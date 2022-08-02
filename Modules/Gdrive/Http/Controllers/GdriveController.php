@@ -915,6 +915,12 @@ class GdriveController extends Controller
                     $tarp_situation='N';
                 }
 
+                if(empty($data['4']) || is_null($data['4'])){
+                    $sandbag=0;
+                }else{
+                    $sandbag=$data['4'];
+                }
+
 
 
 
@@ -925,7 +931,7 @@ class GdriveController extends Controller
                         'assignment_job_type_id' => $data['1'],
                         'service_date' => $data['2'],
                         'pitch' => $data['3'],
-                        'sandbags' => $data['4'],
+                        'sandbags' => $sandbag,
                         'created_by' => $data['5'],
                         'updated_by' => $data['6'],
                         'tarp_situation' => $tarp_situation,
