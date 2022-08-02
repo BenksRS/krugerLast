@@ -34,7 +34,7 @@ class Actions extends Component
 
 //        dd($assignment->finance); dssd
         $this->checkFinance();
-        $this->checkSign();
+//        $this->checkSign();
         $this->checkAuthorizations();
 
     }
