@@ -18,7 +18,7 @@ class JobReports extends Component
     {
         $this->assignment = $assignment;
         $this->noJob = $this->assignment->notes->where('type','no_job');
-//        dd($this->noJob);
+//        dd($this->noJob); teste
     }
     public function processJobtype($id){
         $this->assignment = Assignment::find($id);
