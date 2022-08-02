@@ -33,4 +33,5 @@ Route::prefix('/gdrive')->name('gdrive.')->group(function () {
 Route::prefix('/scripts')->name('scripts.')->group(function () {
 //    Route::get('/{id}', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'scripts'])->name('index');
     Route::get('/marketing_rep/', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'marketing_rep'])->name('marketing_rep');
+    Route::get('/claim_import/', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'claim_import'])->name('claim_import');
 });

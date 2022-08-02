@@ -909,9 +909,29 @@ class GdriveController extends Controller
 ////        dump($job->firebase);
 //
 //    }
+    public function claim_import(){
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '2512M');
+        $base_path="DB/1/";
+        $file_open = fopen(base_path("$base_path/claim_number.csv"), "r");
+        $firstline = true;
+        while (($data = fgetcsv($file_open, 20000, ",")) !== FALSE) {
+            if (!$firstline) {
+                $job= Assignment::find($data['0']);
+                if($job){
+                    $update=[
+                        'claim_number' => $data['1']
+                    ];
+                    $job->update($update);
+                }
+            }
+            $firstline = false;
+        }
+        fclose($file_open);
+
+    }
     public function marketing_rep()
     {
-//        dd('sddsdsdds');
 
         $base_path="DB/scripts/";
         $file_open = fopen(base_path("$base_path/referrals_marketingrep.csv"), "r");
