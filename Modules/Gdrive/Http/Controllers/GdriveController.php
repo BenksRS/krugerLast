@@ -85,12 +85,14 @@ class GdriveController extends Controller
         $auths = $data->authorizations;
 
 
+        $sign = Signdata::where('assignment_id',$id)->where('preferred','Y')->first();
 
-        if(count($auths) > 0){
+
+        if(count($auths) > 0 && isset($sign)){
             $this->updateHistoryFiles($id, 'creating Forms:');
            foreach ($auths as $auth){
                // gera auth
-               $sign = Signdata::where('assignment_id',$id)->where('preferred','Y')->first();
+              
 
                if($sign == null){
                    $sign = Signdata::where('assignment_id',$id)->latest('id')->first();
