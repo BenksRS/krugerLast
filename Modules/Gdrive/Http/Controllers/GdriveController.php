@@ -903,7 +903,7 @@ class GdriveController extends Controller
         ini_set('memory_limit', '2512M');
         $base_path="DB/1/";
                 //$job_report
-        $job_report_file = fopen(base_path("$base_path/db_031_job_report.csv"), "r");
+        $job_report_file = fopen(base_path("$base_path/db_031_job_report_new.csv"), "r");
         $firstline = true;
         while (($data = fgetcsv($job_report_file, 2000, ",")) !== FALSE) {
             if (!$firstline) {
