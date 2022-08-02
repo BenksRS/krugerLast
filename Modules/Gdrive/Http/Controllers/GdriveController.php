@@ -12,9 +12,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsEvents;
+use Modules\Assignments\Entities\AssignmentsStatusPivot;
 use Modules\Assignments\Entities\Gallery;
 use Modules\Assignments\Entities\Signdata;
 use Modules\Assignments\Repositories\AssignmentFirebaseRepository;
+use Modules\Assignments\Repositories\AssignmentRepository;
 use Modules\Gdrive\Entities\Gdrive;
 use Modules\Gdrive\Entities\QueeDir;
 use Modules\Gdrive\Entities\QueeFiles;
@@ -66,6 +68,55 @@ class GdriveController extends Controller
 
     }
 
+    public function add_queue_files(){
+
+        $list = AssignmentRepository::where('status_id', 20)->get();
+        foreach ($list as $item) {
+
+            $now = Carbon::now();
+            QueeFiles::where('assignment_id', $item->id)->delete();
+
+            $history = "<b># Added to queue</b> - $now";
+            QueeFiles::create([
+                'assignment_id' => $item->id,
+                'order' => 50,
+                'status' => 'pending',
+                'history' => $history
+            ])->save();
+
+            // change status
+            AssignmentsStatusPivot::create([
+                'assignment_id'=> $item->id,
+                'assignment_status_id'=> 4,
+                'created_by'=> 73,
+            ]);
+            $update_status=[
+                'status_id'  => 4,
+                'updated_by'  => 73,
+            ];
+
+            $item->update($update_status);
+
+
+
+        }
+    }
+    public function add_queue_dir(){
+        $list = AssignmentRepository::open()->get();
+        foreach ($list as $item){
+            $queue=QueeDir::where('assignment_id',$item->id)->first();
+            if(!isset($queue)){
+                $now=Carbon::now();
+                $history= "<b># Added to queue</b> - $now";
+                QueeDir::create([
+                    'assignment_id' =>$item->id,
+                    'order' =>50,
+                    'status' =>'pending',
+                    'history' =>$history
+                ])->save();
+            }
+        }
+    }
     public function queue_dir()
     {
         $queue=QueeDir::whereIn('status',['pending', 'processing'])->orderBy('order')->first();
@@ -135,7 +186,7 @@ class GdriveController extends Controller
 
            }
         }else{
-            $this->updateHistoryFiles($id, 'No Forms Found:');
+            $this->updateHistoryFiles($id, 'No Forms or Signature Found:');
         }
 
     }
