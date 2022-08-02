@@ -31,6 +31,7 @@ class Fileupload extends Component
         ini_set('post_max_size', '2000M');
         ini_set('max_input_time', 300);
         ini_set('max_execution_time', 300);
+        ini_set('max_file_uploads', 300);
 
         $this->validate([
             'photos.*' => 'mimes:jpg,jpeg,png',
