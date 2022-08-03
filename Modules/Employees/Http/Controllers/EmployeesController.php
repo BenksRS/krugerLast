@@ -14,7 +14,15 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        return view('employees::index');
+        $page_info = (object)[
+            'title' => 'Employees List',
+            'back' => url('employees'),
+            'back_title' => 'Employees List'
+        ];
+        \session()->flash('page',$page_info);
+        $page =\session()->get('page');
+
+        return view('employees::index', compact('page'));
     }
 
     /**
