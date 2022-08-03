@@ -14,5 +14,6 @@
     "Reports": true,
     "Integration": true,
     "Gdrive": true,
-    "Employees": true
+    "Employees": true,
+    "Menu": true
 }

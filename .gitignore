@@ -15,3 +15,5 @@ yarn-error.log
 /.idea
 /.vscode
 Themes/system/assets/modules/css/modules.css
+firebase-credentials.json
+google-services.json
