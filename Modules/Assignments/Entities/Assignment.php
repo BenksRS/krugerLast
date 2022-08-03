@@ -37,6 +37,8 @@ class Assignment extends Model {
         'claim_number',
         'adjuster_info',
         'status_id',
+        'lien_info',
+        'lien_date',
         'status_collection_id',
         'inside_info'
     ];

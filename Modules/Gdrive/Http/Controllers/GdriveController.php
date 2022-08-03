@@ -972,6 +972,27 @@ class GdriveController extends Controller
         fclose($job_report_file);
 
     }
+    public function lien_import(){
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '2512M');
+        $base_path="DB/1/";
+        $file_open = fopen(base_path("$base_path/import_lien_info.csv"), "r");
+        $firstline = true;
+        while (($data = fgetcsv($file_open, 20000, ",")) !== FALSE) {
+            if (!$firstline) {
+                $job= Assignment::find($data['0']);
+                if($job){
+                    $update=[
+                        'lien_date' => $data['1'],
+                        'lien_info' => $data['2']
+                    ];
+                    $job->update($update);
+                }
+            }
+            $firstline = false;
+        }
+        fclose($file_open);
+    }
     public function claim_import(){
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', '2512M');

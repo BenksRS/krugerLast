@@ -32,7 +32,6 @@ class Actions extends Component
 
 
 
-//        dd($assignment->finance); dssd
         $this->checkFinance();
         $this->checkSign();
         $this->checkAuthorizations();
@@ -195,10 +194,10 @@ class Actions extends Component
     }
     public function checkFinance()
     {
+        $this->assignment = AssignmentFinanceRepository::find($this->assignment->id);
         $status_finance= $this->assignment->finance->balance->status;
         $this->dateupdate = Carbon::now();
 
-//        dd($this->assignment->finance);
 
         if($status_finance!='pending'){
             $this->changeStatus($status_finance);

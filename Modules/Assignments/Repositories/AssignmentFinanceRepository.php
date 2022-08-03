@@ -12,7 +12,7 @@ class AssignmentFinanceRepository extends Assignment {
 
     protected $with    =['scheduling','referral','carrier','status','status_collection','event','phones','user_updated','user_created','job_types','invoices', 'payments'];
 
-    protected $appends = ['finance','follow_up_date'];
+    protected $appends = ['finance','follow_up_date', 'lien_date_view'];
 
     public function __construct ()
     {
@@ -24,6 +24,14 @@ class AssignmentFinanceRepository extends Assignment {
         $return = "-";
         if($this->follow_up){
             $return = Carbon::createFromFormat('Y-m-d H:i:s', $this->follow_up)->format('m/d/Y');
+        }
+        return $return;
+    }
+    public function getLienDateViewAttribute (){
+
+        $return = "-";
+        if($this->lien_date){
+            $return = Carbon::createFromFormat('Y-m-d H:i:s', $this->lien_date)->format('m/d/Y');
         }
         return $return;
     }
@@ -68,14 +76,32 @@ class AssignmentFinanceRepository extends Assignment {
 
                     // partial payment
                     $status = ($total_payment > 0 && $total_payment < $total_invoice) ? 10 : $status;
-                    $status_collection = ($total_payment > 0 && $total_payment < $total_invoice) ? 10 : $status;
+                    $status_collection = ($total_payment > 0 && $total_payment < $total_invoice) ? 10 : 5;
+                    break;
+                case 10:
+                    // revise_payment
+                    $status = ($total_invoice == $total_payment) ? 6 : $status;
+
+                    $status_collection = 6;
+                    break;
+                case 24:
+                    // revise paid
+                    $status = ($total_invoice == $total_payment) ? 6 : $status;
+
+                    $status_collection = 6;
                     break;
                 case 6:
-                   // revise_payment
+                    // revise_payment
                     $status = ($total_payment!=$total_invoice) ? 24 : $status;
 
                     $status_collection = 6;
                     break;
+                case 9:
+                    // check paid
+                    $status = ($total_invoice == $total_payment) ? 6 : $status;
+                    $status_collection = ($total_invoice == $total_payment) ? 6 : $status_collection;
+                    break;
+
                 default:
                     $status = ($total_invoice > 0 && $total_payment == 0) ? 5 : $status;
                     $status_collection=$this->status_collection_id;
