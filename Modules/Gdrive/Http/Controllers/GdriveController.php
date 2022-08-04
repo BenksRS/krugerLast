@@ -106,7 +106,7 @@ class GdriveController extends Controller
             ];
 
             $item->update($update_status);
-
+            integration('assignments')->set($item->id);
 
 
         }
