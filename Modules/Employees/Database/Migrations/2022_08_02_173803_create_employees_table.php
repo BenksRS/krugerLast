@@ -13,19 +13,6 @@ class CreateEmployeesTable extends Migration {
      */
     public function up ()
     {
-        Schema::create('employee_groups', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->enum('active', ['Y', 'N'])->default('N');
-            $table->timestamps();
-        });
-
-        Schema::create('employee_group_pivot', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade');
-            $table->foreignId('employee_group_id')->constrained('employee_groups')->onDelete('cascade');
-            $table->timestamps();
-        });
 
         Schema::create('employee_timesheets', function (Blueprint $table) {
             $table->id();

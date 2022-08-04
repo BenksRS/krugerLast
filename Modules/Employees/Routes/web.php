@@ -11,6 +11,8 @@
 |
 */
 
-Route::prefix('employees')->group(function() {
-    Route::get('/', 'EmployeesController@index');
+Route::prefix('/employees')->name('employees.')->group(function () {
+    Route::get('/', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'index'])->name('index');
+    Route::get('/show/{id}', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'show'])->name('show');
+
 });

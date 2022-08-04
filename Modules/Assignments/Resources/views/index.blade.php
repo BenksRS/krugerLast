@@ -18,6 +18,9 @@
         </div>
     </div>
     <!-- end page title -->
-    @livewire('assignments::list.list-all', key('assignments_list_all'))
+
+            @livewire('assignments::list.list-all', key('assignments_list_all'))
+
+
 
 </x-layouts.app>
