@@ -49,6 +49,7 @@ class ReferralController extends AdminController
 
     public function new_prospect()
     {
+
         $page_info = (object)[
             'title' => 'New Prospect',
             'back' => url('Prospect'),
@@ -149,68 +150,24 @@ class ReferralController extends AdminController
 
         return view('referrals::show', compact('referral','page'));
 
-//
-//
-//
-//
-//        if($referral){
-//            $back=route('referrals.index');
-//
-//            echo "<h2>REFERRAL: #{$referral->id}  <a href='{$back}'> << back</a></h2>";
-//            echo "<p>Name: {$referral->company_entity} ( {$referral->company_fictitions} ) </p>";
-//            echo "<p>ADDRESS: {$referral->street}, {$referral->city}, {$referral->state} - {$referral->zipcode}</p>";
-//
-//
-//            $type=$referral->type;
-//            if($type){
-//                echo "<h2>Type:</h2>";
-//                echo "<p>{$type->name} </p>";
-//            }
-//            $carriers=$referral->carriers;
-//
-//            if($carriers){
-//
-//                echo "<h2>Carriers:</h2>";
-//                foreach ($carriers as $carrier){
-//                    echo "<p>{$carrier->company_entity} ( {$carrier->company_fictitions} ) </p>";
-//                }
-//            }
-//
-//            $phones=$referral->phones;
-//
-//            if($phones->isNotEmpty()){
-//                echo "<h2>Phones:</h2>";
-//                foreach ($phones as $phone){
-//                    echo "<p>{$phone->contact} - {$phone->phone} ({$phone->preferred})</p>";
-//                }
-//            }
-//
-//            $authorizathions=$referral->authorizathions;
-//
-//            if($authorizathions){
-////                dd($authorizations);
-//                echo "<h2>Authorizations:</h2>";
-//                foreach ($authorizathions as $authorization){
-//                    echo "<p>{$authorization->name}  ({$authorization->b64})</p>";
-//                }
-//            }
-//
-//
-////            $notes = $referral->notes;
-////            if ( $notes ) {
-////                //                dd($authorizations);
-////                echo "<h2>Notes:</h2>";
-////                foreach ( $notes as $note ) {
-////                    echo "<p> {$note->text} - ( by {$note->user->name} at {$note->created_at} )</p>";
-////                }
-////            }
-//
-//
-//        }
-//
-//
-//
-////        return view('referrals::show');
+    }
+
+    public function show_prospect($id)
+    {
+
+        $referral = Referral::findOrFail($id);
+
+        $page_info = (object)[
+            'title' => 'Prospect Information',
+            'back' => url('/referrals/prospects/'),
+            'back_title' => 'Prospect List'
+        ];
+        \session()->flash('page',$page_info);
+        $page =\session()->get('page');
+
+
+        return view('referrals::show', compact('referral','page'));
+
     }
 
     /**

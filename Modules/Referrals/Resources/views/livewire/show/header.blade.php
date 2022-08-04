@@ -2,12 +2,10 @@
     <div class="row">
         <div class="col-lg-12">
 
-            {{--kk--}}
-
             <div class="card">
                 <div class="card-body headerboardinfo">
 
-                    @if($show)
+                @if($show)
 
                     <div class="row">
                         <div class="col-lg-6">
@@ -17,7 +15,6 @@
                                         <h5 class="mb-1 upc">{{"$referral->company_entity ($referral->company_fictitions) #$referral->id"}}
                                         </h5>
                                         <p class="mb-0">{{$referral->type->name}}</p>
-
                                     </div>
                                 </div>
                             </div>

@@ -5,6 +5,7 @@ namespace Modules\Employees\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\User\Entities\User;
 
 class EmployeesController extends Controller
 {
@@ -51,7 +52,17 @@ class EmployeesController extends Controller
      */
     public function show($id)
     {
-        return view('employees::show');
+        $user = User::findOrFail($id);
+
+        $page_info = (object)[
+            'title' => 'Employee Information',
+            'back' => url('employees'),
+            'back_title' => 'Employee List'
+        ];
+        \session()->flash('page',$page_info);
+        $page =\session()->get('page');
+
+        return view('employees::livewire.show.show', compact('user','page'));
     }
 
     /**
