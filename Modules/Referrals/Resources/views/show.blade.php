@@ -38,6 +38,9 @@
             <script src="{{ themes('libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
             <script src="{{ themes('libs/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
 
+
+
+
             <!-- Responsive examples -->
             <script src="{{ themes('libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
             <script src="{{ themes('libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>

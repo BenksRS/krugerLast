@@ -85,14 +85,23 @@ class GdriveController extends Controller
                 'history' => $history
             ])->save();
 
+//if(in_array($item->job_types->toArray)
+
+            if($item->job_types->contains(11)){
+                $status_id= 21;
+            }else{
+                $status_id= 4;
+            }
+
+
             // change status
             AssignmentsStatusPivot::create([
                 'assignment_id'=> $item->id,
-                'assignment_status_id'=> 4,
+                'assignment_status_id'=> $status_id,
                 'created_by'=> 73,
             ]);
             $update_status=[
-                'status_id'  => 4,
+                'status_id'  => $status_id,
                 'updated_by'  => 73,
             ];
 
