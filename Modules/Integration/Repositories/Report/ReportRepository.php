@@ -13,7 +13,7 @@ class ReportRepository extends JobReport {
     public function setData ($data)
     {
         $report    = $data['report'];
-        $checklist = $report['checklist'];
+        $checklist = $report['checklist'] ?? [];
         $elements  = $report['elements'];
 
         $checklist = collect($checklist)->mapWithKeys(function ($item) {
