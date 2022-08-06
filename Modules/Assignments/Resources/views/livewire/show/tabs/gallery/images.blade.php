@@ -16,7 +16,6 @@
                                     @livewire('assignments::show.tabs.gallery.fileupload', ['assignment' => $assignment->id, 'type' => 'start_job'], key('assignment_gallery_fileupload_front'))
 
                                 @else
-
                                     @if($listGallery->where('type','start_job')->isNotEmpty())
                                         @foreach($listGallery->where('type','start_job') as $imagem)
                                             {{--                                            ITEM --}}
@@ -54,10 +53,6 @@
                                     @endif{{-- end show images front --}}
 
                                 @endif {{-- end show upload front --}}
-
-
-
-
                             </div>
                         </div>
                     </div>

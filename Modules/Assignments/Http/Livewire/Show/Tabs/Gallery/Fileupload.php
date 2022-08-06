@@ -27,14 +27,8 @@ class Fileupload extends Component
         $this->user = Auth::user();
     }
     public function save(){
-        ini_set('upload_max_filesize', '100M');
-        ini_set('post_max_size', '2000M');
-        ini_set('max_input_time', 300);
-        ini_set('max_execution_time', 300);
-        ini_set('max_file_uploads', 300);
-
         $this->validate([
-            'photos.*' => 'mimes:jpg,jpeg,png',
+            'photos.*' => 'mimes:jpg,jpeg,png|max:102400',
         ]);
 
 

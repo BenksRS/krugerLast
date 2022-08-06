@@ -9,10 +9,18 @@ use Modules\User\Entities\User;
 
 class EmployeesController extends Controller
 {
+
+    public function __construct ()
+    {
+        $this->middleware('auth:user');
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
+    public function phpinfo(){
+    return phpinfo();
+    }
     public function index()
     {
         $page_info = (object)[
@@ -30,6 +38,16 @@ class EmployeesController extends Controller
      * Show the form for creating a new resource.
      * @return Renderable
      */
+    public function upload(Request $request){
+//        dd($request);
+        $image = $request->file('file');
+//
+//        $imageName = time().'.'.$image->extension();
+        return response()->json(['success'=>$image]);
+
+
+//        return view('livewire:employees::show.tabs.receipts.upload');
+    }
     public function create()
     {
         return view('employees::create');

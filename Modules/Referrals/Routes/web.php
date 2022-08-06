@@ -27,7 +27,7 @@ Route::prefix('referrals')->name('referrals.')->group(function () {
 	// Referrals
 	Route::get('/', [ReferralController::class, 'index'])->name('index');
     Route::get('/new', [ReferralController::class, 'new'])->name('new');
-    Route::get('/new/prospect/', [ReferralController::class, 'new_prospect'])->name('new_prospect');
+
 	Route::get('/show/{id}', [ReferralController::class, 'show'])->name('show');
     Route::post('/ref_auth_sync', [ReferralController::class, 'ref_auth_sync'])->name('ref_auth_sync');
     Route::post('/bloco_update', [ReferralController::class, 'bloco_update'])->name('bloco_update');
@@ -48,6 +48,14 @@ Route::prefix('referrals')->name('referrals.')->group(function () {
 		Route::get('/show/{id}', [AuthorizationController::class, 'show'])->name('show');
 		Route::get('/new/{id}', [AuthorizationController::class, 'auth_new'])->name('new');
 	});
+
+    // Referral Prospects
+    Route::prefix('prospects')->name('prospects.')->group(function () {
+//        Route::get('/', [ReferralController::class, 'list_prospects'])->name('list_prospects');
+        Route::get('/new', [ReferralController::class, 'new_prospect'])->name('new_prospect');
+        Route::get('/show/{id}', [ReferralController::class, 'show_prospect'])->name('show_prospect');
+    });
+
 });
 
 

@@ -8,8 +8,6 @@
     <div class="card">
 
         <div class="card-body">
-{{--@dump($list_actives)--}}
-{{--@dump($list_off)--}}
 
 
             <ul class="nav nav-pills bg-light rounded" role="tablist">

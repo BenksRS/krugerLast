@@ -23,39 +23,37 @@
     @livewire('employees::show.tabs', ['user' => $user->id], key('employees_tab_panel'))
 
 
-{{--    @push('js')--}}
-{{--        <script>--}}
-{{--            var taskFlatpickrConfigDate = {--}}
-{{--                enableTime: false,--}}
-{{--                altInput: true,--}}
-{{--                dateFormat: "Y-m-d",--}}
-{{--                altFormat: "m\/d\/Y",--}}
-{{--            };--}}
-{{--            var taskFlatpickrConfigDateTime = {--}}
-{{--                enableTime: true,--}}
-{{--                altInput: true,--}}
-{{--                dateFormat: "Y-m-d H:i",--}}
-{{--                altFormat: "m\/d\/Y h:i K",--}}
-{{--                time_24hr: false--}}
-{{--            };--}}
+    @push('js')
+        <script>
+            var taskFlatpickrConfigDate = {
+                enableTime: false,
+                altInput: true,
+                dateFormat: "Y-m-d",
+                altFormat: "m\/d\/Y",
+            };
+            var taskFlatpickrConfigDateTime = {
+                enableTime: true,
+                altInput: true,
+                dateFormat: "Y-m-d H:i",
+                altFormat: "m\/d\/Y h:i K",
+                time_24hr: false
+            };
 
-{{--            function componentsLoadPage(){--}}
-{{--                console.log('START components');--}}
-{{--                $('.select2').select2();--}}
-{{--                $('.flatpickr_date').flatpickr(taskFlatpickrConfigDate);--}}
-{{--                $('.flatpickr_datetime').flatpickr(taskFlatpickrConfigDateTime);--}}
-{{--                console.log('END components')--}}
+            function componentsLoadPage(){
+                console.log('START components employees');
+                $('.select2').select2();
+                $('.dropzone').dropzone();
+                $('.flatpickr_date').flatpickr(taskFlatpickrConfigDate);
+                $('.flatpickr_datetime').flatpickr(taskFlatpickrConfigDateTime);
+                console.log('END components employees')
 
-{{--            }--}}
-{{--            document.addEventListener("DOMContentLoaded", () => {--}}
-{{--                Livewire.hook('message.processed', (message, component) => {componentsLoadPage()})--}}
-{{--            });--}}
-{{--        </script>--}}
+            }
+            document.addEventListener("DOMContentLoaded", () => {
+                Livewire.hook('message.processed', (message, component) => {componentsLoadPage()})
+            });
+        </script>
 
-{{--    @endpush--}}
-
-
-
+    @endpush
 </x-layouts.app>
 
 

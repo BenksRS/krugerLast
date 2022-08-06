@@ -20,7 +20,7 @@
 
                             <div class="col-lg-1 align-self-center">
                                 <div class="text-lg-center mt-4 mt-lg-0">
-                                    <span class="badge {{($user->active) ? "bg-active" : 'bg-danger' }}  p-2">{{($user->active) ? "Active" : 'Disable' }}</span>
+                                    <span class="badge {{$user->active == 'Y' ? "bg-active" : 'bg-danger' }}  p-2">{{$user->active == 'Y' ? "Active" : 'Disable' }}</span>
                                 </div>
                             </div>
                             <div class="col-lg-5 d-none d-lg-block">
