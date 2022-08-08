@@ -1,26 +1,37 @@
 <?php
 
 namespace Modules\Employees\Http\Livewire\Show\Tabs\Receipts;
-
+use Auth;
 use Illuminate\Http\Request;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Modules\User\Entities\User;
 
 class Add extends Component
 {
 
+    use WithFileUploads;
+    public $photo;
+    public $auth_user;
+    public $user;
+    public $amount;
+    public $category;
 
-    public function upload(Request $request){
-//        $photos = $request->file('file');
-//        dump($request->files);
-//        foreach ($photos as $photo) {
-//
-//            $imagedata = file_get_contents($photo->path());
-//            $base64 = base64_encode($imagedata);
-//            $b64 = 'data:image/jpeg;base64,' . $base64;
-//
-//
-//        }
+    public function mount(User $user)
+    {
 
+        $this->user = $user;
+        $this->auth_user = Auth::user();
+    }
+    public function updated($field)
+    {
+        $array = array('amount');
+
+        if (in_array($field, $array))
+        {
+            $this->{$field} = ($this->{$field} != '') ? number_format(preg_replace('/[^0-9.]+/', '', $this->{$field}), 2) : '';
+
+        }
     }
     public function render()
     {

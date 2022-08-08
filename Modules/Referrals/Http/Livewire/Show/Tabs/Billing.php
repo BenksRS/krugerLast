@@ -34,6 +34,19 @@ class Billing extends Component
 
 
     }
+
+    public function addNewNote(){
+
+        $update=[
+            'days_from_billing' => $this->days_from_billing,
+            'days_from_scheduling' => $this->days_from_scheduling,
+            'days_from_scheduling_lien' => $this->days_from_scheduling_lien,
+            'description' => $this->description
+        ];
+        $this->referralBilling->update($update);
+        $this->referralBilling = ReferralBilling::where('referral_id',$this->referral->id)->first();
+        $this->showBilling = !$this->showBilling;
+    }
     public function edit(){
         $this->showBilling = !$this->showBilling;
     }

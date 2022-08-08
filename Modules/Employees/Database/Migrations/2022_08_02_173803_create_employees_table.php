@@ -46,6 +46,21 @@ class CreateEmployeesTable extends Migration {
             $table->timestamps();
         });
 
+        Schema::create('employee_timesheet_days', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('employee_timesheet_id')->constrained('employee_timesheets')->onDelete('cascade');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('cascade');
+            $table->timestamp('date');
+            $table->string('day_week');
+            $table->boolean('off')->default(true);
+            $table->boolean('out')->default(false);
+            $table->boolean('oncall')->default(false);
+            $table->boolean('morning')->default(false);
+            $table->boolean('afternoon')->default(false);
+            $table->boolean('hurricane')->default(false);
+            $table->timestamps();
+        });
 
     }
 
