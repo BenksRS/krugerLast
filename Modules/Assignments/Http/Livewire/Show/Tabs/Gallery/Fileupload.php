@@ -28,29 +28,30 @@ class Fileupload extends Component
     }
     public function save(){
         $this->validate([
-            'photos.*' => 'mimes:jpg,jpeg,png|max:102400',
+            'photos.*' => 'mimes:jpg,jpeg,png',
         ]);
 
 
+        if($this->photos) {
+            foreach ($this->photos as $photo) {
 
-        foreach ($this->photos as $photo) {
-//            dd($photo);
-            $imagedata = file_get_contents($photo->path());
-            $base64 = base64_encode($imagedata);
-            $b64='data:image/jpeg;base64,'.$base64;
+                $imagedata = file_get_contents($photo->path());
+                $base64 = base64_encode($imagedata);
+                $b64='data:image/jpeg;base64,'.$base64;
 
-      Gallery::create([
-                'assignment_id' => $this->assignment->id,
-                'category_id' => 25,
-                'created_by' => $this->user->id,
-                'updated_by' => $this->user->id,
-                'img_id' => rand(2,500),
-                'b64' => $b64,
-                'type' => $this->type,
-            ])->save();
+                Gallery::create([
+                    'assignment_id' => $this->assignment->id,
+                    'category_id' => 25,
+                    'created_by' => $this->user->id,
+                    'updated_by' => $this->user->id,
+                    'img_id' => rand(2,500),
+                    'b64' => $b64,
+                    'type' => $this->type,
+                ])->save();
+            }
+            $this->emit('imageUploaded');
         }
 
-        $this->emit('imageUploaded');
     }
 
     public function render()

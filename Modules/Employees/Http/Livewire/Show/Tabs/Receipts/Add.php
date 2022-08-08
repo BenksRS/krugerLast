@@ -11,7 +11,7 @@ class Add extends Component
 
     public function upload(Request $request){
 //        $photos = $request->file('file');
-        dump($request->files);
+//        dump($request->files);
 //        foreach ($photos as $photo) {
 //
 //            $imagedata = file_get_contents($photo->path());
