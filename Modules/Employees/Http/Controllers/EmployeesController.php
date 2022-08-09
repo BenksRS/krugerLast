@@ -445,6 +445,12 @@ class EmployeesController extends Controller
 
 
 
+    public function guia(){
+        $assignmnet=AssignmentFinanceRepository::DateSchedulled('2022-01-01', Carbon::now())->whereIn('status_id', [5,6,10,24,9])->get();
+        foreach ($assignmnet as $row){
+            dump($row->id);
+        }
+    }
     public function script_comission(){
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', '2512M');
@@ -478,7 +484,7 @@ class EmployeesController extends Controller
     public function comission_marketing_rules($id)
     {
         $assignment = AssignmentFinanceRepository::find($id);
-//dd($assignment->finance);
+dd($assignment->finance);
 
         $rulles = EmployeeRules::where('referral_id', $assignment->referral_id)
             ->where('type', 'R')
