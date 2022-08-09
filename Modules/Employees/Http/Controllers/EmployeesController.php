@@ -484,7 +484,7 @@ class EmployeesController extends Controller
     public function comission_marketing_rules($id)
     {
         $assignment = AssignmentFinanceRepository::find($id);
-dd($assignment->finance);
+//dd($assignment->finance);
 
         $rulles = EmployeeRules::where('referral_id', $assignment->referral_id)
             ->where('type', 'R')
