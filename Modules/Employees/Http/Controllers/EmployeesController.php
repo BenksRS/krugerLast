@@ -446,7 +446,7 @@ class EmployeesController extends Controller
 
 
     public function guia(){
-        $assignmnet=AssignmentFinanceRepository::DateSchedulled('2022-01-01', Carbon::now())->whereIn('status_id', [5,6,10,24,9])->get();
+        $assignmnet=AssignmentFinanceRepository::DateSchedulled('2022-01-01', Carbon::now())->whereIn('status_id', [5,6,10,24,9])->where('id','>',29811)->get();
         foreach ($assignmnet as $row){
             dump($row->id);
         }
@@ -454,7 +454,7 @@ class EmployeesController extends Controller
     public function script_comission(){
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', '2512M');
-        $assignmnet=AssignmentFinanceRepository::DateSchedulled('2022-01-01', Carbon::now())->whereIn('status_id', [5,6,10,24,9])->get();
+        $assignmnet=AssignmentFinanceRepository::DateSchedulled('2022-01-01', Carbon::now())->whereIn('status_id', [5,6,10,24,9])->where('id','>',29811)->get();
 
         foreach ($assignmnet as $row){
             try {
@@ -504,8 +504,10 @@ class EmployeesController extends Controller
 
             if ($check_start_date === TRUE && $check_end_date === TRUE) {
 
+                if($assignment->finance->balance->total >= 0){
+                    $this->apply_comission_rule($rulle->id, $id, "JOB");
+                }
 
-                $this->apply_comission_rule($rulle->id, $id, "JOB");
 
             }
         }
@@ -533,8 +535,9 @@ class EmployeesController extends Controller
 
             if ($check_start_date === TRUE && $check_end_date === TRUE) {
 
-//                dd('aqui');
-                $this->apply_comission_rule($rulle->id, $id, "JOB");
+                if($assignment->finance->balance->total >= 0) {
+                    $this->apply_comission_rule($rulle->id, $id, "JOB");
+                }
 
             }
         }

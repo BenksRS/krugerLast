@@ -59,7 +59,7 @@ class AssignmentFinanceRepository extends Assignment {
         $status='billed';
 
         //check status
-        if($total_invoice > 0 ){
+        if(isset($total_invoice)){
             // billed
 //            $status=5;
             $status_collection=5;
@@ -153,7 +153,7 @@ class AssignmentFinanceRepository extends Assignment {
 
 
             $collection=['status' =>  $status_collection];
-            if(in_array($this->status_id, [5,6,9,10,]) ){
+            if(in_array($this->status_id, [5,6,9,10,24]) ){
                 $collection=(object)[
                     'billed_date'  =>$billed_date,
                     'billed_date_view'  =>$billed_date_view,
