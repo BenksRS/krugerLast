@@ -50,10 +50,12 @@ class AssignmentFinanceRepository extends Assignment {
         $total_payment=$this->payments->whereIn('payment_type',['partial_payment','total_payment'])->sum('amount');
         $total_payment_fees=$this->payments->whereIn('payment_type',['fee_payment'])->sum('amount');
 
+//dump($total_invoice);
+//dump($total_payment);
+        $balance=(float)bcsub($total_invoice,$total_payment,2);
 
-        $balance=($total_invoice-$total_payment);
-
-
+//        dump($balance);
+//        dd('aqui');
         $status='billed';
 
         //check status
@@ -159,6 +161,7 @@ class AssignmentFinanceRepository extends Assignment {
                     'days_from_billing'  =>$days_from_billing,
                     'days_from_service'  =>$days_from_service,
                     'service_date' => $service_date,
+                    'paid_date' => $paid_date,
                     'status' =>  $status,
                     'status_collection' =>  $status_collection,
                 ];

@@ -1,3 +1,8 @@
 <div>
-    <h3>The <code>Comission</code> livewire component is loaded from the <code>Employees</code> module.</h3>
+
+
+
+    @livewire('employees::show.tabs.comission.show', ['user' => $user->id], key('employees_tab_comission_show'))
+
+
 </div>

@@ -8,6 +8,9 @@ use Modules\User\Entities\User;
 class Receipts extends Component
 {
     public $user;
+
+
+
     public function mount(User $user)
     {
 

@@ -16,5 +16,13 @@ Route::prefix('/employees')->name('employees.')->group(function () {
     Route::get('/show/{id}', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'show'])->name('show');
     Route::get('/upload/', [\Modules\Employees\Http\Livewire\Show\Tabs\Receipts\Add::class, 'upload'])->name('upload');
     Route::get('/phpinfo', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'phpinfo'])->name('phpinfo');
+    Route::get('/rules', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'rules'])->name('rules');
+    Route::get('/commissions', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'commissions'])->name('commissions');
+
+
+    Route::get('/check_comission/{id}', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'check_comission'])->name('check_comission');
+    Route::get('/script_comission', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'script_comission'])->name('script_comission');
+
+
 
 });
