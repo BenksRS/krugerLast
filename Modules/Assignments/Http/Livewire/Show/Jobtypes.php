@@ -36,6 +36,8 @@ class Jobtypes extends Component
         $this->jbSelected = $this->assignment->job_types;
         $this->jbSelectedSingle = $this->assignment->job_types()->where('type', 'S')->get();
 
+        integration('assignments')->set($this->assignment->id);
+
         $this->emit('jobtypeUpdate',$this->assignment->id);
 
     }
