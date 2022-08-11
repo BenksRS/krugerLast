@@ -25,10 +25,8 @@ trait AssignmentScope {
                     ->where('first_name', 'like', '%' .$search . '%')
                     ->orWhere('last_name', 'like', '%' .$search . '%')
                     ->orWhere('id', 'like', '%' .$search . '%')
-                ->orWhere('claim_number', 'like', '%' .$search . '%');
-//                    ->orWhere('email', 'like', '%' .$search . '%')
-//                    ->orWhere('street', 'like', '%' .$search . '%')
-//
+                    ->orWhere('claim_number', 'like', '%' .$search . '%');
+
             });
     }
     public function scopeSearch (Builder $query, $search){
@@ -102,8 +100,6 @@ trait AssignmentScope {
                     $q->where('tech_id','=', $tech_id);
                 }
             });
-
-
     }
 
 }

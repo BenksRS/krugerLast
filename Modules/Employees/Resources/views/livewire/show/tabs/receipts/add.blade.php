@@ -1,5 +1,6 @@
 <div>
     <h4 class="card-title mb-4">New Receipt
+
     </h4>
     <div class="card">
         <div class="card-body">
@@ -10,7 +11,6 @@
                     <h6>Select Receipt:</h6>
                     <div class="input-group">
                         <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" wire:model="photo" name="photo">
-                        {{--                    <button class="btn btn-primary" type="submit" id="inputGroupFileAddon04" wire:loading.attr="disabled" wire:target="photo">Upload Receipt</button>--}}
                     </div>
 
                     @error('photo')
@@ -29,6 +29,7 @@
                         <select class=" form-control select2-multiple select_carrier" wire:model="category"
                                 name="carrier_id" data-placeholder="Select ...">
 
+                                    <option >choose...</option>
                                     <option value="GAS">GAS</option>
                                     <option value="AUTOMAINTENANCE">AUTOMAINTENANCE</option>
                                     <option value="MATERIAL">MATERIAL</option>
@@ -49,7 +50,7 @@
                         </div>
                         @enderror
                     </div>
-                    <button type="button" class="btn btn-secondary btn-sm float-start m-1" wire:click="toggleFollowup"><i class="fas fa-chevron-left"></i> cancel</button>
+                    <button type="button" class="btn btn-secondary btn-sm float-start m-1" wire:click="$emit('backList')"><i class="fas fa-chevron-left"></i> cancel</button>
                     <button type="submit" class="btn btn-success btn-sm float-start m-1"
                             {{ ($photo && $amount && $category)? '' : 'disabled' }}  >
                         <i class="fas fa-save"></i> save</button>

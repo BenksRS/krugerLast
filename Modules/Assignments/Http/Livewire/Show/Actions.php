@@ -30,7 +30,7 @@ class Actions extends Component
         $this->assignment = $assignment;
         $this->user = Auth::user();
 
-
+//dump($this->assignment->finance);
 
         $this->checkFinance();
         $this->checkSign();

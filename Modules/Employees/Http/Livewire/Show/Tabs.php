@@ -15,7 +15,7 @@ class Tabs extends Component
     ];
 
     public $user;
-    public $isActive = 'receipts';
+    public $isActive = 'commission';
     public $navs = [
         [
             'title' => 'Personal Details',

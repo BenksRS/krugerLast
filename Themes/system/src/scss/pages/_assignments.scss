@@ -26,6 +26,10 @@
     background-color: #00FFFF!important;
     color: #0b0b0b!important;
 }
+.approved{
+    background-color: #00FF00!important;
+    color: #0b0b0b!important;
+}
 .ready_to_bill{
     background-color: #00FF00!important;
     color: #0b0b0b!important;
@@ -94,6 +98,7 @@
     background-color: #ea709f!important;
     color: #0b0b0b!important;
 }
+
 .pending_solution{
     background-color: #ff6200!important;
     color: #0b0b0b!important;
@@ -119,8 +124,8 @@
     background-color: #ea709f!important;
     color: #0b0b0b!important;
 }
-.revise_to_bill{
-    background-color: #ff4e1d!important;
+.available{
+    background-color: #00FF00!important;
     color: #0b0b0b!important;
 }
 .docusign_sent{
@@ -139,6 +144,7 @@
     background-color: #ff6200!important;
     color: #0b0b0b!important;
 }
+
 .ready_to_install{
     background-color: #48840b!important;
     color: #0b0b0b!important;
@@ -235,6 +241,9 @@
 .img-thumbnail-sign{
     height: 100px!important;
     //width: 200px!important;
+}
+.img-thumbnail-receipt{
+
 }
 .img-thumbnail{
     z-index: 9999!important;

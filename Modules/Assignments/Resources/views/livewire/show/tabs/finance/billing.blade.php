@@ -99,7 +99,7 @@
 
                             </div>
                             <div class="col-md-6">
-                                <label  class="form-label">Settlement Amount</label>
+                                <label  class="form-label">Discount Settlement Amount</label>
                                 <input type="text" class="form-control"  name="settlement_amount"
                                        placeholder="-$0.00" wire:model.debounce.1000ms="settlement_amount"  required>
 
@@ -166,7 +166,7 @@
                                 <td><h5 class="font-size-11 mb-1">Billed A.</h5></td>
                                 <td><h5 class="font-size-11 mb-1">B. Fees</h5></td>
                                 <td><h5 class="font-size-11 mb-1">Discount</h5></td>
-                                <td><h5 class="font-size-11 mb-1">Settlement</h5></td>
+                                <td><h5 class="font-size-11 mb-1">Discount Settlement</h5></td>
                                 <td><h5 class="font-size-11 mb-1">Invoce A.</h5></td>
                                 <td><h5 class="font-size-11 mb-1" >Date</h5></td>
 
@@ -234,7 +234,7 @@
                                 <td><h5 class="font-size-11 mb-1">Billed A.</h5></td>
                                 <td><h5 class="font-size-11 mb-1">B. Fees</h5></td>
                                 <td><h5 class="font-size-11 mb-1">Discount</h5></td>
-                                <td><h5 class="font-size-11 mb-1">Settlement</h5></td>
+                                <td><h5 class="font-size-11 mb-1">Discount Settlement</h5></td>
                                 <td><h5 class="font-size-11 mb-1">Invoce A.</h5></td>
                                 <td><h5 class="font-size-11 mb-1" >Date Billed</h5></td>
                                 <td><h5 class="font-size-11 mb-1">Edited</h5></td>
