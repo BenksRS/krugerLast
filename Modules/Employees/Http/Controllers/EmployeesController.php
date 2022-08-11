@@ -2,10 +2,17 @@
 
 namespace Modules\Employees\Http\Controllers;
 
+use Callkruger\Api\Models\Admin\Worker;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
+use Modules\Assignments\Entities\Assignment;
+use Modules\Assignments\Entities\JobReport;
+use Modules\Assignments\Entities\JobReportReports;
+use Modules\Assignments\Entities\JobReportTarpSizes;
+use Modules\Assignments\Entities\JobReportWorkers;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
 use Modules\Employees\Entities\EmployeeCommissions;
 use Modules\Employees\Entities\EmployeeRules;
@@ -454,7 +461,8 @@ class EmployeesController extends Controller
     public function script_comission(){
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', '2512M');
-        $assignmnet=AssignmentFinanceRepository::DateSchedulled('2022-01-01', Carbon::now())->whereIn('status_id', [5,6,10,24,9])->where('id','>',29811)->get();
+
+        $assignmnet=AssignmentFinanceRepository::DateSchedulled('2022-01-01', Carbon::now())->whereIn('status_id', [5,6,10,24,9])->get();
 
         foreach ($assignmnet as $row){
             try {
@@ -467,24 +475,75 @@ class EmployeesController extends Controller
 
     }
     public function check_comission($id){
-        dump("Start $id");
-//        $this->comission_workers_rules($id);
 
-//        $this->comission_technician_rules($id);
+        Log::channel('commissions')->info("Start $id");
+//        dump("Start $id");
+        $this->comission_workers_rules($id);
+
+        $this->comission_technician_rules($id);
 
         $this->comission_marketing_rules($id);
 
         $this->comission_jobs_rules($id);
 
-        dump("end $id");
+        Log::channel('commissions')->info("end $id");
 
 //        return redirect('assignment/show/' . $id);
 
     }
+
+
+    public function comission_technician_rules($id)
+    {
+
+        $assignment = AssignmentFinanceRepository::find($id);
+        $workers = JobReportWorkers::where('assignment_id', $id)->pluck('worker_id')->toArray();
+
+        $rulles = EmployeeRules::whereIn('user_id', $workers)
+            ->where('type', 'T')
+            ->get();
+
+
+        $technicians = array();
+        foreach ($rulles as $rulle) {
+
+            $tech = explode(',', $rulle->tech_ids);
+            foreach ($tech as $t) {
+                $technicians[] = $t;
+            }
+
+        }
+        $technicians = array_unique($technicians);
+        $full_rulles = EmployeeRules::whereIn('user_id', $technicians)
+            ->where('type', 'T')
+            ->get();
+
+
+        foreach ($full_rulles as $f_rulle) {
+
+
+            $check_start_date = ($assignment->scheduling->start_date > $f_rulle->start_date) ? TRUE : FALSE;
+
+
+            if (is_null($f_rulle->end_date)) {
+                $check_end_date = TRUE;
+            } else {
+                $check_end_date = ($f_rulle->end_date >= $assignment->scheduling->start_date) ? TRUE : FALSE;
+            }
+
+            if ($check_start_date === TRUE && $check_end_date === TRUE) {
+
+                $this->apply_comission_rule($f_rulle->id, $id, "JOB");
+
+            }
+
+
+        }
+    }
+
     public function comission_marketing_rules($id)
     {
         $assignment = AssignmentFinanceRepository::find($id);
-//dd($assignment->finance);
 
         $rulles = EmployeeRules::where('referral_id', $assignment->referral_id)
             ->where('type', 'R')
@@ -525,8 +584,6 @@ class EmployeesController extends Controller
         foreach ($rulles as $rulle) {
 //            dd('aqui');
             $check_start_date = ($assignment->scheduling->start_date > $rulle->start_date) ? TRUE : FALSE;
-
-
             if (is_null($rulle->end_date)) {
                 $check_end_date = TRUE;
             } else {
@@ -563,64 +620,69 @@ class EmployeesController extends Controller
                 if ($exist_comission == true) {
                     // check if might be updated
                     if (in_array($comission->status, $status_comission_changed)) {
-                        $billed_date = $assignment->billed_date;
-                        $due_month = date("m", strtotime($billed_date));
-                        $due_year = date("Y", strtotime($billed_date));
+                        $billed_date = $assignment->finance->collection->billed_date_view;
+                        $due_month = Carbon::createFromFormat('m/d/Y', $billed_date)->format('m');
+                        $due_year = Carbon::createFromFormat('m/d/Y', $billed_date)->format('Y');
 
-                        $date['id_employee'] = $rule->employ_id;
-                        $date['id_assignment'] = $id_assignment;
-                        $date['job_type'] = $job_type_id;
+                        $date['user_id'] = $rule->user_id;
+                        $date['assignment_id'] = $assignment->id;
+                        if($job_type_id != 'JOB'){
+                            $date['job_type'] = $job_type_id;
+                        }
                         $date['amount'] = $rule->valor;
                         $date['status'] = "available";
-                        $date['rulle_id'] = $rule->id;
+                        $date['rule_id'] = $rule->id;
                         $date['due_month'] = $due_month;
                         $date['due_year'] = $due_year;
                         $comission->update($date);
+
                     }
 
                 } else {
                     // insert
+//dd($assignment->finance);
+                    $billed_date = $assignment->finance->collection->billed_date_view;
+                    $due_month = Carbon::createFromFormat('m/d/Y', $billed_date)->format('m');
+                    $due_year = Carbon::createFromFormat('m/d/Y', $billed_date)->format('Y');
 
-                    $billed_date = $assignment->billed_date;
-                    $due_month = date("m", strtotime($billed_date));
-                    $due_year = date("Y", strtotime($billed_date));
-
-                    $date['id_employee'] = $rule->employ_id;
-                    $date['id_assignment'] = $id_assignment;
-                    $date['job_type'] = $job_type_id;
+                    $date['user_id'] = $rule->user_id;
+                    $date['assignment_id'] = $assignment->id;
+                    if($job_type_id != 'JOB'){
+                        $date['job_type'] = $job_type_id;
+                    }
                     $date['amount'] = $rule->valor;
                     $date['status'] = "available";
-                    $date['rulle_id'] = $rule->id;
+                    $date['rule_id'] = $rule->id;
                     $date['due_month'] = $due_month;
                     $date['due_year'] = $due_year;
 
-                    $insert = $this->comissionbalance->insert($date);
+                    EmployeeCommissions::create($date)->save();
+
                 }
 
                 break;
-                break;
+
             case 'T'://Technician
 
-                if (is_null($assignment->paid_date)) {
-                    $due_date = $assignment->billed_date;
+                if (is_null($assignment->finance->collection->paid_date)) {
+                    $due_date = $assignment->finance->collection->billed_date;
                     $due_month = null;
                     $due_year = null;
                     $status = 'pending';
-                    $amount = $assignment->billed_amount;
+                    $amount = $assignment->finance->invoices->total;
 
                     $valor = (($amount * $rule->porcentagem) / $rule->dividir);
                 } else {
-                    $due_date = $assignment->paid_date;
+                    $due_date = $assignment->finance->collection->paid_date;
                     $due_month = date("m", strtotime($due_date));
                     $due_year = date("Y", strtotime($due_date));
                     $status = 'available';
 
                     if($assignment->referral_id == 72){
-                        $amount = ($assignment->paid_amount*0.92);
+                        $amount = ($assignment->finance->payments->total*0.92);
                     }else{
-                        $amount = $assignment->paid_amount;
+                        $amount = $assignment->finance->payments->total;
                     }
-
 
                     $valor = (($amount * $rule->porcentagem) / $rule->dividir);
                 }
@@ -630,32 +692,35 @@ class EmployeesController extends Controller
 
                     // check if might be updated
                     if (in_array($comission->status, $status_comission_changed)) {
-                        $date['id_employee'] = $rule->employ_id;
-                        $date['id_assignment'] = $id_assignment;
-                        $date['job_type'] = $job_type_id;
+                        $date['user_id'] = $rule->user_id;
+                        $date['assignment_id'] = $assignment->id;
+                        if($job_type_id != 'JOB'){
+                            $date['job_type'] = $job_type_id;
+                        }
                         $date['amount'] = $valor;
                         $date['status'] = $status;
-                        $date['rulle_id'] = $rule->id;
+                        $date['rule_id'] = $rule->id;
                         $date['due_month'] = $due_month;
                         $date['due_year'] = $due_year;
                         $comission->update($date);
                     }
 
                 } else {
-                    $date['id_employee'] = $rule->employ_id;
-                    $date['id_assignment'] = $id_assignment;
-                    $date['job_type'] = $job_type_id;
+                    $date['user_id'] = $rule->user_id;
+                    $date['assignment_id'] = $assignment->id;
+                    if($job_type_id != 'JOB'){
+                        $date['job_type'] = $job_type_id;
+                    }
                     $date['amount'] = $valor;
                     $date['status'] = $status;
-                    $date['rulle_id'] = $rule->id;
+                    $date['rule_id'] = $rule->id;
                     $date['due_month'] = $due_month;
                     $date['due_year'] = $due_year;
 
-                    $insert = $this->comissionbalance->insert($date);
+                    EmployeeCommissions::create($date)->save();
                 }
                 break;
             case 'R'://Marketing Representative
-//dd($assignment->finance);
                 if (is_null($assignment->finance->collection->paid_date)) {
                     $due_date = $assignment->finance->collection->billed_date;
                     $due_month = null;
@@ -676,14 +741,11 @@ class EmployeesController extends Controller
                     }else{
                         $amount = $assignment->finance->payments->total;
                     }
-
-
-
                     $valor = (($amount * $rule->porcentagem));
                 }
 
 
-                if ($exist_comission == true) {
+                if ($exist_comission == true){
                     // insert
 
                     // check if might be updated
@@ -799,6 +861,193 @@ class EmployeesController extends Controller
                 break;
         }
 
+
+    }
+
+    public function comission_workers_rules($id)
+    {
+        $assignment = AssignmentFinanceRepository::find($id);
+        $workers = JobReportWorkers::where('assignment_id', $id)->pluck('worker_id')->toArray();
+//dd($workers);
+
+
+
+        $comission_types = array('J', 'S');
+        $check_newtarp = array(7, 9);
+
+
+        // delete comissions workers fora da lista
+//        $deletecomissions=$this->comissionbalance->where('id_assignment', $id)
+//            ->where('status','!=', 'paid')
+//            ->where('job_type','!=', 'JOB')
+//            ->whereIn('id_employee','!=',$workers)
+//            ->get();
+
+        // check rulle comission by job type
+        $job_reports = JobReport::where('assignment_id', $id)->get();
+//        dd($job_reports);
+
+        foreach ($job_reports as $jobtype) {
+            switch ($jobtype->assignment_job_type_id) {
+                case '1': // ROOF TARP
+                    // call total sq ft area install
+                    $tarp_sizes = JobReportTarpSizes::where('assignment_id', $jobtype->assignment_id)->get();
+                    $square_ft_install = 0;
+                    if (count($tarp_sizes) > 0) {
+                        foreach ($tarp_sizes as $ts) {
+
+                            $square_ft_install = floatval(($square_ft_install) + (((int)$ts->height * (int)$ts->width) * (int)$ts->qty));
+                        }
+                    }
+//                    dd($square_ft_install);
+
+
+                    // get rulles for this job type
+                    $rulles_comission = EmployeeRules::whereIn('user_id', $workers)
+                        ->where('type', 'S')
+                        ->where('sq_min', '<=', $square_ft_install)
+                        ->where('sq_max', '>=', $square_ft_install)
+                        ->get();
+
+//                    dd($rulles_comission);
+
+                    if (count($rulles_comission) > 0) {
+                        // aply rulles
+                        foreach ($rulles_comission as $rule) {
+
+                            $check_start_date = ($assignment->scheduling->start_date > $rule->start_date) ? TRUE : FALSE;
+
+                            if (is_null($rule->end_date)) {
+                                $check_end_date = TRUE;
+                            } else {
+                                $check_end_date = ($rule->end_date >= $assignment->scheduling->start_date) ? TRUE : FALSE;
+                            }
+                            if ($check_start_date === TRUE && $check_end_date === TRUE) {
+                                $this->apply_comission_rule($rule->id, $id, $jobtype->assignment_job_type_id);
+                            }
+
+
+                        }
+                    }
+
+                    break;
+                case '2':
+                case '3':
+
+//                    dd($jobtype);
+                    $job_reports_reports = JobReportReports::where('assignment_id', $jobtype->assignment_id)->where('job_type_id',3)->first();
+//                dd($job_reports_reports->report_option_id);
+
+                    if (isset($job_reports_reports)) {
+
+
+                        if (in_array($job_reports_reports->report_option_id, $check_newtarp)) {
+//                            dd('aqui');
+                            // new tarp - sqft rulle
+
+                            // call total sq ft area install
+                            $tarp_sizes = JobReportTarpSizes::where('assignment_id', $jobtype->assignment_id)->get();
+                            $square_ft_install = 0;
+                            if (count($tarp_sizes) > 0) {
+                                foreach ($tarp_sizes as $ts) {
+
+                                    $square_ft_install = floatval(($square_ft_install) + (((int)$ts->height * (int)$ts->width) * (int)$ts->qty));
+                                }
+                            }
+//                    dd($square_ft_install);
+                            // get rulles for this job type
+                            $rulles_comission = EmployeeRules::whereIn('user_id', $workers)
+                                ->where('type', 'S')
+                                ->where('sq_min', '<=', $square_ft_install)
+                                ->where('sq_max', '>=', $square_ft_install)
+                                ->get();
+//                            dd($rulles_comission);
+                            if (count($rulles_comission) > 0) {
+                                // aply rulles
+                                foreach ($rulles_comission as $rule) {
+
+                                    $check_start_date = ($assignment->scheduling->start_date > $rule->start_date) ? TRUE : FALSE;
+
+                                    if (is_null($rule->end_date)) {
+                                        $check_end_date = TRUE;
+                                    } else {
+                                        $check_end_date = ($rule->end_date >= $assignment->scheduling->start_date) ? TRUE : FALSE;
+                                    }
+                                    if ($check_start_date === TRUE && $check_end_date === TRUE) {
+                                        $this->apply_comission_rule($rule->id, $id, $jobtype->assignment_job_type_id);
+                                    }
+
+                                }
+                            }
+
+
+                        } else {
+                            // same tarp - jobtype rulle
+                            $rulles_comission =EmployeeRules::whereIn('user_id', $workers)
+                                ->whereIn('employ_id', $workers)
+                                ->where('type', 'J')
+                                ->where('job_type', $jobtype->assignment_job_type_id)
+                                ->get();
+
+                            if (count($rulles_comission) > 0) {
+                                // aply rulles
+                                foreach ($rulles_comission as $rule) {
+
+                                    $check_start_date = ($assignment->scheduling->start_date > $rule->start_date) ? TRUE : FALSE;
+
+                                    if (is_null($rule->end_date)) {
+                                        $check_end_date = TRUE;
+                                    } else {
+                                        $check_end_date = ($rule->end_date >= $assignment->scheduling->start_date) ? TRUE : FALSE;
+                                    }
+                                    if ($check_start_date === TRUE && $check_end_date === TRUE) {
+                                        $this->apply_comission_rule($rule->id, $id, $jobtype->assignment_job_type_id);
+                                    }
+
+                                }
+                            }
+
+                        }
+
+                    } else {
+//                        // erro job_report option
+//                        $job_error = $this->assignment->find($id);
+//                        $update_info['status_comission'] = 'error on job report';
+//
+//                        $job_error->update($update_info);
+                        //ERROR COMISSION 3
+
+                    }
+
+
+                    break;
+                default:
+                    // get rulles for this job type
+                    $rulles_comission = EmployeeRules::whereIn('user_id', $workers)
+                        ->whereIn('employ_id', $workers)
+                        ->where('type', 'J')
+                        ->where('job_type', $jobtype->assignment_job_type_id)
+                        ->get();
+
+                    if (count($rulles_comission) > 0) {
+                        // aply rulles
+                        foreach ($rulles_comission as $rule) {
+                            $check_start_date = ($assignment->scheduling->start_date > $rule->start_date) ? TRUE : FALSE;
+
+                            if (is_null($rule->end_date)) {
+                                $check_end_date = TRUE;
+                            } else {
+                                $check_end_date = ($rule->end_date >= $assignment->scheduling->start_date) ? TRUE : FALSE;
+                            }
+                            if ($check_start_date === TRUE && $check_end_date === TRUE) {
+                                $this->apply_comission_rule($rule->id, $id, $jobtype->assignment_job_type_id);
+                            }
+
+                        }
+                    }
+                    break;
+            }
+        }
 
     }
 

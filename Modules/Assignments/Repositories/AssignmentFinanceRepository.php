@@ -80,21 +80,26 @@ class AssignmentFinanceRepository extends Assignment {
                     $status = ($total_payment > 0 && $total_payment < $total_invoice) ? 10 : $status;
                     $status_collection = ($total_payment > 0 && $total_payment < $total_invoice) ? 10 : 5;
                     break;
-                case 10:
-                    // revise_payment
-                    $status = ($total_invoice == $total_payment) ? 6 : $status;
+                case 10: // partial_paid
+                    $status = ($balance == 0) ? 6 : $status;
+
+//@dump($status);
+//@dump($total_invoice);
+//@dump($total_payment);
+//@dump($balance);
+//                    dd($total_invoice);
 
                     $status_collection = 6;
                     break;
-                case 24:
-                    // revise paid
-                    $status = ($total_invoice == $total_payment) ? 6 : $status;
+                case 24:// revise payment
+
+                    $status = ($balance == 0) ? 6 : $status;
 
                     $status_collection = 6;
                     break;
                 case 6:
                     // revise_payment
-                    $status = ($total_payment!=$total_invoice) ? 24 : $status;
+                    $status = ($total_payment!=$total_invoice ) ? 24 : $status;
 
                     $status_collection = 6;
                     break;
