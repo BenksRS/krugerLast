@@ -22,11 +22,17 @@ class CreateUserGroupsTable extends Migration {
 
         Schema::create('user_group_pivot', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('user_group_id')->constrained('user_groups')->onDelete('cascade');
             $table->timestamps();
         });
 
+        Schema::create('user_super_admins', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->unique();
+            $table->enum('active', ['Y', 'N'])->default('N');
+            $table->timestamps();
+        });
 
     }
 
@@ -37,6 +43,7 @@ class CreateUserGroupsTable extends Migration {
      */
     public function down ()
     {
+        Schema::dropIfExists('user_super_admins');
         Schema::dropIfExists('user_group_pivot');
         Schema::dropIfExists('user_groups');
     }
