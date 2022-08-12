@@ -89,6 +89,7 @@
                                     @enderror
 
                                 </div>
+
                         </div>
                             <div class="row mt-2">
                                 <div class="col-md-8 mt-2">
@@ -119,6 +120,7 @@
 
                                 </div>
                                 <div  class="col-lg-4 mt-2">
+
                                 @switch($payment_type)
                                     @case('partial_payment')
                                                 @if($balance_total > 0 && $payment_amount > 0)
@@ -144,6 +146,7 @@
 
 
                                 @endswitch
+                                    <button type="button" class="btn btn-sm btn-secondary  waves-effect waves-light  mt-2 me-2 float-end" wire:click.prevent="back"> <i class="fas fa-chevron-left font-size-16 align-middle "></i> Back</button>
                                 </div>
 {{--                                @else--}}
 {{--                                    <div  class="col-lg-4 mt-2">--}}

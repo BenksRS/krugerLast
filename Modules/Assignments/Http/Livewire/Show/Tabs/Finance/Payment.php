@@ -67,7 +67,11 @@ class Payment extends Component
             $this->balance();
         }
     }
+    public function back(){
+        $this->showAdd = false;
+    }
     public function balanceReload(){
+
         $this->invoices = FinanceBilling::where('assignment_id', '=',$this->assignment->id)->where('type', '=','active')->where('status', '!=', 'paid')->get();
         $this->checkInvoices=count($this->invoices);
     }
