@@ -18,7 +18,7 @@
                                     <label for="formrow-firstname-input" class="form-label">Payment Type</label>
                                     <select class="form-select" id="autoSizingSelect" name="payment_type" wire:model="payment_type" wire:change="invoiceList"  >
                                         <option selected>Select...</option>
-                                        @if(count($invoices) > 0)
+                                        @if(count($invoicesOpen) > 0)
                                             <option value="partial_payment">Partial payment</option>
                                             <option value="total_payment">Total Payment</option>
                                         @else
@@ -35,14 +35,16 @@
                                 </div>
                             <div class="col-md-4">
 
-
+{{--@dump(count($invoicesOpen))--}}
+{{--@dump(count($invoicesFees))--}}
                                 <label for="formrow-firstname-input" class="form-label">Invoice</label>
                                 <select class="form-select" id="autoSizingSelect" name="billing_id" wire:model="billing_id" wire:change="balance"  placeholder="mm/dd/yyyy">
                                     <option selected>Select...</option>
-                                    @if(count($invoices) > 0)
-                                    @foreach($invoices as $invoice)
-                                        <option value="{{$invoice->id}}">{{$invoice->invoice_id}}</option>
-                                    @endforeach
+                                    @if(count($invoicesOpen) > 0)
+
+                                        @foreach($invoicesOpen as $invoice)
+                                            <option value="{{$invoice->id}}">{{$invoice->invoice_id}}</option>
+                                        @endforeach
                                     @else
                                         @foreach($invoicesFees as $invoice)
                                             <option value="{{$invoice->id}}">{{$invoice->invoice_id}}</option>

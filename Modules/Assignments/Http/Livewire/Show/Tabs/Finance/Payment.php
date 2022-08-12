@@ -21,6 +21,7 @@ class Payment extends Component
     public $assignment;
     public $invoices;
     public $invoicesFees;
+    public $invoicesOpen;
     public $checkInvoices=0;
     public $user;
     public $showAdd = false;
@@ -51,6 +52,7 @@ class Payment extends Component
     {
         $this->assignment = $assignment;
         $this->invoices = FinanceBilling::where('assignment_id', '=',$this->assignment->id)->where('type', '=','active')->where('status', '!=', 'paid')->get();
+        $this->invoicesOpen = FinanceBilling::where('assignment_id', '=',$this->assignment->id)->where('type', '=','active')->where('status', '!=', 'paid')->get();
         $this->invoicesFees = FinanceBilling::where('assignment_id', '=',$this->assignment->id)->where('type', '=','active')->where('status', 'paid')->get();
 
         $this->payments = FinancePayment::where('assignment_id', '=',$this->assignment->id)->orderBy('updated_at', 'DESC')->get();
