@@ -4,7 +4,7 @@
             No Invoices found, finish before add a payment!!!
         </div>
     @endif
-    <h4 class="card-title mb-4">Payments @if(!$showAdd && $checkInvoices>0)<button type="button" class="btn btn-primary btn-sm float-end" wire:click="$emit('newPayment')"><i class="fas fa-plus"></i> <i class="fas fa-money-bill-wave"></i></button>@endif</h4>
+    <h4 class="card-title mb-4">Payments <button type="button" class="btn btn-primary btn-sm float-end" wire:click="$emit('newPayment')"><i class="fas fa-plus"></i> <i class="fas fa-money-bill-wave"></i></button></h4>
     @if($showAdd)
         {{--  INSERT NEW PAYMENT      --}}
         <div class="card">
@@ -18,9 +18,14 @@
                                     <label for="formrow-firstname-input" class="form-label">Payment Type</label>
                                     <select class="form-select" id="autoSizingSelect" name="payment_type" wire:model="payment_type" wire:change="invoiceList"  >
                                         <option selected>Select...</option>
-                                        <option value="partial_payment">Partial payment</option>
-                                        <option value="total_payment">Total Payment</option>
-                                        <option value="fee_payment">Fee Payment</option>
+                                        @if(count($invoices) > 0)
+                                            <option value="partial_payment">Partial payment</option>
+                                            <option value="total_payment">Total Payment</option>
+                                        @else
+                                            <option value="fee_payment">Fee Payment</option>
+                                        @endif
+
+
                                     </select>
                                     @error('payment_type')
                                     <div class="invalid-feedback show">
@@ -29,12 +34,20 @@
                                     @enderror
                                 </div>
                             <div class="col-md-4">
+
+
                                 <label for="formrow-firstname-input" class="form-label">Invoice</label>
                                 <select class="form-select" id="autoSizingSelect" name="billing_id" wire:model="billing_id" wire:change="balance"  placeholder="mm/dd/yyyy">
                                     <option selected>Select...</option>
+                                    @if(count($invoices) > 0)
                                     @foreach($invoices as $invoice)
                                         <option value="{{$invoice->id}}">{{$invoice->invoice_id}}</option>
                                     @endforeach
+                                    @else
+                                        @foreach($invoicesFees as $invoice)
+                                            <option value="{{$invoice->id}}">{{$invoice->invoice_id}}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                                 @error('billing_id')
                                 <div class="invalid-feedback show">
