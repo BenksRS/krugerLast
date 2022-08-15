@@ -62,24 +62,22 @@
     </div>
     <?php
     }else{
-    if($f->field == 'x'){
-        $field_test='X';
-    }else{
-        $field=$f->field;
-        if($f->field ==  'KRUGER'){
-            $field_test='Kruger';
-        }else{
 
-//                if($field == 'date_sign'){
-//                    $field_test= $assignmentview->{$field};
-//                }else{
-//                    $field_test= $assignmentview->{$field};
-//                }
-            $field_test= $assignmentview->{$field};
-//            dd($field_test);
+        $field=$f->field;
+        switch ($f->field){
+            case 'x':
+                $field_test='X';
+                break;
+            case 'KRUGER':
+                $field_test='Kruger';
+                break;
+            default:
+                $field_test= $assignmentview->{$field};
+                break;
+
         }
 
-    }
+
 
 
 

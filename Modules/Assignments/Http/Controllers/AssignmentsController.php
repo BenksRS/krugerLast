@@ -294,6 +294,23 @@ class AssignmentsController extends Controller {
         $fields = FieldAuthorizations::where('referral_authorizathion_id', $page->id)->get();
 
         if($data){
+
+            if($data->carrier->company_entity){
+               $carrier =$data->carrier->company_entity;
+            }else{
+                $carrier= $data->carrier_info;
+            }
+              $count=0;
+                                           foreach($data->job_types as $job){
+                                                $count++;
+                                                if($count == 1){
+                                                    $job_types=$job->name;
+                                                }else{
+                                                    $job_types="$job_types / $job->name";
+                                                }
+                                          }
+
+
             $assignmentview = (object)[
                 'state' => $data->state,
                 'full_name' => "$data->last_name ,$data->first_name",
@@ -301,9 +318,9 @@ class AssignmentsController extends Controller {
                 'city' =>  $data->city,
                 'zipcode' =>  $data->zipcode,
                 'city_state_zipcode' =>  "$data->city, $data->state, $data->zipcode",
-                'carrier' =>  $data->carrier_info,
+                'carrier' =>  $carrier,
                 'claim_number' =>  $data->claim_number,
-                'job_type' =>  'job_type',
+                'job_type' =>  $job_types,
                 'dol' =>  $data->dol_date,
                 'date_sign' =>  Carbon::now()->format('Y-m-d'),
                 'day_sign' => Carbon::now()->format('d'),
