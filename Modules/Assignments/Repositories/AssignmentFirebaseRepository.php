@@ -68,7 +68,7 @@ class AssignmentFirebaseRepository extends Assignment {
             if(count($notes_all) > 0){
                 foreach ($notes_all as $note){
                     $user=$note->user->name;
-                    $texto="$note->text - (by $user)";
+                    $texto="$note->text - (by $user - $note->created_datetime)";
                     $notes="$notes\\n $texto";
                 }
             }
