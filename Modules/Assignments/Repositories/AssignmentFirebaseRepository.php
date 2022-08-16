@@ -5,6 +5,7 @@ namespace Modules\Assignments\Repositories;
 use Carbon\Carbon;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Scopes\AssignmentScope;
+use Modules\Notes\Entities\Note;
 
 class AssignmentFirebaseRepository extends Assignment {
 
@@ -61,12 +62,20 @@ class AssignmentFirebaseRepository extends Assignment {
 
 
 
-            $notes=" Teste <br> teste foi ";
-//            if($this->notes->where('type','tech')){
-//                foreach ($this->notes->where('type','tech') as $note){
+    $notes_all = Note::where('notable_id', $this->id)->where('type','tech')->get();
+
+        $notes="";
+            if(count($notes_all) > 0){
+                foreach ($notes_all as $note){
+                    $user=$note->user->name;
+                    $texto="$note->text - (by $user)";
+                    $notes="$notes\\n $texto";
+                }
+            }
 //
-//                }
-//            }
+//            dd($this->notes());
+//
+
 
         $count_auth=count($this->authorizations);
         $event="";
