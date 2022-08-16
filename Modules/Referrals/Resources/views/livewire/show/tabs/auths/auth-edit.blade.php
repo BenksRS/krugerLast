@@ -71,6 +71,54 @@
                                     </td>
                                 </tr>
                             @endforeach
+                            <tr class="">
+                                <th class="card-title-desc" scope="row">augusto</th>
+                                <td>
+                                    <button type="button" class="btn btn-success float-end waves-effect waves-light"  wire:click="addField('augusto')" ><i class="bx bx-plus"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <th class="card-title-desc" scope="row">sign1</th>
+                                <td>
+                                    <button type="button" class="btn btn-success float-end waves-effect waves-light"  wire:click="addField('sign1')" ><i class="bx bx-plus"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <th class="card-title-desc" scope="row">sign2</th>
+                                <td>
+                                    <button type="button" class="btn btn-success float-end waves-effect waves-light"  wire:click="addField('sign2')" ><i class="bx bx-plus"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <th class="card-title-desc" scope="row">sign3</th>
+                                <td>
+                                    <button type="button" class="btn btn-success float-end waves-effect waves-light"  wire:click="addField('sign3')" ><i class="bx bx-plus"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <th class="card-title-desc" scope="row">sign4</th>
+                                <td>
+                                    <button type="button" class="btn btn-success float-end waves-effect waves-light"  wire:click="addField('sign4')" ><i class="bx bx-plus"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <th class="card-title-desc" scope="row">sign4</th>
+                                <td>
+                                    <button type="button" class="btn btn-success float-end waves-effect waves-light"  wire:click="addField('sign4')" ><i class="bx bx-plus"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <th class="card-title-desc" scope="row">sign5</th>
+                                <td>
+                                    <button type="button" class="btn btn-success float-end waves-effect waves-light"  wire:click="addField('sign5')" ><i class="bx bx-plus"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <th class="card-title-desc" scope="row">sign6</th>
+                                <td>
+                                    <button type="button" class="btn btn-success float-end waves-effect waves-light"  wire:click="addField('sign6')" ><i class="bx bx-plus"></i></button>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
