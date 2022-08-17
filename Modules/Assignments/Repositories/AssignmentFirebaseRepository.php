@@ -72,10 +72,6 @@ class AssignmentFirebaseRepository extends Assignment {
                     $notes="$notes\\n $texto";
                 }
             }
-//
-//            dd($this->notes());
-//
-
 
         $count_auth=count($this->authorizations);
         $event="";

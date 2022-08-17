@@ -322,13 +322,14 @@ class AssignmentsController extends Controller {
                 'claim_number' =>  $data->claim_number,
                 'job_type' =>  $job_types,
                 'dol' =>  $data->dol_date,
-                'date_sign' =>  Carbon::now()->format('Y-m-d'),
-                'day_sign' => Carbon::now()->format('d'),
-                'month_sign' => Carbon::now()->format('m'),
-                'year_sign' =>  Carbon::now()->format('Y'),
-                'single_year_sign' =>  Carbon::now()->format('y'),
+                'date_sign' =>  $data->scheduling->schedule_date,
+                'day_sign' => Carbon::parse($data->scheduling->schedule_date)->format('d'),
+                'month_sign' => Carbon::parse($data->scheduling->schedule_date)->format('m'),
+                'year_sign' =>  Carbon::parse($data->scheduling->schedule_date)->format('Y'),
+                'single_year_sign' =>  Carbon::parse($data->scheduling->schedule_date)->format('y'),
 
             ];
+//            dd($assignmentview);
         }
 
         $pdf = Pdf::loadView('assignments::pdf', compact('data', 'sign', 'page', 'fields', 'assignmentview'));
