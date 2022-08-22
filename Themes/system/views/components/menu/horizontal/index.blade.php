@@ -57,7 +57,16 @@
                             <a href="{{ url('/referrals') }}" class="dropdown-item" key="t-default">List</a>
                         </div>
                     </li>
-
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-dashboard" role="button"
+                        >
+                            <i class="bx bxs-business me-2"></i><span key="t-dashboards">Prospects</span> <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-dashboard">
+                            <a href="{{ url('/referrals/prospects/new') }}" class="dropdown-item" key="t-default">New</a>
+{{--                            <a href="{{ url('/referrals/prospects') }}" class="dropdown-item" key="t-default">List</a>--}}
+                        </div>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-dashboard" role="button"
                         >
