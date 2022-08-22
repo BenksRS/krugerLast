@@ -123,7 +123,7 @@ class ListAll extends Component
             ];
 
             foreach($new_timesheet_days as $row){
-//                dd($row);
+
                 EmployeeTimesheetDay::create($row)->save();
             }
         }
@@ -131,6 +131,7 @@ class ListAll extends Component
 
         $this->timesheets=EmployeeTimesheet::where('user_id', $this->user->id)->get();
         $this->toogleList();
+
     }
 
 

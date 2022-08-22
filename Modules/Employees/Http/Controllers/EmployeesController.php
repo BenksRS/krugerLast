@@ -465,6 +465,7 @@ class EmployeesController extends Controller
         $assignmnet=AssignmentFinanceRepository::DateSchedulled('2022-01-01', Carbon::now())->whereIn('status_id', [5,6,10,24,9])->get();
 
         foreach ($assignmnet as $row){
+
             try {
                 $this->check_comission($row->id);
             } catch (Exception $e) {
@@ -475,6 +476,7 @@ class EmployeesController extends Controller
 
     }
     public function check_comission($id){
+//        dd('foi');
 
         Log::channel('commissions')->info("Start $id");
 //        dump("Start $id");
@@ -866,6 +868,7 @@ class EmployeesController extends Controller
 
     public function comission_workers_rules($id)
     {
+
         $assignment = AssignmentFinanceRepository::find($id);
         $workers = JobReportWorkers::where('assignment_id', $id)->pluck('worker_id')->toArray();
 //dd($workers);
@@ -890,6 +893,7 @@ class EmployeesController extends Controller
         foreach ($job_reports as $jobtype) {
             switch ($jobtype->assignment_job_type_id) {
                 case '1': // ROOF TARP
+
                     // call total sq ft area install
                     $tarp_sizes = JobReportTarpSizes::where('assignment_id', $jobtype->assignment_id)->get();
                     $square_ft_install = 0;
@@ -954,14 +958,14 @@ class EmployeesController extends Controller
                                     $square_ft_install = floatval(($square_ft_install) + (((int)$ts->height * (int)$ts->width) * (int)$ts->qty));
                                 }
                             }
-//                    dd($square_ft_install);
+
                             // get rulles for this job type
                             $rulles_comission = EmployeeRules::whereIn('user_id', $workers)
                                 ->where('type', 'S')
                                 ->where('sq_min', '<=', $square_ft_install)
                                 ->where('sq_max', '>=', $square_ft_install)
                                 ->get();
-//                            dd($rulles_comission);
+
                             if (count($rulles_comission) > 0) {
                                 // aply rulles
                                 foreach ($rulles_comission as $rule) {
@@ -984,7 +988,7 @@ class EmployeesController extends Controller
                         } else {
                             // same tarp - jobtype rulle
                             $rulles_comission =EmployeeRules::whereIn('user_id', $workers)
-                                ->whereIn('employ_id', $workers)
+                                ->whereIn('user_id', $workers)
                                 ->where('type', 'J')
                                 ->where('job_type', $jobtype->assignment_job_type_id)
                                 ->get();
@@ -1024,7 +1028,7 @@ class EmployeesController extends Controller
                 default:
                     // get rulles for this job type
                     $rulles_comission = EmployeeRules::whereIn('user_id', $workers)
-                        ->whereIn('employ_id', $workers)
+                        ->whereIn('user_id', $workers)
                         ->where('type', 'J')
                         ->where('job_type', $jobtype->assignment_job_type_id)
                         ->get();
@@ -1034,15 +1038,14 @@ class EmployeesController extends Controller
                         foreach ($rulles_comission as $rule) {
                             $check_start_date = ($assignment->scheduling->start_date > $rule->start_date) ? TRUE : FALSE;
 
-                            if (is_null($rule->end_date)) {
+                            if(is_null($rule->end_date)){
                                 $check_end_date = TRUE;
-                            } else {
+                            }else{
                                 $check_end_date = ($rule->end_date >= $assignment->scheduling->start_date) ? TRUE : FALSE;
                             }
                             if ($check_start_date === TRUE && $check_end_date === TRUE) {
                                 $this->apply_comission_rule($rule->id, $id, $jobtype->assignment_job_type_id);
                             }
-
                         }
                     }
                     break;

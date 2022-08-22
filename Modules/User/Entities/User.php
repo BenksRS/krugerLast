@@ -7,6 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Modules\Assignments\Entities\Assignment;
+use Modules\Assignments\Entities\AssignmentsEvents;
+use Modules\Assignments\Entities\AssignmentsJobTypes;
+use Modules\Employees\Entities\EmployeeRate;
 
 class User extends Authenticatable
 {
@@ -22,6 +25,7 @@ class User extends Authenticatable
         'email',
         'active',
         'password',
+        'group_id',
     ];
 
     /**
@@ -60,8 +64,8 @@ class User extends Authenticatable
 		return $this->belongsTo(Assignment::class, 'id', 'created_by');
 	}
 
-    public function userGroup ()
+    public function group()
     {
-        return $this->belongsToMany(UserGroup::class);
+        return $this->belongsTo(UserGroup::class, 'group_id', 'id');
     }
 }

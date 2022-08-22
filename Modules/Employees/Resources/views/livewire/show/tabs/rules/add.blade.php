@@ -1,0 +1,344 @@
+<div>
+    <form  class="needs-validation" novalidate action=""  wire:submit.prevent="addRule(Object.fromEntries(new FormData($event.target)))">
+    <div class="row">
+        <div class="col-lg-4 col-md-12">
+
+
+            <h4 class="card-title mb-4">Rule Info</h4>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3" >
+                        <label class="form-label">Rule Type</label>
+                        <select class=" form-control select2-multiple" wire:model="ruleType"
+                                name="type" data-placeholder="Select ...">
+                            <option >choose...</option>
+                            <option value="T">Technician</option>
+                            <option value="R">Marketing</option>
+                            <option value="J">Job Type</option>
+                            <option value="S">Roof Tarp</option>
+                            <option value="P">All Jobs</option>
+                        </select>
+                    </div>
+
+                    @switch($ruleType)
+                        @case('T')
+                        <div class="mb-3" >
+                            <label class="form-label">Technician</label>
+                            <select class=" form-control select2-multiple" wire:model="techSelected"
+                                    name="techs_id" data-placeholder="Select ...">
+                                <option >choose...</option>
+                                @foreach($techs as $row)
+                                    <option value="{{$row->id}}">{{$row->user->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @break
+                        @case('R')
+                        <div>
+                            <div class="mb-3" wire:ignore>
+                                <label class="form-label">Referral</label>
+                                <select class="select2 form-control select2-multiple select_referral"
+                                        name="referral_id" data-placeholder="Select ...">
+                                    <option selected>chose...</option>
+                                    @foreach($allReferrals as $ref)
+
+                                        @if($ref->id == $referralSelected)
+                                            <option  selected value="{{$ref->id}}">{{$ref->full_name}}</option>
+                                        @else
+                                            <option  value="{{$ref->id}}">{{$ref->full_name}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        @error('reportSelected')
+                        <div class="invalid-feedback show">
+                            Please select a report valid option.
+                        </div>
+                </div>
+                @enderror
+                @break
+                @case('J')
+                <div class="mb-3" >
+                    <label class="form-label">Job Type</label>
+                    <select class=" form-control select2-multiple" wire:model="jobTypesSelected"
+                            name="job_type" data-placeholder="Select ...">
+                        <option >choose...</option>
+                        @foreach($jobTypes as $jt)
+                            <option value="{{$jt->id}}">{{$jt->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                @break
+                @case('S')
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="formrow-firstname-input" class="form-label">Sq Min</label>
+                            <input type="number" class="form-control" id="sq_min" name="sq_min" wire:model="sq_min" placeholder="0.00" autocomplete="nope" >
+                            @error('sq_min')
+                            <div class="invalid-feedback show">
+                                Please enter a valid Sq Min
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label for="formrow-firstname-input" class="form-label">Sq Max</label>
+                            <input type="number" class="form-control" id="sq_max" name="sq_max" wire:model="sq_max" placeholder="0.00" autocomplete="nope" >
+                            @error('sq_min')
+                            <div class="invalid-feedback show">
+                                Please enter a valid Sq Max
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+
+                </div>
+                @break
+                @case('P')
+                @break
+                @endswitch
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <div class="col-lg-4 col-md-12">
+        <h4 class="card-title mb-4">Time Frame</h4>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+                            <label class="form-label">Date Start</label>
+
+                            <div class="input-group" id="start_time-input-group" wire:ignore >
+                                <x-flatpickr  class="flatpickr_date"  id="date_start" name="date_start" show-time :time24hr="false" alt-format="m/d/Y h:i K"    />
+                                <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
+                            </div>
+                            @error('date_start')
+                            <div class="invalid-feedback show">
+                                Please select a valid datetime.
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-2">
+
+                            <label class="form-label">Date End</label>
+                            <div class="input-group" id="end_time-input-group" wire:ignore>
+                                <x-flatpickr  class="flatpickr_date"  id="date_end" name="date_end" show-time :time24hr="false" alt-format="m/d/Y h:i K"    />
+                                <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
+                            </div>
+                            @error('date_end')
+                            <div class="invalid-feedback show">
+                                Please select a valid datetime.
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-4 col-md-12">
+        <h4 class="card-title mb-4">Amount info</h4>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+
+                    @switch($ruleType)
+                        @case('T')
+                        <div class="col-md-6">
+                            <label  class="form-label">Percentage</label>
+                            <input type="text" class="form-control"  name="percentage"
+                                   placeholder="0.5 = 5%" wire:model.debounce.1000ms="percentage"  required>
+
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            @error('percentage')
+                            <div class="invalid-feedback">
+                                Please type a valid option.
+                            </div>
+                            @enderror
+                        </div>
+                        <button class="btn btn-lg btn-success m-2 "
+                                {{isset($this->percentage) ? ' ': 'disabled'}}
+
+                                type="submit" ><i class="bx bx-save"></i> Save  </button>
+                        @break
+                        @case('R')
+                        <div class="col-md-6">
+                            <label  class="form-label">Amount</label>
+                            <input type="text" class="form-control"  name="valor"
+                                   placeholder="$0.00" wire:model.debounce.1000ms="valor"  required>
+
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            @error('valor')
+                            <div class="invalid-feedback">
+                                Please type a valid option.
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label  class="form-label">Percentage</label>
+                            <input type="text" class="form-control"  name="percentage"
+                                   placeholder="0.5 = 5%" wire:model.debounce.1000ms="percentage"  required>
+
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            @error('percentage')
+                            <div class="invalid-feedback">
+                                Please type a valid option.
+                            </div>
+                            @enderror
+                        </div>
+                        <button class="btn btn-lg btn-success m-2 "
+                                {{(isset($this->percentage) && isset($this->valor)) ? ' ': 'disabled'}}
+
+                                type="submit"><i class="bx bx-save"></i> Save  </button>
+                        @break
+                        @case('J')
+                        <div class="col-md-6">
+                            <label  class="form-label">Amount</label>
+                            <input type="text" class="form-control"  name="valor"
+                                   placeholder="$0.00" wire:model.debounce.1000ms="valor"  required>
+
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            @error('valor')
+                            <div class="invalid-feedback">
+                                Please type a valid option.
+                            </div>
+                            @enderror
+                        </div>
+                        <button class="btn btn-lg btn-success m-2 "
+                                {{(isset($this->valor)) ? ' ': 'disabled'}}
+
+                                type="submit"><i class="bx bx-save"></i> Save  </button>
+                        @break
+                        @case('S')
+                        <div class="col-md-6">
+                            <label  class="form-label">Amount</label>
+                            <input type="text" class="form-control"  name="valor"
+                                   placeholder="$0.00" wire:model.debounce.1000ms="valor"  required>
+
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            @error('valor')
+                            <div class="invalid-feedback">
+                                Please type a valid option.
+                            </div>
+                            @enderror
+                        </div>
+                        <button class="btn btn-lg btn-success m-2 "
+                                {{(isset($this->valor)) ? ' ': 'disabled'}}
+
+                                type="submit"><i class="bx bx-save"></i> Save  </button>
+                        @break
+                        @case('P')
+                            <div class="col-md-6">
+                                <label  class="form-label">Percentage</label>
+                                <input type="text" class="form-control"  name="percentage"
+                                       placeholder="0.5 = 5%" wire:model.debounce.1000ms="percentage"  required>
+
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                @error('percentage')
+                                <div class="invalid-feedback">
+                                    Please type a valid option.
+                                </div>
+                                @enderror
+                            </div>
+
+                        <button class="btn btn-lg btn-success m-2 "
+                                {{isset($this->percentage) ? ' ': 'disabled'}}
+
+                                type="submit"><i class="bx bx-save"></i> Save  </button>
+                        @break
+                    @endswitch
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    </form>
+
+</div>
+
+
+
+
+</div>
+@push('js')
+    <script>
+        {{--var taskFlatpickrConfigDate = {--}}
+        {{--    enableTime: false,--}}
+        {{--    altInput: true,--}}
+        {{--    dateFormat: "Y-m-d",--}}
+        {{--    altFormat: "m\/d\/Y",--}}
+        {{--};--}}
+        {{--var taskFlatpickrConfigDateTime = {--}}
+        {{--    enableTime: true,--}}
+        {{--    altInput: true,--}}
+        {{--    dateFormat: "Y-m-d H:i",--}}
+        {{--    altFormat: "m\/d\/Y h:i K",--}}
+        {{--    time_24hr: false--}}
+        {{--};--}}
+        {{--$('#date_start').on('change.datetimepicker', function (e){--}}
+        {{--    let data = $(this).val();--}}
+        {{--    @this.set('date_start', data);--}}
+        {{--});--}}
+        {{--$('#date_end').on('change.datetimepicker', function (e){--}}
+        {{--    let data = $(this).val();--}}
+        {{--    @this.set('date_end', data);--}}
+        {{--});--}}
+        {{--$('.select_referral').on('change', function (e){--}}
+        {{--    let data = $(this).val();--}}
+        {{--    @this.set('referralSelected', data);--}}
+        {{--});--}}
+
+        function componentsLoadPageADD(){
+            console.log('START components ADD');
+            {{--$('#date_start').on('change.datetimepicker', function (e){--}}
+            {{--    let data = $(this).val();--}}
+            {{--    @this.set('date_start', data);--}}
+            {{--});--}}
+            {{--$('#date_end').on('change.datetimepicker', function (e){--}}
+            {{--    let data = $(this).val();--}}
+            {{--    @this.set('date_end', data);--}}
+            {{--});--}}
+            {{--$('.select_referral').on('change', function (e){--}}
+            {{--    let data = $(this).val();--}}
+            {{--    @this.set('referralSelected', data);--}}
+            {{--});--}}
+
+            console.log('END components ADD')
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+            Livewire.hook('message.processed', (message, component) => {componentsLoadPageADD()})
+        });
+    </script>
+@endpush

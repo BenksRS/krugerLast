@@ -8,6 +8,6 @@
         "Modules\\Employees\\Providers\\EmployeesServiceProvider"
     ],
     "aliases": {},
-    "files": [],
+    "files": ["Helpers/helper.php"],
     "requires": []
 }

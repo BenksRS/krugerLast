@@ -16,6 +16,10 @@ class EmployeeTimesheetDay extends Model {
         'date_timesheet'
         ];
 
+    public function timesheet()
+    {
+        return $this->belongsTo(EmployeeTimesheet::class, 'employee_timesheet_id', 'id');
+    }
     public function getDateViewAttribute(){
 
         $return = "-";

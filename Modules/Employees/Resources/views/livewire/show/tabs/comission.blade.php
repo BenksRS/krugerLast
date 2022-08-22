@@ -34,29 +34,3 @@
         </div>
     </div>
 </div>
-@push('js')
-    <script>
-
-        $('.list_jobs_item').hide();
-        $('.btn_hide_jobs').hide();
-
-        $('.btn_show_jobs').on('click', function (e){
-            let data = $(this).data('id');
-            let btn_hide = $(this).data('hide');
-
-            $('.list_jobs_'+data).show();
-            $('.btn_hide_'+data).show();
-            $(this).hide();
-
-        });
-        $('.btn_hide_jobs').on('click', function (e){
-            $('.list_jobs_item').hide();
-            $('.btn_hide_jobs').hide();
-            $('.btn_show_jobs').show();
-
-        });
-
-
-    </script>
-
-@endpush

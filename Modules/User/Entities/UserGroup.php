@@ -12,10 +12,8 @@ class UserGroup extends Model
      *
      * @var array
      */
+    protected $table = 'user_groups';
     protected $fillable = ['name', 'active'];
 
-    public function users ()
-    {
-        return $this->belongsToMany(User::class);
-    }
+
 }

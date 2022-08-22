@@ -4,7 +4,9 @@
 <link href="{{ themes('libs/spectrum-colorpicker2/spectrum.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ themes('libs/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ themes('libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ themes('libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="{{ themes('libs/@chenfengyuan/datepicker/datepicker.min.css') }}">
+
 
 @include('flatpickr::components.style')
 
