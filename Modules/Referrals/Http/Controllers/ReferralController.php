@@ -28,10 +28,15 @@ class ReferralController extends AdminController
      */
     public function index()
     {
+        $page_info = (object)[
+            'title' => 'Referrals All',
+            'back' => url('referrals'),
+            'back_title' => 'Referral List'
+        ];
+        \session()->flash('page',$page_info);
+        $page =\session()->get('page');
 
-        $referrals= Referral::all();
-        return view('referrals::index', compact('referrals'));
-
+        return view('referrals::index', compact('page'));
     }
     public function new ()
     {
