@@ -5,6 +5,7 @@ use Auth;
 use Livewire\Component;
 use Manny\Manny;
 use Modules\Referrals\Entities\Referral;
+use Modules\Referrals\Entities\ReferralPhone;
 use Modules\Referrals\Entities\ReferralType;
 
 class NewProspect extends Component
@@ -105,6 +106,7 @@ class NewProspect extends Component
             'email' => $this->email,
             'status' => 'LEED',
             'referral_type_id' => 12,
+            'marketing_id' => $this->user->id,
         ];
 
         $created = Referral::create($data);
