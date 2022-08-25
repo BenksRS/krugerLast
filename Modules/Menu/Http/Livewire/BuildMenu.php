@@ -12,7 +12,7 @@ class BuildMenu extends Component {
 
     public    $groups;
 
-    public    $groupActive;
+    public    $groupActive=0;
 
     public    $showForm = FALSE;
 

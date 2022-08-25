@@ -3,7 +3,7 @@
 		@include('menu::build.tabs-menu')
 	</div>
 	
-	@include('menu::build.modal')
+{{--	@include('menu::build.modal')--}}
 	
 	@push('css')
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/nestable2@1.6.0/jquery.nestable.min.css">

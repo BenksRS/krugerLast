@@ -11,7 +11,7 @@
 				@include('menu::build.form.general')
 			</div>
 		</div>
-	
+
 	</div>
 	@if(!empty($link['children']))
 		<ol class="dd-list">

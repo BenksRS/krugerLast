@@ -43,7 +43,7 @@
 {{--						</div>--}}
 {{--					</li>--}}
 {{--					<li class="nav-item dropdown">--}}
-{{--						<a class="nav-link dropdown-toggle arrow-none" target="_blan" href="{{ url('/schedulling/') }}" id="topnav-dashboard" role="button"--}}
+{{--						<a class="nav-link dropdown-toggle arrow-none" target="_blank" href="{{ url('/schedulling/') }}" id="topnav-dashboard" role="button"--}}
 {{--						> <i class="bx bx-grid me-2"></i> Scheduling </a>--}}
 {{--					</li>--}}
 {{--					<li class="nav-item dropdown">--}}
