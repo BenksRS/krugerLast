@@ -17,9 +17,10 @@ class BuildMenu extends Component {
     public    $showForm  = FALSE;
 
     protected $rules     = [
-        'data.title' => 'required',
-        'data.icon'  => '',
-        'data.url'   => '',
+        'data.title'   => 'required',
+        'data.icon'    => '',
+        'data.url'     => '',
+        'data.link_id' => '',
     ];
 
     public function mount ()
@@ -34,6 +35,7 @@ class BuildMenu extends Component {
 
         $map = $items->map(function ($value, $key) {
             if ( !empty($value['items']) ) {
+
                 dump($value['items']['visible']);
             }
 

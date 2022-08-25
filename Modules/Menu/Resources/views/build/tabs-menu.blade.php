@@ -42,13 +42,21 @@
 									<div class="modal-body">
 										
 										<div class="row">
-											<div class="col-md-6">
+											<div class="col-md-4">
 												<label for="inputTitle" class="form-label">Title</label>
 												<input type="text" class="form-control" id="inputTitle" wire:model="data.title">
 											</div>
-											<div class="col-md-6">
+											<div class="col-md-4">
 												<label for="inputIcon" class="form-label">Icon</label>
 												<input type="text" class="form-control" id="inputIcon" wire:model="data.icon">
+											</div>
+											<div class="col-md-4">
+												<label for="inputParent" class="form-label">Parent</label>
+												<select id="inputParent" class="form-control" wire:model="data.link_id">
+													@foreach($parents  as $id => $parent)
+														<option value="{{ $id }}">{{ $parent }}</option>
+													@endforeach
+												</select>
 											</div>
 										</div>
 										
