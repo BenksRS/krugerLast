@@ -140,7 +140,6 @@ class EmployeesController extends Controller
         while (($data = fgetcsv($file_open, 2000, ",")) !== FALSE) {
             if (!$firstline) {
 
-
                 switch($data['1']){
                     case 1:
                         $user_id=1;
@@ -287,6 +286,7 @@ class EmployeesController extends Controller
                     ];
 
                     EmployeeRules::insert($insert);
+
                 }
 
 

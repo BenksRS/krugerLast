@@ -21,7 +21,6 @@ class Fileupload extends Component
     public $photos = [];
 
     public function mount(Assignment $assignment, $type){
-//        ini_set(['memory_limit','4G']);
         $this->assignment = $assignment;
         $this->type = $type;
         $this->user = Auth::user();

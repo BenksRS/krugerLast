@@ -4,6 +4,7 @@ namespace Modules\Assignments\Http\Livewire\Show;
 
 use Livewire\Component;
 use Modules\Assignments\Entities\Assignment;
+use Auth;
 
 class TabsPanel extends Component
 {
@@ -13,7 +14,7 @@ class TabsPanel extends Component
     ];
 
     public $assignment;
-    public $isActive = 'info-details';
+    public $isActive = 'finance';
 
     public $navs = [
         [
@@ -56,14 +57,14 @@ class TabsPanel extends Component
             'tab' => 'assignments::show.tabs.finance',
             'category' => 'all',
         ],
-//        [
-//            'title' => 'Comissions',
-//            'status' => '',
-//            'href' => 'comissions',
-//            'key' => 'assignments_tab_comissions',
-//            'tab' => 'assignments::show.tabs.comissions',
-//            'category' => 'all',
-//        ],
+        [
+            'title' => 'Comissions',
+            'status' => '',
+            'href' => 'comissions',
+            'key' => 'assignments_tab_comissions',
+            'tab' => 'assignments::show.tabs.comissions',
+            'category' => 1,
+        ],
 //        [
 //            'title' => 'Coasts',
 //            'status' => '',
@@ -85,9 +86,12 @@ class TabsPanel extends Component
     public function mount(Assignment $assignment)
     {
         $this->assignment = $assignment;
+        $this->user = Auth::user();
+
     }
 
-    public function processChangetab($newActive){
+    public function processChangetab($newActive)
+    {
 
         $this->isActive = $newActive;
 

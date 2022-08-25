@@ -21,8 +21,6 @@ class Images extends Component
     public $gallery_category_id;
 
 
-
-
     public function mount(Assignment $assignment)
     {
         ini_set('memory_limit','1G');
@@ -44,7 +42,6 @@ class Images extends Component
         $this->gallery = Gallery::where('assignment_id', $this->assignment->id)->get();
     }
     public function updateTaskOrder($galleryReturn){
-//dd($galleryReturn);
         foreach ( $galleryReturn as $gallery){
             $type = $gallery['value'];
 
@@ -53,8 +50,8 @@ class Images extends Component
                 $image = Gallery::find($item['value']);
                 $image->update($update);
             }
-
         }
+
         $this->gallery = Gallery::where('assignment_id', $this->assignment->id)->get();
     }
     public function processImageUploaded(){
@@ -62,7 +59,6 @@ class Images extends Component
         $this->gallery = Gallery::where('assignment_id', $this->assignment->id)->get();
     }
     public function processUploadpics($type){
-
 
         switch ($type){
             case "start_job";
@@ -79,16 +75,14 @@ class Images extends Component
                 break;
         }
 
-
-
     }
     public function deleteImage($id){
 
         $deletesImage = Gallery::find($id);
         if($deletesImage){
             $deletesImage->delete();
-
             $this->gallery = Gallery::where('assignment_id', $this->assignment->id)->get();
+
         }
 
     }

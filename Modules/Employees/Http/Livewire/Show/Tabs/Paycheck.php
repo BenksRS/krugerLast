@@ -22,8 +22,8 @@ class Paycheck extends Component
     public $pending;
     public $user;
     public $listPaychecks;
-    public $paycheck_id=1000;
-    public $showList=false;
+    public $paycheck_id;
+    public $showList=true;
     public $showExtra=false;
 
     public $selectedRows = 100;

@@ -95,6 +95,18 @@ class CreateEmployeesTable extends Migration {
             $table->unsignedBigInteger('payroll_id')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('employee_rates', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->bigInteger('type')->nullable();
+            $table->decimal('regular_day')->default(0);
+            $table->decimal('weekend_day')->default(0);
+            $table->decimal('sleep_out')->default(0);
+            $table->decimal('hurricane')->default(0);
+            $table->decimal('oncall')->default(0);
+            $table->timestamps();
+        });
     }
 
     /**

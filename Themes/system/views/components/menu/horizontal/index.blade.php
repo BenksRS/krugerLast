@@ -54,7 +54,8 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-dashboard">
                             <a href="{{ url('/referrals/new') }}" class="dropdown-item" key="t-default">New</a>
-                            <a href="{{ url('/referrals') }}" class="dropdown-item" key="t-default">List</a>
+                            <a href="{{ url('/referrals') }}" class="dropdown-item" key="t-default">List All </a>
+                            <a href="{{ url('/referrals/mylist') }}" class="dropdown-item" key="t-default">My List </a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -64,7 +65,8 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-dashboard">
                             <a href="{{ url('/referrals/prospects/new') }}" class="dropdown-item" key="t-default">New</a>
-{{--                            <a href="{{ url('/referrals/prospects') }}" class="dropdown-item" key="t-default">List</a>--}}
+                            <a href="{{ url('/referrals/prospects/list') }}" class="dropdown-item" key="t-default">List All </a>
+                            <a href="{{ url('/referrals/prospects/mylist') }}" class="dropdown-item" key="t-default">My List </a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -101,15 +103,15 @@
 
 
 
-{{--                    <li class="nav-item dropdown">--}}
-{{--                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-dashboard" role="button"--}}
-{{--                        >--}}
-{{--                            <i class="bx bx-home-circle me-2"></i><span key="t-dashboards">Employees</span> <div class="arrow-down"></div>--}}
-{{--                        </a>--}}
-{{--                        <div class="dropdown-menu" aria-labelledby="topnav-dashboard">--}}
-{{--                            <a href="{{ url('/employees') }}" class="dropdown-item" key="t-default">List</a>--}}
-{{--                        </div>--}}
-{{--                    </li>--}}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-dashboard" role="button"
+                        >
+                            <i class="bx bx-home-circle me-2"></i><span key="t-dashboards">Employees</span> <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-dashboard">
+                            <a href="{{ url('/employees') }}" class="dropdown-item" key="t-default">List</a>
+                        </div>
+                    </li>
 {{--                    <li class="nav-item dropdown">--}}
 {{--                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-dashboard" role="button"--}}
 {{--                        >--}}

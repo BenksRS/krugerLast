@@ -71,9 +71,6 @@ class Search extends Component
 
         switch ($this->filter_type){
             case 'jobs':
-
-
-
                 switch ($this->filter_date){
                     case 'created':
                         $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected)->get();

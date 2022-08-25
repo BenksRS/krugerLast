@@ -5,10 +5,10 @@ namespace Modules\Referrals\Http\Livewire;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Auth;
 use Modules\Referrals\Repositories\ReferralsRepository;
+use Auth;
 
-class ListProspects extends Component
+class MylistProspects extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -32,7 +32,7 @@ class ListProspects extends Component
     public function render()
     {
         $searchAssignment = $this->searchAssignment;
-        $list = ReferralsRepository::where('status','leed')->Searchtopref($searchAssignment)->get();
+        $list = ReferralsRepository::where('marketing_id', $this->user->id)->where('status','leed')->Searchtopref($searchAssignment)->get();
 
 
 
@@ -40,7 +40,7 @@ class ListProspects extends Component
 
         $list = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
 
-        return view('referrals::livewire.list-prospects', [
+        return view('referrals::livewire.mylist-prospects', [
             'list' =>$list
         ]);
 
