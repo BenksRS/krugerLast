@@ -54,6 +54,7 @@ class BuildMenu extends Component {
     public function createLink ()
     {
         MenuLink::create($this->data);
+        $this->data = [];
         $this->toogleForm();
     }
 
