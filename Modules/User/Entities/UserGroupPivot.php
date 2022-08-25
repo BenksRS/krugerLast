@@ -12,6 +12,7 @@ class UserGroupPivot extends Model
      *
      * @var array
      */
+    protected $table = 'user_group_pivot';
     protected $fillable = ['user_id', 'user_group_id', 'superadmin'];
 
     public function user ()

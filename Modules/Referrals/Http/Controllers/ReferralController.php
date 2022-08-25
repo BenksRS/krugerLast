@@ -28,10 +28,27 @@ class ReferralController extends AdminController
      */
     public function index()
     {
+        $page_info = (object)[
+            'title' => 'Referrals All',
+            'back' => url('referrals'),
+            'back_title' => 'Referral List'
+        ];
+        \session()->flash('page',$page_info);
+        $page =\session()->get('page');
 
-        $referrals= Referral::all();
-        return view('referrals::index', compact('referrals'));
+        return view('referrals::index', compact('page'));
+    }
+    public function mylist()
+    {
+        $page_info = (object)[
+            'title' => 'Referrals My list',
+            'back' => url('referrals/mylist'),
+            'back_title' => 'Referral My List'
+        ];
+        \session()->flash('page',$page_info);
+        $page =\session()->get('page');
 
+        return view('referrals::mylist', compact('page'));
     }
     public function new ()
     {
@@ -169,6 +186,40 @@ class ReferralController extends AdminController
         return view('referrals::show', compact('referral','page'));
 
     }
+
+    public function prospect_list()
+    {
+
+        $page_info = (object)[
+            'title' => 'Prospect List',
+            'back' => url('/referrals/prospects/'),
+            'back_title' => 'Prospect List'
+        ];
+        \session()->flash('page',$page_info);
+        $page =\session()->get('page');
+
+
+        return view('referrals::prospect_list_all', compact('page'));
+
+    }
+    public function prospect_my_list()
+    {
+
+        $page_info = (object)[
+            'title' => 'Prospect My List',
+            'back' => url('/referrals/prospects/'),
+            'back_title' => 'Prospect My List'
+        ];
+        \session()->flash('page',$page_info);
+        $page =\session()->get('page');
+
+
+        return view('referrals::prospect_my_list', compact('page'));
+
+    }
+
+
+
 
     /**
      * Show the form for editing the specified resource.

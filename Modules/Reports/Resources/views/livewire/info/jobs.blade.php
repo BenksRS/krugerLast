@@ -55,6 +55,9 @@
                                 @if(in_array('Referral', $selectedColumns))
                                     <th>Referral</th>
                                 @endif
+                                    @if(in_array('Referral', $selectedColumns))
+                                        <th>Marketing</th>
+                                    @endif
                                 @if(in_array('Address', $selectedColumns))
                                     <th>Address</th>
                                 @endif
@@ -145,6 +148,14 @@
                                     @if(in_array('Status', $selectedColumns))
                                         <td><p>{{strtolower($row->referral_carrier_full)}}</p></td>
                                     @endif
+                                        @if(in_array('Status', $selectedColumns))
+                                            <td><p>
+                                                    @if($row->referral->marketing_id)
+                                                        {{strtolower($row->referral->marketing->name)}}
+                                                        @endif
+                                                </p></td>
+
+                                        @endif
                                     @if(in_array('Address', $selectedColumns))
                                         <td><p><a href="{{$row->address->link}}" target="{{$row->address->target}}" >{{$row->address->message}}</a></p></td>
                                     @endif

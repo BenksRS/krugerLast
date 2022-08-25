@@ -52,7 +52,7 @@
 
                                                 <div class="col-lg-1 align-self-center">
                                                     <div class="text-lg-center mt-4 mt-lg-0">
-                                                        <span class="badge {{$user->status != 'new' ? "bg-active" : 'bg-warning' }}  p-2">{{$row->status}}</span>
+                                                        <span class="badge text-uppercase {{$row->status}}  p-2">{{$row->status}}</span>
                                                     </div>
                                                 </div>
 
@@ -75,7 +75,7 @@
                             <div class="table-responsive" data-simplebar style="max-height: 450px;">
                                 <table class="table align-middle table-nowrap">
                                     <tbody>
-                                    @foreach($timesheets->where('status','!=','new') as $row)
+                                    @foreach($timesheets->where('status','approved') as $row)
 
 
                                         <tr>
@@ -104,10 +104,7 @@
 
                                                 <div class="col-lg-1 align-self-center">
                                                     <div class="text-lg-center mt-4 mt-lg-0">
-                                                        <span class="badge {{$row->status != 'new' ? "bg-active" : 'bg-warning' }}  p-2">{{$row->status}}</span>
-                                                        @if($row->status == 'approved')
-                                                            <small class="text-muted">by {{$row->user_approved->name}} ({{$row->approved_view}})</small>
-                                                        @endif
+                                                        <span class="badge text-uppercase {{$row->status}}  p-2">{{$row->status}}</span>
 
                                                     </div>
                                                 </div>

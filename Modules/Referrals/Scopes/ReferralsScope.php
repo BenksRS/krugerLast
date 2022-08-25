@@ -15,11 +15,12 @@ trait ReferralsScope
     }
     public function scopeSearchtopref (Builder $query, $search){
         return $query
+            ->with('type')
             ->when($search, function ($query, $search) {
                 $query
                     ->where('company_entity', 'like', '%' .$search . '%')
                     ->orWhere('company_fictitions', 'like', '%' .$search . '%');
-//                    ->orWhere('id', 'like', '%' .$search . '%')
+//                    ->orWhere('type.name', 'like', '%' .$search . '%');
 //                    ->orWhere('id', $search);
             });
     }

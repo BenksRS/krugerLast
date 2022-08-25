@@ -18,7 +18,7 @@
 <script src="{{ themes('libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
 <script src="{{ themes('libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
 {{--<script src="{{ themes('libs/dropzone/min/dropzone.min.js') }}"></script>--}}
-
+<script src="{{ themes('libs/dropzone/min/dropzone.min.js') }}"></script>
 @include('flatpickr::components.script')
 
 {{--<script src="{{ themes('libs/tui-dom/tui-dom.min.js') }}"></script>--}}

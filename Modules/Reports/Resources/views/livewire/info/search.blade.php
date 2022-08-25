@@ -132,6 +132,19 @@
                         </div>
                         <div class="col-md-5 col-lg-2">
                             <div class="mb-3" >
+                                <label class="form-label">Marketing</label>
+                                <a href="#" wire:click="clear('marketingSelected')"  class="float-end">clear</a>
+                                <select class=" form-control select2-multiple "
+                                        name="marketingSelected" wire:model="marketingSelected" data-placeholder="Select ...">
+                                    <option selected>chose...</option>
+                                    @foreach($marketing as $mar)
+                                        <option  value="{{$mar->id}}">{{$mar->user->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-lg-2">
+                            <div class="mb-3" >
                                 <label class="form-label">Events</label>
                                 <a href="#" wire:click="clear('eventSelected')"  class="float-end">clear</a>
                                 <select class=" form-control select2-multiple "

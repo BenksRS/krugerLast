@@ -9,6 +9,7 @@ use Modules\Assignments\Entities\AssignmentsEvents;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
 use Modules\Assignments\Repositories\AssignmentRepository;
 use Modules\Referrals\Entities\Referral;
+use Modules\User\Entities\Marketing;
 use Modules\User\Entities\Techs;
 
 class Search extends Component
@@ -19,6 +20,8 @@ class Search extends Component
     public $filter_date='schedulled';
     public $filter_type='jobs';
 
+    public $marketing;
+    public $marketingSelected;
     public $techs;
     public $techSelected;
     public $events;
@@ -37,6 +40,7 @@ class Search extends Component
 
     public  function mount(){
         $this->techs = Techs::all();
+        $this->marketing = Marketing::all();
         $this->events = AssignmentsEvents::all();
         $this->allReferrals = Referral::all();
         $this->allCarriers = Referral::all();
@@ -67,9 +71,6 @@ class Search extends Component
 
         switch ($this->filter_type){
             case 'jobs':
-
-
-
                 switch ($this->filter_date){
                     case 'created':
                         $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected)->get();
@@ -106,6 +107,11 @@ class Search extends Component
                 if($this->carrierSelected){
 //                    dd($this->carrierSelected);
                     $this->list=$this->list->where('carrier_id', $this->carrierSelected);
+
+                }
+                if($this->marketingSelected){
+//                    dd($this->marketingSelected);
+                    $this->list=$this->list->where('referral.marketing_id', $this->marketingSelected);
 
                 }
                 break;

@@ -19,6 +19,7 @@ class EmployeeReceipts extends Model
         'category',
         'created_by',
         'updated_by',
+        'paycheck_id',
         'approved_by',
         'approved_at'
     ];

@@ -7,6 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Modules\Assignments\Entities\Assignment;
+use Modules\Assignments\Entities\AssignmentsEvents;
+use Modules\Assignments\Entities\AssignmentsJobTypes;
+use Modules\Employees\Entities\EmployeeRate;
 
 class User extends Authenticatable {
 
