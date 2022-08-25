@@ -28,7 +28,7 @@ class MenuLink extends Model {
         return $this->hasMany(MenuLink::class, 'link_id');
     }
 
-    public function items ()
+    public function group ()
     {
         return $this->belongsTo(MenuLinkGroup::class, 'id', 'link_id');
     }
@@ -38,7 +38,7 @@ class MenuLink extends Model {
         return $query->with(['children'])->whereNull('link_id');
 
         return $query->with([
-            'items' => function ($query) {
+            'group' => function ($query) {
                 $query->where('visible', 'Y');
             },
         ]);

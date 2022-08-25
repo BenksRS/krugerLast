@@ -8,8 +8,6 @@ class ShowMenuLink extends Component {
 
     public    $link;
 
-
-
     protected $rules = [
         'link.title'  => 'required',
         'link.icon'   => '',
@@ -31,7 +29,6 @@ class ShowMenuLink extends Component {
     public function deleteLink ($link)
     {
         $this->link->delete();
-        $this->emit('some-event');
     }
 
     public function render ()

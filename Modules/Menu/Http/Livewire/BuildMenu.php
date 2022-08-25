@@ -8,15 +8,15 @@ use Modules\User\Entities\UserGroup;
 
 class BuildMenu extends Component {
 
-    protected $listeners = ['some-event' => '$refresh'];
-
     public    $data;
 
     public    $groups;
 
-    public    $showForm  = FALSE;
+    public    $groupActive;
 
-    protected $rules     = [
+    public    $showForm = FALSE;
+
+    protected $rules    = [
         'data.title'   => 'required',
         'data.icon'    => '',
         'data.url'     => '',
@@ -28,42 +28,53 @@ class BuildMenu extends Component {
         $this->groups = UserGroup::all();
     }
 
-    public function groupLinks ($id)
-    {
-
-        $items = MenuLink::query()->with(['items' => fn ($query) => $query->where('group_id', $id)])->get();
-
-        $map = $items->map(function ($value, $key) {
-            if ( !empty($value['items']) ) {
-
-                dump($value['items']['visible']);
-            }
-
-            return $value;
-        });
-
-        dump($map->toArray());
-
-    }
-
     public function toogleForm ()
     {
+        $this->data     = [];
         $this->showForm = !$this->showForm;
+    }
+
+    public function setGroup ($id)
+    {
+        $this->groupActive = $id;
     }
 
     public function createLink ()
     {
         MenuLink::create($this->data);
-        $this->data = [];
         $this->toogleForm();
     }
 
     public function getLinks ()
     {
-        $links   = MenuLink::query()->buildItems()->get();
+        $links   = MenuLink::query()->get();
         $parents = $links->pluck('title', 'id');
 
+        if ( $this->groupActive ) {
+            $group = $links->load(['group' => fn ($query) => $query->where('group_id', $this->groupActive)]);
+            $links = $group->map(function ($value) {
+                if ( !empty($value->group) ) {
+
+                    $group = $value->group;
+
+                    $value->order  = $group->order;
+                    $value->active = $group->visible;
+
+                }
+
+                return $value;
+            });
+        }
+
+        $links = $links->map(function ($value) use ($links) {
+            $value->children = $links->where('link_id', $value->id);
+
+            return $value;
+
+        })->whereNull('link_id');
+
         return ['links' => $links, 'parents' => $parents];
+
     }
 
     public function render ()

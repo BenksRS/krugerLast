@@ -3,12 +3,14 @@
 		<div class="menu-groups">
 			<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 				
-				<a class="nav-link active" id="v-pills-menus-tab" data-bs-toggle="pill" href="#v-pills-menus" role="tab" aria-controls="v-pills-menus" aria-selected="true">
+				<a class="nav-link {{!$groupActive ? 'active' : ''}}" href="#v-pills-menus" role="tab" data-bs-toggle="tab">
 					<p class="fw-bold my-2">Menus</p>
 				</a>
 				
 				@foreach($groups as $group)
-					<a class="nav-link" id="v-pills-{{ $group->name }}-tab" data-bs-toggle="pill" href="#v-pills-{{ $group->name }}" role="tab" aria-controls="v-pills-{{ $group->name }}" aria-selected="false" wire:click="groupLinks({{$group->id}})">
+					<a class="nav-link {{($groupActive == $group->id) ? 'active' : ''}}"
+					   wire:click="setGroup({{ $group->id }})" href="#v-pills-menus"
+					   role="tab" data-bs-toggle="tab">
 						<p class="fw-bold my-2">{{ $group->name }}</p>
 					</a>
 				@endforeach
@@ -92,11 +94,11 @@
 								</form>
 							</div>
 						@else
-							
+							{{ $groupActive }}
 							<div class="dd m-0">
 								<ol class="dd-list">
 									@foreach($links as $i => $link)
-										<livewire:menu::show-menu-link :link="$link" wire:key="menu-link-{{ $link->id }}"/>
+										{{--@livewire('menu::show-menu-link', ['link' => $link, 'group_id' => $groupActive], key('menu-link-'.$link['id']))--}}
 									@endforeach
 								</ol>
 							</div>
