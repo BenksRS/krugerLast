@@ -4,9 +4,10 @@ namespace Modules\Menu\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\Menu\Menu;
 
-class MenuServiceProvider extends ServiceProvider
-{
+class MenuServiceProvider extends ServiceProvider {
+
     /**
      * @var string $moduleName
      */
@@ -22,7 +23,7 @@ class MenuServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot ()
     {
         $this->registerTranslations();
         $this->registerConfig();
@@ -35,9 +36,10 @@ class MenuServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register ()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->registerMenu();
     }
 
     /**
@@ -45,7 +47,7 @@ class MenuServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerConfig()
+    protected function registerConfig ()
     {
         $this->publishes([
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
@@ -60,14 +62,14 @@ class MenuServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerViews()
+    public function registerViews ()
     {
         $viewPath = resource_path('views/modules/' . $this->moduleNameLower);
 
         $sourcePath = module_path($this->moduleName, 'Resources/views');
 
         $this->publishes([
-            $sourcePath => $viewPath
+            $sourcePath => $viewPath,
         ], ['views', $this->moduleNameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
@@ -78,11 +80,11 @@ class MenuServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerTranslations()
+    public function registerTranslations ()
     {
         $langPath = resource_path('lang/modules/' . $this->moduleNameLower);
 
-        if (is_dir($langPath)) {
+        if ( is_dir($langPath) ) {
             $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
         } else {
             $this->loadTranslationsFrom(module_path($this->moduleName, 'Resources/lang'), $this->moduleNameLower);
@@ -94,19 +96,28 @@ class MenuServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
+    public function provides ()
     {
-        return [];
+        return ['menu'];
     }
 
-    private function getPublishableViewPaths(): array
+    private function getPublishableViewPaths (): array
     {
         $paths = [];
-        foreach (\Config::get('view.paths') as $path) {
-            if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
+        foreach ( \Config::get('view.paths') as $path ) {
+            if ( is_dir($path . '/modules/' . $this->moduleNameLower) ) {
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
+
         return $paths;
     }
+
+    protected function registerMenu ()
+    {
+        $this->app->singleton('menu', function ($app) {
+            return new Menu($app['config'], $app['router']);
+        });
+    }
+
 }

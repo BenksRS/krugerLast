@@ -18,4 +18,9 @@ class UserGroupPivot extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function userGroup ()
+    {
+        return $this->belongsTo(UserGroup::class);
+    }
 }

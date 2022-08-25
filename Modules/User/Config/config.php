@@ -1,5 +1,10 @@
 <?php
 
 return [
-    'name' => 'User'
+    'name' => 'User',
+
+    'superadmin' => [
+        'users'  => [1, 75],
+        'groups' => ['admin'],
+    ],
 ];

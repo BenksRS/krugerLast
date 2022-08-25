@@ -8,8 +8,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Modules\Assignments\Entities\Assignment;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
+
     use HasFactory, Notifiable;
 
     /**
@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'active',
         'password',
+        'group_id',
     ];
 
     /**
@@ -34,34 +35,39 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-/*	protected $appends = ['selected'];*/
+    /*	protected $appends = ['selected'];*/
 
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = [
+    protected $casts   = [
         'email_verified_at' => 'datetime',
+        'superadmin'        => 'boolean',
     ];
+
+    protected $appends = [];
 
     public function setPasswordAttribute ($value)
     {
         $this->attributes["password"] = Hash::make($value);
     }
 
-	public function getSelectedAttribute ()
-	{
-		return ['Michel' => 'Michel', 'Vieira' => 'Vieira'];
-	}
 
-	public function assignment ()
-	{
-		return $this->belongsTo(Assignment::class, 'id', 'created_by');
-	}
+    public function getSelectedAttribute ()
+    {
+        return ['Michel' => 'Michel', 'Vieira' => 'Vieira'];
+    }
+
+    public function assignment ()
+    {
+        return $this->belongsTo(Assignment::class, 'id', 'created_by');
+    }
 
     public function userGroup ()
     {
-        return $this->belongsToMany(UserGroup::class);
+        return $this->belongsTo(UserGroup::class, 'group_id');
     }
+
 }

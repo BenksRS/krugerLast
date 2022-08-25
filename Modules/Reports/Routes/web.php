@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('reports')->group(function() {
-    Route::get('/', 'ReportsController@index');
+Route::prefix('reports')->name('reports.')->group(function() {
+    Route::get('/', 'ReportsController@index')->name('index');
 });
