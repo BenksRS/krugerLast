@@ -54,7 +54,7 @@
                                         {{--@dump($url)--}}
                                         @if($url!='profile')
                                             <button type="button" class="btn btn-sm btn-danger  waves-effect waves-light  me-2 float-end" wire:click.prevent="disable('{{$row->id}}')"> <i class="bx bx-block font-size-16 align-middle "></i> Disable</button>
-                                            <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-end" wire:click.prevent="show('{{$row->id}}')"> <i class="bx bx-file font-size-16 align-middle "></i> Edit</button>
+{{--                                            <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-end" wire:click.prevent="show('{{$row->id}}')"> <i class="bx bx-file font-size-16 align-middle "></i> Edit</button>--}}
                                         @endif
                                     </td>
                                 </tr>
