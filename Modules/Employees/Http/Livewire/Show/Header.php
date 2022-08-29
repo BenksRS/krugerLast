@@ -2,8 +2,10 @@
 
 namespace Modules\Employees\Http\Livewire\Show;
 
+use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 use Modules\User\Entities\User;
+
 
 class Header extends Component
 {
@@ -11,6 +13,7 @@ class Header extends Component
     public $user;
     public $active;
     public $name;
+    public $url;
 
 
     protected $rules = [
@@ -22,6 +25,8 @@ class Header extends Component
         $this->user = $user;
         $this->name = $user->name;
         $this->active = $user->active;
+
+        $this->url = \session()->get('url');
 
     }
 

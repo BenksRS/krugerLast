@@ -27,3 +27,6 @@ Route::prefix('/employees')->name('employees.')->group(function () {
 
 
 });
+Route::prefix('/profile')->name('employees.')->group(function () {
+    Route::get('/', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'profile'])->name('profile');
+});

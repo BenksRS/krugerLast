@@ -3,10 +3,12 @@
     <div class="row">
         @if($show)
             <div class="col-lg-12 col-md-12">
+
                 <h4 class="card-title mb-4">Rules Commissions
+                    @if(\session()->get('url')!='profile')
                     <button type="button" class="btn btn-sm btn-warning  waves-effect waves-light  me-2 float-end" wire:click.prevent="duplicate"> <i class="bx bx-add-to-queue font-size-16 align-middle "></i> Duplicate All</button>
                     <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-end" wire:click.prevent="toggleShowRules"> <i class="bx bx-plus font-size-16 align-middle "></i> New</button>
-
+                     @endif
                 </h4>
 
                 @livewire('employees::show.tabs.rules.show', ['user' => $user->id], key('employees_tab_rules_show'))
