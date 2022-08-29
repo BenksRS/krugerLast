@@ -20,6 +20,7 @@ class Show extends Component
         $this->user = $user;
         $this->rules = EmployeeRules::where('user_id',  $this->user->id)->get();
         $this->url = \session()->get('url');
+
 //        dd( $this->url);
     }
 
