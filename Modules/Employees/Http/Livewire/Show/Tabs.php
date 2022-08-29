@@ -2,6 +2,7 @@
 
 namespace Modules\Employees\Http\Livewire\Show;
 
+use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 use Modules\User\Entities\User;
 
@@ -13,7 +14,7 @@ class Tabs extends Component
         'refreshTabPanel' => '$refresh'
 
     ];
-
+    public $url;
     public $user;
     public $isActive = 'personal-details';
     public $navs = [
@@ -36,35 +37,35 @@ class Tabs extends Component
             'href' => 'commission',
             'key' => 'employees_tab_comission',
             'tab' => 'employees::show.tabs.comission',
-            'category' => 'all',
+            'category' => 'profile',
         ],
         [
             'title' => 'Rules',
             'href' => 'rules',
             'key' => 'employees_tab_rules',
             'tab' => 'employees::show.tabs.rules',
-            'category' => 'all',
+            'category' => 'profile',
         ],
         [
             'title' => 'Time Sheet',
             'href' => 'timesheet',
             'key' => 'employees_tab_timesheet',
             'tab' => 'employees::show.tabs.timesheet',
-            'category' => 'all',
+            'category' => 'profile',
         ],
         [
             'title' => 'Pay Check',
             'href' => 'paycheck',
             'key' => 'employees_tab_paycheck',
             'tab' => 'employees::show.tabs.paycheck',
-            'category' => 'all',
+            'category' => 'profile',
         ],
         [
             'title' => 'Receipts',
             'href' => 'receipts',
             'key' => 'employees_tab_receipts',
             'tab' => 'employees::show.tabs.receipts',
-            'category' => 'all',
+            'category' => 'profile',
         ],
 
     ];
@@ -73,6 +74,13 @@ class Tabs extends Component
     {
 
         $this->user = $user;
+        $this->url =  Route::getCurrentRoute()->uri();
+
+        if($this->url == 'profile'){
+            $this->isActive = 'commission';
+        }
+
+
     }
     public function processChangetab($newActive){
 

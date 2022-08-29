@@ -26,10 +26,12 @@
                             <div class="col-lg-5 d-none d-lg-block">
                                 <div class="clearfix mt-4 mt-lg-0 ">
 
-
+                                    @if($url != 'profile')
                                     <a href="#" type="button" class="btn btn-primary waves-effect waves-light me-2  float-end" wire:click.prevent="edit">
                                         <i class="fas fa-cogs font-size-16 align-middle"></i>
                                     </a>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>

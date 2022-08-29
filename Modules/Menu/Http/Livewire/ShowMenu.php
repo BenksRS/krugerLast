@@ -2,9 +2,10 @@
 
 namespace Modules\Menu\Http\Livewire;
 
-use Illuminate\Support\Facades\Auth;
+
 use Livewire\Component;
 use Modules\Menu\Entities\MenuLink;
+use Auth;
 
 class ShowMenu extends Component {
 
@@ -14,7 +15,8 @@ class ShowMenu extends Component {
 
     public function mount ()
     {
-        $this->user = Auth::user()->load(['group']);
+        $this->user = Auth::user();
+//        dd($this->user);
 
         $this->getLinkGroup();
     }
@@ -57,3 +59,4 @@ class ShowMenu extends Component {
     }
 
 }
+

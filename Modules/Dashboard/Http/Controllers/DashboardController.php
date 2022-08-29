@@ -5,8 +5,9 @@ namespace Modules\Dashboard\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Core\Http\Controllers\AdminController;
 
-class DashboardController extends Controller
+class DashboardController extends AdminController
 {
     /**
      * Display a listing of the resource.

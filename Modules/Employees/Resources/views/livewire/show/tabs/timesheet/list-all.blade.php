@@ -59,7 +59,9 @@
                                             </td>
 
                                             <td>
+                                                @if(\session()->get('url')!='profile')
                                                 <button type="button" class="btn btn-sm btn-danger  waves-effect waves-light  me-2 float-end" wire:click.prevent="delete('{{$row->id}}')"> <i class="bx bx-trash font-size-16 align-middle "></i></button>
+                                                @endif
                                                 <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-end" wire:click.prevent="show('{{$row->id}}')"> <i class="bx bx-search font-size-16 align-middle "></i> View</button>
                                             </td>
                                         </tr>
@@ -112,8 +114,10 @@
                                             </td>
 
                                             <td>
+                                                @if(\session()->get('url')!='profile')
                                                 <button type="button" class="btn btn-sm btn-danger  waves-effect waves-light  me-2 float-end" wire:click.prevent="delete('{{$row->id}}')"> <i class="bx bx-trash font-size-16 align-middle "></i></button>
-                                                <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-end" wire:click.prevent="show('{{$row->id}}')"> <i class="bx bx-search font-size-16 align-middle "></i> View</button>
+                                                @endif
+                                                    <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-end" wire:click.prevent="show('{{$row->id}}')"> <i class="bx bx-search font-size-16 align-middle "></i> View</button>
                                             </td>
                                         </tr>
                                     @endforeach

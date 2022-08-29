@@ -2,6 +2,8 @@
 
 namespace Modules\Employees\Http\Livewire\Show\Tabs\Rules;
 
+use http\Env\Request;
+use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 use Modules\Employees\Entities\EmployeeRules;
 use Modules\User\Entities\User;
@@ -11,11 +13,14 @@ class Show extends Component
     public $user;
     public $rules;
     public $tab='active';
+    public $url;
 
     public function mount(User $user)
     {
         $this->user = $user;
         $this->rules = EmployeeRules::where('user_id',  $this->user->id)->get();
+        $this->url = \session()->get('url');
+//        dd( $this->url);
     }
 
     public function setTab($tab){

@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\JobReport;
 use Modules\Assignments\Entities\JobReportReports;
@@ -18,6 +19,8 @@ use Modules\Employees\Entities\EmployeeCommissions;
 use Modules\Employees\Entities\EmployeeRules;
 use Modules\Referrals\Entities\Referral;
 use Modules\User\Entities\User;
+use Auth;
+
 
 class EmployeesController extends Controller
 {
@@ -45,7 +48,22 @@ class EmployeesController extends Controller
 
         return view('employees::index', compact('page'));
     }
+    public function profile()
+    {
+        $user = Auth::user();
+        $url =  Route::getCurrentRoute()->uri();
+        $page_info = (object)[
+            'title' => 'Employee Information',
+            'back' => url('employees'),
+            'back_title' => 'Employee List'
+        ];
+        \session()->flash('page',$page_info);
+//        \session()->flash('url',$url);
+        \session()->put('url', $url);
+        $page =\session()->get('page');
 
+        return view('employees::livewire.profile.show', compact('user','page'));
+    }
     /**
      * Show the form for creating a new resource.
      * @return Renderable
@@ -83,6 +101,7 @@ class EmployeesController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
+        $url =  Route::getCurrentRoute()->uri();
 
         $page_info = (object)[
             'title' => 'Employee Information',
@@ -90,6 +109,7 @@ class EmployeesController extends Controller
             'back_title' => 'Employee List'
         ];
         \session()->flash('page',$page_info);
+        \session()->put('url', $url);
         $page =\session()->get('page');
 
         return view('employees::livewire.show.show', compact('user','page'));

@@ -61,7 +61,9 @@
                                                 </td>
                                                 <td>
 
+                                                    @if(\session()->get('url')!='profile')
                                                     <button type="button" class="btn btn-sm btn-success  waves-effect waves-light  me-2 float-end" wire:click.prevent="paid('{{$row->id}}')"> <i class="bx bx-check font-size-16 align-middle "></i> Paid</button>
+                                                    @endif
                                                     <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-end" wire:click.prevent="show('{{$row->id}}')"> <i class="bx bx-search font-size-16 align-middle "></i> View</button>
 
                                                 </td>

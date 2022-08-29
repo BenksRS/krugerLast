@@ -9,10 +9,15 @@
             @if($timesheet->status != 'approved')
                 <span class="badge bg-warning  p-2">{{$timesheet->status}} </span>
                 <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-end" wire:click.prevent="toogleEdit"> <i class="bx bx-plus font-size-16 align-middle "></i> Edit</button>
-                <button type="button" class="btn btn-sm btn-success  waves-effect waves-light  me-2 float-end" wire:click.prevent="approve"> <i class="bx bx-check font-size-16 align-middle "></i> Approve</button>
+{{--@dump(\session()->get('url'))--}}
+                @if(\session()->get('url')!='profile')
+                    <button type="button" class="btn btn-sm btn-success  waves-effect waves-light  me-2 float-end" wire:click.prevent="approve"> <i class="bx bx-check font-size-16 align-middle "></i> Approve</button>
+                @endif
             @else
                 <span class="badge bg-success  p-2">{{$timesheet->status}}</span> <small class="text-muted">by {{$timesheet->user_approved->name}} ({{$timesheet->approved_view}})</small>
+                @if(\session()->get('url')!='profile')
                 <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-end" wire:click.prevent="toogleEdit"> <i class="bx bx-plus font-size-16 align-middle "></i> Edit</button>
+                @endif
             @endif
         @endif
         <button type="button" class="btn btn-sm btn-secondary waves-effect waves-light  me-2 float-end" wire:click.prevent="$emit('backList')"> <i class="fas fa-chevron-left font-size-16 align-middle "></i> Back</button>
