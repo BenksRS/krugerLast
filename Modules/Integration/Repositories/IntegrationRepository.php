@@ -3,6 +3,7 @@
 namespace Modules\Integration\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use Modules\Integration\Entities\Integration;
 
 trait IntegrationRepository {
@@ -25,6 +26,13 @@ trait IntegrationRepository {
     public function getData ()
     {
         return [];
+    }
+
+    protected function checkEncoder ($file = NULL)
+    {
+        $encoder = 'data:image/jpeg;base64,/';
+
+        return (string) Str::of($file)->trim(',/')->start($encoder);
     }
 
 }

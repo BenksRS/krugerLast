@@ -16,7 +16,7 @@ class SignatureRepository extends Signdata {
     {
         return [
             'assignment_id' => $data['job_id'],
-            'b64'           => $data['file'],
+            'b64'           => $this->checkEncoder($data['file']),
             'date_sign'     => $data['uploaded_at'],
             'type'          => 'app',
             'preferred'     => 'N',

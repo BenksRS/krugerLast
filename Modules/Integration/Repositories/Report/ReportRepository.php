@@ -14,7 +14,7 @@ class ReportRepository extends JobReport {
     {
         $report    = $data['report'];
         $checklist = $report['checklist'] ?? [];
-        $elements  = $report['elements'];
+        $elements  = $report['elements'] ?? [];
 
         $checklist = collect($checklist)->mapWithKeys(function ($item) {
             return [$item['name'] => $item['value'] == 0 ? 'N' : 'Y'];
