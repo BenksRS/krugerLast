@@ -24,7 +24,7 @@ class ShowMenu extends Component {
 
         if ( $this->user->group ) {
             $links = MenuLink::query();
-            $group = $links->whereHas('group', function ($query) {
+            $group = $links->with(['group'])->whereHas('group', function ($query) {
                 return $query->where('group_id', $this->user->group->id)->where('visible', 'Y');
             })->get();
             $links = $group->map(function ($value) {
