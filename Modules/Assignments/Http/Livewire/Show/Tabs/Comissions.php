@@ -9,6 +9,9 @@ use Modules\Employees\Http\Controllers\EmployeesController;
 
 class Comissions extends Component
 {
+    protected $listeners = [
+        'update_commission'
+    ];
     public $assignment;
 
     public $listCommissions;

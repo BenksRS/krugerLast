@@ -35,6 +35,14 @@ class Actions extends Component
         $this->checkFinance();
         $this->checkSign();
         $this->checkAuthorizations();
+        $this->checkCommissions();
+
+    }
+    public function checkCommissions(){
+
+        if(in_array($this->assignment->status_id,[5,6,10,24,9])){
+            $this->emit('update_commission');
+        }
 
     }
     public function reloadForms()
