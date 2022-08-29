@@ -14,17 +14,17 @@ class TabsPanel extends Component
     ];
 
     public $assignment;
-    public $isActive = 'comissions';
+    public $isActive = 'info-details';
 
     public $navs = [
-//        [
-//            'title' => 'Info Details',
-//            'status' => 'active',
-//            'href' => 'info-details',
-//            'key' => 'assignments_tab_info',
-//            'tab' => 'assignments::show.tabs.info',
-//            'category' => 'all',
-//        ],
+        [
+            'title' => 'Info Details',
+            'status' => 'active',
+            'href' => 'info-details',
+            'key' => 'assignments_tab_info',
+            'tab' => 'assignments::show.tabs.info',
+            'category' => 'all',
+        ],
         [
             'title' => 'Job Report',
             'status' => '',
