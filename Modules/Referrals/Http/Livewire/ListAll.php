@@ -31,7 +31,7 @@ class ListAll extends Component
     public function render()
     {
         $searchAssignment = $this->searchAssignment;
-        $list = ReferralsRepository::Searchtopref($searchAssignment)->get();
+        $list = ReferralsRepository::Searchtopref($searchAssignment)->where('status', '!=', 'leed')->get();
 
 
 

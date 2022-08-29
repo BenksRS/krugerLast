@@ -37,6 +37,7 @@ class NewProspect extends Component
     public $email;
     public $notes;
 
+    public $referral_types;
     public $referral_type_id;
     public $status;
 

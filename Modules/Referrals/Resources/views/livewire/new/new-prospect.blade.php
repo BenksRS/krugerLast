@@ -183,8 +183,10 @@
                                     <label class="form-label">Referral Type</label>
                                     <select class="form-control select2  select2-multiple select_referral"
                                             name="referral_typeSelected" wire:model="referral_type_id" data-placeholder="Select ...">
-
-                                        <option selected="selected" value="12">Prospect</option>
+                                        <option selected >chose...</option>
+                                        @foreach($referral_types as $type)
+                                            <option  value="{{$type->id}}">{{$type->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 @error('referral_typeSelected')
