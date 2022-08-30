@@ -1146,6 +1146,22 @@ class GdriveController extends Controller
 
 
     }
+    public function fix_address(){
+        $assignments=AssignmentRepository::whereLike('city', "'")->whereLike('street', "'")->get();
+        $this->cleamCleam($assignments);
+
+
+    }
+    public function cleamCleam($jobs){
+        foreach ($jobs as $job){
+            $update['city']=str_replace( array( "`", "'"), "",  $job->city);
+            $update['street']=str_replace( array( "`", "'"), "",  $job->street);
+            $job->update($update);
+        }
+    }
+
+
+
     public function adjust_images($id)
     {
         ini_set('max_execution_time', 0);

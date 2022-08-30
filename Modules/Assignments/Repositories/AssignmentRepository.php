@@ -21,7 +21,8 @@ class AssignmentRepository extends Assignment {
 
     public function getOriginAddressAttribute ()
     {
-        return sprintf("%s, %s, %s %s", ucwords(strtolower($this->street)), ucwords(strtolower($this->city)), $this->state, $this->zipcode);
+        $var=sprintf("%s, %s, %s %s", ucwords(strtolower($this->street)), ucwords(strtolower($this->city)), $this->state, $this->zipcode);
+        return str_replace(array("`", "'", "'", "", $var));
     }
 
 }

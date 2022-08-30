@@ -40,6 +40,10 @@ class Address extends Component
         $this->address_target = $assignment->address->target;
         $this->address_message = $assignment->address->message;
     }
+    public function clean($str){
+        $result = str_replace(array("`#`", "'"), '', $str);
+        return $result;
+    }
     public function edit(){
 
         $this->show = false;

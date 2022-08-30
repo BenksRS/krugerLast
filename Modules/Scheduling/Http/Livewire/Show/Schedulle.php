@@ -8,6 +8,7 @@ use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsScheduling;
 use Modules\Assignments\Entities\AssignmentsStatus;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
+use Modules\Assignments\Repositories\AssignmentRepository;
 use Modules\Notes\Entities\Directions;
 use Modules\User\Entities\Techs;
 use DateTime;
@@ -48,7 +49,8 @@ class Schedulle extends Component
 
         $this->techs = Techs::with('user')->get();
 
-        $this->date = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now())->format('Y-m-d');
+//        $this->date = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now())->format('Y-m-d');
+        $this->date = Carbon::createFromFormat('Y-m-d H:i:s', '2022-08-19 00:00:00')->format('Y-m-d');
         $this->dateDisplay = Carbon::createFromFormat('Y-m-d', $this->date)->format('F d, Y');
         $this->weekDisplay = Carbon::createFromFormat('Y-m-d', $this->date)->format('l');
         $this->statusList = AssignmentsStatus::whereIn('id', $this->getChecklist())->get();
@@ -77,7 +79,7 @@ class Schedulle extends Component
     }
     public function getOpenJobsCity (){
 //        $jobs = Assignment::whereIn('status_id',$this->getChecklist(TRUE))->get();
-        $jobs = Assignment::with(['status'])->whereIn('status_id',$this->getChecklist(TRUE))->get();
+        $jobs = AssignmentRepository::whereIn('status_id',$this->getChecklist(TRUE))->get();
 
 
 
