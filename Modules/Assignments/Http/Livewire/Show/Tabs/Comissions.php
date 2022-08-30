@@ -9,6 +9,9 @@ use Modules\Employees\Http\Controllers\EmployeesController;
 
 class Comissions extends Component
 {
+    protected $listeners = [
+        'update_commission_run'
+    ];
     public $assignment;
 
     public $listCommissions;
@@ -20,12 +23,20 @@ class Comissions extends Component
 
     }
 
+    public function update_commission_run(){
+        dd('run');
+    }
     public function update_commission(){
-        $employees = new EmployeesController();
 
-        $employees->check_comission($this->assignment->id);
+        if(in_array($this->assignment->status_id,[5,6,10,24,9])){
+            $employees = new EmployeesController();
 
-        $this->listCommissions = EmployeeCommissions::with('rule')->where('assignment_id', $this->assignment->id)->get();
+            $employees->check_comission($this->assignment->id);
+
+            $this->listCommissions = EmployeeCommissions::with('rule')->where('assignment_id', $this->assignment->id)->get();
+        }
+
+
     }
     public function showMoney($var){
         return number_format($var,2);

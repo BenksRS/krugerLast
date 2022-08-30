@@ -14,6 +14,7 @@ use Modules\Assignments\Entities\JobReportWorkers;
 use Modules\Assignments\Entities\StockTarps;
 use Modules\User\Entities\User;
 use Auth;
+use Modules\User\Entities\Workers;
 
 class TarpRepair extends Component
 {
@@ -78,7 +79,7 @@ class TarpRepair extends Component
         $this->jobType_id = $this->jobType->id;
 
         $this->jobTypeOptions = $this->jobType->reports;
-        $this->workers = User::all();
+        $this->workers = Workers::with('user')->get();
         $this->user = Auth::user();
         $this->jobReport = JobReport::where('assignment_id', $this->assignment->id)->where('assignment_job_type_id', $this->jobType_id)->first();
 

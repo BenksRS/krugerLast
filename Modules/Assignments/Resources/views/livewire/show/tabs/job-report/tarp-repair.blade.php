@@ -315,12 +315,12 @@
                                         <div class="col-auto float-start">
                                             <div class="form-check form-checkbox-outline form-check-primary mb-3">
                                                 @if($workersDB)
-                                                    <input class="form-check-input" type="checkbox" id="checkWorker{{$wk->id}}" wire:click="syncWorkers({{$wk->id}})" value="{{$wk->id}}"  {{ $workersDB->contains($wk->id) ? 'checked=""' : '' }}">
+                                                    <input class="form-check-input" type="checkbox" id="checkWorker{{$wk->user->id}}" wire:click="syncWorkers({{$wk->user->id}})" value="{{$wk->user->id}}"  {{ $workersDB->contains($wk->user->id) ? 'checked=""' : '' }}">
                                                 @else
-                                                    <input class="form-check-input" type="checkbox" id="checkWorker{{$wk->id}}" wire:click="syncWorkers({{$wk->id}})" value="{{$wk->id}}"  >
+                                                    <input class="form-check-input" type="checkbox" id="checkWorker{{$wk->user->id}}" wire:click="syncWorkers({{$wk->user->id}})" value="{{$wk->user->id}}"  >
                                                 @endif
-                                                <label class="form-check-label" for="checkWorker{{$wk->id}}">
-                                                    {{$wk->name}}
+                                                <label class="form-check-label" for="checkWorker{{$wk->user->id}}">
+                                                    {{$wk->user->name}}
                                                 </label>
                                             </div>
                                         </div>

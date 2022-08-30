@@ -10,6 +10,7 @@ use Modules\Assignments\Entities\AssignmentFinance;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
 use Modules\Assignments\Entities\Signdata;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
+use Modules\Employees\Http\Controllers\EmployeesController;
 use Modules\Referrals\Entities\Referral;
 use Modules\Referrals\Entities\ReferralAuthorizationPivot;
 use Modules\Referrals\Entities\ReferralCarriersPivot;
@@ -35,6 +36,18 @@ class Actions extends Component
         $this->checkFinance();
         $this->checkSign();
         $this->checkAuthorizations();
+
+        $this->checkCommissions();
+
+    }
+    public function checkCommissions(){
+
+        if(in_array($this->assignment->status_id,[5,6,10,24,9])){
+
+            $employees = new EmployeesController();
+
+            $employees->check_comission($this->assignment->id);
+        }
 
     }
     public function reloadForms()
