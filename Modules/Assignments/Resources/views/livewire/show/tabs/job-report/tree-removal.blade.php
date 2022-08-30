@@ -288,7 +288,7 @@
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio"  name="bobcat_type"  wire:model="bobcat_type"
-                                               id="formRadios10" value="skid_loader" >
+                                               id="formRadios10" value="mini_skid_loader" >
                                         <label class="form-check-label" for="formRadios10">
                                             Mini Skid Loader
                                         </label>
