@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsJobTypes;
+use Modules\Assignments\Entities\AssignmentsStatus;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
 use Modules\Assignments\Entities\AssignmentsTags;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
@@ -90,9 +91,9 @@ class Header extends Component
     }
     public function changeStatusNotes($newStatus){
 
-
+        $status= AssignmentsStatus::find($newStatus);
         $this->assignment->notes()->create([
-            'text'=> $this->changeStatustext,
+            'text'=> "### CHANGE STATUS TO: $status->name ### $this->changeStatustext",
             'notable_id'=> $this->assignment->id,
             'created_by'=> $this->user->id,
             'type'=> 'assignment',

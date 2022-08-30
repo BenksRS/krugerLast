@@ -145,6 +145,7 @@
                                             <li><button class="dropdown-item" wire:click="changeStatus(20)" type="button">UPLOADING PICS</button></li>
                                             <li><button class="dropdown-item" wire:click="changeStatus(4)" type="button">READY TO BILL</button></li>
                                             <li><button class="dropdown-item" wire:click="setPreStatus(7)" type="button">CLOSED</button></li>
+                                            <li><button class="dropdown-item" wire:click="setPreStatus(26)" type="button">NO CHARGE</button></li>
                                             <li><button class="dropdown-item" wire:click="setPreStatus(8)" type="button">NO JOB</button></li>
                                         </ul>
                                     </div>
@@ -174,6 +175,20 @@
                                     </div>
                                 </div>
                                 @break
+                            @case(26)
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6 ">
+                                <hr>
+                                <div>
+                                    <h5 class="modal-title" id="change_status_modal_pending">Explain why do you change status to NO CHARGE at this job? </h5>
+                                    <div class="d-flex">
+                                        <textarea class="form-control  me-2"  wire:model="changeStatustext"  rows="5" placeholder="Enter note here..."></textarea>
+                                        <button type="button" {{(empty($this->changeStatustext)) ?'disabled' : '' }} class="btn btn-success waves-effect waves-light  float-end" wire:click="changeStatusNotes({{$this->preStatus}})"><i class="bx bx-save font-size-16 align-middle me-2"></i></button>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                            @break
                             @case(8)
                                 <div class="col-md-6"></div>
                                 <div class="col-md-6 ">
