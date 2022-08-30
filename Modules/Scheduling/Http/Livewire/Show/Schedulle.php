@@ -49,8 +49,8 @@ class Schedulle extends Component
 
         $this->techs = Techs::with('user')->get();
 
-//        $this->date = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now())->format('Y-m-d');
-        $this->date = Carbon::createFromFormat('Y-m-d H:i:s', '2022-08-19 00:00:00')->format('Y-m-d');
+        $this->date = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now())->format('Y-m-d');
+//        $this->date = Carbon::createFromFormat('Y-m-d H:i:s', '2022-08-19 00:00:00')->format('Y-m-d');
         $this->dateDisplay = Carbon::createFromFormat('Y-m-d', $this->date)->format('F d, Y');
         $this->weekDisplay = Carbon::createFromFormat('Y-m-d', $this->date)->format('l');
         $this->statusList = AssignmentsStatus::whereIn('id', $this->getChecklist())->get();
