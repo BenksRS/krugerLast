@@ -21,8 +21,27 @@ class Actions extends Component
     {
         $this->referral = $referral;
         $this->checkAuthorizations($this->referral->id);
+        $this->checkCarrierDefault();
+
     }
 
+    public function checkCarrierDefault(){
+        $ref_id= $this->referral->id;
+        $ref_type_id= $this->referral->referral_type_id;
+
+        $carrier_default = ($ref_type_id == 9) ? 583 :582 ;
+
+        $rule_carrier = ReferralCarriersPivot::where('referral_vendor_id',$ref_id)->where('referral_carrier_id',$carrier_default)->first();
+
+        if(!$rule_carrier){
+            ReferralCarriersPivot::create([
+                'referral_vendor_id' => $ref_id,
+                'referral_carrier_id' => $carrier_default
+            ])->save();
+        }
+
+
+    }
     public function checkAuthorizations($referral_id)
     {
 //        dd('aqui');
