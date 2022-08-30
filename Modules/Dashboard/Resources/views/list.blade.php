@@ -35,7 +35,9 @@
         @case('followup')
         @livewire('dashboard::list.fallow-up', key('dash_list_followup'))
         @break
-
+        @case('revisebill')
+        @livewire('dashboard::list.revisebill', key('dash_list_followup'))
+        @break
         @default
         <h3>OPPSSSS!!!! No list found!! </h3>
     @endswitch

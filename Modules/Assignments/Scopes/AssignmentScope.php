@@ -48,6 +48,10 @@ trait AssignmentScope {
     {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
+    public function scopeRevisebill (Builder $query, $status = [24])
+    {
+        return $query->whereIn('status_id', collect($status))->whereNotNull('id');
+    }
     public function scopeCollection (Builder $query, $status = [5,9,10,])
     {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');

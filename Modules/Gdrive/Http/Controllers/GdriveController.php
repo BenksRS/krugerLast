@@ -16,6 +16,7 @@ use Modules\Assignments\Entities\AssignmentsStatusPivot;
 use Modules\Assignments\Entities\Gallery;
 use Modules\Assignments\Entities\JobReport;
 use Modules\Assignments\Entities\Signdata;
+use Modules\Assignments\Repositories\AssignmentFinanceRepository;
 use Modules\Assignments\Repositories\AssignmentFirebaseRepository;
 use Modules\Assignments\Repositories\AssignmentRepository;
 use Modules\Gdrive\Entities\Gdrive;
@@ -1104,6 +1105,47 @@ class GdriveController extends Controller
 
     }
 
+    public function check_finance(){
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '2512M');
+
+
+        $assignmnet=AssignmentFinanceRepository::DateSchedulled('2022-01-01', Carbon::now())->whereIn('status_id', [6,10,24])->get();
+
+        foreach ($assignmnet as $row){
+
+            $status_finance= $row->finance->balance->status;
+            if($status_finance!='pending'){
+
+                if($row->status_id != $status_finance){
+                    AssignmentsStatusPivot::create([
+                        'assignment_id'=> $row->id,
+                        'assignment_status_id'=> $status_finance,
+                        'created_by'=> 73,
+                    ]);
+                    $update_status=[
+                        'status_id'  => $status_finance,
+                        'updated_by'  => 73,
+                    ];
+
+                    $status_collection=array(5,6);
+                    if(in_array($status_finance, $status_collection)){
+                        $update_status['status_collection_id']=$status_finance;
+                    }
+
+
+                    $row->update($update_status);
+
+                }
+
+            }
+
+
+        }
+
+
+
+    }
     public function adjust_images($id)
     {
         ini_set('max_execution_time', 0);
