@@ -33,6 +33,7 @@ class ListAll extends Component
 //
         $searchAssignment = "%$this->searchAssignment%";
         $list=Assignment::with(['scheduling','referral','carrier','status','event','phones','user_updated','user_created','job_types','invoices'])->whereLike('first_name',$searchAssignment)
+            ->whereLike('id',$searchAssignment)
             ->whereLike('last_name',$searchAssignment)
             ->whereLike('email',$searchAssignment)
             ->whereLike('street',$searchAssignment)
@@ -41,6 +42,7 @@ class ListAll extends Component
             ->whereLike('zipcode',$searchAssignment)
             ->whereLike('claim_number',$searchAssignment)
             ->orderBy('id', 'DESC');
+
 
         $list = $list->paginate($this->selectedRows);
 
