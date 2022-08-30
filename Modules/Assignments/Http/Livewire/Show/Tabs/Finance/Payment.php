@@ -34,6 +34,7 @@ class Payment extends Component
     public $payment_date;
     public $payment_amount;
     public $payment_type;
+    public $payment_info;
     public $payment_date_edit;
     public $invoice_id;
     public $paid_fees;
@@ -128,6 +129,7 @@ class Payment extends Component
             'amount' => preg_replace('/[^0-9.]+/', '', $this->payment_amount),
             'payment_type' => $this->payment_type,
             'payment_date' =>$this->payment_date,
+            'payment_info' =>$this->payment_info,
 
         ];
         if($this->payment_type != 'fee_payment'){

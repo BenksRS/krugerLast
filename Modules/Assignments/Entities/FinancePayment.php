@@ -19,6 +19,7 @@ class FinancePayment extends Model
         'created_by',
         'updated_by',
         'amount',
+        'payment_info',
         'payment_date'
     ];
     protected $appends  = [

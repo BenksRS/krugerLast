@@ -91,6 +91,21 @@
                                     @enderror
 
                                 </div>
+                                <div class="col-md-6">
+                                    <label  class="form-label">info</label>
+                                    <input type="text" class="form-control"  name="payment_info"
+                                           placeholder="info" wire:model="payment_info">
+
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    @error('payment_amount')
+                                    <div class="invalid-feedback">
+                                        Please type a valid option.
+                                    </div>
+                                    @enderror
+
+                                </div>
 
                         </div>
                             <div class="row mt-2">
@@ -187,6 +202,7 @@
                                 <tr>
                                     <td><h5 class="font-size-11 mb-1">Invoice</h5></td>
                                     <td><h5 class="font-size-11 mb-1">Amount</h5></td>
+                                    <td><h5 class="font-size-11 mb-1">Info</h5></td>
                                     <td><h5 class="font-size-11 mb-1" >Date Payment</h5></td>
                                     <td><h5 class="font-size-11 mb-1"></h5>Edited</td>
                                     <td><h5 class="font-size-11 mb-1"></h5>-</td>
@@ -202,6 +218,9 @@
                                             </td>
                                             <td>
                                                 <p class="text-muted mb-0 font-size-11 ">{{$payment->amount_view}}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-muted mb-0 font-size-11 ">{{$payment->payment_info}}</p>
                                             </td>
                                             <td>
                                                 <p class="text-muted mb-0 font-size-11 text-danger">{{$payment->payment_date_view}}</p>
