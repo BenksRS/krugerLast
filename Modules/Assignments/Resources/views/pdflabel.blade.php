@@ -185,6 +185,7 @@ $pics_front_house=\Modules\Assignments\Entities\Gallery::where([
 
 <?php
 $countInside=0;
+$countImageInside=0;
 $pics_inside=\Modules\Assignments\Entities\Gallery::where([
         'assignment_id' => $data->id,
         'type' => 'pics_inside'
@@ -217,113 +218,142 @@ if(count($pics_inside) > 0){
             <span><?="Address: $data->street - $data->city - $data->state - $data->zipcode"?></span>
         </div>
 
-
-    @foreach($pics_inside as $pic_inside)
-            <?php
-//            $mylabel = "NO SELECTED";
-            switch ($countInside){
-            case 0:
-
-
-            ?>
-            <div style="font-size: 12px; position: fixed;left:20mm; top:23mm; z-index:  -1000;">
-                <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
-                <br>
-                <span><?php echo $pic_inside->category->name?></span>
-                <br>
-            </div>
-
-            <?php
-            break;
-            case 1:
-
-            ?>
-            <div style="font-size: 12px; position: fixed;left:105mm; top:23mm; z-index:  -1000;">
-                <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
-                <br>
-                <span><?php echo $pic_inside->category->name?></span>
-                <br>
-            </div>
+        @foreach($pics_inside as $pic_inside)
             <?php
 
-            break;
-            case 2:
-
+            if($countInside == 8){
+            $countInside=0;
             ?>
+    </div>
 
-            <div style="font-size: 12px; position: fixed;left:20mm; top:90mm; z-index:  -1000;">
-                <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
-                <br>
-                <span><?php echo $pic_inside->category->name?></span>
-                <br>
-            </div>
-            <?php
+</main>
 
-            break;
-            case 3:
+<div class="page_break"></div>
 
-            ?>
-            <div style="font-size: 12px; position: fixed;left:105mm; top:90mm; z-index:  -1000;">
-                <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
-                <br>
-                <span><?php echo $pic_inside->category->name?></span>
-                <br>
-            </div>
-            <?php
+<div id="watermark">
 
-            break;
-            case 4:
+</div>
+<main>
 
-            ?>
-            <div style="font-size: 12px; position: fixed;left:20mm; top:155mm; z-index:  -1000;">
-                <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
-                <br>
-                <span><?php echo $pic_inside->category->name?></span>
-                <br>
-            </div>
-            <?php
+    <div class="card-header">
+        <h4 class="mt-1 mb-1 text-black" style="font-size: 22px; position: fixed;left:10mm; top:0mm; z-index:  -1000;">
+            <strong> Inside pictures of the damaged area: ({{count($pics_inside)}}) Pics</strong>
+        </h4>
+    </div>
+    <div style="font-size: 12px; position: fixed;left:20mm; top:283mm; z-index:  -1000;">
+        <span><?="Name: $data->full_name - Service date: $data_scheduled"?></span>
+    </div>
+    <div style="font-size: 12px; position: fixed;left:20mm; top:287mm; z-index:  -1000;">
+        <span><?="Address: $data->street - $data->city - $data->state - $data->zipcode"?></span>
+    </div>
+    <?php
+    }
+    switch ($countInside){
+    case 0:
 
-            break;
-            case 5:
 
-            ?>
-            <div style="font-size: 12px; position: fixed;left:105mm; top:155mm; z-index:  -1000;">
-                <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
-                <br>
-                <span><?php echo $pic_inside->category->name?></span>
-                <br>
-            </div>
-            <?php
+    ?>
+    <div style="font-size: 12px; position: fixed;left:20mm; top:23mm; z-index:  -1000;">
+        <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
+        <br>
+        <span><?php echo $pic_inside->category->name?></span>
+        <br>
+    </div>
 
-            break;
-            case 6:
+    <?php
+    break;
+    case 1:
 
-            ?>
-            <div style="font-size: 12px; position: fixed;left:20mm; top:220mm; z-index:  -1000;">
-                <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
-                <br>
-                <span><?php echo $pic_inside->category->name?></span>
-                <br>
-            </div>
-            <?php
+    ?>
+    <div style="font-size: 12px; position: fixed;left:105mm; top:23mm; z-index:  -1000;">
+        <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
+        <br>
+        <span><?php echo $pic_inside->category->name?></span>
+        <br>
+    </div>
+    <?php
 
-            break;
-            case 7:
+    break;
+    case 2:
 
-            ?>
-            <div style="font-size: 12px; position: fixed;left:105mm; top:220mm; z-index:  -1000;">
-                <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
-                <br>
-                <span><?php echo $pic_inside->category->name?></span>
-                <br>
-            </div>
-            <?php
+    ?>
 
-            break;
-            }
-                $countInside++;
-            ?>
-        @endforeach
+    <div style="font-size: 12px; position: fixed;left:20mm; top:90mm; z-index:  -1000;">
+        <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
+        <br>
+        <span><?php echo $pic_inside->category->name?></span>
+        <br>
+    </div>
+    <?php
+
+    break;
+    case 3:
+
+    ?>
+    <div style="font-size: 12px; position: fixed;left:105mm; top:90mm; z-index:  -1000;">
+        <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
+        <br>
+        <span><?php echo $pic_inside->category->name?></span>
+        <br>
+    </div>
+    <?php
+
+    break;
+    case 4:
+
+    ?>
+    <div style="font-size: 12px; position: fixed;left:20mm; top:155mm; z-index:  -1000;">
+        <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
+        <br>
+        <span><?php echo $pic_inside->category->name?></span>
+        <br>
+    </div>
+    <?php
+
+    break;
+    case 5:
+
+    ?>
+    <div style="font-size: 12px; position: fixed;left:105mm; top:155mm; z-index:  -1000;">
+        <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
+        <br>
+        <span><?php echo $pic_inside->category->name?></span>
+        <br>
+    </div>
+    <?php
+
+    break;
+    case 6:
+
+    ?>
+    <div style="font-size: 12px; position: fixed;left:20mm; top:220mm; z-index:  -1000;">
+        <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
+        <br>
+        <span><?php echo $pic_inside->category->name?></span>
+        <br>
+    </div>
+    <?php
+
+    break;
+    case 7:
+
+    ?>
+    <div style="font-size: 12px; position: fixed;left:105mm; top:220mm; z-index:  -1000;">
+        <img   style="width: 300px; height: 230px;" src="{{$pic_inside->b64}}" />
+        <br>
+        <span><?php echo $pic_inside->category->name?></span>
+        <br>
+    </div>
+
+    <?php
+
+    break;
+    }
+    $countInside++;
+    $countImageInside++;
+    ?>
+    @endforeach
+
 
     </div>
 
