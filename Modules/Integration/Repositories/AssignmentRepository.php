@@ -78,7 +78,7 @@ class AssignmentRepository extends Assignment {
             $info_phones = NULL;
         }
 
-        $notes="teste";
+        $notes="";
 
 
 
