@@ -52,7 +52,7 @@ class AssignmentRepository extends Assignment {
             $tech_name = $this->scheduling->tech->name;
 
             $scheduled_order_at   = $this->scheduling->start_date;
-            $scheduled_start_time = Carbon::createFromFormat('Y-m-d H:i:s', $scheduled_order_at)->format('H:i');
+            $scheduled_start_time = $this->scheduling->start_hour;
             //            dd($scheduled_start_time);
         } else {
             $tech_id              = NULL;
