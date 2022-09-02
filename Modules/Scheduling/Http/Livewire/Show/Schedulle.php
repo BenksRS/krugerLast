@@ -413,16 +413,18 @@ class Schedulle extends Component
                 foreach ($jobs['items'] as $item){
                     $assignment_id=$item['value'];
 
+                    $jobSched = AssignmentsScheduling::where('assignment_id',$assignment_id)->first();
+                    if($jobSched->tech_id == 73){
+                        $start_date = $jobSched->start_date;
+                    }
+                    
 
 //                    $end_date = new \DateTime($start_date); //now
                     $end_date = new \DateTime($start_date); //now
                     $end_date->add(new \DateInterval('PT1H'));
 
 
-                    $jobSched = AssignmentsScheduling::where('assignment_id',$assignment_id)->first();
-                    if($jobSched->tech_id == 73){
-                        $start_date = $jobSched->start_date;
-                    }
+
 
                     $update=[
                         'tech_id'=> $tech_id,
