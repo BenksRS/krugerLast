@@ -60,7 +60,7 @@ class EmployeeTimesheet extends Model
                 ];
 
                 //weekend
-                $weekend_days=(int)ceil(($weekendDays->sum('morning') +  $weekendDays->sum('afternoon')/ 2));
+                $weekend_days=(int)ceil(($weekendDays->sum('morning') +  $weekendDays->sum('afternoon'))/ 2);
                 $total_weekend_days=(($weekend_days) * ($this->rates->weekend_day));
 
                 $weekend=(object)[
