@@ -318,10 +318,12 @@
                                                         @if($insideJobs)
 
                                                                 @foreach($insideJobs->sortBy('order') as $item)
+
                                                                     <div class="open_job alert {{$item->job->status->class}}" wire:key="open__{{$item->job->id}}" wire:sortable-group.item="{{$item->job->id}}" >
                                                                         <div class="row">
                                                                             <?php
                                                                             $fontsize=10;
+                                                                            //                                            $length=
 
                                                                             if(strlen($item->job->full_name) > 34){
                                                                                 $fontsize=$fontsize-2;

@@ -402,9 +402,13 @@ class Schedulle extends Component
         $message_error="";
         foreach ( $JobsReturn as $jobs){
             if($jobs['value'] != 'openJobs'){
+
+
                 $infos = explode('_',$jobs['value']);
                 $tech_id=$infos[1];
                 $start_date=$infos[3];
+
+
 
                 foreach ($jobs['items'] as $item){
                     $assignment_id=$item['value'];
@@ -414,18 +418,21 @@ class Schedulle extends Component
                     $end_date = new \DateTime($start_date); //now
                     $end_date->add(new \DateInterval('PT1H'));
 
+
+                    $jobSched = AssignmentsScheduling::where('assignment_id',$assignment_id)->first();
+                    if($jobSched->tech_id == 73){
+                        $start_date = $jobSched->start_date;
+                    }
+
                     $update=[
                         'tech_id'=> $tech_id,
                         'start_date'=> $start_date,
                         'end_date'=> $end_date,
                         'updated_by'=> $this->user->id,
                     ];
-                    $jobSched = AssignmentsScheduling::where('assignment_id',$assignment_id)->first();
-
-
 
                     if($jobSched){
-                        if($jobSched->start_date != $start_date){
+                        if($jobSched->start_date != $start_date || $jobSched->tech_id == 73){
 
                             // check if has another
                             $checkTimeframe=$this->checkTimeframeforTech($tech_id,$start_date);
