@@ -32,7 +32,7 @@ class Schedulle extends Component
     public $dateDisplay;
     public $weekDisplay;
     public $openJobs;
-    public $showSystem=true;
+    public $showSystem=false;
     public $openJobsCity;
     public $systemJobsCity;
     public $totalJobs;
