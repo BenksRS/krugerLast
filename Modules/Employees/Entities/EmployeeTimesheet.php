@@ -67,7 +67,6 @@ class EmployeeTimesheet extends Model
                     'days' =>$weekend_days,
                     'total' =>$total_weekend_days,
                 ];
-
                 //sleep out
                 $sleep_out_days=$this->days->sum('out');
                 $total_sleep_out_days=(($sleep_out_days) * ($this->rates->sleep_out));
@@ -75,7 +74,6 @@ class EmployeeTimesheet extends Model
                     'days' =>$sleep_out_days,
                     'total' =>$total_sleep_out_days,
                 ];
-
                 //on call
                 $oncall_days=$this->days->sum('oncall');
                 $total_oncall_days=(($oncall_days) * ($this->rates->oncall));
@@ -103,7 +101,6 @@ class EmployeeTimesheet extends Model
                     'hurricane'=>$hurricane,
                     'total' =>$total
                 ];
-
                 break;
             default:
                 $result=[];

@@ -9,7 +9,11 @@ class Techs extends Model
 {
     use HasFactory;
     protected $table = 'techs';
-    protected $fillable = [];
+    protected $fillable = [
+        'active',
+        'user_id',
+        'order'
+    ];
 
     public function user()
     {

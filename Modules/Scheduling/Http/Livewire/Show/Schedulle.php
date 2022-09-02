@@ -25,18 +25,22 @@ class Schedulle extends Component
 
     public $techs;
     public $schedulled;
+    public $systemSchedulled;
     public $grids=[];
     public $grids_header=[];
     public $date;
     public $dateDisplay;
     public $weekDisplay;
     public $openJobs;
+    public $showSystem=true;
     public $openJobsCity;
+    public $systemJobsCity;
     public $totalJobs;
     public $user;
     public $jobRoute;
 
     public $filter;
+    public $filterSystem;
 
     public $addresses;
     public $originAddress;
@@ -47,10 +51,8 @@ class Schedulle extends Component
 
     public function mount(){
 
-        $this->techs = Techs::with('user')->get();
-
+        $this->techs = Techs::with('user')->whereNotIn('id',[73])->orderBy('order')->get();
         $this->date = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now())->format('Y-m-d');
-//        $this->date = Carbon::createFromFormat('Y-m-d H:i:s', '2022-08-19 00:00:00')->format('Y-m-d');
         $this->dateDisplay = Carbon::createFromFormat('Y-m-d', $this->date)->format('F d, Y');
         $this->weekDisplay = Carbon::createFromFormat('Y-m-d', $this->date)->format('l');
         $this->statusList = AssignmentsStatus::whereIn('id', $this->getChecklist())->get();
@@ -64,24 +66,29 @@ class Schedulle extends Component
 ////        dd($this->originAddress);
 
     }
+
     protected function getChecklist ($filter = FALSE)
     {
         return array_keys($filter ? array_filter($this->checklist) : $this->checklist);
     }
+    public function toogleSystem(){
+        $this->showSystem = !$this->showSystem;
+        $this->getOpenJobsCity();
+        $this->getSystemJobsCity();
+    }
     public function nullFilter(){
         $this->filter =  null;
         $this->getOpenJobsCity();
+        $this->getSystemJobsCity();
     }
     public function setFilter($labelSelected){
         $this->filter = $labelSelected;
 
         $this->getOpenJobsCity();
+        $this->getSystemJobsCity();
     }
     public function getOpenJobsCity (){
-//        $jobs = Assignment::whereIn('status_id',$this->getChecklist(TRUE))->get();
         $jobs = AssignmentRepository::whereIn('status_id',$this->getChecklist(TRUE))->get();
-
-
 
         $this->totalJobs=count($jobs);
         $jobsbyState=$jobs->groupBy('state');
@@ -125,15 +132,70 @@ class Schedulle extends Component
                     'order' =>$milhas_value
                 ];
             }
-
-
-        }
+            }
             $coll=collect($coll);
         }else {
             $coll = [];
         }
 
         $this->openJobsCity = $coll;
+    }
+    public function getSystemJobsCity (){
+// $jobs = AssignmentRepository::whereIn('status_id',$this->getChecklist(TRUE))->get();
+        $tech_system=73;
+        $jobs = AssignmentRepository::SchedulledSystem($this->date,$tech_system)->get();
+
+//        dd($jobs);
+
+        $this->totalJobs=count($jobs);
+        $jobsbyState=$jobs->groupBy('state');
+
+        if(count($jobsbyState) > 0){
+
+            foreach ($jobsbyState as $state => $jobsState){
+
+                foreach ($jobsState->groupBy('city') as $city => $jobs){
+//                dd($jobs);
+                    $total= count($jobs);
+                    $destination="$city, $state, US";
+                    $label="$state - $city";
+
+
+//                dd($this->originAddress);
+                    if($this->originAddress){
+
+                        $milhas = $this->getMiles($this->originAddress, $destination);
+                        $milhas_text=$milhas->text;
+                        $milhas_value=$milhas->value;
+//
+//                    $milhas_text='-';
+//                    $milhas_value=0;
+                    }else{
+                        $milhas_text='-';
+                        $milhas_value=0;
+                    }
+
+                    $slug=strtolower(str_replace(' ', '',$label));
+                    $slug=strtolower(str_replace(',', '',$slug));
+                    $coll[]=(object)[
+                        'id' => rand(1,10000000),
+                        'total' => $total,
+                        'slug' => $slug,
+//                    'jobs' => $jobs,
+                        'label' => $label,
+                        'city' => $city,
+                        'state' => $state,
+                        'milhas' => $milhas_text,
+                        'order' =>$milhas_value
+                    ];
+                }
+            }
+            $coll=collect($coll);
+        }else {
+            $coll = [];
+        }
+
+        $this->systemJobsCity = $coll;
     }
     public function getReferralName ($referral,$carrier){
 
@@ -192,6 +254,48 @@ class Schedulle extends Component
         return $coll;
 
     }
+    public function getSystemJobs ($city,$state){
+        $tech_system=73;
+        $jobs = AssignmentRepository::SchedulledSystem($this->date,$tech_system)
+            ->where('city',$city)
+            ->where('state',$state)
+            ->get();
+        if(count($jobs) > 0){
+            foreach ($jobs as $job){
+//dd("$this->originAddress, $job->originAddress");
+                $destination=sprintf("%s, %s, %s %s", ucwords(strtolower($job->street)), ucwords(strtolower($job->city)), $job->state, $job->zipcode);
+
+                $milhas = $this->getMiles($this->originAddress, $destination);
+                $milhas_text=$milhas->text;
+                $milhas_value=$milhas->value;
+
+
+//                $milhas_text='-';
+//                $milhas_value=0;
+
+
+                $coll[]=(object)[
+                    'id' => $job->id,
+                    'job' => $job,
+                    'destination' => $destination,
+                    'milhas' => $milhas_text,
+                    'order' => $milhas_value
+                ];
+            }
+
+            $coll=collect($coll);
+
+        }else{
+            $coll=[];
+        }
+
+
+
+
+
+        return $coll;
+
+    }
     public function changeRoute($origin){
 
 //        dd($origin);
@@ -199,6 +303,7 @@ class Schedulle extends Component
         $this->jobRoute = $origin[1];
 //        $this->dateJobs();
         $this->getOpenJobsCity();
+        $this->getSystemJobsCity();
     }
     public function getMiles($originAddress,$destinationAddress){
 
@@ -235,7 +340,10 @@ class Schedulle extends Component
     }
     public function dateJobs (){
         $this->schedulled = AssignmentsScheduling::with('assignment')->whereDate('start_date', $this->date)->get();
+        $tech_system=73;
+//        $this->systemSchedulled = AssignmentsScheduling::with('assignment')->where('tech_id', $tech_system)->whereDate('start_date', $this->date)->get();
     }
+
     public function reloadGridJobs (){
 
 
@@ -266,6 +374,7 @@ class Schedulle extends Component
         $this->weekDisplay = Carbon::createFromFormat('Y-m-d', $this->date)->format('l');
         $this->dateJobs();
         $this->getOpenJobsCity();
+        $this->getSystemJobsCity();
         $this->reloadGridJobs();
 
 //        dd( $this->date);
@@ -415,6 +524,7 @@ class Schedulle extends Component
         $this->reloadGridJobs();
         $this->dateJobs();
         $this->getOpenJobsCity();
+        $this->getSystemJobsCity();
     }
     public function run_grids_header(){
         $interval=['AM','PM'];
@@ -508,6 +618,7 @@ class Schedulle extends Component
 //        dd($this->originAddress);
         $this->reloadGridJobs();
         $this->getOpenJobsCity();
+        $this->getSystemJobsCity();
     }
     public function render()
     {
@@ -515,6 +626,7 @@ class Schedulle extends Component
         return view('scheduling::livewire.show.schedulle',[
             'list_schedulleds' => $this->schedulled,
             'list_openJobsCity' => $this->openJobsCity,
+            'list_systemCity' => $this->systemJobsCity,
         ]);
     }
 }

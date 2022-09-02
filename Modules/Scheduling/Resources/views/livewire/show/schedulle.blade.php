@@ -103,71 +103,58 @@
                             <div wire:loading class="lineWrap animated-background ">
 
                             </div>
-                            <div class="lineWrap" wire:key="line_tech-{{$tech->id}}"  wire:loading.remove>
+                            <div class="lineWrap" wire:key="line_tech-{{$tech->id}}"   wire:loading.remove>
                                 <?php
                                 $jobs=$list_schedulleds->where('tech_id',$tech->user->id);
                                 ?>
 
 
                                 @foreach($grids as $grid)
-                                    {{--                                    <div wire:loading.delay.longest  class="schedbox animated-background">--}}
-                                    {{--                                       --}}
-                                    {{--                                    </div>--}}
-
-
-                                    <div class="schedbox" wire:key="tech_{{$tech->user->id}}_grid_{{$grid}}" wire:sortable-group.item-group="techid_{{$tech->user->id}}_grid_{{$grid}}">
-                                        {{--                                <div  wire:sortable-group.item-group.item-group="grid-{{$grid}}">--}}
                                         <?php
-                                        $job_grid =$jobs->where('start_date',"$grid")->first();
-
+                                        $jobs_grid =$jobs->where('start_date',"$grid");
+                                        $count_jobs=count($jobs_grid);
                                         ?>
-
-                                        @if($job_grid)
-
-
-
-                                            <div class="scheduled_job alert {{$job_grid->assignment->status->class}} {{($this->jobRoute == $job_grid->assignment->id)? ' job_route': ''}}"  wire:key="techid_{{$tech->user->id}}_grid_{{$grid}}_{{$job_grid->assignment->id}}" wire:sortable-group.item="{{$job_grid->assignment->id}}" >
-
-                                                <div class="row">
+                                    <div class="schedbox" wire:key="tech_{{$tech->user->id}}_grid_{{$grid}}" wire:sortable-group.item-group="techid_{{$tech->user->id}}_grid_{{$grid}}" >
+                                        {{--                                <div  wire:sortable-group.item-group.item-group="grid-{{$grid}}">--}}
 
 
+                                        @if($count_jobs > 0)
 
 
+                                            @foreach($jobs_grid as $job_grid)
 
 
+                                                <div class="scheduled_job alert {{$job_grid->assignment->status->class}} {{($this->jobRoute == $job_grid->assignment->id)? ' job_route': ''}}"  wire:key="techid_{{$tech->user->id}}_grid_{{$grid}}_{{$job_grid->assignment->id}}" wire:sortable-group.item="{{$job_grid->assignment->id}}" >
 
+                                                    <div class="row">
+                                                        <div class="col-lg-12 blackfont">
+                                                            #{{ $job_grid->assignment->id }}
+                                                        </div>
 
+                                                        <div class="col-lg-12 whitefont"  style="font-size: 9px">
+                                                            @foreach($job_grid->assignment->job_types as $job_types)
+                                                                <?php $count=0;$count++;?>
+                                                                @if($count == 1)
+                                                                    {{$job_types->name}}
+                                                                @else
+                                                                    {{" / $job_types->name"}}
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                        <div class="col-lg-12 blackfont" style="font-size: 9px">
+                                                            {{$job_grid->assignment->city}} - {{$job_grid->assignment->state}}
+                                                        </div>
 
+                                                        <div class="col-lg-12">
+                                                            <button type="button" class="btn btn-sm btn-warning waves-effect waves-light"  wire:loading.attr="disabled" wire:click="$emit('changeRoute',['{{$job_grid->assignment->destination}}', '{{$job_grid->assignment->id}}' ])" ><i class="bx bx-car"></i></button>
+                                                            {{--                                                        <button type="button" class="btn btn-sm btn-info waves-effect waves-light"><i class="bx bx-search"></i></button>--}}
+                                                            {{--                                                        <button type="button" class="btn btn-sm btn-danger waves-effect waves-light" ><i class="bx bx-trash"></i></button>--}}
+                                                        </div>
 
-
-                                                    <div class="col-lg-12 blackfont">
-                                                        #{{ $job_grid->assignment->id }}
-                                                    </div>
-
-                                                    <div class="col-lg-12 whitefont"  style="font-size: 9px">
-                                                        @foreach($job_grid->assignment->job_types as $job_types)
-                                                            <?php $count=0;$count++;?>
-                                                            @if($count == 1)
-                                                                {{$job_types->name}}
-                                                            @else
-                                                                {{" / $job_types->name"}}
-                                                            @endif
-                                                        @endforeach
-                                                    </div>
-                                                    <div class="col-lg-12 blackfont" style="font-size: 9px">
-                                                        {{$job_grid->assignment->city}} - {{$job_grid->assignment->state}}
-                                                    </div>
-
-                                                    <div class="col-lg-12">
-                                                        <button type="button" class="btn btn-sm btn-warning waves-effect waves-light"  wire:loading.attr="disabled" wire:click="$emit('changeRoute',['{{$job_grid->assignment->destination}}', '{{$job_grid->assignment->id}}' ])" ><i class="bx bx-car"></i></button>
-{{--                                                        <button type="button" class="btn btn-sm btn-info waves-effect waves-light"><i class="bx bx-search"></i></button>--}}
-{{--                                                        <button type="button" class="btn btn-sm btn-danger waves-effect waves-light" ><i class="bx bx-trash"></i></button>--}}
                                                     </div>
 
                                                 </div>
-
-                                            </div>
-
+                                            @endforeach
                                         @endif
                                     </div>
                                     {{--                            </div>--}}
@@ -200,111 +187,193 @@
                 </div>
 
                 <hr>
-                Total Jobs({{$this->totalJobs}}) <br>
-                <div class="float-end mb-2">
-                    @if($this->filter)
-                        <span class="badge badge-soft-primary"> {{$this->filter}}</span> <a href="#" style="font-size: 9px" wire:click="$emit('nullFilter')">Remove</a>
-                    @endif
-                </div>
-                <hr>
-                <div class="jobsOpen"  wire:key="openjobs" wire:sortable-group.item-group="openJobs" >
-                    <div class="accordion accordion-flush" id="accordionCitys" >
 
+                <div class="total_jobs {{$showSystem == true ? 'hide' : '' }}">
+                    <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-start" wire:click.prevent="toogleSystem"> <i class="bx bx-loader-circle font-size-16 align-middle "></i> SystemJobs</button>        Total Jobs({{$this->totalJobs}}) <br>
 
-                        @if(count($list_openJobsCity) > 0)
-                            <?php  $id=1;?>
-                            <div wire:loading>
-                                <div class="spinner-border text-primary col-lg-12" role="status">
-                                </div>
-                            </div>
-                            <div wire:loading.remove>
-                                @foreach($list_openJobsCity->sortBy('order') as $groupCity)
-                                    <?php  $scroll=($id*49)-49; $id++;?>
-                                    <div class="accordion-item {{($this->filter==$groupCity->label) ? ' moveup' : ' '}}" data-move="{{$scroll}}">
-
-                                        <h2 class="accordion-header" id="flush-heading-{{$groupCity->slug}}">
-                                            <button  class="accordion-button fw-medium {{($this->filter==$groupCity->label) ? ' ' : ' collapsed'}}" type="button"  data-bs-toggle="collapse" data-bs-target="#flush-collapse-{{$groupCity->slug}}" aria-expanded="true" aria-controls="flush-collapse-{{$groupCity->slug}}"  wire:click="$emit('setFilter','{{$groupCity->label}}')">
-                                                <span style="font-size: 10px;">{{$groupCity->label}} ({{$groupCity->total}}) - {{$groupCity->milhas}}</span>
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapse-{{$groupCity->slug}}"  class="accordion-collapse collapse {{($this->filter==$groupCity->label) ? ' show' : ' '}}"  aria-labelledby="flush-heading-{{$groupCity->slug}}" data-bs-parent="#accordionCitys">
-                                            <div class="accordion-body text-muted">
-                                                <div wire:loading>
-                                                    <div class="spinner-border text-primary col-lg-12" role="status">
-                                                    </div>
-                                                </div>
-                                                @if($this->filter==$groupCity->label)
-                                                    <?php
-                                                    $insideJobs=$this->getOpenJobs($groupCity->city,$groupCity->state);
-                                                    ?>
-
-
-                                                    {{-- JOBS --}}
-                                                    @if($insideJobs)
-                                                        <div wire:loading.remove>
-
-                                                            @foreach($insideJobs->sortBy('order') as $item)
-
-
-                                                                <div class="open_job alert {{$item->job->status->class}}" wire:key="open__{{$item->job->id}}" wire:sortable-group.item="{{$item->job->id}}" >
-                                                                    <div class="row">
-                                                                        <?php
-                                                                        $fontsize=10;
-                                                                        //                                            $length=
-
-                                                                        if(strlen($item->job->full_name) > 34){
-                                                                            $fontsize=$fontsize-2;
-                                                                        }
-                                                                        ?>
-
-                                                                        <div class="col-lg-12 blackfont"  style="font-size: {{$fontsize}}px">
-                                                                            {{ $item->job->full_name }}
-                                                                        </div>
-
-                                                                        <div class="col-lg-12 whitefont mt-1" style="font-size: 9px">
-                                                                            <?php $countOpen=0;?>
-                                                                            @foreach($item->job->job_types as $job_types)
-                                                                                <?php $countOpen++;?>
-                                                                                @if($countOpen == 1)
-                                                                                    {{$job_types->name}}
-                                                                                @else
-                                                                                    {{" / $job_types->name"}}
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </div>
-                                                                        <div class="col-lg-12 blackfont mt-1">
-
-                                                                            <span class="float-start" style="font-size: 9px">{{ isset($item->job->phones->first()->phone) ? $item->job->phones->first()->phone : 'No phone'}}</span>
-
-                                                                            <span class="float-end "  style="font-size: 8px"> ({{$item->job->referral_carrier }})</span>
-
-                                                                        </div>
-                                                                        <div class="col-lg-12 whitefont mt-1" style="font-size: 10px">
-                                                                            <span class="float-start">{{strtoupper($item->job->city)}} - {{$item->job->state}}</span>
-                                                                            <span class="float-end">   ({{$item->milhas}})</span>
-                                                                        </div>
-
-
-
-                                                                    </div>
-                                                                </div>
-                                                            @endforeach
-
-                                                        </div>
-
-                                                    @endif
-
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                @endforeach
-                            </div>
+                    <div class="float-end mb-2">
+                        @if($this->filter)
+                            <span class="badge badge-soft-primary"> {{$this->filter}}</span> <a href="#" style="font-size: 9px" wire:click="$emit('nullFilter')">Remove</a>
                         @endif
                     </div>
-                    <div style="height: 800px">
+                    <hr>
+                    <div class="jobsOpen"  wire:key="openjobs" wire:sortable-group.item-group="openJobs" >
+                        <div class="accordion accordion-flush" id="accordionCitys" >
 
+
+                            @if(count($list_openJobsCity) > 0)
+                                <?php  $id=1;?>
+                                <div wire:loading>
+                                    <div class="spinner-border text-primary col-lg-12" role="status">
+                                    </div>
+                                </div>
+                                <div wire:loading.remove>
+                                    @foreach($list_openJobsCity->sortBy('order') as $groupCity)
+                                        <?php  $scroll=($id*49)-49; $id++;?>
+                                        <div class="accordion-item {{($this->filter==$groupCity->label) ? ' moveup' : ' '}}" data-move="{{$scroll}}">
+
+                                            <h2 class="accordion-header" id="flush-heading-{{$groupCity->slug}}">
+                                                <button  class="accordion-button fw-medium {{($this->filter==$groupCity->label) ? ' ' : ' collapsed'}}" type="button"  data-bs-toggle="collapse" data-bs-target="#flush-collapse-{{$groupCity->slug}}" aria-expanded="true" aria-controls="flush-collapse-{{$groupCity->slug}}"  wire:click="$emit('setFilter','{{$groupCity->label}}')">
+                                                    <span style="font-size: 10px;">{{$groupCity->label}} ({{$groupCity->total}}) - {{$groupCity->milhas}}</span>
+                                                </button>
+                                            </h2>
+                                            <div id="flush-collapse-{{$groupCity->slug}}"  class="accordion-collapse collapse {{($this->filter==$groupCity->label) ? ' show' : ' '}}"  aria-labelledby="flush-heading-{{$groupCity->slug}}" data-bs-parent="#accordionCitys">
+                                                <div class="accordion-body text-muted">
+                                                    <div wire:loading>
+                                                        <div class="spinner-border text-primary col-lg-12" role="status">
+                                                        </div>
+                                                    </div>
+                                                    @if($this->filter==$groupCity->label)
+                                                        <?php
+                                                        $insideJobs=$this->getOpenJobs($groupCity->city,$groupCity->state);
+                                                        ?>
+
+
+                                                        {{-- JOBS --}}
+                                                        @if($insideJobs)
+                                                            <div wire:loading.remove>
+
+                                                                @foreach($insideJobs->sortBy('order') as $item)
+
+
+                                                                    <div class="open_job alert {{$item->job->status->class}}" wire:key="open__{{$item->job->id}}" wire:sortable-group.item="{{$item->job->id}}" >
+                                                                        <div class="row">
+                                                                            <?php
+                                                                            $fontsize=10;
+                                                                            //                                            $length=
+
+                                                                            if(strlen($item->job->full_name) > 34){
+                                                                                $fontsize=$fontsize-2;
+                                                                            }
+                                                                            ?>
+
+                                                                            <div class="col-lg-12 blackfont"  style="font-size: {{$fontsize}}px">
+                                                                                {{ $item->job->full_name }}
+                                                                            </div>
+
+                                                                            <div class="col-lg-12 whitefont mt-1" style="font-size: 9px">
+                                                                                <?php $countOpen=0;?>
+                                                                                @foreach($item->job->job_types as $job_types)
+                                                                                    <?php $countOpen++;?>
+                                                                                    @if($countOpen == 1)
+                                                                                        {{$job_types->name}}
+                                                                                    @else
+                                                                                        {{" / $job_types->name"}}
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            </div>
+                                                                            <div class="col-lg-12 blackfont mt-1">
+
+                                                                                <span class="float-start" style="font-size: 9px">{{ isset($item->job->phones->first()->phone) ? $item->job->phones->first()->phone : 'No phone'}}</span>
+
+                                                                                <span class="float-end "  style="font-size: 8px"> ({{$item->job->referral_carrier }})</span>
+
+                                                                            </div>
+                                                                            <div class="col-lg-12 whitefont mt-1" style="font-size: 10px">
+                                                                                <span class="float-start">{{strtoupper($item->job->city)}} - {{$item->job->state}}</span>
+                                                                                <span class="float-end">   ({{$item->milhas}})</span>
+                                                                            </div>
+
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+
+                                                            </div>
+
+                                                        @endif
+
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                        <div style="height: 800px">
+
+                        </div>
+                    </div>
+                </div>
+
+{{--                SYSTEM JOBS --}}
+                <div class="system_jobs {{$showSystem == true ? '' : 'hide' }}" >
+                    <button type="button" class="btn btn-sm btn-secondary  waves-effect waves-light  me-2 float-start" wire:click.prevent="toogleSystem"> <i class="bx bx-loader-circle font-size-16 align-middle "></i> OpenJobs</button>   System
+                    <hr>
+                    <div class="jobsOpen"  wire:key="openjobs" wire:sortable-group.item-group="openJobs" >
+
+                            @if(count($list_systemCity) > 0)
+                                <?php  $id=1;?>
+
+                                    @foreach($list_systemCity->sortBy('order') as $groupCity)
+                                                        <?php
+                                                        $insideJobs=$this->getSystemJobs($groupCity->city,$groupCity->state);
+                                                        ?>
+
+
+                                                        {{-- JOBS --}}
+                                                        @if($insideJobs)
+
+                                                                @foreach($insideJobs->sortBy('order') as $item)
+                                                                    <div class="open_job alert {{$item->job->status->class}}" wire:key="open__{{$item->job->id}}" wire:sortable-group.item="{{$item->job->id}}" >
+                                                                        <div class="row">
+                                                                            <?php
+                                                                            $fontsize=10;
+
+                                                                            if(strlen($item->job->full_name) > 34){
+                                                                                $fontsize=$fontsize-2;
+                                                                            }
+                                                                            ?>
+
+                                                                            <div class="col-lg-12 blackfont"  style="font-size: {{$fontsize}}px">
+                                                                                {{ $item->job->full_name }}
+                                                                            </div>
+
+                                                                            <div class="col-lg-12 whitefont mt-1" style="font-size: 9px">
+                                                                                <?php $countOpen=0;?>
+                                                                                @foreach($item->job->job_types as $job_types)
+                                                                                    <?php $countOpen++;?>
+                                                                                    @if($countOpen == 1)
+                                                                                        {{$job_types->name}}
+                                                                                    @else
+                                                                                        {{" / $job_types->name"}}
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            </div>
+                                                                            <div class="col-lg-12 blackfont mt-1">
+
+                                                                                <span class="float-start" style="font-size: 11px">{{ $item->job->scheduling->start_hour}}</span>
+
+{{--                                                                                <span class="float-end "  style="font-size: 8px"> ({{$item->job->referral_carrier }})</span>--}}
+
+                                                                            </div>
+                                                                            <div class="col-lg-12 whitefont mt-1" style="font-size: 10px">
+                                                                                <span class="float-start">{{strtoupper($item->job->city)}} - {{$item->job->state}}</span>
+                                                                                <span class="float-end">   ({{$item->milhas}})</span>
+                                                                            </div>
+
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+
+
+                                                        @endif
+
+
+
+
+                                    @endforeach
+
+                            @endif
+
+                        <div style="height: 800px">
+
+                        </div>
                     </div>
                 </div>
 
