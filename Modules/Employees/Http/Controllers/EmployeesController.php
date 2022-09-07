@@ -958,8 +958,8 @@ class EmployeesController extends Controller
                 case '2':
                 case '3':
 
-//                    dd($jobtype);
-                    $job_reports_reports = JobReportReports::where('assignment_id', $jobtype->assignment_id)->where('job_type_id',3)->first();
+//                    dd($jobtype->assignment_job_type_id);
+                    $job_reports_reports = JobReportReports::where('assignment_id', $jobtype->assignment_id)->where('job_type_id',$jobtype->assignment_job_type_id)->first();
 //                dd($job_reports_reports->report_option_id);
 
                     if (isset($job_reports_reports)) {
