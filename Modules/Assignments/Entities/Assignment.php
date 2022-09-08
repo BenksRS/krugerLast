@@ -5,6 +5,7 @@ namespace Modules\Assignments\Entities;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Employees\Entities\EmployeeCommissions;
 use Modules\Notes\Entities\Note;
 use Modules\Referrals\Entities\Referral;
 use Modules\Referrals\Entities\ReferralAuthorization;
@@ -70,6 +71,7 @@ class Assignment extends Model {
         return $this->hasMany(AssignmentsPhones::class, 'assignment_id', 'id')->orderBy('preferred', 'asc');
     }
 
+
     public function job_types ()
     {
         return $this->belongsToMany(AssignmentsJobTypes::class, 'assignments_job_types_pivot', 'assignment_id', 'assignment_job_type_id', 'id');
@@ -77,6 +79,10 @@ class Assignment extends Model {
     public function invoices()
     {
         return $this->hasMany(FinanceBilling::class, 'assignment_id', 'id')->where('type','active');
+    }
+    public function commissions()
+    {
+        return $this->hasMany(EmployeeCommissions::class, 'assignment_id', 'id');
     }
     public function payments()
     {

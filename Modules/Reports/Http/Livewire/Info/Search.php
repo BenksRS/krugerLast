@@ -13,6 +13,9 @@ use Modules\Referrals\Entities\Referral;
 use Modules\Referrals\Entities\ReferralType;
 use Modules\User\Entities\Marketing;
 use Modules\User\Entities\Techs;
+use Modules\User\Entities\User;
+use Auth;
+
 
 class Search extends Component
 {
@@ -26,6 +29,8 @@ class Search extends Component
     public $marketingSelected;
     public $techs;
     public $techSelected;
+    public $commissions;
+    public $commissionsSelected;
 
     public $events;
     public $eventSelected;
@@ -46,14 +51,19 @@ class Search extends Component
     public $date_to_edit;
     public $list;
 
+    public $user;
+
     public  function mount(){
         $this->techs = Techs::all();
+        $this->commissions = User::where('active','Y')->get();
         $this->marketing = Marketing::all();
         $this->events = AssignmentsEvents::all();
         $this->ref_type = ReferralType::all();
         $this->job_types = AssignmentsJobTypes::where('active','Y')->get();
         $this->allReferrals = Referral::all();
         $this->allCarriers = Referral::all();
+
+        $this->user = Auth::user();
     }
     public function updated($field)
     {
@@ -90,13 +100,13 @@ class Search extends Component
                         $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                         break;
                     case 'billed':
-                        $this->list=AssignmentFinanceRepository::DateBilled($date_from,$date_to)->get();
+                        $this->list=AssignmentFinanceRepository::DateBilled($date_from,$date_to,$this->techSelected,$this->commissionsSelected)->get();
                         if($this->techSelected){
                             $this->list=$this->list->where('scheduling.tech_id', $this->techSelected);
                         }
                         break;
                     case 'paid':
-                        $this->list=AssignmentFinanceRepository::DatePaid($date_from,$date_to)->get();
+                        $this->list=AssignmentFinanceRepository::DatePaid($date_from,$date_to,$this->commissionsSelected)->get();
                         break;
                 }
                 if($this->eventSelected){

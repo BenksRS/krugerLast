@@ -208,6 +208,22 @@
                             </div>
                         </div>
 
+                        @if($this->user->group_id == 1)
+                        <div class="col-md-5 col-lg-2">
+                            <div class="mb-3" >
+                                <label class="form-label">Commissions</label>
+                                <a href="#" wire:click="clear('commissionsSelected')"  class="float-end">clear</a>
+                                <select class=" form-control select2-multiple "
+                                        name="commissionsSelected" wire:model="commissionsSelected" data-placeholder="Select ...">
+                                    <option selected>chose...</option>
+                                    @foreach($commissions as $comm)
+                                        <option  value="{{$comm->id}}">{{$comm->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                            @endif
+
                     </div>
 
 

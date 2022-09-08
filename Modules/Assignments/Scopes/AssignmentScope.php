@@ -93,10 +93,16 @@ trait AssignmentScope {
             });
     }
 
-    public function scopeDateBilled (Builder $query, $date_from, $date_to, $tech_id=null)
+    public function scopeDateBilled (Builder $query, $date_from, $date_to, $tech_id=null, $user_id=null)
     {
         return $query
             ->with('invoices')
+            ->with('commissions')
+            ->whereHas('commissions', function (Builder $q) use ($user_id) {
+                if($user_id != null){
+                    $q->where('user_id','=', $user_id);
+                }
+            })
             ->whereHas('invoices', function (Builder $q) use ($date_from) {
                 $q->whereDate('billed_date','>=', $date_from);
             })
@@ -104,10 +110,16 @@ trait AssignmentScope {
                 $q->whereDate('billed_date','<=', $date_to);
             });
     }
-    public function scopeDatePaid (Builder $query, $date_from, $date_to)
+    public function scopeDatePaid (Builder $query, $date_from, $date_to, $user_id=null)
     {
         return $query
             ->with('payments')
+            ->with('commissions')
+            ->whereHas('commissions', function (Builder $q) use ($user_id) {
+                if($user_id != null){
+                    $q->where('user_id','=', $user_id);
+                }
+            })
             ->whereHas('payments', function (Builder $q) use ($date_from) {
                 $q->whereDate('payment_date','>=', $date_from);
             })
