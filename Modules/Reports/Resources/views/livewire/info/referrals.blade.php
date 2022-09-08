@@ -72,7 +72,7 @@
 
                                 <tr>
                                     @if(in_array('Status', $selectedColumns))
-                                        <td><p>{{$row->ref}} -- {{$row->job_types}}</p></td>
+                                        <td><p>{{$row->ref}}</p></td>
 
                                     @endif
                                     @if(in_array('Status', $selectedColumns))
