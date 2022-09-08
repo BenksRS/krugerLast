@@ -74,13 +74,10 @@ class AssignmentRepository extends Assignment {
                 }
                 $count ++;
             }
-        } else {
+        }else{
             $info_phones = NULL;
         }
-
         $notes="";
-
-
 
         $notesTech = Note::where('notable_id', $this->id)->where('type','tech')->get();
 

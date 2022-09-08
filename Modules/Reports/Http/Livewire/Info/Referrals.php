@@ -24,11 +24,42 @@ class Referrals extends Component
 
 
     public function mount($test){
-        $this->list= $test;
+//        $this->list= $test;
+        $this->getRefJobs($test);
         $this->selectedColumns = $this->columns;
 
     }
+    public function showMoney($var){
+        return number_format($var,2,'.',',');
+    }
+    public function getRefJobs($test){
 
+        $jobsbyReferral=$test->groupBy('referral_carrier_full');
+
+        if(count($jobsbyReferral) > 0){
+            foreach ($jobsbyReferral as $ref_name => $jobsRef) {
+
+                $total = count($jobsRef);
+
+
+                $coll[]=(object)[
+                    'id' => rand(1,10000000),
+                    'total' => $total,
+                    'jobs' => $jobsRef,
+                    'ref' => $ref_name,
+                ];
+
+
+
+            }
+            $coll=collect($coll);
+        }else {
+            $coll = [];
+        }
+
+        $this->list = $coll;
+
+    }
     public function searchResult($result)
     {
         $this->searchInfo = $result;
@@ -49,7 +80,10 @@ class Referrals extends Component
 
 
         $list = $this->list;
-//        $list = $list->sortBy('start_date')->sortBy('order_status');
+        $list = $list->sortBy('ref');
+
+//        $list;
+//        $list = $list->groupBy('company_fictitions');
 
         $items = $list->forPage($this->page, $this->selectedRows);
 

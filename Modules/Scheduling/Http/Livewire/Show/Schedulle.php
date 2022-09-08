@@ -310,7 +310,6 @@ class Schedulle extends Component
 //        dd($originAddress)
         $direction = Directions::where('origin',$originAddress)->where('destination',$destinationAddress)->first();
 
-//        dd($direction);
         if(!$direction){
             $address= google_distance($originAddress, $destinationAddress);
             $explode=explode(' ',$address);
@@ -418,13 +417,9 @@ class Schedulle extends Component
                         $start_date = $jobSched->start_date;
                     }
 
-
 //                    $end_date = new \DateTime($start_date); //now
                     $end_date = new \DateTime($start_date); //now
                     $end_date->add(new \DateInterval('PT1H'));
-
-
-
 
                     $update=[
                         'tech_id'=> $tech_id,
@@ -470,8 +465,6 @@ class Schedulle extends Component
                         }
 
                     }else{
-
-
                         // check if has another
                         $checkTimeframe=$this->checkTimeframeforTech($tech_id,$start_date);
 
@@ -504,12 +497,7 @@ class Schedulle extends Component
                         }else{
                             $message_error= "<b>ERROR #$assignment_id</b> - This Technician already have a job at this time!";
                         }
-
-
-
                     }
-
-
                          if($message_error){
                              session()->flash('schederror' ,[
                                  'class' => 'danger',
@@ -624,7 +612,7 @@ class Schedulle extends Component
         $selected= (object)$this->addresses['selected'];
         $this->jobRoute = $selected->id;
         $this->originAddress = "$selected->street , $selected->city, $selected->state $selected->zipcode, US";
-//        dd($this->originAddress);
+
         $this->reloadGridJobs();
         $this->getOpenJobsCity();
         $this->getSystemJobsCity();

@@ -44,13 +44,16 @@
                                     <th>Referral</th>
                                 @endif
                                 @if(in_array('Referral', $selectedColumns))
-                                    <th>Carrier</th>
+                                    <th>Referral Type</th>
                                 @endif
                                     @if(in_array('Referral', $selectedColumns))
                                         <th>Total jobs</th>
                                     @endif
                                     @if(in_array('Referral', $selectedColumns))
                                         <th>Total billed</th>
+                                    @endif
+                                    @if(in_array('Referral', $selectedColumns))
+                                        <th>Total Paid</th>
                                     @endif
                             </tr>
 
@@ -69,16 +72,20 @@
 
                                 <tr>
                                     @if(in_array('Status', $selectedColumns))
-                                        <td><p>{{$row->referral->company_fictitions}}</p></td>
+                                        <td><p>{{$row->ref}} -- {{$row->job_types}}</p></td>
+
                                     @endif
                                     @if(in_array('Status', $selectedColumns))
-                                        <td><p>{{ isset($row->carrier_id) ? $row->carrier->company_fictitions : $row->carrier_info}}</p></td>
+                                        <td><p>{{$row->jobs[0]->referral->type->name}}</p></td>
                                     @endif
                                         @if(in_array('Status', $selectedColumns))
-                                            <td><p>{{$row->total_jobs}}</p></td>
+                                            <td><p>{{$row->total}}</p></td>
                                         @endif
                                         @if(in_array('Status', $selectedColumns))
-                                            <td><p>${{$row->finance->invoices->total}}</p></td>
+                                            <td><p>${{$this->showMoney($row->jobs->sum('finance.invoices.total'))}}</p></td>
+                                        @endif
+                                        @if(in_array('Status', $selectedColumns))
+                                            <td><p>${{$this->showMoney($row->jobs->sum('finance.payments.total'))}}</p></td>
                                         @endif
 
                                 </tr>

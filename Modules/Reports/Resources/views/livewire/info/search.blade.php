@@ -37,7 +37,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
 
                             <div class="mt-0">
                                 <h5 class="font-size-14 mb-3">Date Filter By:</h5>
@@ -70,6 +70,31 @@
                                     </label>
                                 </div>
                                 @error('tarp_situation')
+                                <div class="invalid-feedback show">
+                                    Please select a valid option.
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+
+                            <div class="mt-0">
+                                <h5 class="font-size-14 mb-3">Show By:</h5>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="filter_type" wire:model="filter_type"
+                                           id="filter_type_jobs" value="jobs">
+                                    <label class="form-check-label" for="filter_date_c">
+                                        Jobs
+                                    </label>
+                                </div>
+                                <div class="form-check-inline mt-1">
+                                    <input class="form-check-input" type="radio" name="filter_type" wire:model="filter_type"
+                                           id="filter_type_ref" value="referral" checked>
+                                    <label class="form-check-label" for="filter_type_ref">
+                                        Referral
+                                    </label>
+                                </div>
+                                @error('filter_type')
                                 <div class="invalid-feedback show">
                                     Please select a valid option.
                                 </div>
@@ -156,6 +181,32 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-5 col-lg-2">
+                            <div class="mb-3" >
+                                <label class="form-label">Referral Type</label>
+                                <a href="#" wire:click="clear('reftypeSelected')"  class="float-end">clear</a>
+                                <select class=" form-control select2-multiple "
+                                        name="reftypeSelected" wire:model="reftypeSelected" data-placeholder="Select ...">
+                                    <option selected>chose...</option>
+                                    @foreach($ref_type as $rt)
+                                        <option  value="{{$rt->id}}">{{$rt->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-lg-2">
+                            <div class="mb-3" >
+                                <label class="form-label">Job Type</label>
+                                <a href="#" wire:click="clear('jtSelected')"  class="float-end">clear</a>
+                                <select class=" form-control select2-multiple "
+                                        name="jtSelected" wire:model="jtSelected" data-placeholder="Select ...">
+                                    <option selected>chose...</option>
+                                    @foreach($job_types as $jt)
+                                        <option  value="{{$jt->id}}">{{$jt->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
                     </div>
 
@@ -187,9 +238,9 @@
                 @case('jobs')
                     @livewire('reports::info.jobs',['test' =>$list], key('reports_jobs'))
                 @break
-{{--                @case('referral')--}}
-{{--                    @livewire('reports::info.referrals',['test' =>$list], key('reports_referrals'))--}}
-{{--                @break--}}
+                @case('referral')
+                    @livewire('reports::info.referrals',['test' =>$list], key('reports_referrals'))
+                @break
             @endswitch
         @endif
     </div>

@@ -6,9 +6,11 @@ use Carbon\Carbon;
 use Livewire\Component;
 use Manny\Manny;
 use Modules\Assignments\Entities\AssignmentsEvents;
+use Modules\Assignments\Entities\AssignmentsJobTypes;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
 use Modules\Assignments\Repositories\AssignmentRepository;
 use Modules\Referrals\Entities\Referral;
+use Modules\Referrals\Entities\ReferralType;
 use Modules\User\Entities\Marketing;
 use Modules\User\Entities\Techs;
 
@@ -24,12 +26,18 @@ class Search extends Component
     public $marketingSelected;
     public $techs;
     public $techSelected;
+
     public $events;
     public $eventSelected;
 
     public $allReferrals;
     public $allCarriers;
+    public $jtSelected;
+
     public $referralSelected;
+    public $job_types;
+    public $ref_type;
+    public $reftypeSelected;
     public $carrierSelected;
 
     public $date_from;
@@ -42,6 +50,8 @@ class Search extends Component
         $this->techs = Techs::all();
         $this->marketing = Marketing::all();
         $this->events = AssignmentsEvents::all();
+        $this->ref_type = ReferralType::all();
+        $this->job_types = AssignmentsJobTypes::where('active','Y')->get();
         $this->allReferrals = Referral::all();
         $this->allCarriers = Referral::all();
     }
@@ -71,39 +81,41 @@ class Search extends Component
 
         switch ($this->filter_type){
             case 'jobs':
+            case 'referral':
                 switch ($this->filter_date){
                     case 'created':
-                        $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected)->get();
+                        $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                         break;
                     case 'schedulled':
-                        $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected)->get();
+                        $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                         break;
                     case 'billed':
                         $this->list=AssignmentFinanceRepository::DateBilled($date_from,$date_to)->get();
                         if($this->techSelected){
                             $this->list=$this->list->where('scheduling.tech_id', $this->techSelected);
                         }
-
                         break;
                     case 'paid':
                         $this->list=AssignmentFinanceRepository::DatePaid($date_from,$date_to)->get();
-
-
                         break;
                 }
-
-
-
-
-
                 if($this->eventSelected){
 //                    dd('eventSelected');
                     $this->list=$this->list->where('event_id', $this->eventSelected);
                 }
+//            if($this->jtSelected){
+//
+//                $this->list=$this->list->whereIn('', $this->jtSelected);
+//
+//            }
                 if($this->referralSelected){
 //                    dd('referralSelected');
                     $this->list=$this->list->where('referral_id', $this->referralSelected);
                 }
+            if($this->reftypeSelected){
+//                    dd('referralSelected');
+                $this->list=$this->list->where('referral.referral_type_id', $this->reftypeSelected);
+            }
                 if($this->carrierSelected){
 //                    dd($this->carrierSelected);
                     $this->list=$this->list->where('carrier_id', $this->carrierSelected);
@@ -115,6 +127,7 @@ class Search extends Component
 
                 }
                 break;
+
         }
 
 
