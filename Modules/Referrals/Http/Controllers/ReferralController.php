@@ -38,6 +38,20 @@ class ReferralController extends AdminController
 
         return view('referrals::index', compact('page'));
     }
+
+    public function inactive()
+    {
+        $page_info = (object)[
+            'title' => 'Referrals Inactive',
+            'back' => url('inactive'),
+            'back_title' => 'Referral Inactive List'
+        ];
+        \session()->flash('page',$page_info);
+        $page =\session()->get('page');
+
+        return view('referrals::inactive', compact('page'));
+    }
+
     public function mylist()
     {
         $page_info = (object)[

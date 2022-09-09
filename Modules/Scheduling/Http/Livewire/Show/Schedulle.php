@@ -51,7 +51,7 @@ class Schedulle extends Component
 
     public function mount(){
 
-        $this->techs = Techs::with('user')->whereNotIn('id',[73])->orderBy('order')->get();
+        $this->techs = Techs::with('user')->where('active','Y')->whereNotIn('id',[73])->orderBy('order')->get();
         $this->date = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now())->format('Y-m-d');
         $this->dateDisplay = Carbon::createFromFormat('Y-m-d', $this->date)->format('F d, Y');
         $this->weekDisplay = Carbon::createFromFormat('Y-m-d', $this->date)->format('l');

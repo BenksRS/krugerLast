@@ -39,8 +39,6 @@ class ListProspects extends Component
         $searchAssignment = $this->searchAssignment;
         $list = ReferralsRepository::where('status','leed')->Searchtopref($searchAssignment,$this->selectedMarketing)->get();
 
-
-
         $items = $list->forPage($this->page, $this->selectedRows);
 
         $list = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
