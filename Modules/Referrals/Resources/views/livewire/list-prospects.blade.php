@@ -50,6 +50,22 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Marketing Rep <i class="mdi mdi-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-md">
+                                        <ul class="list-group">
+                                            @foreach($marketing as $mr)
+                                                <li class="list-group-item">
+                                                    <label>
+                                                        <input type="checkbox" wire:model="selectedMarketing" value="{{$mr->id}}">
+                                                        {{$mr->user->name}}</label>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>

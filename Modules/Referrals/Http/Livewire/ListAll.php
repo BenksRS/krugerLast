@@ -8,6 +8,7 @@ use Livewire\WithPagination;
 use Modules\Assignments\Repositories\AssignmentRepository;
 use Modules\Referrals\Entities\Referral;
 use Modules\Referrals\Repositories\ReferralsRepository;
+use Modules\User\Entities\Marketing;
 
 class ListAll extends Component
 {
@@ -17,11 +18,17 @@ class ListAll extends Component
     public $searchAssignment;
     public $columns = ['Id','Name','Type', 'Marketing','status', 'Address'];
     public $selectedColumns = [];
+    public $marketing;
+    public $selectedMarketing;
     public $selectedRows = 100;
 
     public function mount()
     {
         $this->selectedColumns = $this->columns;
+        $this->marketing = Marketing::all();
+        $this->selectedMarketing = $this->marketing->pluck('id')->toArray();
+//        dump($this->columns);
+//        dump($this->selectedMarketing);
 
     }
     public function updatingSearchAssignment()
@@ -31,7 +38,7 @@ class ListAll extends Component
     public function render()
     {
         $searchAssignment = $this->searchAssignment;
-        $list = ReferralsRepository::Searchtopref($searchAssignment)->where('status', '!=', 'leed')->get();
+        $list = ReferralsRepository::Searchtopref($searchAssignment,$this->selectedMarketing)->where('status', '!=', 'leed')->get();
 
 
 

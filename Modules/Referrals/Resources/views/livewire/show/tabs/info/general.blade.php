@@ -22,6 +22,17 @@
                         </td>
                     </tr>
                     <tr>
+                        <th scope="row">Last Job Sent:</th>
+                        <td>
+
+                            @if($referral->lastjob)
+                            {{$referral->lastjob->created_date}}
+                            @else
+                                no jobs sent!
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
                         <th scope="row">Created by :</th>
                         <td>
                             @if($referral->user_created)

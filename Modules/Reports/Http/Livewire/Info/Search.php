@@ -67,13 +67,8 @@ class Search extends Component
     }
     public function updated($field)
     {
-//        if ($field == 'date_to' || $field == 'date_from' || $field == 'techSelected' )
-//        {
+        $this->list = [];
 
-
-
-            $this->list = [];
-//        }
     }
 
     public function clear($field){

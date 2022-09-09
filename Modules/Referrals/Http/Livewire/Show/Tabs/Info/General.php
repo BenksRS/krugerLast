@@ -3,6 +3,7 @@
 namespace Modules\Referrals\Http\Livewire\Show\Tabs\Info;
 
 use Livewire\Component;
+use Modules\Assignments\Entities\Assignment;
 use Modules\Referrals\Entities\Referral;
 use Modules\User\Entities\Marketing;
 
@@ -12,12 +13,14 @@ class General extends Component
     public $marketingList;
     public $marketing_id;
     public $marketingSelected;
+    public $lastJob;
     public $edit=false;
 
     public function mount(Referral $referral){
         $this->referral = $referral;
         $this->marketingSelected = $this->marketing_id = $this->referral->marketing_id;
         $this->marketingList = Marketing::where('active','Y')->get();
+        $this->lastJob = Assignment::where('referral_id', $this->referral->id)->orderbyDesc('id')->first();
     }
 
     public function updateMarketing(){

@@ -5,6 +5,7 @@ namespace Modules\Referrals\Entities;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Assignments\Entities\Assignment;
 use Modules\Notes\Entities\Note;
 use Modules\Referrals\Entities\ReferralAuthorization;
 use Modules\User\Entities\User;
@@ -33,14 +34,20 @@ class Referral extends Model
         'updated_at'
 
     ];
-//    protected $with = ['type','carriers','phones'];
+
+
     protected $appends  = ['address', 'full_name', 'created_date','updated_date'];
 
 
+
+    public function lastjob(){
+        return $this->hasOne(Assignment::class,'referral_id','id')->latest();
+    }
     public function phones()
     {
         return $this->hasMany(ReferralPhone::class,'referral_id','id')->orderBy('preferred','asc');
     }
+
     public function type()
     {
         return $this->belongsTo(ReferralType::class,'referral_type_id','id');
@@ -72,6 +79,7 @@ class Referral extends Model
     {
         return $this->belongsTo(User::class, 'updated_by', 'id');
     }
+
     public function getCreatedDateAttribute (){
 
         $return = "-";
@@ -100,7 +108,6 @@ class Referral extends Model
         if(!empty($this->company_entity) && !empty($this->company_fictitions))
             $return = "$this->company_entity ($this->company_fictitions)";
         else{
-
             $return = "$this->company_entity ($this->company_fictitions)";
         }
         $entity=(!empty($this->company_entity)) ? $this->company_entity: 'No entity name';

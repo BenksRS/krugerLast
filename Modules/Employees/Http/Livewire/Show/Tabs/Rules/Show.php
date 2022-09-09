@@ -2,6 +2,7 @@
 
 namespace Modules\Employees\Http\Livewire\Show\Tabs\Rules;
 
+use Carbon\Carbon;
 use http\Env\Request;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
@@ -29,7 +30,7 @@ class Show extends Component
     }
     public function disable($id){
         $rule=EmployeeRules::find($id);
-        $rule->update(['status'=>'disable']);
+        $rule->update(['status'=>'disable', 'end_date' => Carbon::now()]);
 
         $this->rules = EmployeeRules::where('user_id',  $this->user->id)->get();
     }

@@ -9,6 +9,6 @@ class ReferralsRepository extends Referral{
 
     use ReferralsScope;
 
-    protected $with = ['authorizathions'];
+    protected $with = ['authorizathions', 'type'];
 
 }

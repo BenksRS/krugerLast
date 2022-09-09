@@ -50,6 +50,22 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Marketing Rep <i class="mdi mdi-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-md">
+                                        <ul class="list-group">
+                                            @foreach($marketing as $mr)
+                                                <li class="list-group-item">
+                                                    <label>
+                                                        <input type="checkbox" wire:model="selectedMarketing" value="{{$mr->id}}">
+                                                        {{$mr->user->name}}</label>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -71,6 +87,9 @@
                                 @if(in_array('Marketing', $selectedColumns))
                                     <th>Type</th>
                                 @endif
+                                    @if(in_array('Type', $selectedColumns))
+                                        <th>LAST JOB SENT</th>
+                                    @endif
                                 @if(in_array('Type', $selectedColumns))
                                     <th>Marketing</th>
                                 @endif
@@ -111,6 +130,16 @@
                                     @if(in_array('Type', $selectedColumns))
                                         <td><p>{{strtolower($row->type->name)}}</p></td>
                                     @endif
+                                        @if(in_array('Type', $selectedColumns))
+                                            <td><p>
+                                                    @if($row->lastjob)
+                                                        {{$row->lastjob->created_date}}
+                                                    @else
+                                                       <span class="alert-danger"> No jobs sent!</span>
+                                                    @endif
+
+                                                </p></td>
+                                        @endif
                                     @if(in_array('Marketing', $selectedColumns))
                                         <td><p>
 
