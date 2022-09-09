@@ -78,7 +78,7 @@ class TarpInspection extends Component
         $this->jobType_id = $this->jobType->id;
 
         $this->jobTypeOptions = $this->jobType->reports;
-        $this->workers = Workers::with('user')->get();
+        $this->workers = Workers::with('user')->where('active','Y')->get();
         $this->user = Auth::user();
         $this->jobReport = JobReport::where('assignment_id', $this->assignment->id)->where('assignment_job_type_id', $this->jobType_id)->first();
 
