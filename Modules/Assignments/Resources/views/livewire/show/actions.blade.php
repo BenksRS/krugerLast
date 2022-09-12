@@ -1,5 +1,16 @@
 <div>
 {{--@dump($assignment->finance)--}}
+    @if($assignment->referral->status == 'BLOCKED')
+
+        <div  class="alert alert-danger" x-init="setTimeout(() => show = false, 3000)">
+            <b>{{$assignment->referral->full_name}} </b> is <b>BLOCKED</b> on the system!!!! Don't proceed without permission!
+        </div>
+        <script>
+            setTimeout(function() {
+                $('.alert-success').fadeOut('fast');
+            }, 2000);
+        </script>
+    @endif
         @if(session()->has('missingAuth'))
             <div  class="alert alert-{{session('missingAuth')['class']}}" x-init="setTimeout(() => show = false, 3000)">
                 {!! nl2br(session('missingAuth')['message']) !!}

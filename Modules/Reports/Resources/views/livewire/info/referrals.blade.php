@@ -72,7 +72,11 @@
 
                                 <tr>
                                     @if(in_array('Status', $selectedColumns))
-                                        <td><p>{{$row->ref}}</p></td>
+                                        <td><p>{{$row->ref}}</p>
+                                            @if($row->jobs[0]->referral->status == 'BLOCKED')
+                                                <span class="badge alert-danger">{{$row->jobs[0]->referral->status}}</span>
+                                            @endif
+                                        </td>
 
                                     @endif
                                     @if(in_array('Status', $selectedColumns))

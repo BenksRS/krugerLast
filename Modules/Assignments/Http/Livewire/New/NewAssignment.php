@@ -51,6 +51,7 @@ class NewAssignment extends Component
     public $carrier_info;
     public $claim_info;
     public $adjuster_info;
+    public $ref;
 
     public $user;
 
@@ -68,7 +69,7 @@ class NewAssignment extends Component
         $this->allReferrals = Referral::all();
         $this->jobTypes = AssignmentsJobTypes::where('active', 'y')->get();
         $this->user = Auth::user();
-//        dd( $this->user->id);
+
     }
     public function clearContent(){
         $this->first_name = $this->last_name = $this->street = $this->city = $this->state = $this->zipcode = $this->phone = $this->phone_alternative = $this->email = $this->notes = $this->date_create = $this->date_dol = $this->referralSelected = $this->claim_info = $this->carrier_info = $this->carrierSelected = $this->adjuster_info = null;
@@ -87,12 +88,17 @@ class NewAssignment extends Component
 
     }
 
+    public function loadReferral(){
+        $this->ref = Referral::find($this->referralSelected);
+    }
     public function updated($field)
     {
         if ($field == 'referralSelected')
         {
+            $this->loadReferral();
             $this->emit('contentChange');
             $this->carrierSelected = $this->carrier_info = null;
+
         }
         if ($field == 'phone')
         {

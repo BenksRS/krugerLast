@@ -142,7 +142,11 @@
                                         <td><span class="badge {{strtolower($row->status->name)}}">{{$row->status->name}}</span></td>
                                 @endif
                                 @if(in_array('Status', $selectedColumns))
-                                    <td><p>{{strtolower($row->referral_carrier_full)}}</p></td>
+                                    <td><p>{{strtolower($row->referral_carrier_full)}}</p>
+                                        @if($row->referral->status == 'BLOCKED')
+                                            <span class="badge alert-danger">{{$row->referral->status}}</span>
+                                        @endif
+                                    </td>
                                 @endif
                                 @if(in_array('Address', $selectedColumns))
                                     <td><p><a href="{{$row->address->link}}" target="{{$row->address->target}}" >{{$row->address->message}}</a></p></td>

@@ -1,4 +1,20 @@
 <div>
+
+    @if($ref && $ref->status == 'BLOCKED')
+
+        <div  class="alert alert-danger" x-init="setTimeout(() => show = false, 3000)">
+            <b>{{$ref->full_name}} </b> is <b>BLOCKED</b> on the system!!!! Don't proceed without permission!
+        </div>
+        <script>
+            setTimeout(function() {
+                $('.alert-success').fadeOut('fast');
+            }, 2000);
+        </script>
+    @endif
+
+
+
+
      <form  class="needs-validation " autocomplete="off">
     <div class="row">
         <div class="col-lg-6">
@@ -349,10 +365,7 @@
                 let data = $(this).val();
                 @this.set('referralSelected', data);
             });
-            $('.select_referral').on('change', function (e){
-                let data = $(this).val();
-                @this.set('referralSelected', data);
-            });
+
             $('#date_assignment').on('change.datetimepicker', function (e){
                 let data = $(this).val();
                 @this.set('date_create', data);
@@ -366,7 +379,10 @@
         document.addEventListener("livewire:load", function (event) {
             @this.on('clearContent', function () {
                 setTimeout(function() {
-                    $('.select_referral').val(null).trigger('change');
+                    $('.select_referral').on('change', function (e){
+                        let data = $(this).val();
+                        @this.set('referralSelected', data);
+                    });
                     $('#date_of_loss').val(null);
                     $('#date_assignment').val(null);
                 },700);
@@ -374,6 +390,10 @@
             @this.on('contentChange', function () {
                 setTimeout(function() {
                     $('.select2').select2();
+                    $('.select_referral').on('change', function (e){
+                        let data = $(this).val();
+                        @this.set('referralSelected', data);
+                    });
                     $('.select_carrier').on('change', function (e){
                         let data = $(this).val();
                         @this.set('carrierSelected', data);
