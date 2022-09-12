@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    @livewire('referrals::ListInactives', key('referrals_inactives'))
+    @livewire('referrals::list-inactives', key('referrals_inactives'))
 
 
 
