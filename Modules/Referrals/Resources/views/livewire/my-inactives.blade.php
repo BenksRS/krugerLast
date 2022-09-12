@@ -70,6 +70,25 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Status <i class="mdi mdi-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-md">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <label>
+                                                    <input type="checkbox" wire:model="selectedStatus" value="ACTIVE">
+                                                    ACTIVE </label>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <label>
+                                                    <input type="checkbox" wire:model="selectedStatus" value="BLOCKED">
+                                                    BLOCKED </label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -126,7 +145,7 @@
                             </tr>
                             @foreach($list as $row)
 
-                                
+
                                 @if(in_array($row->jobs_sent, $selectedJobsSent))
 
 

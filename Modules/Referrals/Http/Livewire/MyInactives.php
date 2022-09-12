@@ -19,6 +19,7 @@ class MyInactives extends Component
     public $selectedColumns = [];
     public $selectedJobsSent = ['Y','N'];
     public $marketing;
+    public $selectedStatus=['ACTIVE','BLOCKED'];
     public $selectedMarketing;
     public $selectedRows = 100;
 
@@ -38,7 +39,7 @@ class MyInactives extends Component
     public function render()
     {
         $searchAssignment = $this->searchAssignment;
-        $list = ReferralsRepository::Searchtopref($searchAssignment,$this->user->id)->where('status', '!=', 'leed')->get();
+        $list = ReferralsRepository::Searchtopref($searchAssignment,$this->user->id)->whereIn('status',$this->selectedStatus)->get();
 
         $list = $list->sortByDesc('jobs_sent')->sortByDesc('days_last_job');
 
