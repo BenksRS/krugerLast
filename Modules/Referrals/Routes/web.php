@@ -27,6 +27,7 @@ Route::prefix('referrals')->name('referrals.')->group(function () {
 	// Referrals
 	Route::get('/', [ReferralController::class, 'index'])->name('index');
 	Route::get('/inactive/', [ReferralController::class, 'inactive'])->name('inactive');
+	Route::get('/myinactive/', [ReferralController::class, 'myinactive'])->name('myinactive');
     Route::get('/new', [ReferralController::class, 'new'])->name('new');
     Route::get('/mylist', [ReferralController::class, 'mylist'])->name('mylist');
 

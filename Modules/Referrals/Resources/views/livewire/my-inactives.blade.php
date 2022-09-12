@@ -51,6 +51,25 @@
                                     </div>
                                 </div>
 
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Jobs Sent <i class="mdi mdi-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-md">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <label>
+                                                    <input type="checkbox" wire:model="selectedJobsSent" value="Y">
+                                                    Yes </label>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <label>
+                                                    <input type="checkbox" wire:model="selectedJobsSent" value="N">
+                                                    No </label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -73,7 +92,13 @@
                                     <th>Type</th>
                                 @endif
                                 @if(in_array('Type', $selectedColumns))
+                                    <th>JOB SENT</th>
+                                @endif
+                                @if(in_array('Type', $selectedColumns))
                                     <th>LAST JOB SENT</th>
+                                @endif
+                                @if(in_array('Type', $selectedColumns))
+                                    <th>Days from Last Job</th>
                                 @endif
                                 @if(in_array('Type', $selectedColumns))
                                     <th>Marketing</th>
@@ -101,44 +126,69 @@
                             </tr>
                             @foreach($list as $row)
 
-
-                                <tr>
-                                    @if(in_array('Id', $selectedColumns))
-                                        <td><p>{{strtolower($row->id)}}</p></td>
-                                        {{--                                        <td><span class="badge {{strtolower($row->status->name)}}">{{$row->status->name}}</span></td>--}}
-                                    @endif
-                                    @if(in_array('Name', $selectedColumns))
-                                        <td><p>
-                                                <a href="{{url('referrals/show/'.$row->id)}}"> {{strtolower($row->full_name)}}</a>
-                                            </p></td>
-                                    @endif
-                                    @if(in_array('Type', $selectedColumns))
-                                        <td><p>{{strtolower($row->type->name)}}</p></td>
-                                    @endif
-                                    @if(in_array('Type', $selectedColumns))
-                                        <td><p>
-                                                @if($row->lastjob)
-                                                    {{$row->lastjob->created_date}}
-                                                @else
-                                                    <span class="alert-danger"> No jobs sent!</span>
-                                                @endif
-
-                                            </p></td>
-                                    @endif
-                                    @if(in_array('Marketing', $selectedColumns))
-                                        <td><p>
+                                
+                                @if(in_array($row->jobs_sent, $selectedJobsSent))
 
 
-                                                {{strtolower(isset($row->marketing->name) ? $row->marketing->name : '-' )}}</p></td>
-                                    @endif
-                                    @if(in_array('status', $selectedColumns))
-                                        <td><span class="badge {{strtolower($row->status)}}">{{$row->status}}</span></td>
-                                    @endif
-                                    @if(in_array('Address', $selectedColumns))
-                                        <td><p><a href="{{$row->address->link}}" target="{{$row->address->target}}" >{{$row->address->message}}</a></p></td>
-                                    @endif
-                                </tr>
+
+                                    <tr>
+                                        @if(in_array('Id', $selectedColumns))
+                                            <td><p>{{strtolower($row->id)}}</p></td>
+                                            {{--                                        <td><span class="badge {{strtolower($row->status->name)}}">{{$row->status->name}}</span></td>--}}
+                                        @endif
+                                        @if(in_array('Name', $selectedColumns))
+                                            <td><p>
+                                                    <a href="{{url('referrals/show/'.$row->id)}}"> {{strtolower($row->full_name)}}</a>
+                                                </p></td>
+                                        @endif
+                                        @if(in_array('Type', $selectedColumns))
+                                            <td><p>{{strtolower($row->type->name)}}</p></td>
+                                        @endif
+                                        @if(in_array('Type', $selectedColumns))
+                                            <td><p>
+                                                    @if($row->jobs_sent == 'Y')
+
+                                                        <span class="alert-success p-1" > Yes</span>
+                                                    @else
+                                                        <span class="alert-danger"> No jobs sent!</span>
+                                                    @endif
+                                                </p></td>
+                                        @endif
+                                        @if(in_array('Type', $selectedColumns))
+                                            <td><p>
+                                                    @if($row->lastjob)
+                                                        {{$row->lastjob->created_date}}
+                                                    @else
+                                                        -
+                                                    @endif
+
+                                                </p></td>
+                                        @endif
+                                        @if(in_array('Type', $selectedColumns))
+                                            <td><p>
+                                                    @if($row->days_last_job > 0)
+                                                        {{$row->days_last_job}} Days
+                                                    @else
+                                                        {{$row->days_last_job}}
+                                                    @endif
+                                                </p></td>
+                                        @endif
+                                        @if(in_array('Marketing', $selectedColumns))
+                                            <td><p>
+
+
+                                                    {{strtolower(isset($row->marketing->name) ? $row->marketing->name : '-' )}}</p></td>
+                                        @endif
+                                        @if(in_array('status', $selectedColumns))
+                                            <td><span class="badge {{strtolower($row->status)}}">{{$row->status}}</span></td>
+                                        @endif
+                                        @if(in_array('Address', $selectedColumns))
+                                            <td><p><a href="{{$row->address->link}}" target="{{$row->address->target}}" >{{$row->address->message}}</a></p></td>
+                                        @endif
+                                    </tr>
+                                @endif
                             @endforeach
+                            {{--                              @endforeach--}}
                             </tbody>
                         </table>
                     </div>

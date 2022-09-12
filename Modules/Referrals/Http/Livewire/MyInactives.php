@@ -6,9 +6,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Modules\Referrals\Repositories\ReferralsRepository;
+use Modules\User\Entities\Marketing;
 use Auth;
 
-class MylistProspects extends Component
+class MyInactives extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -16,13 +17,18 @@ class MylistProspects extends Component
     public $searchAssignment;
     public $columns = ['Id','Name','Type', 'Marketing','status', 'Address'];
     public $selectedColumns = [];
+    public $selectedJobsSent = ['Y','N'];
+    public $marketing;
+    public $selectedMarketing;
     public $selectedRows = 100;
-    public $user;
 
     public function mount()
     {
         $this->selectedColumns = $this->columns;
+        $this->marketing = Marketing::all();
         $this->user = Auth::user();
+        $this->selectedMarketing = $this->marketing->pluck('id')->toArray();
+
 
     }
     public function updatingSearchAssignment()
@@ -32,17 +38,18 @@ class MylistProspects extends Component
     public function render()
     {
         $searchAssignment = $this->searchAssignment;
-        $list = ReferralsRepository::Searchtopref($searchAssignment, $this->user->id)->where('status','leed')->get();
+        $list = ReferralsRepository::Searchtopref($searchAssignment,$this->user->id)->where('status', '!=', 'leed')->get();
 
-
+        $list = $list->sortByDesc('jobs_sent')->sortByDesc('days_last_job');
 
         $items = $list->forPage($this->page, $this->selectedRows);
 
         $list = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
 
-        return view('referrals::livewire.mylist-prospects', [
+        return view('referrals::livewire.my-inactives', [
             'list' =>$list
         ]);
 
     }
+
 }

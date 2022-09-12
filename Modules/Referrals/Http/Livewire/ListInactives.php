@@ -16,6 +16,7 @@ class ListInactives extends Component
     public $searchAssignment;
     public $columns = ['Id','Name','Type', 'Marketing','status', 'Address'];
     public $selectedColumns = [];
+    public $selectedJobsSent = ['Y','N'];
     public $marketing;
     public $selectedMarketing;
     public $selectedRows = 100;
@@ -37,7 +38,7 @@ class ListInactives extends Component
         $searchAssignment = $this->searchAssignment;
         $list = ReferralsRepository::Searchtopref($searchAssignment,$this->selectedMarketing)->where('status', '!=', 'leed')->get();
 
-//        $list = $list->sortByDesc('jobs_sent')->sortByDesc('days_last_job');
+        $list = $list->sortByDesc('jobs_sent')->sortByDesc('days_last_job');
 
         $items = $list->forPage($this->page, $this->selectedRows);
 
