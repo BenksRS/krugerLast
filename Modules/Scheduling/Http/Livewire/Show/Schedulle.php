@@ -413,9 +413,14 @@ class Schedulle extends Component
                     $assignment_id=$item['value'];
 
                     $jobSched = AssignmentsScheduling::where('assignment_id',$assignment_id)->first();
-                    if($jobSched->tech_id == 73){
-                        $start_date = $jobSched->start_date;
-                    }
+
+                   if($jobSched){
+                       if($jobSched->tech_id == 73){
+                           $start_date = $jobSched->start_date;
+                           
+                       }
+                   }
+
 
 //                    $end_date = new \DateTime($start_date); //now
                     $end_date = new \DateTime($start_date); //now
@@ -427,6 +432,15 @@ class Schedulle extends Component
                         'end_date'=> $end_date,
                         'updated_by'=> $this->user->id,
                     ];
+                    $data_start_show = Carbon::parse($start_date)->format('m/d/Y g:i A');
+                    $data_end_show=Carbon::parse($end_date)->format('m/d/Y g:i A');
+
+
+                    $tech_info = Techs::find($tech_id);
+                    $tech_name = $tech_info->user->name;
+
+                    $description = "Scheduled: $data_start_show to $data_end_show - Tech : $tech_name";
+
 
                     if($jobSched){
                         if($jobSched->start_date != $start_date || $jobSched->tech_id == 73){
@@ -447,11 +461,14 @@ class Schedulle extends Component
                                 ];
                                 $assignment->update($updateAssignment);
 
+
+
                                 // add status in history
                                 $AssignmentStatus=[
                                     'assignment_id'  => $assignment_id,
                                     'assignment_status_id'  => 2,
                                     'created_by'  => $this->user->id,
+                                    'description'  => $description,
                                 ];
                                 AssignmentsStatusPivot::create($AssignmentStatus);
 
@@ -479,6 +496,7 @@ class Schedulle extends Component
                                 'assignment_id'  => $assignment_id,
                                 'assignment_status_id'  => 2,
                                 'created_by'  => $this->user->id,
+                                'description'  => $description,
                             ];
                             AssignmentsStatusPivot::create($AssignmentStatus);
 

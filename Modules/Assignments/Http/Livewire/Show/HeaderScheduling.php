@@ -42,6 +42,7 @@ class HeaderScheduling extends Component
     public $jobTypes;
     public $jtDuplicate;
 
+
     public $schedule_start;
 
 
@@ -52,8 +53,6 @@ class HeaderScheduling extends Component
         $this->user = Auth::user();
 
         $this->jbSelected = $this->assignment->job_types;
-
-//        dd($this->jbSelected);
         $this->jbSelectedSingle = $this->assignment->job_types()->where('type', 'S')->get();
 
         $this->jobTypes = AssignmentsJobTypes::where('active', 'y')->get();
@@ -172,29 +171,38 @@ class HeaderScheduling extends Component
     public function ScheduleUpdate(){
         $Schedule=AssignmentsScheduling::where('assignment_id', $this->assignment->id)->first();
 
+        $tech_info = Techs::find($this->techSelected);
+        $tech_name = $tech_info->user->name;
         $AssignmentsScheduling=[
             'assignment_id' => $this->assignment->id,
             'tech_id' => $this->techSelected,
             'updated_by' => $this->user->id,
         ];
-
+        $description = "Scheduled: change tech to $tech_name";
         if($this->schedule_start){
             $data_start = Carbon::createFromFormat('Y-m-d  H:i', $this->schedule_start)->format('Y-m-d H:i:s');
-
+            $data_start_show=Carbon::createFromFormat('Y-m-d  H:i', $this->schedule_start)->format('m/d/Y g:i A');
             $data_end = strtotime($data_start)+60*60;
             $data_end = date('Y-m-d H:i:s', $data_end);
-
+            $data_end_show=Carbon::parse($data_start_show)->addHour()->format('m/d/Y g:i A');
+//            $data_end_show=Carbon::createFromFormat('Y-m-d  H:i', $data_end)->format('m/d/Y g:i A');
             $AssignmentsScheduling['start_date']=$data_start;
             $AssignmentsScheduling['end_date']=$data_end;
+
+            $description = "Scheduled: $data_start_show to $data_end_show - Tech : $tech_name";
         }
 
         $Schedule->update($AssignmentsScheduling);
+
+
+
 
         // $AssignmentStatus
         $AssignmentStatus=[
             'assignment_id'  => $this->assignment->id,
             'assignment_status_id'  => 2,
             'created_by'  => $this->user->id,
+            'description'  => $description,
         ];
         AssignmentsStatusPivot::create($AssignmentStatus);
 
@@ -221,9 +229,16 @@ class HeaderScheduling extends Component
 
         if($this->schedule_start){
             $data_start = Carbon::createFromFormat('Y-m-d  H:i', $this->schedule_start)->format('Y-m-d H:i:s');
+            $data_start_show = Carbon::createFromFormat('Y-m-d  H:i', $this->schedule_start)->format('m/d/Y g:i A');
             $data_end = strtotime($data_start)+60*60;
+            $data_end_show=Carbon::parse($data_start_show)->addHour()->format('m/d/Y g:i A');
+//            $data_end_show=Carbon::createFromFormat('Y-m-d  H:i', $data_end)->format('m/d/Y g:i A');
             $data_end = date('Y-m-d H:i:s', $data_end);
         }
+
+        $tech_info = Techs::find($this->techSelected);
+        $tech_name = $tech_info->user->name;
+
         $AssignmentsScheduling=[
             'assignment_id' => $this->assignment->id,
             'tech_id' => $this->techSelected,
@@ -234,10 +249,13 @@ class HeaderScheduling extends Component
         ];
         AssignmentsScheduling::create($AssignmentsScheduling);
 
+        $description = "Scheduled: $data_start_show to $data_end_show - Tech : $tech_name";
+
         $AssignmentStatus=[
           'assignment_id'  => $this->assignment->id,
           'assignment_status_id'  => 2,
           'created_by'  => $this->user->id,
+            'description'  => $description,
         ];
         AssignmentsStatusPivot::create($AssignmentStatus);
 

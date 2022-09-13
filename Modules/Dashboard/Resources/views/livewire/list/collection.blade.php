@@ -164,7 +164,7 @@
                                                 <span class="badge alert-danger">{{$row->referral->status}}</span>
                                             @endif
                                         </td>
-                                    @endif
+                                    @e  ndif
                                 @if(in_array('Status', $selectedColumns))
                                         <td><span class="badge {{strtolower($row->status->name)}}">{{$row->status->name}}</span></td>
                                 @endif

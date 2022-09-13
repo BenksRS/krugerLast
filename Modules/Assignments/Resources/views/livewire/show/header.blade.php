@@ -25,7 +25,37 @@
                                         </p>
                                         <h5 class="mb-1">{{$assignment->full_name}}
                                             <span class="badge {{strtolower($assignment->status->name)}}">{{$assignment->status->name}}</span>
+
+                                            <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".history_modal"><i class="bx bx-history" ></i></button>
                                         </h5>
+
+                                        <!--  Modal Tags -->
+                                        <div class="modal fade history_modal" tabindex="-1" role="dialog" aria-labelledby="myHistoryModalLabel" aria-hidden="true" >
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="myHistoryModalLabel">History</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <ul class="list-unstyled megamenu-list">
+                                                            @if($historic)
+                                                                @foreach($historic->where('assignment_status_id', 2) as $h)
+
+                                                                    <li style="border-bottom: 1px solid #c7c5c5;">
+                                                                        <span class="badge {{strtolower($h->status->name)}}">{{$h->status->name}}</span> ({{$h->user->name}})- {{$h->created_date}} <br># <small>{{$h->description}}</small>
+                                                                    </li>
+
+                                                                @endforeach
+                                                            @else
+                                                                <li><h6 class="font-size-15 text-center not_found">No History at this job available..</h6></li>
+                                                            @endif
+                                                        </ul>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
+
                                         <p class="mb-2">
                                             @if($assignment->scheduling)
 {{--                                            <p class="mb-2">10/21/2021 btw 11AM to 12PM - Tech: Bolo</p>--}}

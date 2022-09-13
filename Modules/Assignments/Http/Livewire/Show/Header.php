@@ -46,7 +46,7 @@ class Header extends Component
     public $job_types_selected;
 
     public $preStatus;
-
+    public $historic;
 
     protected $rules = [
         'first_name' => 'required',
@@ -62,7 +62,7 @@ class Header extends Component
         $this->allTags = AssignmentsTags::whereNotIn('id',$this->selectedTags_ids)->get();
 
         $this->jtc = AssignmentsJobTypes::where('active', 'y')->get();
-
+        $this->historic = AssignmentsStatusPivot::where('assignment_id',$this->assignment->id)->get();
         $this->first_name = $this->assignment->first_name;
         $this->last_name = $this->assignment->last_name;
         $this->user = Auth::user();
@@ -161,7 +161,7 @@ class Header extends Component
     }
     public function processScheduling(){
         $this->assignment = Assignment::find($this->assignment->id);
-
+        $this->historic = AssignmentsStatusPivot::where('assignment_id',$this->assignment->id)->get();
         //sync app
 //        callkruger('jobs')->sync($this->assignment->id);
 
