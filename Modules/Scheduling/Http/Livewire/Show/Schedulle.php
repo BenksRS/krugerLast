@@ -417,7 +417,7 @@ class Schedulle extends Component
                    if($jobSched){
                        if($jobSched->tech_id == 73){
                            $start_date = $jobSched->start_date;
-                           
+
                        }
                    }
 
