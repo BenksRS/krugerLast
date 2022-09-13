@@ -44,6 +44,8 @@ class NewAssignment extends Component
     public $email;
     public $notes;
 
+    public $notes_tech;
+
     public $date_create;
     public $date_dol;
     public $referral_id;
@@ -150,6 +152,11 @@ class NewAssignment extends Component
         // add notes
         $this->addNotes($created->id);
 
+
+        // add tech notes
+        $this->addTechNotes($created->id);
+
+        
         // add phones
         $this->addPhones($created->id);
 
@@ -177,6 +184,16 @@ class NewAssignment extends Component
             'notable_type'=>  Assignment::class,
         ]);
     }
+    public function addTechNotes($id){
+        $job = Assignment::find($id);
+        $job->notes()->create([
+            'text'=> $this->notes_tech,
+            'notable_id'=> $id,
+            'type'=> 'tech',
+            'created_by'=> $this->user->id,
+            'notable_type'=>  Assignment::class,
+        ]);
+    }
     public function addPhones($id){
 
         if($this->phone){
@@ -191,6 +208,7 @@ class NewAssignment extends Component
                 'assignment_id' => $id,
                 'phone' => $this->phone_alternative,
             ])->save();
+
         }
 
     }

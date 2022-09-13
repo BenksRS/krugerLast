@@ -181,6 +181,17 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label for="formrow-inputCity" class="form-label">Tech Notes</label>
+                                    <textarea class="form-control  me-2" id="notes_tech"  wire:model="notes_tech" rows="5" placeholder="Enter Tech notes info here..."></textarea>
+                                    @error('notes_tech')
+                                    <div class="invalid-feedback show">
+                                        Please enter a valid info in notes.
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
 
                 </div>
