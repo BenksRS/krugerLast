@@ -140,6 +140,12 @@
                                 @if(in_array('status', $selectedColumns))
                                     <th>status</th>
                                 @endif
+                                    @if(in_array('Address', $selectedColumns))
+                                        <th>Contact</th>
+                                    @endif
+                                    @if(in_array('Address', $selectedColumns))
+                                        <th>E-mail</th>
+                                    @endif
                                 @if(in_array('Address', $selectedColumns))
                                     <th>Address</th>
                                 @endif
@@ -216,6 +222,16 @@
                                       @if(in_array('status', $selectedColumns))
                                           <td><span class="badge {{strtolower($row->status)}}">{{$row->status}}</span></td>
                                       @endif
+                                          @if(in_array('status', $selectedColumns))
+                                              <td><p>
+                                                      @foreach($row->phones as $phone)
+                                                           ({{$phone->contact}}) - {{$phone->phone}} /
+                                                      @endforeach
+                                                      </p></td>
+                                          @endif
+                                          @if(in_array('status', $selectedColumns))
+                                              <td><p>{{$row->email}}</p></td>
+                                          @endif
                                       @if(in_array('Address', $selectedColumns))
                                           <td><p><a href="{{$row->address->link}}" target="{{$row->address->target}}" >{{$row->address->message}}</a></p></td>
                                       @endif
