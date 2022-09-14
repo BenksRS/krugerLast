@@ -195,13 +195,6 @@
                                         @endforeach
                                     </td>
                                 @endif
-                                {{--                                @if(in_array('Invoice', $selectedColumns))--}}
-                                {{--                                    <td>--}}
-                                {{--                                        @foreach($row->invoices as $invoice)--}}
-                                {{--                                            <p>{{$invoice}}</p>--}}
-                                {{--                                        @endforeach--}}
-                                {{--                                    </td>--}}
-                                {{--                                @endif--}}
 
                                 @if(in_array('Created by', $selectedColumns))
                                     <td><p>{{$row->user_created->name}}</p></td>

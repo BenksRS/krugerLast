@@ -173,12 +173,14 @@
                                             <li><button class="dropdown-item" wire:click="setPreStatus(12)"type="button" >PENDING</button></li>
                                             <li><button class="dropdown-item" wire:click="changeStatus(3)"  type="button">IN PROGRESS</button></li>
                                             <li><button class="dropdown-item" wire:click="changeStatus(20)" type="button">UPLOADING PICS</button></li>
-                                            <li><button class="dropdown-item" wire:click="changeStatus(4)" type="button">READY TO BILL</button></li>
+                                            <li><button class="dropdown-item" wire:click="changeStatus(4)" @if(!isset($assignment->scheduling)) disabled @endif type="button">READY TO BILL @if(!isset($assignment->scheduling))  <i class="bx bx-time-five"></i> (MISSING SCHEDULED DATE) @endif   </button></li>
                                             <li><button class="dropdown-item" wire:click="setPreStatus(7)" type="button">CLOSED</button></li>
                                             <li><button class="dropdown-item" wire:click="setPreStatus(26)" type="button">NO CHARGE</button></li>
                                             <li><button class="dropdown-item" wire:click="setPreStatus(8)" type="button">NO JOB</button></li>
                                         </ul>
                                     </div>
+
+{{--                                  @dump($assignment->scheduling)--}}
                                   <div class="float-end">
                                       @livewire('assignments::show.header-scheduling', ['assignment' => $assignment->id], key('assignment_header_scheduling'))
                                   </div>
