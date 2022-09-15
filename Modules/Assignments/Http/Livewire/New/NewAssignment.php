@@ -153,8 +153,11 @@ class NewAssignment extends Component
         $this->addNotes($created->id);
 
 
-        // add tech notes
-        $this->addTechNotes($created->id);
+        if(isset($this->notes_tech)){
+            // add tech notes
+            $this->addTechNotes($created->id);
+        }
+
 
         // add phones
         $this->addPhones($created->id);
