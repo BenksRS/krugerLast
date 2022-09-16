@@ -92,10 +92,16 @@ class TabsPanel extends Component
     }
 
     public function checkTabActive(){
-        if($this->assignment->status_id == 4){
-            $this->isActive = 'finance';
-        }else{
-            $this->isActive = 'info-details';
+        switch ($this->assignment->status_id){
+            case 4:
+            case 5:
+            case 10:
+            case 24:
+                $this->isActive = 'finance';
+                break;
+            default:
+                $this->isActive = 'info-details';
+                break;
         }
     }
     public function processChangetab($newActive)
