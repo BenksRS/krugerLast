@@ -88,8 +88,16 @@ class TabsPanel extends Component
         $this->assignment = $assignment;
         $this->user = Auth::user();
 
+        $this->checkTabActive();
     }
 
+    public function checkTabActive(){
+        if($this->assignment->status_id == 4){
+            $this->isActive = 'finance';
+        }else{
+            $this->isActive = 'info-details';
+        }
+    }
     public function processChangetab($newActive)
     {
 
