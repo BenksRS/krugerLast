@@ -9,7 +9,10 @@ class AssignmentsEvents extends Model
 {
     use HasFactory;
     protected $table = 'assignments_events';
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+        'active',
+    ];
 
     protected static function newFactory()
     {

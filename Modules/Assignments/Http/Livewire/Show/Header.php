@@ -6,6 +6,7 @@ namespace Modules\Assignments\Http\Livewire\Show;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Modules\Assignments\Entities\Assignment;
+use Modules\Assignments\Entities\AssignmentsEvents;
 use Modules\Assignments\Entities\AssignmentsJobTypes;
 use Modules\Assignments\Entities\AssignmentsStatus;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
@@ -31,6 +32,7 @@ class Header extends Component
     public $selectedTags;
     public $selectedTags_ids;
     public $allTags;
+    public $allEvents;
 
 
     public $changeStatustext;
@@ -59,7 +61,8 @@ class Header extends Component
         $this->assignment = $assignment;
         $this->selectedTags = $this->assignment->tags;
         $this->selectedTags_ids = $this->assignment->tags->pluck('id');
-        $this->allTags = AssignmentsTags::whereNotIn('id',$this->selectedTags_ids)->get();
+        $this->allTags = AssignmentsTags::whereNotIn('id',$this->selectedTags_ids)->where('active', 'y')->get();
+        $this->allEvents = AssignmentsEvents::where('active', 'y')->get();
 
         $this->jtc = AssignmentsJobTypes::where('active', 'y')->get();
         $this->historic = AssignmentsStatusPivot::where('assignment_id',$this->assignment->id)->get();
@@ -193,8 +196,19 @@ class Header extends Component
         $this->assignment = Assignment::find($id);
         $this->selectedTags = $this->assignment->tags;
         $this->selectedTags_ids = $this->assignment->tags->pluck('id');
-        $this->allTags = AssignmentsTags::whereNotIn('id',$this->selectedTags_ids)->get();
+        $this->allTags = AssignmentsTags::whereNotIn('id',$this->selectedTags_ids)->where('active', 'y')->get();
         $this->dispatchBrowserEvent('closeModal');
+    }
+
+
+    public function addEvent($idEvent){
+
+        $job=Assignment::find($this->assignment->id);
+
+//        dd($idEvent);
+        $job->update(['event_id' => $idEvent]);
+
+        $this->assignment = Assignment::find($this->assignment->id);
     }
     public function addTag($idTag){
         $this->assignment->tags()->attach($idTag);

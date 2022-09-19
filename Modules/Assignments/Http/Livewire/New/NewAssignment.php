@@ -31,8 +31,6 @@ class NewAssignment extends Component
     public $jbSelectedSingle;
     public $jobTypes;
 
-
-
     public $first_name;
     public $last_name;
     public $street;

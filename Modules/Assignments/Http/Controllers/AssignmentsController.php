@@ -64,7 +64,19 @@ class AssignmentsController extends Controller {
         return view('assignments::new', compact('page'));
 
     }
+    public function tags ()
+    {
+        $page_info = (object)[
+            'title' => 'Tags & Events Manager',
+            'back' => url('general/tags'),
+            'back_title' => 'Tags & Events Manager'
+        ];
+        \session()->flash('page',$page_info);
+        $page =\session()->get('page');
 
+        return view('assignments::general_tags', compact('page'));
+
+    }
     public function open ()
     {
 

@@ -32,7 +32,7 @@ class Open extends Component
         $searchAssignment = $this->searchAssignment;
         $list = AssignmentRepository::open()->search($searchAssignment)->get();
 
-//        $list = Assignment::with(['scheduling','referral','carrier','status','event','phones','user_updated','user_created','job_types'])->whereIn('status_id',[1,2,3,4,8,11,12,14,15,17,18,19,20,21,22,23])->get();
+////        $list = Assignment::with(['scheduling','referral','carrier','status','event','phones','user_updated','user_created','job_types'])->whereIn('status_id',[1,2,3,4,8,11,12,14,15,17,18,19,20,21,22,23])->get();
 
 
         $list=$list->sortBy('start_date')->sortBy('order_status');

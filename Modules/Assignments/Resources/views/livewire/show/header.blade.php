@@ -141,8 +141,7 @@
 
                         <div class="col-md-1 align-self-right">
                             <div class="text-lg-center mt-4 mt-lg-0">
-                                <p class="mb-0 text-info ">  EVENT:  <button type="button" class="btn btn-info btn-sm" ><i class="fas fa-exchange-alt
-" ></i></button></p>
+                                <p class="mb-0 text-info ">  EVENT:  <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".small_event_modal"><i class="fas fa-exchange-alt" ></i></button></p>
                                 @if($assignment->event)
                                     <span class="badge bg-danger p-2 mt-2">{{$assignment->event->name}}  </span>
                                     @endif
@@ -152,8 +151,7 @@
                         </div>
                         <div class="col-md-3 align-self-left">
                             <div class="text-lg-left mt-4 mt-lg-0">
-                                <p class="mb-0 text-info ">TAGS:  <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".small_tag_modal"><i class="fas fa-exchange-alt
-" ></i></button></p>
+                                <p class="mb-0 text-info ">TAGS:  <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".small_tag_modal"><i class="fas fa-exchange-alt" ></i></button></p>
                                     @foreach($this->selectedTags  as $tags)
                                         <span class="badge tagable float-start p-1 me-1 mt-1">{{$tags->name}}<a href="javascript:void(0);" wire:click="removeTag({{$tags->id}})"  alt="Remove Tag"> <i class="bx bx-x "></i></a></span>
                                     @endforeach
@@ -272,6 +270,31 @@
         </div>
     </div>
 
+
+    <!--  Modal Events -->
+    <div class="modal fade small_event_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallEventModalLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mySmallEventModalLabel">Select Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-unstyled megamenu-list">
+                        @if($allEvents->isNotEmpty())
+                            @foreach($allEvents as $event)
+                                <li>
+                                    <span class="badge tagable p-2 m-1">{{$event->name}}</span> <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" data-bs-dismiss="modal" wire:click.prevent="addEvent({{$event->id}})">Select</button>
+                                </li>
+                            @endforeach
+                        @else
+                            <li><h6 class="font-size-15 text-center not_found">No Events Active..</h6></li>
+                        @endif
+                    </ul>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <!--  Modal Tags -->
     <div class="modal fade small_tag_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >

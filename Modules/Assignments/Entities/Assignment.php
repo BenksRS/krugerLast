@@ -40,6 +40,7 @@ class Assignment extends Model {
         'status_id',
         'lien_info',
         'lien_date',
+        'event_id',
         'status_collection_id',
         'inside_info'
     ];
@@ -70,7 +71,6 @@ class Assignment extends Model {
     {
         return $this->hasMany(AssignmentsPhones::class, 'assignment_id', 'id')->orderBy('preferred', 'asc');
     }
-
 
     public function job_types ()
     {

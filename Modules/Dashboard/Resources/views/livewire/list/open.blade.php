@@ -66,6 +66,7 @@
                             @if(in_array('Name', $selectedColumns))
                                 <th>Name</th>
                             @endif
+
                             @if(in_array('Job Type', $selectedColumns))
                                 <th>Job Type</th>
                             @endif
@@ -81,6 +82,7 @@
                             @if(in_array('Address', $selectedColumns))
                                 <th>Address</th>
                             @endif
+
                             @if(in_array('Street', $selectedColumns))
                                 <th>Street</th>
                             @endif
@@ -121,12 +123,23 @@
 
                             <tr>
                                 @if(in_array('Name', $selectedColumns))
-                                    <td><a href="{{url('assignments/show/'.$row->id)}}">{{$row->last_name}}, {{$row->first_name}} #{{$row->id}}</a>
-                                        @if($row->event)
-                                            <span class="badge alert-danger">{{$row->event->name}}</span>
-                                        @endif
+                                    <td><a href="{{url('assignments/show/'.$row->id)}}">{{$row->last_name}}, {{$row->first_name}} #{{$row->id}}
+
+                                            @if($row->event)
+                                                <span class="badge alert-danger" >{{$row->event->name}}</span>
+                                            @endif
+                                            @if($row->tags)
+                                                @foreach($row->tags as $tag)
+                                                    <span class="badge tagable float-start ">{{$tag->name}}</span>
+                                                    {{--                                                <span class="badge alert-info">{{$tag->name}}</span>--}}
+                                                @endforeach
+                                            @endif
+                                        </a>
+
+
                                     </td>
                                 @endif
+
                                 @if(in_array('Job Type', $selectedColumns))
                                     <td><p>
                                             <?php $count=0;?>
@@ -163,6 +176,7 @@
                                 @if(in_array('Address', $selectedColumns))
                                         <td><p><a href="{{$row->address->link}}" target="{{$row->address->target}}" >{{$row->address->message}}</a></p></td>
                                 @endif
+
                                 @if(in_array('Street', $selectedColumns))
                                     <td><p>{{$row->street}}</p></td>
                                 @endif

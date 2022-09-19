@@ -20,3 +20,8 @@ Route::prefix('/assignments')->name('assignments.')->group(function () {
 
 
 });
+Route::prefix('/general')->name('general.')->group(function () {
+    Route::get('/tags', [AssignmentsController::class, 'tags'])->name('tags');
+    Route::get('/events', [AssignmentsController::class, 'events'])->name('events');
+    Route::get('/signature', [AssignmentsController::class, 'signature'])->name('signature');
+});

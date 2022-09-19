@@ -14,7 +14,7 @@ class AssignmentRepository extends Assignment {
 
     use AssignmentScope;
 
-    protected $with    = ['scheduling', 'referral', 'carrier', 'status', 'event', 'phones', 'user_updated', 'user_created', 'job_types'];
+    protected $with    = ['scheduling', 'referral', 'carrier','tags', 'status', 'event', 'phones', 'user_updated', 'user_created', 'job_types'];
 
     protected $appends = ['firebase'];
 
@@ -82,7 +82,6 @@ class AssignmentRepository extends Assignment {
         $notesTech = Note::where('notable_id', $this->id)->where('type','tech')->get();
 
                     if(count($notesTech) > 0){
-
                         foreach ($notesTech as $nota){
                             $user=$nota->user->name;
                             $notes=$notes."$nota->text - ($user - $nota->created_datetime)\n";
@@ -121,6 +120,7 @@ class AssignmentRepository extends Assignment {
             'event'                => $event,
             'nojob'                => NULL,
             'notes'                => $notes,
+            'tags'                 => $this->tags,
             'claim'                => $this->claim_number,
             'adjuster'             => $this->adjuster_info,
             'order'                => (int) $this->status->ordem,
