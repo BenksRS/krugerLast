@@ -76,6 +76,11 @@ class Payment extends Component
     public function balanceReload(){
 
         $this->invoices = FinanceBilling::where('assignment_id', '=',$this->assignment->id)->where('type', '=','active')->where('status', '!=', 'paid')->get();
+        $this->invoicesOpen = FinanceBilling::where('assignment_id', '=',$this->assignment->id)->where('type', '=','active')->where('status', '!=', 'paid')->get();
+        $this->invoicesFees = FinanceBilling::where('assignment_id', '=',$this->assignment->id)->where('type', '=','active')->where('status', 'paid')->get();
+
+        $this->payments = FinancePayment::where('assignment_id', '=',$this->assignment->id)->orderBy('updated_at', 'DESC')->get();
+        
         $this->checkInvoices=count($this->invoices);
     }
     public function invoiceList(){
@@ -190,7 +195,11 @@ class Payment extends Component
 
                 $this->emit('invoiceUpdate');
             }
+        $this->invoices = FinanceBilling::where('assignment_id', '=',$this->assignment->id)->where('type', '=','active')->where('status', '!=', 'paid')->get();
+        $this->invoicesOpen = FinanceBilling::where('assignment_id', '=',$this->assignment->id)->where('type', '=','active')->where('status', '!=', 'paid')->get();
+        $this->invoicesFees = FinanceBilling::where('assignment_id', '=',$this->assignment->id)->where('type', '=','active')->where('status', 'paid')->get();
 
+        $this->payments = FinancePayment::where('assignment_id', '=',$this->assignment->id)->orderBy('updated_at', 'DESC')->get();
         $this->emit('balanceReload');
         $this->emit('checkFinance');
 
