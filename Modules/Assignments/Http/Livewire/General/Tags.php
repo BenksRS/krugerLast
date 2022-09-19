@@ -29,7 +29,7 @@ class Tags extends Component
     }
     public function addNewTag(){
         AssignmentsTags::create([
-            'name' => $this->new_tag,
+            'name' => strtoupper($this->new_tag),
             'active' => 'Y',
         ])->save();
         $this->new_tag = null;
@@ -38,7 +38,7 @@ class Tags extends Component
     }
     public function addNewEvent(){
         AssignmentsEvents::create([
-            'name' => $this->new_event,
+            'name' => strtoupper($this->new_event),
             'active' => 'Y',
         ])->save();
         $this->new_event = null;
