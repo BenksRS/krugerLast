@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 use Modules\Assignments\Entities\Assignment;
+use Modules\Assignments\Entities\Docsign;
 use Modules\Assignments\Entities\Signdata;
 use Modules\Core\Http\Controllers\AdminController;
 use Modules\Referrals\Entities\FieldAuthorizations;
@@ -45,6 +46,7 @@ class AssignmentsController extends Controller {
             'back' => url('assignments'),
             'back_title' => 'Assignments List'
         ];
+
         \session()->flash('page',$page_info);
         $page =\session()->get('page');
 
@@ -86,6 +88,7 @@ class AssignmentsController extends Controller {
     {
         return view('assignments::list');
     }
+
     /**
      * Show the form for creating a new resource.
      * @return Renderable
@@ -243,6 +246,23 @@ class AssignmentsController extends Controller {
 //            }
 //        }
 //        echo "<br><br>";
+    }
+    public function docsignfile($id){
+        $docusignFile =Docsign::find($id);
+        $pdf = base64_decode($docusignFile->b64, true);
+
+        return response($pdf)
+            ->withHeaders([
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="'.$docusignFile->name.'"'
+            ]);
+
+
+
+
+
+
+
     }
     public function pdfgallerylabel($id)
     {

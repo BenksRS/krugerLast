@@ -1,17 +1,33 @@
 <div>
-    @if(session()->has('reloadForms'))
-        <div  class="alert alert-{{session('reloadForms')['class']}}" x-init="setTimeout(() => show = false, 3000)">
-            {!! nl2br(session('reloadForms')['message']) !!}
-        </div>
-        <script>
-            setTimeout(function() {
-                $('.alert-success').fadeOut('fast');
-            }, 2000);
-        </script>
+
+
+    @if($showUploading)
+        <h4 class="card-title mb-4">DocSign List <button type="button" class="btn btn-sm btn-secondary  waves-effect waves-light  me-2 float-end" wire:click="reloadForms"> <i class="fas fa-arrow-left  align-middle "></i> Back</button></h4>
+        <form wire:submit.prevent="save"  >
+
+            <div class="input-group">
+                <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" wire:model="newauth" name="newauth">
+                <button class="btn btn-primary" type="submit" id="inputGroupFileAddon04" wire:loading.attr="disabled">Upload DocSign</button>
+            </div>
+            @error('newauth')<span class="alert-danger error">{{ $message }}</span> @enderror
+            <div wire:loading wire:target="newauth"><i class="fa fa-spinner"></i> Uploading...</div>
+        </form>
+        <hr>
+    @else
+        <h4 class="card-title mb-4">DocSign List <button type="button" class="btn btn-warning btn-sm float-end" wire:click="$emit('uploadAuth')"><i class="fas fa-plus"></i> <i class="fas fa-file-pdf"></i> DocuSign</button></h4>
+
+
     @endif
-    <h4 class="card-title mb-4">Forms List <button type="button" class="btn btn-sm btn-warning  waves-effect waves-light  me-2 float-end" wire:click="reloadForms"> <i class="fas fa-undo-alt  align-middle "></i> Reload</button></h4>
+
+
     <div class="card">
         <div class="card-body">
+
+
+
+
+
+
             <div class="table-responsive">
                 <table class="table table-nowrap align-middle table-hover mb-0">
                     <tbody>
@@ -26,15 +42,11 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <h5 class="font-size-10  mb-1">{{$auth->name}}</h5>
+                                    <h5 class="font-size-10 mb-1">{{$auth->name}}</h5>
                                 </td>
                                 <td>
                                     <div class="float-end">
-                                        @if(count($assignment->signs) > 0)
-                                            <a target="_blank" href="{{ url("/assignments/pdfauth/$assignment->id/$auth->id") }}" class="text-dark"><i class="bx bx-link-alt h3 m-0"></i></a>
-                                        @else
-                                            <small>Waiting signture.</small>
-                                        @endif
+                                            <a target="_blank" href="{{ url("/assignments/docsignfile/$auth->id") }}" class="text-dark"><i class="bx bx-link-alt h3 m-0"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -42,7 +54,7 @@
                     @else
                         <tr>
                             <td>
-                                <h6 class="text-center">No forms assigned for this job ...</h6>
+                                <h6 class="text-center">No DocSign`s for this job ...</h6>
                             </td>
                         </tr>
                     @endif
@@ -53,5 +65,4 @@
             </div>
         </div>
     </div>
-
 </div>

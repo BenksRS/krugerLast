@@ -120,7 +120,7 @@ class AssignmentRepository extends Assignment {
             'event'                => $event,
             'nojob'                => NULL,
             'notes'                => $notes,
-            'tags'                 => $this->tags,
+            'tags'                 => $this->tags->pluck('name', 'id'),
             'claim'                => $this->claim_number,
             'adjuster'             => $this->adjuster_info,
             'order'                => (int) $this->status->ordem,
