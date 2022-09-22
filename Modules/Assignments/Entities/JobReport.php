@@ -18,6 +18,7 @@ class JobReport extends Model
         'sandbags',
         'anchoring_support',
         'tarp_alterations',
+        'tarp_situation',
         'height_accomodation',
         'debris',
         'loads',
