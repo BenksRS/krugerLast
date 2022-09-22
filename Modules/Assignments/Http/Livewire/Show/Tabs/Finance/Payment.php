@@ -80,7 +80,6 @@ class Payment extends Component
         $this->invoicesFees = FinanceBilling::where('assignment_id', '=',$this->assignment->id)->where('type', '=','active')->where('status', 'paid')->get();
 
         $this->payments = FinancePayment::where('assignment_id', '=',$this->assignment->id)->orderBy('updated_at', 'DESC')->get();
-        
         $this->checkInvoices=count($this->invoices);
     }
     public function invoiceList(){

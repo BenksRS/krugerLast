@@ -17,6 +17,7 @@ Route::prefix('/assignments')->name('assignments.')->group(function () {
     Route::get('/pdfgallery/{id}', [AssignmentsController::class, 'pdfgallery'])->name('pdfgallery');
     Route::get('/pdfgallerybefore/{id}', [AssignmentsController::class, 'pdfgallerybefore'])->name('pdfgallerybefore');
     Route::get('/pdfgalleryafter/{id}', [AssignmentsController::class, 'pdfgalleryafter'])->name('pdfgalleryafter');
+    Route::get('/docsignfile/{id}', [AssignmentsController::class, 'docsignfile'])->name('docsignfile');
 
 
 });
