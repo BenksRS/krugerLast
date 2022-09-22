@@ -106,6 +106,8 @@ class AssignmentRepository extends Assignment {
             break;
         }
 
+        $tags = !empty($this->tags) ? collect($this->tags)->pluck('name')->all() : null;
+
         $firebase = [
             'job_id'               => $this->id,
             'employee_id'          => $tech_id,
@@ -120,7 +122,7 @@ class AssignmentRepository extends Assignment {
             'event'                => $event,
             'nojob'                => NULL,
             'notes'                => $notes,
-            'tags'                 => $this->tags,
+            'tags'                 => $tags,
             'claim'                => $this->claim_number,
             'adjuster'             => $this->adjuster_info,
             'order'                => (int) $this->status->ordem,

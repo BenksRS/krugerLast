@@ -17,7 +17,10 @@ class ReportRepository extends JobReport {
         $elements  = $report['elements'] ?? [];
 
         $checklist = collect($checklist)->mapWithKeys(function ($item) {
-            return [$item['name'] => $item['value'] == 0 ? 'N' : 'Y'];
+
+            $name = $item['name'] == 'height_accommodation' ? 'height_accomodation' : $item['name'];
+
+            return [$name => $item['value'] == 1 ? 'Y' : 'N'];
         })->all();
 
         return array_merge([
@@ -31,6 +34,7 @@ class ReportRepository extends JobReport {
             's2x4x8'                 => $elements['two_by_eigth'] ?? NULL,
             's2x4x12'                => $elements['two_by_twelve'] ?? NULL,
             's2x4x16'                => $elements['two_by_sixteen'] ?? NULL,
+            'tarp_situation'         => !empty($elements['tarp_situation']) ? $elements['tarp_situation'] == 2 ? 'Y' : 'N' : 'N',
             'created_by'             => 73,
             'updated_by'             => 73,
         ], $checklist);

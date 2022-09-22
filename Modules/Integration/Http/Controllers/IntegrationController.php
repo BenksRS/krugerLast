@@ -27,7 +27,14 @@ class IntegrationController extends Controller {
     public function index ()
     {
 
-        integration(['reports'])->get();
+        $data = $this->assignmentRepository->whereId(27868)->first();
+
+        dump($data->getData());
+
+        integration('assignments')->set('27869');
+
+        return;
+        integration(['assignments'])->getTest();
 /*
         integration(['users', 'workers'])->set();*/
 

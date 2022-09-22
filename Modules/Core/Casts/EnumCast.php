@@ -16,7 +16,7 @@ class EnumCast implements CastsAttributes {
      */
     public function get ($model, string $key, $value, array $attributes)
     {
-        return $value == 'N' ? 0 : 1;
+        return $value == 'Y' ? 1 : 0;
     }
 
     /**
@@ -29,7 +29,7 @@ class EnumCast implements CastsAttributes {
      */
     public function set ($model, string $key, $value, array $attributes)
     {
-        return $value == 0 ? 'N' : 'Y';
+        return $value == 1 ? 'Y': 'N';
     }
 
 }
