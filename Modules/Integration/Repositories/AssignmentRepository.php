@@ -42,7 +42,7 @@ class AssignmentRepository extends Assignment {
 
             $nojob      = NoJob::find($data['nojob_data']['option']);
             $assignment = $this->find($assignmentId);
-            $tags       = !empty($assignment->tags) ? collect($assignment->tags)->pluck('name')->all() : [];
+            $tags       = !empty($assignment->tags) ? collect($assignment->tags)->pluck('id')->all() : [];
 
             if ( $nojob->nojob == 'Y' ) {
                 $this->notes()->create([
@@ -52,9 +52,30 @@ class AssignmentRepository extends Assignment {
                     'type'         => 'no_job',
                     'notable_type' => Modules\Assignments\Entities\Assignment::class,
                 ]);
+
+
+                if ( in_array($nojob->id, [3, 4, 5, 6]) && in_array(4, $tags)) {
+                    $statusId = 8;
+                } else {
+                    $statusId = $nojob->status_id;
+
+                    $statusDB   = AssignmentsStatus::find($nojob->status_id);
+
+                    $this->notes()->create([
+                        'text'         => "### CHANGE STATUS TO: $statusDB->name ### PLEASE BILL TRIP CHARGE",
+                        'notable_id'   => $assignmentId,
+                        'created_by'   => $employeeId,
+                        'type'         => 'assignment',
+                        'notable_type' => Modules\Assignments\Entities\Assignment::class,
+                    ]);
+                }
+
             } else {
+                $text = '';
+                $statusDB   = AssignmentsStatus::find($nojob->status_id);
+
                 $this->notes()->create([
-                    'text'         => "### CHANGE STATUS TO: $status->name ### $nojob->text",
+                    'text'         => "### CHANGE STATUS TO: $statusDB->name ### $nojob->text",
                     'notable_id'   => $assignmentId,
                     'created_by'   => $employeeId,
                     'type'         => 'assignment',
@@ -62,11 +83,6 @@ class AssignmentRepository extends Assignment {
                 ]);
             }
 
-            if ( in_array($nojob->id, [3, 4, 5, 6]) && in_array('DRIVE BY', $tags)) {
-                $statusId = 8;
-            } else {
-                $statusId = $nojob->status_id;
-            }
 
         }
 
