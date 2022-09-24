@@ -9,7 +9,7 @@ class Nojob extends Model
 {
     use HasFactory;
 
-    protected $table = 'nobjob';
+    protected $table = 'nojob';
 
     protected $fillable = [
         ''
