@@ -10,6 +10,10 @@ return [
         'remote' => ['create', 'update', 'delete'],
     ],
 
+    'queries' => [
+        'limit' => 10,
+    ],
+
     'connection' => [
 
         'users' => [
@@ -41,10 +45,13 @@ return [
                 'set' => FALSE,
                 'get' => TRUE,
             ],
-            'events' => ['local.update'],
+            'events' => ['local.update', 'remote.delete'],
             'rules'  => [
-                'local.update' => [
-                    'status.new' => ['in_progress', 'uploading', 'uploading_pics'],
+                'local.update'  => [
+                    'status.new' => ['nojob_review', 'in_progress', 'uploading', 'uploading_pics'],
+                ],
+                'remote.delete' => [
+                    'status.new'  => ['nojob_review', 'delete', 'uploading_pics'],
                 ],
             ],
         ],
