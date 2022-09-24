@@ -7,9 +7,7 @@
                 <div class="row mb-3">
                     <div class="col-md-10">
                         <label  class="form-label">Tag name</label>
-                        <input type="text" class="form-control "  name="new_tag"
-                               placeholder="new tag name" wire:model="new_tag"  required>
-
+                        <input type="text" class="form-control "  name="new_tag" placeholder="new tag name" wire:model="new_tag"  required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -18,7 +16,6 @@
                             Please type a valid option.
                         </div>
                         @enderror
-
                     </div>
                     <div  class="col-md-2 ">
                         <button class="btn  btn-lg btn-success mt-4 float-start" {{isset($new_tag) ? ' ': 'disabled'}} wire:click.prevent="addNewTag"  type="button"   >ADD</button>

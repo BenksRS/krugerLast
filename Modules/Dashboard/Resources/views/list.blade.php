@@ -23,6 +23,18 @@
         @case('open')
             @livewire('dashboard::list.open', key('dash_list_open'))
         @break
+        @case('message')
+        @livewire('dashboard::list.messages', key('dash_list_message'))
+        @break
+        @case('late')
+        @livewire('dashboard::list.late', key('dash_list_late'))
+        @break
+        @case('request_docusign')
+        @livewire('dashboard::list.request-docsign', key('dash_list_request_docusign'))
+        @break
+        @case('docusign_sent')
+        @livewire('dashboard::list.docsign-sent', key('dash_list_docsign-sent'))
+        @break
         @case('readytobill')
             @livewire('dashboard::list.readytobill', key('dash_list_readytobill'))
         @break

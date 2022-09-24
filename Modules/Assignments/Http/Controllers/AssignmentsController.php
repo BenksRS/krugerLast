@@ -33,10 +33,6 @@ class AssignmentsController extends Controller {
      */
     public function gdrive (){
 
-
-
-
-
     }
     public function index ()
     {

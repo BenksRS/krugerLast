@@ -143,12 +143,13 @@
     background-color: #ea709f!important;
     color: #0b0b0b!important;
 }
-.open-reschedule{
+
+.pending{
     background-color: #ea709f!important;
     color: #0b0b0b!important;
 }
-.pending{
-    background-color: #ea709f!important;
+.late{
+    background-color: #a2e7a2 !important;
     color: #0b0b0b!important;
 }
 .available{
@@ -156,7 +157,15 @@
     color: #0b0b0b!important;
 }
 .docusign_sent{
-    background-color: #ea709f!important;
+    background-color: rgb(204, 139, 241) !important;
+    color: #0b0b0b!important;
+}
+.message_sent{
+    background-color: #e01563 !important;
+    color: #0b0b0b!important;
+}
+.request_docusign{
+    background-color: rgb(163, 2, 255) !important;
     color: #0b0b0b!important;
 }
 .uploading{

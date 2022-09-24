@@ -5,10 +5,9 @@ namespace Modules\Dashboard\Http\Livewire\List;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Repositories\AssignmentRepository;
 
-class Open extends Component
+class DocsignSent extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -30,7 +29,7 @@ class Open extends Component
     public function render()
     {
         $searchAssignment = $this->searchAssignment;
-        $list = AssignmentRepository::open()->search($searchAssignment)->get();
+        $list = AssignmentRepository::DocusignSent()->search($searchAssignment)->get();
 
         $list=$list->sortBy('start_date')->sortBy('order_status');
 
@@ -38,9 +37,10 @@ class Open extends Component
 
         $list = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
 
-        return view('dashboard::livewire.list.open', [
+        return view('dashboard::livewire.list.docsign-sent', [
             'list' =>$list
         ]);
 
     }
 }
+

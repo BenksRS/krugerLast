@@ -12,12 +12,32 @@ trait AssignmentScope {
         return  $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
 
-    public function scopeOpen (Builder $query, $status = [1,2,3,4,8,11,12,14,15,17,18,19,20,21,22,23])
+    public function scopeOpen (Builder $query, $status = [1,2,3,4,8,11,12,14,15,17,18,19,20,21,22,23,28,14,29,27])
     {
 
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
 
     }
+    public function scopeRequestDocusign (Builder $query, $status = [29])
+    {
+
+        return $query->whereIn('status_id', collect($status))->whereNotNull('id');
+
+    }
+    public function scopeDocusignSent (Builder $query, $status = [14])
+    {
+
+        return $query->whereIn('status_id', collect($status))->whereNotNull('id');
+
+    }
+
+    public function scopeMessages (Builder $query, $status = [1])
+    {
+
+        return $query->whereIn('status_id', collect($status))->whereNotNull('id');
+
+    }
+
     public function scopeSearchtop (Builder $query, $search){
         return $query
             ->when($search, function ($query, $search) {

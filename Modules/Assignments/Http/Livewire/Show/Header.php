@@ -107,7 +107,6 @@ class Header extends Component
             if($this->assignment->scheduling){
                 $this->assignment->scheduling->delete();
             }
-
         }
 
 
