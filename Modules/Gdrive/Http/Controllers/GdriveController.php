@@ -22,6 +22,7 @@ use Modules\Assignments\Repositories\AssignmentRepository;
 use Modules\Gdrive\Entities\Gdrive;
 use Modules\Gdrive\Entities\QueeDir;
 use Modules\Gdrive\Entities\QueeFiles;
+use Modules\Gdrive\Entities\QueeForms;
 use Modules\Referrals\Entities\FieldAuthorizations;
 use Modules\Referrals\Entities\Referral;
 use Modules\Referrals\Entities\ReferralAuthorization;
@@ -33,6 +34,31 @@ class GdriveController extends Controller
      * @return Renderable
      */
 
+    public function queue_forms(){
+        $queue=QueeForms::whereIn('status',['pending', 'processing'])->orderBy('order')->first();
+        if(isset($queue)) {
+            if ($queue->status == 'pending') {
+
+                if($queue->type == 'forms'){
+                    // start pdfs forms
+                    try {
+                        $this->updateHistoryForms($queue->assignment_id, $queue->type, 'start upload Forms pdf`s:');
+
+                        $this->pdfs_auth($queue->assignment_id);
+                    } catch (Exception $e) {
+//                    $this->errorHistoryFiles($queue->assignment_id, 'on upload Forms pdf`s:', $e->getMessage());
+                    }
+                    $this->updateHistoryForms($queue->assignment_id, $queue->type,  'Done:');
+                    $queue->update(['status' => 'complete']);
+                }else{
+                    // docusigns
+
+                    $queue->update(['status' => 'complete']);
+
+                }
+            }
+        }
+    }
     public function queue_files()
     {
         $queue=QueeFiles::whereIn('status',['pending', 'processing'])->orderBy('order')->first();
@@ -476,6 +502,17 @@ class GdriveController extends Controller
     public function updateHistoryFiles($id, $etapa){
         $now=Carbon::now();
         $QueueDir = QueeFiles::where('assignment_id', $id)->first();
+        $message="<b>$etapa:</b> $now";
+        $message="$QueueDir->history<br>$message";
+
+        $update=[
+            'history' => $message
+        ];
+        $QueueDir->update($update);
+    }
+    public function updateHistoryForms($id, $type,$etapa){
+        $now=Carbon::now();
+        $QueueDir = QueeForms::where('assignment_id', $id)->where('types',$type)->first();
         $message="<b>$etapa:</b> $now";
         $message="$QueueDir->history<br>$message";
 

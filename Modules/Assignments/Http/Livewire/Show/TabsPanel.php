@@ -99,6 +99,10 @@ class TabsPanel extends Component
             case 24:
                 $this->isActive = 'finance';
                 break;
+            case 29:
+            case 14:
+                $this->isActive = 'forms';
+            break;
             default:
                 $this->isActive = 'info-details';
                 break;

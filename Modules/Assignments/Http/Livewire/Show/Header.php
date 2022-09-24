@@ -103,7 +103,7 @@ class Header extends Component
             'notable_type'=>  Modules\Assignments\Entities\Assignment::class,
         ]);
 
-        if(in_array($newStatus, [11,12])){
+        if(in_array($newStatus, [11,12, 27])){
             if($this->assignment->scheduling){
                 $this->assignment->scheduling->delete();
             }
@@ -208,6 +208,7 @@ class Header extends Component
         $job->update(['event_id' => $idEvent]);
 
         $this->assignment = Assignment::find($this->assignment->id);
+        integration('assignments')->set($this->assignment->id);
     }
     public function addTag($idTag){
         $this->assignment->tags()->attach($idTag);
@@ -215,12 +216,14 @@ class Header extends Component
         $this->selectedTags_ids = $this->assignment->tags->pluck('id');
         $this->emit('tagsUpdate',$this->assignment->id);
         $this->dispatchBrowserEvent('close-modal');
+        integration('assignments')->set($this->assignment->id);
     }
     public function removeTag($idTag){
         $this->assignment->tags()->detach($idTag);
         $this->selectedTags = $this->assignment->tags;
         $this->selectedTags_ids = $this->assignment->tags->pluck('id');
         $this->emit('tagsUpdate',$this->assignment->id);
+        integration('assignments')->set($this->assignment->id);
     }
 
     public function render()

@@ -22,6 +22,7 @@ Route::prefix('/gdrive')->name('gdrive.')->group(function () {
     Route::get('/add_queue_dir/', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'add_queue_dir'])->name('add_queue_dir');
     Route::get('/add_queue_files/', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'add_queue_files'])->name('add_queue_files');
     Route::get('/queue_files/', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'queue_files'])->name('queue_files');
+    Route::get('/queue_forms/', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'queue_forms'])->name('queue_forms');
     Route::get('/create/{id}', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'create'])->name('create');
     Route::get('/image/{id}', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'image'])->name('image');
     Route::get('/pdfs/{id}', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'pdfs'])->name('pdfbefore');

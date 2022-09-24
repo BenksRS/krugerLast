@@ -9,6 +9,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Modules\Assignments\Entities\AssignmentsPhones;
 use Modules\Assignments\Repositories\AssignmentRepository;
+use Modules\Notes\Entities\Note;
 use Modules\Referrals\Entities\Referral;
 use Auth;
 
@@ -84,23 +85,25 @@ class Messages extends Component
                     $claim = '';
                 }
                 fputcsv($file, array($review->first_name, $review->last_name, $phone_number, $carrier_name, $review->id, $claim, $review->address->message));
+
+                $update_status=[
+                    'status_id'  => 28,
+                    'updated_by'  => $this->user->id,
+                ];
+                $review->update($update_status);
+
+                Note::create([
+                    'text'=> "### CHANGE STATUS TO: MESSAGE SENT ### ",
+                    'notable_id'=> $review->id,
+                    'created_by'=> $this->user->id,
+                    'type'=> 'assignment',
+                    'notable_type'=>  'Modules\Assignments\Entities\Assignment',
+                ]);
+
             }
             fclose($file);
 
 
-            $update_status=[
-                'status_id'  => 28,
-                'updated_by'  => $this->user->id,
-            ];
-            $review->update($update_status);
-
-                 $review->notes()->create([
-                     'text'=> "### CHANGE STATUS TO: MESSAGE SENT ### ",
-                     'notable_id'=> $review->id,
-                     'created_by'=> $this->user->id,
-                     'type'=> 'assignment',
-                     'notable_type'=>  Modules\Assignments\Entities\Assignment::class,
-                 ]);
 
         };
 

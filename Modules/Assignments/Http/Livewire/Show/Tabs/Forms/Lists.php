@@ -2,8 +2,11 @@
 
 namespace Modules\Assignments\Http\Livewire\Show\Tabs\Forms;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use Modules\Assignments\Entities\Assignment;
+use Modules\Gdrive\Entities\QueeFiles;
+use Modules\Gdrive\Entities\QueeForms;
 use Modules\Referrals\Entities\Referral;
 use Modules\Referrals\Entities\ReferralAuthorizationPivot;
 use Modules\Referrals\Entities\ReferralCarriersPivot;
@@ -14,6 +17,7 @@ class Lists extends Component
     public $assignment;
 
     public $authorizations;
+    public $quee_forms;
 
 
     public function mount(Assignment $assignment)
@@ -21,7 +25,7 @@ class Lists extends Component
 
         $this->assignment = $assignment;
         $this->authorizations = $this->assignment->authorizations;
-
+        $this->reloadInfo();
 
     }
 
@@ -31,6 +35,24 @@ class Lists extends Component
          foreach ($auths as $auth){
              $this->assignment->authorizations()->attach($auth->referral_authorizathion_id);
          }
+    }
+    public function reloadInfo(){
+        $this->quee_forms= QueeForms::where('assignment_id', $this->assignment->id)->where('type', 'forms')->where('status', '!=', 'complete')->first();
+    }
+    public function addFormQueue(){
+        $now=Carbon::now();
+        QueeForms::where('assignment_id', $this->assignment->id)->where('type','forms')->delete();
+
+        $history= "<b># Added to queue</b> - $now";
+        QueeForms::create([
+            'assignment_id' =>$this->assignment->id,
+            'order' =>50,
+            'status' =>'pending',
+            'type' =>'forms',
+            'history' =>$history
+        ])->save();
+
+        $this->reloadInfo();
     }
     public function reloadForms()
     {

@@ -14,16 +14,24 @@
         </form>
         <hr>
     @else
-        <h4 class="card-title mb-4">DocSign List <button type="button" class="btn btn-warning btn-sm float-end" wire:click="$emit('uploadAuth')"><i class="fas fa-plus"></i> <i class="fas fa-file-pdf"></i> DocuSign</button></h4>
-
-
+        <h4 class="card-title mb-4">DocSign List
+{{--            <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-end" wire:click="addFormQueue('forms')"> <i class="fas fa-file-upload  align-middle "></i> Send Gdrive</button>--}}
+            <button type="button" class="btn btn-warning btn-sm me-2  float-end" wire:click="$emit('uploadAuth')"><i class="fas fa-plus"></i> <i class="fas fa-file-pdf"></i> DocuSign</button></h4>
     @endif
-
-
     <div class="card">
         <div class="card-body">
 
+{{--            @if( isset($quee_forms->status) &&  in_array($quee_forms->status, ['pending', 'processing']))--}}
+{{--                <div class="row">--}}
+{{--                    <div class="col-lg-12" wire:poll.1s="reloadInfo">--}}
+{{--                        <h5 class="font-size-10 mt-2">Syncing all Docusign Google Drive:</h5><span>{{$quee_forms->status}}</span>--}}
+{{--                        <div  class="alert alert-warning">--}}
+{{--                            <p> {!! nl2br($quee_forms->history) !!}</p>--}}
 
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            @endif--}}
 
 
 

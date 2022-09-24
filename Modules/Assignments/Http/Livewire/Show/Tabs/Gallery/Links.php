@@ -8,6 +8,7 @@ use Modules\Assignments\Entities\Assignment;
 use Modules\Gdrive\Entities\Gdrive;
 use Modules\Gdrive\Entities\QueeDir;
 use Modules\Gdrive\Entities\QueeFiles;
+use Modules\Gdrive\Entities\QueeForms;
 
 class Links extends Component
 {
@@ -37,6 +38,7 @@ class Links extends Component
 
 
     }
+
     public function addFilesQueue(){
         $now=Carbon::now();
         QueeFiles::where('assignment_id', $this->assignment->id)->delete();

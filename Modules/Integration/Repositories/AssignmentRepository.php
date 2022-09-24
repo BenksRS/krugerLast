@@ -45,12 +45,12 @@ class AssignmentRepository extends Assignment {
             $tags       = !empty($assignment->tags) ? collect($assignment->tags)->pluck('id')->all() : [];
 
             if ( $nojob->nojob == 'Y' ) {
-                $assignment->notes()->create([
+                Note::create([
                     'text'         => $nojob->text,
                     'notable_id'   => $assignment->id,
                     'created_by'   => $employeeId,
                     'type'         => 'no_job',
-                    'notable_type' => 'Modules\Assignments\Entities\Assignment',
+                    'notable_type'=>  'Modules\Assignments\Entities\Assignment',
                 ]);
 
 
@@ -61,25 +61,42 @@ class AssignmentRepository extends Assignment {
 
                     $statusDB   = AssignmentsStatus::find($nojob->status_id);
 
-                    $assignment->notes()->create([
+                    Note::create([
                         'text'         => "### CHANGE STATUS TO: $statusDB->name ### PLEASE BILL TRIP CHARGE",
                         'notable_id'   => $assignment->id,
                         'created_by'   => $employeeId,
                         'type'         => 'assignment',
-                        'notable_type' => 'Modules\Assignments\Entities\Assignment',
+                        'notable_type'=>  'Modules\Assignments\Entities\Assignment',
                     ]);
+
+
+                    Note::create([
+                        'text'         => "### CHANGE STATUS TO: $statusDB->name ### PLEASE BILL TRIP CHARGE",
+                        'notable_id'   => $assignment->id,
+                        'created_by'   => $employeeId,
+                        'type'         => 'finance',
+                        'notable_type'=>  'Modules\Assignments\Entities\Assignment',
+                    ]);
+
                 }
 
             } else {
                 $text = '';
+                $statusId = $nojob->status_id;
                 $statusDB   = AssignmentsStatus::find($nojob->status_id);
 
-                $assignment->notes()->create([
+                if(in_array($statusId, [11,12, 27])){
+                    if($assignment->scheduling){
+                        $assignment->scheduling->delete();
+                    }
+                }
+
+                Note::create([
                     'text'         => "### CHANGE STATUS TO: $statusDB->name ### $nojob->text",
                     'notable_id'   => $assignment->id,
                     'created_by'   => $employeeId,
                     'type'         => 'assignment',
-                    'notable_type' => 'Modules\Assignments\Entities\Assignment',
+                    'notable_type'=>  'Modules\Assignments\Entities\Assignment',
                 ]);
             }
 

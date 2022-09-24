@@ -106,6 +106,7 @@
                             <div class="lineWrap" wire:key="line_tech-{{$tech->id}}"   wire:loading.remove>
                                 <?php
                                 $jobs=$list_schedulleds->where('tech_id',$tech->user->id);
+
                                 ?>
 
 
@@ -121,7 +122,7 @@
                                         @if($count_jobs > 0)
 
 
-                                            @foreach($jobs_grid as $job_grid)
+                                            @foreach($jobs_grid->whereIn('status_id',[2,3,4,5,6,10,]) as $job_grid)
 
 
                                                 <div class="scheduled_job alert {{$job_grid->assignment->status->class}} {{($this->jobRoute == $job_grid->assignment->id)? ' job_route': ''}}"  wire:key="techid_{{$tech->user->id}}_grid_{{$grid}}_{{$job_grid->assignment->id}}" wire:sortable-group.item="{{$job_grid->assignment->id}}" >
