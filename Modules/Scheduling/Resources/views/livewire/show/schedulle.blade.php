@@ -122,9 +122,10 @@
                                         @if($count_jobs > 0)
 
 
-                                            @foreach($jobs_grid->whereIn('status_id',[2,3,4,5,6,10,]) as $job_grid)
+                                            @foreach($jobs_grid as $job_grid)
 
 
+                                                    @if(!in_array($job_grid->assignment->status_id, [7,8,23]))
                                                 <div class="scheduled_job alert {{$job_grid->assignment->status->class}} {{($this->jobRoute == $job_grid->assignment->id)? ' job_route': ''}}"  wire:key="techid_{{$tech->user->id}}_grid_{{$grid}}_{{$job_grid->assignment->id}}" wire:sortable-group.item="{{$job_grid->assignment->id}}" >
 
                                                     <div class="row">
@@ -155,6 +156,7 @@
                                                     </div>
 
                                                 </div>
+                                           @endif
                                             @endforeach
                                         @endif
                                     </div>
