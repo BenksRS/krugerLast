@@ -41,7 +41,7 @@ class AssignmentRepository extends Assignment {
         if ( $data['status']['new'] == 'nojob_review' && !empty($data['nojob_data']['option']) ) {
 
             $nojob      = NoJob::find($data['nojob_data']['option']);
-            $assignment = $this->find($data['job_id']);
+            $assignment = $this->find($assignmentId);
             $tags       = !empty($assignment->tags) ? collect($assignment->tags)->pluck('name')->all() : [];
 
             if ( $nojob->nojob == 'Y' ) {
