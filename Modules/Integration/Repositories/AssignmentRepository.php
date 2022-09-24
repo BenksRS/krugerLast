@@ -53,7 +53,7 @@ class AssignmentRepository extends Assignment {
                     'notable_type' => Modules\Assignments\Entities\Assignment::class,
                 ]);
             } else {
-                $this->assignment->notes()->create([
+                $this->notes()->create([
                     'text'         => "### CHANGE STATUS TO: $status->name ### $nojob->text",
                     'notable_id'   => $assignmentId,
                     'created_by'   => $employeeId,
