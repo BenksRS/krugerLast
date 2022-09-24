@@ -5,14 +5,16 @@ namespace Modules\Assignments\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class NoJob extends Model
+class Nojob extends Model
 {
     use HasFactory;
-    protected $table = 'nojob';
-    protected $fillable = [];
 
+    protected $fillable = [
+        ''
+    ];
+    
     protected static function newFactory()
     {
-        return \Modules\Assignments\Database\factories\JobReportOptionsFactory::new();
+        return \Modules\Assignments\Database\factories\NojobFactory::new();
     }
 }
