@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Nojob extends Model
 {
     use HasFactory;
-
+    protected $table = 'nojob';
     protected $fillable = [
         ''
     ];
