@@ -5,7 +5,7 @@ namespace Modules\Integration\Repositories;
 use Carbon\Carbon;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsStatus;
-use Modules\Assignments\Entities\NoJob;
+use Modules\Assignments\Entities\Nojob;
 use Modules\Assignments\Scopes\AssignmentScope;
 use Modules\Notes\Entities\Note;
 
@@ -40,14 +40,14 @@ class AssignmentRepository extends Assignment {
 
         if ( $data['status']['new'] == 'nojob_review' && !empty($data['nojob_data']['option']) ) {
 
-            $nojob      = NoJob::find($data['nojob_data']['option']);
+            $nojob      = Nojob::find($data['nojob_data']['option']);
             $assignment = $this->find($assignmentId);
             $tags       = !empty($assignment->tags) ? collect($assignment->tags)->pluck('id')->all() : [];
 
             if ( $nojob->nojob == 'Y' ) {
-                $this->notes()->create([
+                $assignment->notes()->create([
                     'text'         => $nojob->text,
-                    'notable_id'   => $assignmentId,
+                    'notable_id'   => $assignment->id,
                     'created_by'   => $employeeId,
                     'type'         => 'no_job',
                     'notable_type' => Modules\Assignments\Entities\Assignment::class,
@@ -61,9 +61,9 @@ class AssignmentRepository extends Assignment {
 
                     $statusDB   = AssignmentsStatus::find($nojob->status_id);
 
-                    $this->notes()->create([
+                    $assignment->notes()->create([
                         'text'         => "### CHANGE STATUS TO: $statusDB->name ### PLEASE BILL TRIP CHARGE",
-                        'notable_id'   => $assignmentId,
+                        'notable_id'   => $assignment->id,
                         'created_by'   => $employeeId,
                         'type'         => 'assignment',
                         'notable_type' => Modules\Assignments\Entities\Assignment::class,
@@ -74,9 +74,9 @@ class AssignmentRepository extends Assignment {
                 $text = '';
                 $statusDB   = AssignmentsStatus::find($nojob->status_id);
 
-                $this->notes()->create([
+                $assignment->notes()->create([
                     'text'         => "### CHANGE STATUS TO: $statusDB->name ### $nojob->text",
-                    'notable_id'   => $assignmentId,
+                    'notable_id'   => $assignment->id,
                     'created_by'   => $employeeId,
                     'type'         => 'assignment',
                     'notable_type' => Modules\Assignments\Entities\Assignment::class,
