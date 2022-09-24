@@ -5,6 +5,7 @@ namespace Modules\Integration\Repositories;
 use Carbon\Carbon;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsStatus;
+use Modules\Assignments\Entities\NoJob;
 use Modules\Assignments\Scopes\AssignmentScope;
 use Modules\Notes\Entities\Note;
 
@@ -14,7 +15,7 @@ class AssignmentRepository extends Assignment {
 
     use AssignmentScope;
 
-    protected $with    = ['scheduling', 'referral', 'carrier','tags', 'status', 'event', 'phones', 'user_updated', 'user_created', 'job_types'];
+    protected $with    = ['scheduling', 'referral', 'carrier', 'tags', 'status', 'event', 'phones', 'user_updated', 'user_created', 'job_types'];
 
     protected $appends = ['firebase'];
 
@@ -30,10 +31,63 @@ class AssignmentRepository extends Assignment {
 
     public function setData ($data)
     {
-        $status = AssignmentsStatus::where('name', $data['status']['new'])->first();
+        $assignmentId = $data['job_id'];
+        $employeeId   = $data['employee_id'];
+
+        $status   = AssignmentsStatus::where('name', $data['status']['new'])->first();
+        $statusId = $status->id;
+
+
+        if ( $data['status']['new'] == 'nojob_review' && !empty($data['nojob_data']['option']) ) {
+
+            $nojob      = NoJob::find($data['nojob_data']['option']);
+            $assignment = $this->find($assignmentId);
+            $tags       = !empty($assignment->tags) ? collect($assignment->tags)->pluck('id')->all() : [];
+
+            if ( $nojob->nojob == 'Y' ) {
+                $this->notes()->create([
+                    'text'         => $nojob->text,
+                    'notable_id'   => $assignmentId,
+                    'created_by'   => $employeeId,
+                    'type'         => 'no_job',
+                    'notable_type' => Modules\Assignments\Entities\Assignment::class,
+                ]);
+
+
+                if ( in_array($nojob->id, [3, 4, 5, 6]) && in_array(4, $tags)) {
+                    $statusId = 8;
+                } else {
+                    $statusId = $nojob->status_id;
+
+                    $statusDB   = AssignmentsStatus::find($nojob->status_id);
+
+                    $this->notes()->create([
+                        'text'         => "### CHANGE STATUS TO: $statusDB->name ### PLEASE BILL TRIP CHARGE",
+                        'notable_id'   => $assignmentId,
+                        'created_by'   => $employeeId,
+                        'type'         => 'assignment',
+                        'notable_type' => Modules\Assignments\Entities\Assignment::class,
+                    ]);
+                }
+
+            } else {
+                $text = '';
+                $statusDB   = AssignmentsStatus::find($nojob->status_id);
+
+                $this->notes()->create([
+                    'text'         => "### CHANGE STATUS TO: $statusDB->name ### $nojob->text",
+                    'notable_id'   => $assignmentId,
+                    'created_by'   => $employeeId,
+                    'type'         => 'assignment',
+                    'notable_type' => Modules\Assignments\Entities\Assignment::class,
+                ]);
+            }
+
+
+        }
 
         return [
-            'status_id' => $status->id,
+            'status_id' => $statusId,
         ];
     }
 
@@ -74,22 +128,22 @@ class AssignmentRepository extends Assignment {
                 }
                 $count ++;
             }
-        }else{
+        } else {
             $info_phones = NULL;
         }
-        $notes="";
+        $notes = "";
 
-        $notesTech = Note::where('notable_id', $this->id)->where('type','tech')->get();
+        $notesTech = Note::where('notable_id', $this->id)->where('type', 'tech')->get();
 
-                    if(count($notesTech) > 0){
-                        foreach ($notesTech as $nota){
-                            $user=$nota->user->name;
-                            $notes=$notes."$nota->text - ($user - $nota->created_datetime)\n";
-                        }
-                    }
+        if ( count($notesTech) > 0 ) {
+            foreach ( $notesTech as $nota ) {
+                $user  = $nota->user->name;
+                $notes = $notes . "$nota->text - ($user - $nota->created_datetime)\n";
+            }
+        }
 
         $count_auth = count($this->authorizations);
-        $count_auth= 1;
+        $count_auth = 1;
         $event      = "";
         if ( $this->event ) {
             $event = $this->event->name;
@@ -106,7 +160,7 @@ class AssignmentRepository extends Assignment {
             break;
         }
 
-        $tags = !empty($this->tags) ? collect($this->tags)->pluck('name')->all() : null;
+        $tags = !empty($this->tags) ? collect($this->tags)->pluck('name')->all() : NULL;
 
         $firebase = [
             'job_id'               => $this->id,
