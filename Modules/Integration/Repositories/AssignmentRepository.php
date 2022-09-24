@@ -50,7 +50,7 @@ class AssignmentRepository extends Assignment {
                     'notable_id'   => $assignment->id,
                     'created_by'   => $employeeId,
                     'type'         => 'no_job',
-                    'notable_type' => Modules\Assignments\Entities\Assignment::class,
+                    'notable_type' => 'Modules\Assignments\Entities\Assignment',
                 ]);
 
 
@@ -66,7 +66,7 @@ class AssignmentRepository extends Assignment {
                         'notable_id'   => $assignment->id,
                         'created_by'   => $employeeId,
                         'type'         => 'assignment',
-                        'notable_type' => Modules\Assignments\Entities\Assignment::class,
+                        'notable_type' => 'Modules\Assignments\Entities\Assignment',
                     ]);
                 }
 
@@ -79,7 +79,7 @@ class AssignmentRepository extends Assignment {
                     'notable_id'   => $assignment->id,
                     'created_by'   => $employeeId,
                     'type'         => 'assignment',
-                    'notable_type' => Modules\Assignments\Entities\Assignment::class,
+                    'notable_type' => 'Modules\Assignments\Entities\Assignment',
                 ]);
             }
 
