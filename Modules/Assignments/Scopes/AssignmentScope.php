@@ -30,11 +30,27 @@ trait AssignmentScope {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
 
     }
+    public function scopeNojobs (Builder $query, $status = [8])
+    {
+
+        return $query->whereIn('status_id', collect($status))->whereNotNull('id');
+
+    }
 
     public function scopeMessages (Builder $query, $status = [1])
     {
 
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
+
+    }
+    public function scopeTextJobs (Builder $query, $date, $status = [2])
+    {
+        return $query
+            ->with('scheduling')
+            ->whereHas('scheduling', function (Builder $q) use ($date) {
+                $q->whereDate('start_date', $date);
+            })->whereIn('status_id', collect($status))->whereNotNull('id');
+
 
     }
 

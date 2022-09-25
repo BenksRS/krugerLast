@@ -46,11 +46,12 @@ class Schedulle extends Component
     public $originAddress;
     public $statusList;
 
-    public $checklist = [1 => TRUE, 11 => TRUE, 12 => TRUE, 17 => TRUE];
+    public $checklist = [1 => TRUE, 11 => TRUE, 12 => TRUE, 17 => TRUE, 27 => false, 28 => false,  14 => false, 29 => false];
 
 
     public function mount(){
 
+//        dd($this->getChecklist(true));
         $this->techs = Techs::with('user')->where('active','Y')->whereNotIn('id',[73])->orderBy('order')->get();
         $this->date = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now())->format('Y-m-d');
         $this->dateDisplay = Carbon::createFromFormat('Y-m-d', $this->date)->format('F d, Y');
@@ -66,6 +67,24 @@ class Schedulle extends Component
 ////        dd($this->originAddress);
 
     }
+    public function updated($field)
+    {
+
+       switch ($field){
+           case 'checklist.1':
+           case 'checklist.11':
+           case 'checklist.12':
+           case 'checklist.17':
+           case 'checklist.27':
+           case 'checklist.28':
+           case 'checklist.14':
+           case 'checklist.29':
+              $this->checkFilter();
+               break;
+           default:
+               break;
+       }
+    }
 
     protected function getChecklist ($filter = FALSE)
     {
@@ -73,6 +92,10 @@ class Schedulle extends Component
     }
     public function toogleSystem(){
         $this->showSystem = !$this->showSystem;
+        $this->getOpenJobsCity();
+        $this->getSystemJobsCity();
+    }
+    public function checkFilter(){
         $this->getOpenJobsCity();
         $this->getSystemJobsCity();
     }
@@ -88,7 +111,8 @@ class Schedulle extends Component
         $this->getSystemJobsCity();
     }
     public function getOpenJobsCity (){
-        $jobs = AssignmentRepository::whereIn('status_id',$this->getChecklist(TRUE))->get();
+        $jobs = AssignmentRepository::whereIn('status_id',$this->getChecklist(true))->get();
+
 
         $this->totalJobs=count($jobs);
         $jobsbyState=$jobs->groupBy('state');

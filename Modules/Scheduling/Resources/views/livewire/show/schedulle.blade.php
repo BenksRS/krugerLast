@@ -48,10 +48,10 @@
                                 </script>
                             @endif
                         </div>
-                        <div class="col-lg-3"></div>
-                        <dic class="col-lg-2 float-end" >
-                            @foreach($statusList as $data)
-                                <div class="form-check form-check-inline user-select-none" wire:key="check-status-{{ $data->id }}">
+                        <div class="col-lg-2"></div>
+                        <dic class="col-lg-3 float-end" >
+                            @foreach($statusList->sortby('ordem') as $data)
+                                <div class="form-check form-check-inline user-select-none font" wire:key="check-status-{{ $data->id }}">
                                     <input class="form-check-input" type="checkbox" id="check-status-{{ $data->id }}" wire:model="checklist.{{ $data->id }}">
                                     <label class="form-check-label" for="check-status-{{ $data->id }}">
                                         <div class="{{ $data->class }} badge rounded-pill text-uppercase">

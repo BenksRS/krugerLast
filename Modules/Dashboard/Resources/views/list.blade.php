@@ -31,6 +31,11 @@
         @break
         @case('request_docusign')
         @livewire('dashboard::list.request-docsign', key('dash_list_request_docusign'))
+        @case('nojobs')
+        @livewire('dashboard::list.nojobs', key('dash_list_request_nojobs'))
+        @break
+        @case('schedulled')
+        @livewire('dashboard::list.schedulled', key('dash_list_request_schedulled'))
         @break
         @case('docusign_sent')
         @livewire('dashboard::list.docsign-sent', key('dash_list_docsign-sent'))
