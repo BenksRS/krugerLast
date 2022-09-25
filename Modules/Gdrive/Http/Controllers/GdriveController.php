@@ -164,6 +164,8 @@ class GdriveController extends Controller
             }
         }
 
+        QueeDir::where('status', 'complete')->delete();
+
     }
 
     public function pdfs_auth($id){
