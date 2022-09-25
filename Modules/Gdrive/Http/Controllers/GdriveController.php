@@ -163,7 +163,7 @@ class GdriveController extends Controller
                 $this->create($queue->assignment_id);
             }
         }
-        
+
 
     }
 

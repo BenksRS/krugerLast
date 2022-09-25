@@ -21,7 +21,7 @@
 
     @switch($type)
         @case('open')
-            @livewire('dashboard::list.open', key('dash_list_open'))
+        @livewire('dashboard::list.open', key('dash_list_open'))
         @break
         @case('message')
         @livewire('dashboard::list.messages', key('dash_list_message'))
@@ -31,6 +31,7 @@
         @break
         @case('request_docusign')
         @livewire('dashboard::list.request-docsign', key('dash_list_request_docusign'))
+        @break
         @case('nojobs')
         @livewire('dashboard::list.nojobs', key('dash_list_request_nojobs'))
         @break
@@ -41,10 +42,10 @@
         @livewire('dashboard::list.docsign-sent', key('dash_list_docsign-sent'))
         @break
         @case('readytobill')
-            @livewire('dashboard::list.readytobill', key('dash_list_readytobill'))
+        @livewire('dashboard::list.readytobill', key('dash_list_readytobill'))
         @break
         @case('collection')
-            @livewire('dashboard::list.collection', key('dash_list_collection'))
+        @livewire('dashboard::list.collection', key('dash_list_collection'))
         @break
         @case('takeactions')
         @livewire('dashboard::list.take-actions', key('dash_list_take_actions'))
