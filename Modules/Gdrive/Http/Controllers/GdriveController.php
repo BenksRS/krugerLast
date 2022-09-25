@@ -163,8 +163,7 @@ class GdriveController extends Controller
                 $this->create($queue->assignment_id);
             }
         }
-
-        QueeDir::where('status', 'complete')->delete();
+        
 
     }
 
