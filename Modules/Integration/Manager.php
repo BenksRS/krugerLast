@@ -96,7 +96,8 @@ class Manager {
                                 $model->create($resources);
                             break;
                             case 'local.update':
-                                if ( isset($rules) ) {
+
+                                if ( !empty($rules) ) {
                                     foreach ( $rules[$event] as $rule => $status ) {
                                         if ( in_array($dot[$rule], $status) ) {
                                             $model->find($item['job_id'])->update($resources);
@@ -112,7 +113,18 @@ class Manager {
                                 }
                             break;
                             case 'remote.delete':
-                                $reference->getChild($key)->remove();
+
+                                if ( !empty($rules) ) {
+                                    foreach ( $rules[$event] as $rule => $status ) {
+                                        if ( in_array($dot[$rule], $status) ) {
+                                            $reference->getChild($key)->remove();
+                                        }
+                                    }
+                                } else {
+                                    $reference->getChild($key)->remove();
+                                }
+
+
                             break;
                         }
                     }
