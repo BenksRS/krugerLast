@@ -43,7 +43,7 @@ class Billing extends Component
             'days_from_scheduling_lien' => $this->days_from_scheduling_lien,
             'description' => $this->description
         ];
-        $this->referralBilling->update($update);
+        ReferralBilling::where('referral_id',$this->referral->id)->update($update);
         $this->referralBilling = ReferralBilling::where('referral_id',$this->referral->id)->first();
         $this->showBilling = !$this->showBilling;
     }
