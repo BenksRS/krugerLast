@@ -183,6 +183,7 @@
                                                 <li><button class="dropdown-item" wire:click="setPreStatus(7)"  type="button">CLOSED</button></li>
                                                 <li><button class="dropdown-item" wire:click="setPreStatus(26)" type="button">NO CHARGE</button></li>
                                                 <li><button class="dropdown-item" wire:click="setPreStatus(8)"  type="button">NO JOB</button></li>
+                                                <li><button class="dropdown-item" wire:click="changeStatus(30)"  type="button">LANDLINE</button></li>
                                             </ul>
                                         </div>
 

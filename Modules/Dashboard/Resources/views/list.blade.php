@@ -56,6 +56,9 @@
         @case('revisebill')
         @livewire('dashboard::list.revisebill', key('dash_list_followup'))
         @break
+        @case('landline')
+        @livewire('dashboard::list.landline', key('dash_list_landline'))
+        @break
         @default
         <h3>OPPSSSS!!!! No list found!! </h3>
     @endswitch

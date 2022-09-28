@@ -92,6 +92,12 @@ trait AssignmentScope {
     {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
+    public function scopeLandline (Builder $query, $status = [30])
+    {
+
+        return $query->whereIn('status_id', collect($status))->whereNotNull('id');
+
+    }
     public function scopeDateSchedulled (Builder $query, $date_from, $date_to, $tech_id=null, $job_type=null)
     {
         return $query
