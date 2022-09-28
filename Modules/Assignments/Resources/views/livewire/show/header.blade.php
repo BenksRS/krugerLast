@@ -167,6 +167,7 @@
                                                 <i class="bx bx-dots-horizontal align-middle"></i>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-lg-end">
+                                                <li><button class="dropdown-item" wire:click="changeStatusScheduling(1)"  type="button">OPEN</button></li>
                                                 <li><button class="dropdown-item" wire:click="setPreStatus(11)" type="button">OPEN RESCHEDULE</button></li>
                                                 <li><button class="dropdown-item" wire:click="setPreStatus(12)" type="button">PENDING</button></li>
 
@@ -175,7 +176,7 @@
                                                 <li><button class="dropdown-item" wire:click="changeStatus(14)"  type="button">DOCUSIGN SENT</button></li>
                                                 <li><button class="dropdown-item" wire:click="changeStatus(17)"  type="button">READY TO INSTALL</button></li>
                                                 @if($assignment->scheduling)
-                                                    <li><button class="dropdown-item" wire:click="changeStatus(27)"  type="button">LATE</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(27)"  type="button">LATE</button></li>
                                                 @endif
                                                 <li><button class="dropdown-item" wire:click="changeStatus(20)" type="button">UPLOADING PICS</button></li>
                                                 <li><button class="dropdown-item" wire:click="changeStatus(4)"  @if(!isset($assignment->scheduling)) disabled @endif type="button">READY TO BILL @if(!isset($assignment->scheduling))  <i class="bx bx-time-five"></i> (MISSING SCHEDULED DATE) @endif   </button></li>
