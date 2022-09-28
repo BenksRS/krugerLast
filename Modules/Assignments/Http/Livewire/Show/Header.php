@@ -181,7 +181,10 @@ class Header extends Component
             }
 
             $this->assignment->update($update_status);
-            $this->assignment->scheduling->delete();
+
+            if($this->assignment->scheduling) {
+                $this->assignment->scheduling->delete();
+            }
 
             $this->assignment = AssignmentFinanceRepository::find($this->assignment->id);
 
