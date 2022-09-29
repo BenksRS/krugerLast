@@ -35,6 +35,7 @@ class Schedulle extends Component
     public $showSystem=false;
     public $openJobsCity;
     public $systemJobsCity;
+    public $newJobsCity;
     public $totalJobs;
     public $user;
     public $jobRoute;
@@ -70,20 +71,20 @@ class Schedulle extends Component
     public function updated($field)
     {
 
-       switch ($field){
-           case 'checklist.1':
-           case 'checklist.11':
-           case 'checklist.12':
-           case 'checklist.17':
-           case 'checklist.27':
-           case 'checklist.28':
-           case 'checklist.14':
-           case 'checklist.29':
-              $this->checkFilter();
-               break;
-           default:
-               break;
-       }
+        switch ($field){
+            case 'checklist.1':
+            case 'checklist.11':
+            case 'checklist.12':
+            case 'checklist.17':
+            case 'checklist.27':
+            case 'checklist.28':
+            case 'checklist.14':
+            case 'checklist.29':
+                $this->checkFilter();
+                break;
+            default:
+                break;
+        }
     }
 
     protected function getChecklist ($filter = FALSE)
@@ -119,43 +120,43 @@ class Schedulle extends Component
 
         if(count($jobsbyState) > 0){
 
-        foreach ($jobsbyState as $state => $jobsState){
+            foreach ($jobsbyState as $state => $jobsState){
 
-            foreach ($jobsState->groupBy('city') as $city => $jobs){
+                foreach ($jobsState->groupBy('city') as $city => $jobs){
 //                dd($jobs);
-                $total= count($jobs);
-                $destination="$city, $state, US";
-                $label="$state - $city";
+                    $total= count($jobs);
+                    $destination="$city, $state, US";
+                    $label="$state - $city";
 
 
 //                dd($this->originAddress);
-                if($this->originAddress){
+                    if($this->originAddress){
 
-                    $milhas = $this->getMiles($this->originAddress, $destination);
-                    $milhas_text=$milhas->text;
-                    $milhas_value=$milhas->value;
+                        $milhas = $this->getMiles($this->originAddress, $destination);
+                        $milhas_text=$milhas->text;
+                        $milhas_value=$milhas->value;
 //
 //                    $milhas_text='-';
 //                    $milhas_value=0;
-                }else{
-                                $milhas_text='-';
-                                $milhas_value=0;
-                }
+                    }else{
+                        $milhas_text='-';
+                        $milhas_value=0;
+                    }
 
-                $slug=strtolower(str_replace(' ', '',$label));
-                $slug=strtolower(str_replace(',', '',$slug));
-                $coll[]=(object)[
-                    'id' => rand(1,10000000),
-                    'total' => $total,
-                    'slug' => $slug,
+                    $slug=strtolower(str_replace(' ', '',$label));
+                    $slug=strtolower(str_replace(',', '',$slug));
+                    $coll[]=(object)[
+                        'id' => rand(1,10000000),
+                        'total' => $total,
+                        'slug' => $slug,
 //                    'jobs' => $jobs,
-                    'label' => $label,
-                    'city' => $city,
-                    'state' => $state,
-                    'milhas' => $milhas_text,
-                    'order' =>$milhas_value
-                ];
-            }
+                        'label' => $label,
+                        'city' => $city,
+                        'state' => $state,
+                        'milhas' => $milhas_text,
+                        'order' =>$milhas_value
+                    ];
+                }
             }
             $coll=collect($coll);
         }else {
@@ -221,6 +222,61 @@ class Schedulle extends Component
 
         $this->systemJobsCity = $coll;
     }
+    public function getNewJobs(){
+        $jobs = AssignmentRepository::whereIn('status_id',$this->getChecklist(true))->get();
+
+//        dd($jobs);
+
+        $this->totalJobs=count($jobs);
+        $jobsbyState=$jobs->groupBy('state');
+
+        if(count($jobsbyState) > 0){
+
+            foreach ($jobsbyState as $state => $jobsState){
+
+                foreach ($jobsState->groupBy('city') as $city => $jobs){
+//                dd($jobs);
+                    $total= count($jobs);
+                    $destination="$city, $state, US";
+                    $label="$state - $city";
+
+
+//                dd($this->originAddress);
+                    if($this->originAddress){
+
+                        $milhas = $this->getMiles($this->originAddress, $destination);
+                        $milhas_text=$milhas->text;
+                        $milhas_value=$milhas->value;
+//
+//                    $milhas_text='-';
+//                    $milhas_value=0;
+                    }else{
+                        $milhas_text='-';
+                        $milhas_value=0;
+                    }
+
+                    $slug=strtolower(str_replace(' ', '',$label));
+                    $slug=strtolower(str_replace(',', '',$slug));
+                    $coll[]=(object)[
+                        'id' => rand(1,10000000),
+                        'total' => $total,
+                        'slug' => $slug,
+//                    'jobs' => $jobs,
+                        'label' => $label,
+                        'city' => $city,
+                        'state' => $state,
+                        'milhas' => $milhas_text,
+                        'order' =>$milhas_value
+                    ];
+                }
+            }
+            $coll=collect($coll);
+        }else {
+            $coll = [];
+        }
+
+        $this->newJobsCity = $coll;
+    }
     public function getReferralName ($referral,$carrier){
 
 
@@ -247,9 +303,50 @@ class Schedulle extends Component
 //dd("$this->originAddress, $job->originAddress");
                 $destination=sprintf("%s, %s, %s %s", ucwords(strtolower($job->street)), ucwords(strtolower($job->city)), $job->state, $job->zipcode);
 
-                    $milhas = $this->getMiles($this->originAddress, $destination);
-                    $milhas_text=$milhas->text;
-                    $milhas_value=$milhas->value;
+                $milhas = $this->getMiles($this->originAddress, $destination);
+                $milhas_text=$milhas->text;
+                $milhas_value=$milhas->value;
+
+
+//                $milhas_text='-';
+//                $milhas_value=0;
+
+
+                $coll[]=(object)[
+                    'id' => $job->id,
+                    'job' => $job,
+                    'destination' => $job->originAddress,
+                    'milhas' => $milhas_text,
+                    'order' => $milhas_value
+                ];
+            }
+
+            $coll=collect($coll);
+
+        }else{
+            $coll=[];
+        }
+
+
+
+
+
+        return $coll;
+
+    }
+    public function getNewOpenJobs (){
+//dd($city - $state);
+        $jobs = Assignment::with(['status','referral','carrier','phones'])
+            ->whereIn('status_id',$this->getChecklist(TRUE))
+            ->get();
+        if(count($jobs) > 0){
+            foreach ($jobs as $job){
+//dd("$this->originAddress, $job->originAddress");
+                $destination=sprintf("%s, %s, %s %s", ucwords(strtolower($job->street)), ucwords(strtolower($job->city)), $job->state, $job->zipcode);
+
+                $milhas = $this->getMiles($this->originAddress, $destination);
+                $milhas_text=$milhas->text;
+                $milhas_value=$milhas->value;
 
 
 //                $milhas_text='-';
@@ -438,12 +535,12 @@ class Schedulle extends Component
 
                     $jobSched = AssignmentsScheduling::where('assignment_id',$assignment_id)->first();
 
-                   if($jobSched){
-                       if($jobSched->tech_id == 73){
-                           $start_date = $jobSched->start_date;
+                    if($jobSched){
+                        if($jobSched->tech_id == 73){
+                            $start_date = $jobSched->start_date;
 
-                       }
-                   }
+                        }
+                    }
 
 
 //                    $end_date = new \DateTime($start_date); //now
@@ -540,12 +637,12 @@ class Schedulle extends Component
                             $message_error= "<b>ERROR #$assignment_id</b> - This Technician already have a job at this time!";
                         }
                     }
-                         if($message_error){
-                             session()->flash('schederror' ,[
-                                 'class' => 'danger',
-                                 'message' => $message_error
-                             ]);
-                         }
+                    if($message_error){
+                        session()->flash('schederror' ,[
+                            'class' => 'danger',
+                            'message' => $message_error
+                        ]);
+                    }
                     if($message){
                         session()->flash('schedupdate' ,[
                             'class' => 'success',
@@ -666,6 +763,7 @@ class Schedulle extends Component
             'list_schedulleds' => $this->schedulled,
             'list_openJobsCity' => $this->openJobsCity,
             'list_systemCity' => $this->systemJobsCity,
+            'list_newJobs' => $this->newJobsCity,
         ]);
     }
 }
