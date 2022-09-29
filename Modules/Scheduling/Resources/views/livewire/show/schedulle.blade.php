@@ -193,41 +193,17 @@
                 <div class="total_jobs {{$showSystem == true ? 'hide' : '' }}">
                     <button type="button" class="btn btn-sm btn-primary  waves-effect waves-light  me-2 float-start" wire:click.prevent="toogleSystem"> <i class="bx bx-loader-circle font-size-16 align-middle "></i> SystemJobs</button>        Total Jobs({{$this->totalJobs}}) <br>
 
-                    <div class="float-end mb-2">
-                        @if($this->filter)
-                            <span class="badge badge-soft-primary"> {{$this->filter}}</span> <a href="#" style="font-size: 9px" wire:click="$emit('nullFilter')">Remove</a>
-                        @endif
-                    </div>
+
                     <hr>
                     <div class="jobsOpen"  wire:key="openjobs" wire:sortable-group.item-group="openJobs" >
-                        <div class="accordion accordion-flush" id="accordionCitys" >
 
 
-                            @if(count($list_openJobsCity) > 0)
-                                <?php  $id=1;?>
-                                <div wire:loading>
-                                    <div class="spinner-border text-primary col-lg-12" role="status">
-                                    </div>
-                                </div>
-                                <div wire:loading.remove>
-                                    @foreach($list_openJobsCity->sortBy('order') as $groupCity)
-                                        <?php  $scroll=($id*49)-49; $id++;?>
-                                        <div class="accordion-item {{($this->filter==$groupCity->label) ? ' moveup' : ' '}}" data-move="{{$scroll}}">
 
-                                            <h2 class="accordion-header" id="flush-heading-{{$groupCity->slug}}">
-                                                <button  class="accordion-button fw-medium {{($this->filter==$groupCity->label) ? ' ' : ' collapsed'}}" type="button"  data-bs-toggle="collapse" data-bs-target="#flush-collapse-{{$groupCity->slug}}" aria-expanded="true" aria-controls="flush-collapse-{{$groupCity->slug}}"  wire:click="$emit('setFilter','{{$groupCity->label}}')">
-                                                    <span style="font-size: 10px;">{{$groupCity->label}} ({{$groupCity->total}}) - {{$groupCity->milhas}}</span>
-                                                </button>
-                                            </h2>
-                                            <div id="flush-collapse-{{$groupCity->slug}}"  class="accordion-collapse collapse {{($this->filter==$groupCity->label) ? ' show' : ' '}}"  aria-labelledby="flush-heading-{{$groupCity->slug}}" data-bs-parent="#accordionCitys">
-                                                <div class="accordion-body text-muted">
-                                                    <div wire:loading>
-                                                        <div class="spinner-border text-primary col-lg-12" role="status">
-                                                        </div>
-                                                    </div>
-                                                    @if($this->filter==$groupCity->label)
+
+
+
                                                         <?php
-                                                        $insideJobs=$this->getOpenJobs($groupCity->city,$groupCity->state);
+                                                        $insideJobs=$this->getNewOpenJobs();
                                                         ?>
 
 
@@ -286,18 +262,10 @@
 
                                                         @endif
 
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                    @endforeach
-                                </div>
-                            @endif
-                        </div>
-                        <div style="height: 800px">
+                           
 
-                        </div>
+
                     </div>
                 </div>
 
