@@ -161,6 +161,38 @@ class Header extends Component
             $this->emit('updateScheduling');
         }
     }
+
+    public function changeStatusScheduling($newStatus){
+        $this->preStatus = null;
+        if($this->assignment->status_id != $newStatus){
+            AssignmentsStatusPivot::create([
+                'assignment_id'=> $this->assignment->id,
+                'assignment_status_id'=> $newStatus,
+                'created_by'=> 73,
+            ]);
+            $update_status=[
+                'status_id'  => $newStatus,
+                'updated_by'  => $this->user->id,
+            ];
+
+            $status_collection=array(5,6);
+            if(in_array($newStatus, $status_collection)){
+                $update_status['status_collection_id']=$newStatus;
+            }
+
+            $this->assignment->update($update_status);
+
+            if($this->assignment->scheduling) {
+                $this->assignment->scheduling->delete();
+            }
+
+            $this->assignment = AssignmentFinanceRepository::find($this->assignment->id);
+
+            integration('assignments')->set($this->assignment->id);
+            $this->emit('updateScheduling');
+        }
+    }
+
     public function processScheduling(){
         $this->assignment = Assignment::find($this->assignment->id);
         $this->historic = AssignmentsStatusPivot::where('assignment_id',$this->assignment->id)->get();

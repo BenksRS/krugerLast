@@ -23,7 +23,14 @@
                 <div class="card-body">
 
                         <div class="row">
-
+    
+                          <div class="col-md-12">
+                                <div class="form-check form-check-left mb-3">
+                                    <input class="form-check-input check_event" type="checkbox" id="event_id" wire:model="event_id" value="41">
+                                    <label class="form-check-label" for="event_id">HURRICANE IAN</label>
+                                </div>
+                            </div>
+                            
                             <div class="col-md-6">
                         <div class="mb-3">
                             <label for="formrow-firstname-input" class="form-label">First Name</label>

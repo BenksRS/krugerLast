@@ -89,7 +89,7 @@ class Search extends Component
             case 'referral':
                 switch ($this->filter_date){
                     case 'created':
-                        $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                        $this->list=AssignmentFinanceRepository::DateCreated($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                         break;
                     case 'schedulled':
                         $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();

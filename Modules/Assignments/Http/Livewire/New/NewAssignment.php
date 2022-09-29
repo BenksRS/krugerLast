@@ -31,6 +31,7 @@ class NewAssignment extends Component
     public $jbSelectedSingle;
     public $jobTypes;
 
+    public $event_id;
     public $first_name;
     public $last_name;
     public $street;
@@ -115,6 +116,7 @@ class NewAssignment extends Component
         $errors = $this->getErrorBag();
 
         $data=[
+            'event_id' => $this->event_id ?? null,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'street' => $this->street,

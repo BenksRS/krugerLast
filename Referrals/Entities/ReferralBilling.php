@@ -9,7 +9,13 @@ class ReferralBilling extends Model
 {
     use HasFactory;
     protected $table = 'referral_billing';
-    protected $fillable = [];
+    protected $fillable = [
+        'referral_id',
+        'days_from_billing',
+        'days_from_scheduling',
+        'days_from_scheduling_lien',
+        'description'
+    ];
 
     protected static function newFactory()
     {

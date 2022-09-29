@@ -92,6 +92,12 @@ trait AssignmentScope {
     {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
+    public function scopeLandline (Builder $query, $status = [30])
+    {
+
+        return $query->whereIn('status_id', collect($status))->whereNotNull('id');
+
+    }
     public function scopeDateSchedulled (Builder $query, $date_from, $date_to, $tech_id=null, $job_type=null)
     {
         return $query
@@ -171,6 +177,24 @@ trait AssignmentScope {
                 if($tech_id != null){
                     $q->where('tech_id','=', $tech_id);
                 }
+            });
+    }
+
+    public function scopeDateCreated (Builder $query, $date_from, $date_to, $tech_id=null, $job_type=null)
+    {
+        return $query
+            ->with('job_types')
+            ->whereHas('job_types', function (Builder $q) use ($job_type) {
+                if($job_type != null) {
+                    $q->whereIn('assignment_job_type_id', [$job_type]);
+                }
+            })
+            ->when($date_from, function (Builder $q, $date_from){
+                $q->whereDate('created_at','>=', $date_from);
+            })
+
+            ->when($date_to, function (Builder $q, $date_to) {
+                $q->whereDate('created_at','<=', $date_to);
             });
     }
 
