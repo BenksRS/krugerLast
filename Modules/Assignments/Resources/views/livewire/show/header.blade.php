@@ -171,6 +171,10 @@
                                                 <li><button class="dropdown-item" wire:click="setPreStatus(11)" type="button">OPEN RESCHEDULE</button></li>
                                                 <li><button class="dropdown-item" wire:click="setPreStatus(12)" type="button">PENDING</button></li>
 
+                                                @if($assignment->status->id == 4)
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(3)" type="button">IN PROGRESS</button></li>
+                                                @endif
+                                                
                                                 <li><button class="dropdown-item" wire:click="changeStatus(28)" type="button">MESSAGE SENT</button></li>
                                                 <li><button class="dropdown-item" wire:click="changeStatus(29)" type="button">REQUEST DOCUSIGN</button></li>
                                                 <li><button class="dropdown-item" wire:click="changeStatus(14)"  type="button">DOCUSIGN SENT</button></li>
