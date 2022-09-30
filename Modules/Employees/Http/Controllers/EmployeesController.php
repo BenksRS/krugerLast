@@ -605,7 +605,7 @@ class EmployeesController extends Controller
 
         foreach ($rulles as $rulle) {
 //            dd('aqui');
-            $check_start_date = ($assignment->scheduling->start_date > $rulle->start_date) ? TRUE : FALSE;
+            $check_start_date = (!empty($assignment->scheduling->start_date) && ($assignment->scheduling->start_date > $rulle->start_date)) ? TRUE : FALSE;
             if (is_null($rulle->end_date)) {
                 $check_end_date = TRUE;
             } else {
