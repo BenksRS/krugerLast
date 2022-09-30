@@ -177,7 +177,7 @@ class AssignmentRepository extends Assignment {
             break;
         }
 
-        $tags = !empty($this->tags) ? collect($this->tags)->pluck('name')->all() : NULL;
+        $tags = !empty($this->tags) ? collect($this->tags)->pluck('name')->unique()->values()->all() : NULL;
 
         $firebase = [
             'job_id'               => $this->id,
