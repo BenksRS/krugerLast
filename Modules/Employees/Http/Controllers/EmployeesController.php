@@ -939,7 +939,7 @@ class EmployeesController extends Controller
                         // aply rulles
                         foreach ($rulles_comission as $rule) {
 
-                            $check_start_date = ($assignment->scheduling->start_date > $rule->start_date) ? TRUE : FALSE;
+                            $check_start_date = (!empty($rule->start_date) && ($assignment->scheduling->start_date > $rule->start_date)) ? TRUE : FALSE;
 
                             if (is_null($rule->end_date)) {
                                 $check_end_date = TRUE;
