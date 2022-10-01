@@ -32,7 +32,7 @@ class AssignmentRepository extends Assignment {
     public function setData ($data)
     {
         $assignmentId = $data['job_id'];
-        $employeeId   = $data['employee_id'];
+        $employeeId   = $data['employee_id'] ?? 73;
 
         $status   = AssignmentsStatus::where('name', $data['status']['new'])->first();
         $statusId = $status->id;
