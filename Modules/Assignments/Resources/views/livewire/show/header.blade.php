@@ -179,7 +179,7 @@
                                                 <li><button class="dropdown-item" wire:click="changeStatus(29)" type="button">REQUEST DOCUSIGN</button></li>
                                                 <li><button class="dropdown-item" wire:click="changeStatus(14)"  type="button">DOCUSIGN SENT</button></li>
                                                 <li><button class="dropdown-item" wire:click="changeStatus(17)"  type="button">READY TO INSTALL</button></li>
-                                                @if($assignment->scheduling)
+                                                @if($assignment->scheduling || in_array($assignment->status->id,[28, 17]))
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(27)"  type="button">LATE</button></li>
                                                 @endif
                                                 <li><button class="dropdown-item" wire:click="changeStatus(20)" type="button">UPLOADING PICS</button></li>
