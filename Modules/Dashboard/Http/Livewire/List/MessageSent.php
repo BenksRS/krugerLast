@@ -7,7 +7,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Modules\Assignments\Repositories\AssignmentRepository;
 
-class Late extends Component
+class MessageSent extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -29,7 +29,7 @@ class Late extends Component
     public function render()
     {
         $searchAssignment = $this->searchAssignment;
-        $list = AssignmentRepository::late()->search($searchAssignment)->get();
+        $list = AssignmentRepository::messageSent()->search($searchAssignment)->get();
 
         $list=$list->sortBy('start_date')->sortBy('order_status');
 
@@ -37,7 +37,7 @@ class Late extends Component
 
         $list = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
 
-        return view('dashboard::livewire.list.late', [
+        return view('dashboard::livewire.list.message_sent', [
             'list' =>$list
         ]);
 
