@@ -76,6 +76,11 @@ trait AssignmentScope {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
 
+    public function scopeThig (Builder $query, $status = [31])
+    {
+        return $query->whereIn('status_id', collect($status))->whereNotNull('id');
+    }
+
     public function scopeTextJobs (Builder $query, $date, $status = [2])
     {
         return $query

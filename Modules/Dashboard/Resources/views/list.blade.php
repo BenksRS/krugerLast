@@ -62,6 +62,9 @@
         @case('landline')
         @livewire('dashboard::list.landline', key('dash_list_landline'))
         @break
+        @case('thig')
+        @livewire('dashboard::list.thig', key('dash_list_thig'))
+        @break
         @default
         <h3>OPPSSSS!!!! No list found!! </h3>
     @endswitch
