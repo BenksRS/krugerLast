@@ -280,7 +280,7 @@
 
                                     @foreach($list_systemCity->sortBy('order') as $groupCity)
                                                         <?php
-                                                        $insideJobs=$this->getSystemJobs($groupCity->city,$groupCity->state);
+                                                        $insideJobs=$this->getSystemJobs($groupCity->city ?? '',$groupCity->state ?? '');
                                                         ?>
 
 
