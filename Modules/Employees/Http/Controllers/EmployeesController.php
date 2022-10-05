@@ -550,7 +550,7 @@ class EmployeesController extends Controller
             if (is_null($f_rulle->end_date)) {
                 $check_end_date = TRUE;
             } else {
-                $check_end_date = ($f_rulle->end_date >= $assignment->scheduling->start_date) ? TRUE : FALSE;
+                $check_end_date = (!empty($assignment->scheduling->start_date) && ($f_rulle->end_date >= $assignment->scheduling->start_date)) ? TRUE : FALSE;
             }
 
             if ($check_start_date === TRUE && $check_end_date === TRUE) {
@@ -580,7 +580,7 @@ class EmployeesController extends Controller
             if (is_null($rulle->end_date)) {
                 $check_end_date = TRUE;
             } else {
-                $check_end_date = ($rulle->end_date >= $assignment->scheduling->start_date) ? TRUE : FALSE;
+                $check_end_date = (!empty($assignment->scheduling->start_date) && ($rulle->end_date >= $assignment->scheduling->start_date)) ? TRUE : FALSE;
             }
 
             if ($check_start_date === TRUE && $check_end_date === TRUE) {
@@ -609,7 +609,7 @@ class EmployeesController extends Controller
             if (is_null($rulle->end_date)) {
                 $check_end_date = TRUE;
             } else {
-                $check_end_date = ($rulle->end_date >= $assignment->scheduling->start_date) ? TRUE : FALSE;
+                $check_end_date = (!empty($assignment->scheduling->start_date) && ($rulle->end_date >= $assignment->scheduling->start_date)) ? TRUE : FALSE;
             }
 
             if ($check_start_date === TRUE && $check_end_date === TRUE) {
@@ -944,7 +944,7 @@ class EmployeesController extends Controller
                             if (is_null($rule->end_date)) {
                                 $check_end_date = TRUE;
                             } else {
-                                $check_end_date = ($rule->end_date >= $assignment->scheduling->start_date) ? TRUE : FALSE;
+                                $check_end_date = (!empty($assignment->scheduling->start_date) && ($rule->end_date >= $assignment->scheduling->start_date)) ? TRUE : FALSE;
                             }
                             if ($check_start_date === TRUE && $check_end_date === TRUE) {
                                 $this->apply_comission_rule($rule->id, $id, $jobtype->assignment_job_type_id);
