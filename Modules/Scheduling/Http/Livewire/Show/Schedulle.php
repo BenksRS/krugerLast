@@ -47,7 +47,7 @@ class Schedulle extends Component
     public $originAddress;
     public $statusList;
 
-    public $checklist = [1 => TRUE, 11 => TRUE, 12 => TRUE, 17 => TRUE, 27 => false, 28 => false,  14 => false, 29 => false];
+    public $checklist = [1 => TRUE, 11 => TRUE, 12 => TRUE, 17 => TRUE, 27 => false, 28 => false,  14 => false, 29 => false, 31 => false];
 
 
     public function mount(){
