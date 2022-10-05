@@ -41,6 +41,9 @@
         @case('docusign_sent')
         @livewire('dashboard::list.docsign-sent', key('dash_list_docsign-sent'))
         @break
+        @case('message_sent')
+        @livewire('dashboard::list.message-sent', key('dash_list_message-sent'))
+        @break
         @case('readytobill')
         @livewire('dashboard::list.readytobill', key('dash_list_readytobill'))
         @break

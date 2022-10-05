@@ -37,7 +37,7 @@ class MessageSent extends Component
 
         $list = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
 
-        return view('dashboard::livewire.list.message_sent', [
+        return view('dashboard::livewire.list.message-sent', [
             'list' =>$list
         ]);
 

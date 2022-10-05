@@ -32,6 +32,11 @@ trait AssignmentScope {
 
     }
 
+    public function scopeMessageSent (Builder $query, $status = [28])
+    {
+        return $query->whereIn('status_id', collect($status))->whereNotNull('id');
+    }
+
     public function scopeNojobs (Builder $query, $status = [8])
     {
 
@@ -67,11 +72,6 @@ trait AssignmentScope {
     }
 
     public function scopeLate (Builder $query, $status = [27])
-    {
-        return $query->whereIn('status_id', collect($status))->whereNotNull('id');
-    }
-
-    public function scopeMessageSent (Builder $query, $status = [28])
     {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
