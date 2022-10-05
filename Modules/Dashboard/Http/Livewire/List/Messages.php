@@ -15,7 +15,7 @@ use Auth;
 
 class Messages extends Component
 {
-
+    use WithPagination;
 
     public $searchAssignment;
     public $columns = ['Name','Job Type','Schedule','Status','Referral','Address','Street','City','State', 'Phone', 'Created by', 'Created At', 'Update By','Update At'];
