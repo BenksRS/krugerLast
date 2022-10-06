@@ -65,6 +65,9 @@
 		@case('thig')
 			@livewire('dashboard::list.thig', key('dash_list_thig'))
 			@break
+		@case('univ')
+			@livewire('dashboard::list.univ', key('dash_list_univ'))
+			@break
 		@case('magic_message_sent')
 		@case('magic_docusign_sent')
 		@case('magic_ready_to_install')

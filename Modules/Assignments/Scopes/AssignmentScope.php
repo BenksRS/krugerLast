@@ -81,6 +81,11 @@ trait AssignmentScope {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
 
+    public function scopeUniv (Builder $query, $status = [32])
+    {
+        return $query->whereIn('status_id', collect($status))->whereNotNull('id');
+    }
+
     public function scopeTextJobs (Builder $query, $date, $status = [2])
     {
         return $query
