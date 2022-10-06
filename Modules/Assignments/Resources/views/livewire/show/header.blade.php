@@ -174,6 +174,7 @@
                                                 @if(in_array($assignment->status->id,[1, 27, 28]))
                                                     <li><button class="dropdown-item" wire:click="changeStatus(31)" type="button">THIG</button></li>
                                                 @endif
+                                                <li><button class="dropdown-item" wire:click="changeStatus(32)" type="button">UNIV</button></li>
                                                 
                                                 @if($assignment->status->id == 4)
                                                     <li><button class="dropdown-item" wire:click="changeStatus(3)" type="button">IN PROGRESS</button></li>
