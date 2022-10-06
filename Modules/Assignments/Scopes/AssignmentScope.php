@@ -126,7 +126,8 @@ trait AssignmentScope {
                     ->orWhere('state', 'like', '%' . $search . '%')
                     ->orWhere('zipcode', 'like', '%' . $search . '%')
                     ->orWhere('claim_number', 'like', '%' . $search . '%')
-                    ->orWhere->searchReferral($search);
+                    ->orWhere->searchReferral($search)
+                    ->orWhere->searchPhones($search);
             });
     }
 
@@ -139,6 +140,15 @@ trait AssignmentScope {
             })
             ->orWhereHas('carrier', function (Builder $q) use ($search) {
                 $q->where('company_entity', 'like', '%' . $search . '%');
+            });
+    }
+
+    public function scopeSearchPhones (Builder $query, $search)
+    {
+        return $query
+            ->with('phones')
+            ->whereHas('phones', function (Builder $q) use ($search) {
+                $q->where('phone', 'like', '%' . $search . '%');
             });
     }
 
