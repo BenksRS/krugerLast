@@ -125,7 +125,7 @@
 														<div class="row">
 															<div class="col-lg-12 blackfont">
 																#{{ $job_grid->assignment->id }}
-                                                                @if( !empty($job_grid->assignment->tags->toArray()) && in_array(11, $job_grid->assignment->tags->toArray()))
+                                                                @if( !empty($job_grid->assignment->tags->toArray()) && in_array(11, collect($job_grid->assignment->tags)->pluck('id')->all()))
                                                                     <div class="position-absolute top-0 end-0">
                                                                         <i class="bx bx-purchase-tag-alt" style="font-size: 20px;"></i>
                                                                     </div>
@@ -225,7 +225,7 @@
                                                 ?>
 											<div class="col-lg-12 blackfont" style="font-size: {{$fontsize}}px">
 												{{ $item->job->full_name }}
-												@if( !empty($item->job->tags->toArray()) && in_array(11, $item->job->tags->toArray()))
+												@if( !empty($item->job->tags->toArray()) && in_array(11, collect($item->job->tags)->pluck('id')->all()))
 													<div class="position-absolute top-0 end-0">
 														<i class="bx bx-purchase-tag-alt" style="font-size: 20px"></i>
 													</div>
