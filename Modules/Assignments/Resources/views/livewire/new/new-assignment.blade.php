@@ -347,13 +347,13 @@
     <hr>
     <div  class="col-lg-6 mt-5">
         <button class="btn btn-lg btn-primary m-2 " wire:click.prevent="addJob('next')"
-         {{(count($this->jbSelected) > 0 && isset($this->referralSelected) &&  isset($this->carrierSelected)) ? ' ': 'disabled'}}
+         {{(count($this->jbSelected) > 0 && isset($this->referralSelected) &&  isset($this->carrierSelected)) ? ' ': ''}}
 
                 type="submit"><i class="bx bx-save"></i> Next  </button>
     </div>
     <div  class="col-lg-6 mt-5">
         <button class="btn btn-lg btn-success m-2 " wire:click.prevent="addJob('open')"
-                {{(count($this->jbSelected) > 0 && isset($this->referralSelected) &&  isset($this->carrierSelected)) ? ' ': 'disabled'}}
+                {{(count($this->jbSelected) > 0 && isset($this->referralSelected) &&  isset($this->carrierSelected)) ? ' ': ''}}
                 type="submit"><i class="bx bx-save"></i> OPEN  </button>
     </div>
 
