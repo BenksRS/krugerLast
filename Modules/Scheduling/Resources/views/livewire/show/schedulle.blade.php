@@ -226,13 +226,14 @@
 											<div class="col-lg-12 blackfont" style="font-size: {{$fontsize}}px">
 												{{ $item->job->full_name }}
 												@if( !empty($item->job->tags->toArray()) && in_array(11, collect($item->job->tags)->pluck('id')->all()))
-													<div class="position-absolute top-0 end-0">
-														<i class="bx bx-purchase-tag-alt" style="font-size: 20px"></i>
+													<div class="position-absolute" style="top: -5px; right: 5px">
+														<i class="bx bx-purchase-tag-alt" style="font-size: 18px"></i>
 													</div>
 												@endif
 											</div>
 											
-											<div class="col-lg-12 whitefont mt-1" style="font-size: 9px">
+											<div class="col-lg-12 whitefont mt-1" style="font-size: 10px">
+												
                                                     <?php $countOpen = 0; ?>
 												@foreach($item->job->job_types as $job_types)
                                                         <?php $countOpen ++; ?>
@@ -242,6 +243,9 @@
 														{{" / $job_types->name"}}
 													@endif
 												@endforeach
+												<span class="float-end">
+													<i class="bx bx-calendar-alt"></i> {{$item->job->created_date}}
+												</span>
 											</div>
 											<div class="col-lg-12 blackfont mt-1">
 												
