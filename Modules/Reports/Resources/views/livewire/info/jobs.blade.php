@@ -3,6 +3,9 @@
         nav svg{
             max-height: 20px;
         }
+        .table th{
+            vertical-align: middle;
+        }
     </style>
     <div class="row">
         <div class="col-12">
@@ -99,6 +102,9 @@
                                 @endif
                                 @if(in_array('Balance Amount', $selectedColumns))
                                     <th>Balance Amount</th>
+                                @endif
+                                @if(in_array('Claim Number', $selectedColumns))
+                                    <th>Claim<br> Number</th>
                                 @endif
                             </tr>
 
@@ -242,6 +248,9 @@
                                                 <p>${{$row->finance->balance->total}}</p>
                                             @endif
                                         </td>
+                                    @endif
+                                    @if(in_array('Claim Number', $selectedColumns))
+                                        <td><p>{{$row->claim_number}}</p></td>
                                     @endif
                                 </tr>
                             @endforeach
