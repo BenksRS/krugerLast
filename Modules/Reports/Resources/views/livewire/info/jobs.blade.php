@@ -104,7 +104,7 @@
                                     <th>Balance Amount</th>
                                 @endif
                                 @if(in_array('Claim Number', $selectedColumns))
-                                    <th>Claim<br> Number</th>
+                                    <th width="80">Claim<br> Number</th>
                                 @endif
                             </tr>
 
