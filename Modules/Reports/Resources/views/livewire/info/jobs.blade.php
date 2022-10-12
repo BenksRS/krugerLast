@@ -47,7 +47,7 @@
                                     <th>Name</th>
                                 @endif
                                 @if(in_array('Job Type', $selectedColumns))
-                                    <th>Job Type</th>
+                                    <th width="120">Job Type</th>
                                 @endif
                                 @if(in_array('Schedule', $selectedColumns))
                                     <th>Schedule</th>
@@ -80,10 +80,10 @@
                                 {{--                                <th>Invoice</th>--}}
                                 {{--                            @endif--}}
                                 @if(in_array('Created by', $selectedColumns))
-                                    <th>Created by</th>
+                                    <th width="120">Created by</th>
                                 @endif
                                 @if(in_array('Created At', $selectedColumns))
-                                    <th>Created At</th>
+                                    <th width="120">Created At</th>
                                 @endif
                                 @if(in_array('invoice`s', $selectedColumns))
                                     <th>Invoice`s</th>
