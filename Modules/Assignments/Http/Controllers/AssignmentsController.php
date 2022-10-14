@@ -323,7 +323,7 @@ class AssignmentsController extends Controller {
 
         if($data){
 
-            if($data->carrier->company_entity){
+            if(!empty($data->carrier->company_entity)){
                $carrier =$data->carrier->company_entity;
             }else{
                 $carrier= $data->carrier_info;
