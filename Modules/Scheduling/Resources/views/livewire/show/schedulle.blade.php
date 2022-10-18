@@ -120,10 +120,10 @@
 											@foreach($jobs_grid as $job_grid)
 												
 												@if(!in_array($job_grid->assignment->status_id, [7,8,23]))
-													<div class="scheduled_job alert {{$job_grid->assignment->status->class}} {{($this->jobRoute == $job_grid->assignment->id)? ' job_route': ''}}" wire:key="techid_{{$tech->user->id}}_grid_{{$grid}}_{{$job_grid->assignment->id}}" wire:sortable-group.item="{{$job_grid->assignment->id}}">
+													<div class="scheduled_job alert {{$job_grid->assignment->status->class}} {{($this->jobRoute == $job_grid->assignment->id)? ' job_route': ''}}" wire:key="techid_{{$tech->user->id}}_grid_{{$grid}}_{{$job_grid->assignment->id}}" wire:sortable-group.item="{{$job_grid->assignment->id}}" style="padding: 6px">
 														
 														<div class="row">
-															<div class="col-lg-12 blackfont">
+															<div class="col-lg-12 blackfont" style="font-size: 10px; font-weight: 600">
 																#{{ $job_grid->assignment->id }}
                                                                 @if( !empty($job_grid->assignment->tags->toArray()) && in_array(11, collect($job_grid->assignment->tags)->pluck('id')->all()))
                                                                     <div class="position-absolute top-0 end-0">
@@ -142,6 +142,7 @@
 																	@endif
 																@endforeach
 															</div>
+															<span class="float-start" style="font-size: 9px">{{ isset($job_grid->assignment->phones->first()->phone) ? $job_grid->assignment->phones->first()->phone : 'No phone'}}</span>
 															<div class="col-lg-12 blackfont" style="font-size: 9px">
 																{{$job_grid->assignment->city}} - {{$job_grid->assignment->state}}
 															</div>
