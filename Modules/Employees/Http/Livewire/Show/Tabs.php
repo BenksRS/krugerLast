@@ -6,89 +6,102 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 use Modules\User\Entities\User;
 
-class Tabs extends Component
-{
+class Tabs extends Component {
 
     protected $listeners = [
-        'changeTab' => 'processChangetab',
-        'refreshTabPanel' => '$refresh'
+        'changeTab'       => 'processChangetab',
+        'refreshTabPanel' => '$refresh',
 
     ];
-    public $url;
-    public $user;
-    public $isActive = 'commission';
-    public $navs = [
-//        [
-//            'title' => 'Personal Details',
-//            'href' => 'personal-details',
-//            'key' => 'employees_tab_personal',
-//            'tab' => 'employees::show.tabs.personal',
-//            'category' => 'all',
-//        ],
+
+    public    $url;
+
+    public    $user;
+
+    public    $isActive  = 'commission';
+
+    public    $navs      = [
+        //        [
+        //            'title' => 'Personal Details',
+        //            'href' => 'personal-details',
+        //            'key' => 'employees_tab_personal',
+        //            'tab' => 'employees::show.tabs.personal',
+        //            'category' => 'all',
+        //        ],
         [
-            'title' => 'Daily Rates',
-            'href' => 'daily-rates',
-            'key' => 'employees_tab_daily',
-            'tab' => 'employees::show.tabs.rates',
+            'title'    => 'Daily Rates',
+            'href'     => 'daily-rates',
+            'key'      => 'employees_tab_daily',
+            'tab'      => 'employees::show.tabs.rates',
             'category' => 'all',
         ],
         [
-            'title' => 'Commission',
-            'href' => 'commission',
-            'key' => 'employees_tab_comission',
-            'tab' => 'employees::show.tabs.comission',
+            'title'    => 'Commission',
+            'href'     => 'commission',
+            'key'      => 'employees_tab_comission',
+            'tab'      => 'employees::show.tabs.comission',
             'category' => 'profile',
         ],
         [
-            'title' => 'Rules',
-            'href' => 'rules',
-            'key' => 'employees_tab_rules',
-            'tab' => 'employees::show.tabs.rules',
+            'title'    => 'Rules',
+            'href'     => 'rules',
+            'key'      => 'employees_tab_rules',
+            'tab'      => 'employees::show.tabs.rules',
             'category' => 'profile',
         ],
         [
-            'title' => 'Time Sheet',
-            'href' => 'timesheet',
-            'key' => 'employees_tab_timesheet',
-            'tab' => 'employees::show.tabs.timesheet',
+            'title'    => 'Time Sheet',
+            'href'     => 'timesheet',
+            'key'      => 'employees_tab_timesheet',
+            'tab'      => 'employees::show.tabs.timesheet',
             'category' => 'profile',
         ],
         [
-            'title' => 'Pay Check',
-            'href' => 'paycheck',
-            'key' => 'employees_tab_paycheck',
-            'tab' => 'employees::show.tabs.paycheck',
+            'title'    => 'Pay Check',
+            'href'     => 'paycheck',
+            'key'      => 'employees_tab_paycheck',
+            'tab'      => 'employees::show.tabs.paycheck',
             'category' => 'profile',
         ],
         [
-            'title' => 'Receipts',
-            'href' => 'receipts',
-            'key' => 'employees_tab_receipts',
-            'tab' => 'employees::show.tabs.receipts',
+            'title'    => 'Receipts',
+            'href'     => 'receipts',
+            'key'      => 'employees_tab_receipts',
+            'tab'      => 'employees::show.tabs.receipts',
+            'category' => 'profile',
+        ],
+        [
+            'title'    => 'Account',
+            'href'     => 'account',
+            'key'      => 'employees_tab_account',
+            'tab'      => 'employees::show.tabs.account',
             'category' => 'profile',
         ],
 
     ];
 
-    public function mount(User $user)
+    public function mount (User $user)
     {
 
         $this->user = $user;
-        $this->url =  Route::getCurrentRoute()->uri();
+        $this->url  = Route::getCurrentRoute()->uri();
 
-        if($this->url == 'profile'){
+        if ( $this->url == 'profile' ) {
             $this->isActive = 'commission';
         }
 
-
     }
-    public function processChangetab($newActive){
+
+    public function processChangetab ($newActive)
+    {
 
         $this->isActive = $newActive;
 
     }
-    public function render()
+
+    public function render ()
     {
         return view('employees::livewire.show.tabs');
     }
+
 }
