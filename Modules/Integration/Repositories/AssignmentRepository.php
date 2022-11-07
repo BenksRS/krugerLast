@@ -37,7 +37,6 @@ class AssignmentRepository extends Assignment {
         $status   = AssignmentsStatus::where('name', $data['status']['new'])->first();
         $statusId = $status->id;
 
-
         if ( $data['status']['new'] == 'nojob_review' && !empty($data['nojob_data']['option']) ) {
 
             $nojob      = Nojob::find($data['nojob_data']['option']);
@@ -50,43 +49,41 @@ class AssignmentRepository extends Assignment {
                     'notable_id'   => $assignment->id,
                     'created_by'   => $employeeId,
                     'type'         => 'no_job',
-                    'notable_type'=>  'Modules\Assignments\Entities\Assignment',
+                    'notable_type' => 'Modules\Assignments\Entities\Assignment',
                 ]);
 
-
-                if ( in_array($nojob->id, [3, 4, 5, 6]) && in_array(4, $tags)) {
+                if ( in_array($nojob->id, [3, 4, 5, 6]) && in_array(4, $tags) ) {
                     $statusId = 8;
                 } else {
                     $statusId = $nojob->status_id;
 
-                    $statusDB   = AssignmentsStatus::find($nojob->status_id);
+                    $statusDB = AssignmentsStatus::find($nojob->status_id);
 
                     Note::create([
                         'text'         => "### CHANGE STATUS TO: $statusDB->name ### PLEASE BILL TRIP CHARGE",
                         'notable_id'   => $assignment->id,
                         'created_by'   => $employeeId,
                         'type'         => 'assignment',
-                        'notable_type'=>  'Modules\Assignments\Entities\Assignment',
+                        'notable_type' => 'Modules\Assignments\Entities\Assignment',
                     ]);
-
 
                     Note::create([
                         'text'         => "### CHANGE STATUS TO: $statusDB->name ### PLEASE BILL TRIP CHARGE",
                         'notable_id'   => $assignment->id,
                         'created_by'   => $employeeId,
                         'type'         => 'finance',
-                        'notable_type'=>  'Modules\Assignments\Entities\Assignment',
+                        'notable_type' => 'Modules\Assignments\Entities\Assignment',
                     ]);
 
                 }
 
             } else {
-                $text = '';
+                $text     = '';
                 $statusId = $nojob->status_id;
-                $statusDB   = AssignmentsStatus::find($nojob->status_id);
+                $statusDB = AssignmentsStatus::find($nojob->status_id);
 
-                if(in_array($statusId, [11,12, 27])){
-                    if($assignment->scheduling){
+                if ( in_array($statusId, [11, 12, 27]) ) {
+                    if ( $assignment->scheduling ) {
                         $assignment->scheduling->delete();
                     }
                 }
@@ -96,10 +93,9 @@ class AssignmentRepository extends Assignment {
                     'notable_id'   => $assignment->id,
                     'created_by'   => $employeeId,
                     'type'         => 'assignment',
-                    'notable_type'=>  'Modules\Assignments\Entities\Assignment',
+                    'notable_type' => 'Modules\Assignments\Entities\Assignment',
                 ]);
             }
-
 
         }
 
@@ -131,8 +127,6 @@ class AssignmentRepository extends Assignment {
             $scheduled_order_at   = NULL;
             $scheduled_start_time = NULL;
         }
-
-        $job_type = $this->job_types->first();
 
         if ( $this->phones ) {
             $info_phones = "";
@@ -177,6 +171,8 @@ class AssignmentRepository extends Assignment {
             break;
         }
 
+        $job_type = collect($this->job_types)->pluck('name');
+
         $tags = !empty($this->tags) ? collect($this->tags)->pluck('name')->unique()->values()->all() : NULL;
 
         $firebase = [
@@ -184,7 +180,8 @@ class AssignmentRepository extends Assignment {
             'employee_id'          => $tech_id,
             'employee_name'        => $tech_name,
             'referral_company'     => $this->referral_carrier_full,
-            'job_type'             => $job_type->name,
+            'job_type'             => $job_type->first(),
+            'job_types'            => $job_type->implode(', '),
             'email'                => $this->email,
             'full_name'            => $this->full_name,
             'full_phone'           => $info_phones,
