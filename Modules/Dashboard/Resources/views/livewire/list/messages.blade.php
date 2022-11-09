@@ -98,13 +98,13 @@
                                                 $carrier=\Modules\Referrals\Entities\Referral::find($row->carrier_id);
                                                 $carrier_name=$carrier->company_entity;
                                             }else{
-                                                $carrier_name='';
+                                                $carrier_name=$row->referral->company_entity;
                                             }
                                         }else{
                                             if($row->carrier_info){
                                                 $carrier_name=$row->carrier_info;
                                             }else{
-                                                $carrier_name='';
+                                                $carrier_name=$row->referral->company_entity;
                                             }
 
                                         }
