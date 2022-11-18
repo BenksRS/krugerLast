@@ -33,7 +33,7 @@ class UserServiceProvider extends ServiceProvider {
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
 
         Relation::morphMap([
-            'users'       => User::class,
+/*            'users'       => User::class,*/
             'user_groups' => UserGroup::class,
         ]);
     }

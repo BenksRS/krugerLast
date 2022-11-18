@@ -3,7 +3,8 @@
 use Modules\Integration\Repositories;
 
 return [
-    'name' => 'Integration',
+    'name'   => 'Integration',
+    'prefix' => 'sync.',
 
     'actions' => [
         'local'  => ['create', 'update', 'delete'],
@@ -42,16 +43,16 @@ return [
             'model'  => Repositories\AssignmentRepository::class,
             'table'  => 'jobs',
             'queues' => [
-                'set' => FALSE,
+                'set' => TRUE,
                 'get' => TRUE,
             ],
-            'events' => ['local.update', 'remote.delete'],
+            'events' => ['local.update'],
             'rules'  => [
                 'local.update'  => [
                     'status.new' => ['nojob_review', 'in_progress', 'uploading', 'uploading_pics'],
                 ],
                 'remote.delete' => [
-                    'status.new'  => ['nojob_review', 'delete', 'uploading_pics'],
+                    'status.new' => ['nojob_review', 'delete', 'uploading_pics'],
                 ],
             ],
         ],

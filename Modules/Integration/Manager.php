@@ -5,6 +5,7 @@ namespace Modules\Integration;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Kreait\Firebase\Database;
+use Modules\Integration\Entities\Integration;
 use Modules\Integration\Entities\IntegrationFailedJob;
 use Modules\Integration\Services\Firebase\DatabaseService;
 
@@ -13,13 +14,15 @@ class Manager {
     /**
      * @var null
      */
-    public mixed                $connections;
+    public mixed                   $connections;
 
-    public IntegrationFailedJob $failedJob;
+    protected Database             $database;
 
-    protected Database          $database;
+    protected Integration          $integration;
 
-    protected                   $limit;
+    protected IntegrationFailedJob $failedJob;
+
+    protected                      $limit;
 
     /**
      * @param                 $connections
@@ -29,6 +32,7 @@ class Manager {
     {
         $this->connections = $connections;
         $this->database    = app(Database::class);
+        $this->integration = app(Integration::class);
         $this->failedJob   = app(IntegrationFailedJob::class);
 
         $this->limit = config('integration.queries.limit');
@@ -73,6 +77,8 @@ class Manager {
         $events = $config['events'];
         $rules  = $config['rules'] ?? [];
 
+        $test = TRUE;
+
         $reference = $this->database->getReference($config['table']);
 
         $items = $reference->getValue();
@@ -81,13 +87,11 @@ class Manager {
             foreach ( $items as $key => $item ) {
 
                 if ( empty($item['job_id']) ) {
-                    continue;
+                    $item['job_id'] = $this->integration->where('uuid', $key)->first()->syncable_id;
                 }
 
                 $resources = $model->setData($item);
                 $dot       = Arr::dot($item);
-
-                dump($events);
 
                 if ( $events ) {
                     foreach ( $events as $event ) {
@@ -108,7 +112,8 @@ class Manager {
                                 }
 
                                 if ( (isset($item['sync_delete']) && $item['sync_delete'] === TRUE) ||
-                                     (isset($item['status']['new']) && $item['status']['new'] == 'uploading_pics') ) {
+                                     (isset($item['status']['new']) && in_array($item['status']['new'], ['nojob_review', 'delete', 'uploading_pics']))
+                                ) {
                                     $reference->getChild($key)->remove();
                                 }
                             break;
@@ -123,7 +128,6 @@ class Manager {
                                 } else {
                                     $reference->getChild($key)->remove();
                                 }
-
 
                             break;
                         }

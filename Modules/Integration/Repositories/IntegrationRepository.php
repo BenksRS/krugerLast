@@ -35,4 +35,11 @@ trait IntegrationRepository {
         return (string) Str::of($file)->trim(',/')->start($encoder);
     }
 
+    protected function getMorphType ()
+    {
+        $class = $this->getMorphClass();
+
+        return (string) Str::of($class)->afterLast('.');
+    }
+
 }

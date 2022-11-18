@@ -33,11 +33,8 @@ class IntegrationServiceProvider extends ServiceProvider {
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
 
-        Relation::morphMap([
-            'users'       => UserRepository::class,
-            'workers'     => WorkerRepository::class,
-            'assignments' => AssignmentRepository::class,
-        ]);
+
+        Relation::morphMap(integration_morphs());
     }
 
     /**
