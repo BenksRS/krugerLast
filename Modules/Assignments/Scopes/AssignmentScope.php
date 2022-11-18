@@ -178,6 +178,7 @@ trait AssignmentScope {
     public function scopeSchedulledSystem (Builder $query, $date, $tech_id = NULL)
     {
         return $query
+            ->where('status_id', '=',2)
             ->with('scheduling')
             ->whereHas('scheduling', function (Builder $q) use ($tech_id) {
                 if ( $tech_id != NULL ) {
@@ -187,6 +188,7 @@ trait AssignmentScope {
             ->whereHas('scheduling', function (Builder $q) use ($date) {
                 $q->whereDate('start_date', $date);
             });
+
     }
 
     public function scopeDateBilled (Builder $query, $date_from, $date_to, $tech_id = NULL, $user_id = NULL)

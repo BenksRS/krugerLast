@@ -83,7 +83,7 @@ class AssignmentFinanceRepository extends Assignment {
                 case 10: // partial_paid
                     $status = ($balance == 0) ? 6 : $status;
 
-//@dump($status);
+
 //@dump($total_invoice);
 //@dump($total_payment);
 //@dump($balance);
@@ -112,6 +112,8 @@ class AssignmentFinanceRepository extends Assignment {
 
                 default:
                     $status = ($total_invoice > 0 && $total_payment == 0) ? 5 : $status;
+                    $status = ($total_payment > 0 && $total_payment < $total_invoice) ? 10 : $status;
+//                    @dump($total_invoice);
                     $status_collection=$this->status_collection_id;
                     break;
             }

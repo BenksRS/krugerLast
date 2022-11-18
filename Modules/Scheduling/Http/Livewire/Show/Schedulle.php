@@ -375,11 +375,9 @@ class Schedulle extends Component
         return $coll;
 
     }
-    public function getSystemJobs ($city,$state){
+    public function getSystemJobs (){
         $tech_system=73;
         $jobs = AssignmentRepository::SchedulledSystem($this->date,$tech_system)
-            ->where('city',$city)
-            ->where('state',$state)
             ->get();
         if(count($jobs) > 0){
             foreach ($jobs as $job){

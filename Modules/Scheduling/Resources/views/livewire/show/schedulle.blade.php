@@ -283,9 +283,7 @@
 					<div class="jobsOpen" wire:key="openjobs" wire:sortable-group.item-group="openJobs">
 						
 						@if(count($list_systemCity) > 0)
-                                <?php $id = 1; ?>
-							
-							@foreach($list_systemCity->sortBy('order') as $groupCity)
+
                                     <?php
                                     $insideJobs = $this->getSystemJobs($groupCity->city ?? '', $groupCity->state ?? '');
                                     ?>
@@ -293,9 +291,9 @@
 								
 								{{-- JOBS --}}
 								@if($insideJobs)
-									
+
 									@foreach($insideJobs->sortBy('order') as $item)
-										
+
 										<div class="open_job alert {{$item->job->status->class}}" wire:key="open__{{$item->job->id}}" wire:sortable-group.item="{{$item->job->id}}">
 											<div class="row">
                                                     <?php
@@ -306,11 +304,11 @@
                                                         $fontsize = $fontsize - 2;
                                                     }
                                                     ?>
-												
+
 												<div class="col-lg-12 blackfont" style="font-size: {{$fontsize}}px">
 													{{ $item->job->full_name }}
 												</div>
-												
+
 												<div class="col-lg-12 whitefont mt-1" style="font-size: 9px">
                                                         <?php $countOpen = 0; ?>
 													@foreach($item->job->job_types as $job_types)
@@ -323,26 +321,24 @@
 													@endforeach
 												</div>
 												<div class="col-lg-12 blackfont mt-1">
-													
+
 													<span class="float-start" style="font-size: 11px">{{ $item->job->scheduling->start_hour}}</span>
-													
+
 													{{--                                                                                <span class="float-end "  style="font-size: 8px"> ({{$item->job->referral_carrier }})</span>--}}
-												
+
 												</div>
 												<div class="col-lg-12 whitefont mt-1" style="font-size: 10px">
 													<span class="float-start">{{strtoupper($item->job->city)}} - {{$item->job->state}}</span>
 													<span class="float-end">   ({{$item->milhas}})</span>
 												</div>
-											
-											
+
+
 											</div>
 										</div>
 									@endforeach
-								
+
 								@endif
-							
-							@endforeach
-						
+
 						@endif
 						
 						<div style="height: 800px">
