@@ -61,7 +61,7 @@
 							</button>
 							<div class="dropdown-menu dropdown-menu-end">
 								<!-- item-->
-								<a class="dropdown-item" href="http://dashboard.callkruger.sys/profile"><i class="bx bx-user font-size-16 align-middle me-1"></i>
+								<a class="dropdown-item" href="{{ url('profile') }}"><i class="bx bx-user font-size-16 align-middle me-1"></i>
 									<span key="t-profile">Profile</span></a>
 											<div class="dropdown-divider"></div>
 								<a class="dropdown-item text-danger" href="{{ route('auth.logout') }}" onclick="event.preventDefault();
