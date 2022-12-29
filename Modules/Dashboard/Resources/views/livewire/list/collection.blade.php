@@ -9,8 +9,7 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-						TOTAL COLLECTION ::
-					<span wire:loading>....</span>
+					TOTAL COLLECTION :: <span wire:loading>....</span>
 					<span wire:loading.remove>${{$total_collection}}</span><br>
 					<div class="row mb-3">
 						<div class="col-lg-8">
@@ -59,11 +58,11 @@
 					<div class="row mb-3">
 						
 						<div class="col-lg-6">
-							<div class="mb-3">
+							<div class="mb-3" wire:ignore>
 								<label class="form-label">Referral</label>
 								<a href="#" wire:click.prevent="clearFilter('referral_id')" onClick="clearReferral()" class="float-end">clear</a>
 								<select class="select2 form-control select2-multiple select_referral select-filter"
-								        name="referrals" wire:model="filters.referral_id">
+								        wire:model="filters.referral_id">
 									<option selected value>chose...</option>
 									@foreach($allReferrals as $ref)
 										<option value="{{$ref->id}}">{{$ref->full_name}}</option>
@@ -72,11 +71,11 @@
 							</div>
 						</div>
 						<div class="col-lg-6">
-							<div class="mb-3">
+							<div class="mb-3" wire:ignore>
 								<label class="form-label">Carrier</label>
 								<a href="#" wire:click="clearFilter('carrier_id')" onClick="clearCarrier()" class="float-end">clear</a>
 								<select class="select2 form-control select2-multiple select_carrier select-filter"
-								        name="carriers" wire:model="filters.carrier_id">
+								        wire:model="filters.carrier_id">
 									<option selected value>chose...</option>
 									@foreach($allCarriers as $carrier)
 										<option value="{{$carrier->id}}">{{$carrier->full_name}}</option>
@@ -142,6 +141,17 @@
 									@if(in_array('Created At', $selectedColumns))
 										<th>Created At</th>
 									@endif
+									
+									@if(in_array('State', $selectedColumns))
+										<th>Invoice Amount</th>
+									@endif
+									@if(in_array('State', $selectedColumns))
+										<th>Paid Amount</th>
+									@endif
+									@if(in_array('State', $selectedColumns))
+										<th>Balance Amount</th>
+									@endif
+								
 								</tr>
 							</thead>
 							
@@ -254,6 +264,31 @@
 													<i class="bx bx-calendar me-1 text-muted"></i>{{$row->created_date}}
 												</p></td>
 										@endif
+										
+										@if(in_array('State', $selectedColumns))
+											<td>
+												@if($row->finance->invoices)
+													<p>${{$row->finance->invoices->total}}</p>
+												@endif
+											</td>
+										@endif
+										@if(in_array('State', $selectedColumns))
+											
+											<td>
+												@if($row->finance->payments)
+													<p>${{$row->finance->payments->total}}</p>
+												@endif
+											</td>
+										@endif
+										@if(in_array('State', $selectedColumns))
+											
+											<td>
+												@if($row->finance->balance)
+													<p>${{$row->finance->balance->total}}</p>
+												@endif
+											</td>
+										@endif
+									
 									</tr>
 								@endforeach
 							</tbody>
@@ -292,16 +327,13 @@
 	<script>
 
         $(document).ready(function () {
-            $('.select2').select2({
-                placeholder: "Select...",
-                allowClear:  true
-            })
+            $('.select2').select2()
 
             $('body').on('change', '.select-filter', function (e) {
-                let model = $(this).attr('wire:model');
-	            let value = $(this).val();
-	            
-	            @this.set(model, value)
+                let model = $(this).attr('wire:model')
+                let value = $(this).val()
+				
+				                   @this.set(model, value)
             })
 
             Livewire.hook('message.processed', (message, component) => {
@@ -309,12 +341,13 @@
             })
 
         })
+
         function clearReferral () {
-            $('.select_referral').empty().trigger('change')
+            /* $('.select_referral').empty().trigger('change')*/
         }
 
         function clearCarrier () {
-            $('.select_carrier').empty().trigger('change')
+            /* $('.select_carrier').empty().trigger('change')*/
         }
 	</script>
 @endpush
