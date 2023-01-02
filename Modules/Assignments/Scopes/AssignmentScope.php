@@ -65,6 +65,13 @@ trait AssignmentScope {
     {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
+    public function scopeFollowup60 (Builder $query, $status = [5, 9, 10,])
+    {
+        return $query
+            ->with('finance')
+            ->where('collection.days_from_billing', '<', 60)
+            ->whereIn('status_id', collect($status))->whereNotNull('id');
+    }
 
     public function scopeLandline (Builder $query, $status = [30])
     {
