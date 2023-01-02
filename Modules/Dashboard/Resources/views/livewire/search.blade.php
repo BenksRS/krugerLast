@@ -74,7 +74,7 @@
 $user = Auth::user();
 ?>
 @if(in_array($user->group_id, [1,4]))
-<span style="color: white">
+<span style="color: red; background-color: white; ">
     <i class="bx bx-money me-2" ></i>
     <span >
     <?php
