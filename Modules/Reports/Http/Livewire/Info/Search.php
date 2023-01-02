@@ -64,6 +64,11 @@ class Search extends Component
         $this->allCarriers = Referral::all();
 
         $this->user = Auth::user();
+
+
+
+
+
     }
     public function updated($field)
     {

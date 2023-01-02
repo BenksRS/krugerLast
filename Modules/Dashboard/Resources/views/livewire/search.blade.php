@@ -70,3 +70,19 @@
 
 </div>
 </div>
+<?php
+$user = Auth::user();
+?>
+@if(in_array($user->group_id, [1,4]))
+<span style="color: white">
+    <i class="bx bx-money me-2" ></i>
+    <span >
+    <?php
+
+        $today=\Carbon\Carbon::now();
+        $list = \Modules\Assignments\Repositories\AssignmentFinanceRepository::Collection()->whereDate('follow_up', '<=',$today)->get();
+    ?>
+        {{count($list)}} <small>Jobs follow up</small>
+    </span>
+</span>
+    @endif
