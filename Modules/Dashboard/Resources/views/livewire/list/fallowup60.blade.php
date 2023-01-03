@@ -117,6 +117,16 @@
                                 @if(in_array('Created At', $selectedColumns))
                                     <th>Created At</th>
                                 @endif
+
+                                    @if(in_array('State', $selectedColumns))
+                                        <th>Invoice Amount</th>
+                                    @endif
+                                    @if(in_array('State', $selectedColumns))
+                                        <th>Paid Amount</th>
+                                    @endif
+                                    @if(in_array('State', $selectedColumns))
+                                        <th>Balance Amount</th>
+                                    @endif
                             </tr>
                             </thead>
 
@@ -218,6 +228,29 @@
                                     @if(in_array('Created At', $selectedColumns))
                                         <td><p class="font-size-14" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Dol Date"><i class="bx bx-calendar me-1 text-muted"></i>{{$row->created_date}}</p></td>
                                     @endif
+                                        @if(in_array('State', $selectedColumns))
+                                            <td>
+                                                @if($row->finance->invoices)
+                                                    <p>${{$row->finance->invoices->total}}</p>
+                                                @endif
+                                            </td>
+                                        @endif
+                                        @if(in_array('State', $selectedColumns))
+
+                                            <td>
+                                                @if($row->finance->payments)
+                                                    <p>${{$row->finance->payments->total}}</p>
+                                                @endif
+                                            </td>
+                                        @endif
+                                        @if(in_array('State', $selectedColumns))
+
+                                            <td>
+                                                @if($row->finance->balance)
+                                                    <p>${{$row->finance->balance->total}}</p>
+                                                @endif
+                                            </td>
+                                        @endif
                                 </tr>
                             @endforeach
                             </tbody>
