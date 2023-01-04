@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-body">
                     TOTAL COLLECTION :: ${{$total_collection}}<br>
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-lg-8">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -59,6 +59,44 @@
                             <input type="text" class="form-control" placeholder="Search..." wire:model="searchAssignment">
                         </div>
                     </div>
+    
+                    <!-- Filter Collection -->
+                    <div class="row mb-3">
+        
+                        <div class="col-lg-6">
+                            <div class="mb-3" wire:ignore>
+                                <label class="form-label">Referral</label>
+                                <a href="#" wire:click.prevent="clearFilter('referral_id')" onClick="clearReferral()" class="float-end">clear</a>
+                                <select class="select2 form-control select2-multiple select_referral select-filter"
+                                        name="referral_id"
+                                        data-model="referral_id"
+                                        wire:model="filters.referral_id">
+                                    <option selected value>chose...</option>
+                                    @foreach($allReferrals as $ref)
+                                        <option value="{{$ref->id}}">{{$ref->full_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3" wire:ignore>
+                                <label class="form-label">Carrier</label>
+                                <a href="#" wire:click="clearFilter('carrier_id')" onClick="clearCarrier()" class="float-end">clear</a>
+                                <select class="select2 form-control select2-multiple select_carrier select-filter"
+                                        name="carrier_id"
+                                        data-model="carrier_id"
+                                        wire:model="filters.carrier_id">
+                                    <option selected value>chose...</option>
+                                    @foreach($allCarriers as $carrier)
+                                        <option value="{{$carrier->id}}">{{$carrier->full_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+    
+                    </div>
+                    <!-- End Filter Collection -->
+                    
                     <div class="table-responsive mb-0" data-pattern="priority-columns">
                         <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100 listtable">
                             <thead>
@@ -284,3 +322,31 @@
         </div> <!-- end col -->
     </div> <!-- end row -->
 </div>
+
+@push('js')
+    <script>
+        
+        $(document).ready(function () {
+            $('.select2').select2();
+            
+            $(document).on('change', '.select-filter', function (e) {
+                let model = $(this).data('model');
+                let value = $(this).val();
+                @this.set('filters.' + model, value);
+            })
+            
+            Livewire.hook('message.processed', (message, component) => {
+                $('.select2').select2()
+            })
+            
+        })
+        
+        function clearReferral () {
+            /* $('.select_referral').empty().trigger('change')*/
+        }
+        
+        function clearCarrier () {
+            /* $('.select_carrier').empty().trigger('change')*/
+        }
+    </script>
+@endpush
