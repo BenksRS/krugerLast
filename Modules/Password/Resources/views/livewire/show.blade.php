@@ -53,7 +53,9 @@
 										<td>{{ $password->name }}</td>
 										<td>{{ $password->username }}</td>
 										<td>{{ $password->password }}</td>
-										<td style="min-width: 400px">{{ $password->url }}</td>
+										<td style="min-width: 400px; max-width: 400px">
+											<a href="{{ $password->url }}" target="_blank">{{ $password->url }}</a>
+										</td>
 										<td style="width: 200px">{{ $password->user_created->name }}</td>
 										<td style="width: 200px">{{ $password->user_updated->name }}</td>
 										<td style="width: 150px">
