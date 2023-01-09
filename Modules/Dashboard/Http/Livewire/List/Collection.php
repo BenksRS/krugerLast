@@ -115,7 +115,7 @@
                 }
             })->get();
 
-            $total_collection       = $list->sum('finance.finance.balance.total');
+            $total_collection       = $list->sum('finance.balance.total');
             $this->total_collection = number_format($total_collection, 2);
 
             $list = $list->sortByDesc('finance.collection.days_from_billing');
