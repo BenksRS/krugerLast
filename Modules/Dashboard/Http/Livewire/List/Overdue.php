@@ -104,7 +104,7 @@ class Overdue extends Component
         })->get();
 
         $list = $list->where('finance.collection.days_from_billing','>',30);
-        $total_collection=$list->sum('finance.invoices.total');
+        $total_collection=$list->sum('finance.balance.total');
         $this->total_collection = number_format($total_collection, 2);
 
         $list=$list->sortBy('follow_up');

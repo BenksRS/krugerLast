@@ -130,7 +130,13 @@
             })->get();
 
             $total_collection       = $list->sum('finance.balance.total');
-            $totalOverDue = $this->overDue($list);
+
+
+            $listOverdue=$list->where('finance.collection.days_from_billing','>',30);
+
+            $totalOverDue = $listOverdue->sum('finance.balance.total');
+
+
             $this->totalOverDue = number_format($totalOverDue, 2);
             $this->total_collection = number_format($total_collection, 2);
 
