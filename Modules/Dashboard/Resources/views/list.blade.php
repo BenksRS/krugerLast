@@ -56,11 +56,14 @@
 		@case('followup')
 			@livewire('dashboard::list.fallow-up', key('dash_list_followup'))
 			@break
+		@case('overdue')
+			@livewire('dashboard::list.overdue', key('dash_list_overdue'))
+		@break
 		@case('followup60')
-			@livewire('dashboard::list.fallowup60', key('dash_list_followup'))
+		@livewire('dashboard::list.fallowup60', key('dash_list_followup60'))
 		@break
 		@case('followup90')
-		@livewire('dashboard::list.fallowup90', key('dash_list_followup'))
+		@livewire('dashboard::list.fallowup90', key('dash_list_followup90'))
 		@break
 		@case('revisebill')
 			@livewire('dashboard::list.revisebill', key('dash_list_followup'))
