@@ -116,7 +116,9 @@
                                 @if(in_array('Status', $selectedColumns))
                                     <th>Status</th>
                                 @endif
-
+                                    @if(in_array('days_from_service', $selectedColumns))
+                                        <th>Follow up</th>
+                                    @endif
                                 @if(in_array('days_from_billing', $selectedColumns))
                                     <th>Days from billing</th>
                                 @endif
@@ -227,7 +229,9 @@
                                             <span class="badge {{strtolower($row->status->name)}}">{{$row->status->name}}</span>
                                         </td>
                                     @endif
-
+                                        @if(in_array('Status', $selectedColumns))
+                                            <td><p><b>{{strtolower($row->follow_up_date)}}</b></p></td>
+                                        @endif
                                     @if(in_array('days_from_billing', $selectedColumns))
                                         <td><p>{{strtolower($row->finance->collection->days_from_billing)}} days</p>
                                         </td>
