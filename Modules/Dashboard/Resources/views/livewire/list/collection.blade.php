@@ -29,7 +29,10 @@
 											<label>
 												<input type="radio" wire:model="selectedRows" value="100"> 100</label>
 										</li>
-									
+										<li class="list-group-item">
+											<label>
+												<input type="radio" wire:model="selectedRows" value="999999"> ALL</label>
+										</li>
 									</ul>
 								</div>
 								<div class="btn-group">
