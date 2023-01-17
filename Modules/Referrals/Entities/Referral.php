@@ -37,11 +37,6 @@
 
         protected $appends = ['address', 'full_name', 'created_date', 'updated_date'];
 
-        public function assignments ()
-        {
-            return $this->hasMany(Assignment::class);
-        }
-
         public function lastjob ()
         {
             return $this->hasOne(Assignment::class, 'referral_id', 'id')->latest();

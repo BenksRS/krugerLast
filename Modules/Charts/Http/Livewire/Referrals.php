@@ -5,7 +5,7 @@ namespace Modules\Charts\Http\Livewire;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Livewire\Component;
-use Modules\Referrals\Entities\Referral;
+use Modules\Charts\Repositories\ReferralRepository;
 
 class Referrals extends Component {
 
@@ -17,17 +17,12 @@ class Referrals extends Component {
     public $listData = [];
 
     protected $listeners = [
-        'filter'  => 'filter',
+        'filter' => 'filter',
     ];
 
     public function mount ()
     {
-
         $this->listData = collect($this->listData);
-
-
-        $this->setChartData();
-
     }
 
     public function filter ( $filters )
@@ -40,19 +35,20 @@ class Referrals extends Component {
         if ( !$filters )
             return;
 
-        $data = Referral::withCount('assignments')->whereHas('assignments', function ( $query ) use ( $filters ) {
-            if ( $filters ) {
-                $query->whereDate('created_at', '>=', $filters['start']);
-                $query->whereDate('created_at', '<=', $filters['end']);
+        $data = ReferralRepository::whereHas('assignments', function ( $query ) use ( $filters ) {
+            $query->dateRange($filters['start'], $filters['end']);
+        })->withCount([
+            'assignments' => function ( $query ) use ( $filters ) {
+                $query->dateRange($filters['start'], $filters['end']);
             }
-        })->get();
+        ])->get();
 
         $sum = $data->sum('assignments_count');
 
         $graph = $data->map(fn ( $item ) => [
             'name'    => Str::title($item->company_entity),
             'total'   => $item->assignments_count,
-            'percent' => round($item->assignments_count / $sum * 100, 2),
+            'percent' => round(($item->assignments_count * 100) / $sum, 2)
         ])->sortByDesc('total');
 
         $this->chartData['labels']   = $graph->pluck('name')->toArray();
@@ -66,6 +62,15 @@ class Referrals extends Component {
 
         $this->emit('updateChart', $this->chartData);
 
+    }
+
+    public function toMap ( $item )
+    {
+        return [
+            'name'    => $item->name,
+            'total'   => $item->total,
+            'percent' => $item->percent,
+        ];
     }
 
     public function render ()
