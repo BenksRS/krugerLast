@@ -18,6 +18,8 @@
 
         public $searchAssignment;
 
+        public $totalOverDue;
+
         public $columns = [
             'Billed Date',
             'Status Collection',
@@ -104,6 +106,18 @@
             $this->filters[$field] = NULL;
             $this->resetPage();
         }
+        public function overDue($list) {
+
+            $total=0;
+                foreach ($list as $row){
+                    if($row->finance->collection->days_from_service > 30){
+                        $total= $total + $row->finance->balance->total;
+                    }
+
+                }
+
+            return $total;
+        }
 
         public function render ()
         {
@@ -115,7 +129,15 @@
                 }
             })->get();
 
-            $total_collection       = $list->sum('finance.invoices.total');
+            $total_collection       = $list->sum('finance.balance.total');
+
+
+            $listOverdue=$list->where('finance.collection.days_from_billing','>',30);
+
+            $totalOverDue = $listOverdue->sum('finance.balance.total');
+
+
+            $this->totalOverDue = number_format($totalOverDue, 2);
             $this->total_collection = number_format($total_collection, 2);
 
             $list = $list->sortByDesc('finance.collection.days_from_billing');

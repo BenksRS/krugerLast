@@ -11,6 +11,8 @@
 				<div class="card-body">
 					TOTAL COLLECTION :: <span wire:loading>....</span>
 					<span wire:loading.remove>${{$total_collection}}</span><br>
+					TOTAL OVERDUE :: <span wire:loading>....</span>
+					<span wire:loading.remove>${{$totalOverDue}}</span><br>
 					<div class="row mb-3">
 						<div class="col-lg-8">
 							<div class="btn-group">
@@ -29,7 +31,10 @@
 											<label>
 												<input type="radio" wire:model="selectedRows" value="100"> 100</label>
 										</li>
-									
+										<li class="list-group-item">
+											<label>
+												<input type="radio" wire:model="selectedRows" value="999999"> ALL</label>
+										</li>
 									</ul>
 								</div>
 								<div class="btn-group">

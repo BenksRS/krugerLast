@@ -29,15 +29,20 @@ class EmployeesController extends Controller
     {
         $this->middleware('auth:user');
     }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
+
     public function phpinfo(){
-    return phpinfo();
+        return phpinfo();
     }
+
     public function index()
     {
+
+
         $page_info = (object)[
             'title' => 'Employees List',
             'back' => url('employees'),
@@ -54,7 +59,7 @@ class EmployeesController extends Controller
         $url =  Route::getCurrentRoute()->uri();
         $page_info = (object)[
             'title' => 'Employee Information',
-            'back' => url('employees'),
+            'back' => url('#'),
             'back_title' => 'Employee List'
         ];
         \session()->flash('page',$page_info);
