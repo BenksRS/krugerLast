@@ -16,5 +16,8 @@
     "Gdrive": true,
     "Employees": true,
     "Menu": true,
-    "Password": true
+    "Password": true,
+    "Charts": true,
+    "Car": true
+
 }

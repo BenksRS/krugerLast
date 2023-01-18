@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Modules\Assignments\Entities\Assignment;
+use Modules\Car\Entities\Car;
 use Modules\Notes\Entities\Note;
 use Modules\Referrals\Entities\Referral;
 
@@ -34,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
 
         Relation::enforceMorphMap([
             Referral::class => Referral::class,
+            Car::class => Car::class,
             Note::class => Note::class,
             Assignment::class => Assignment::class,
         ]);
