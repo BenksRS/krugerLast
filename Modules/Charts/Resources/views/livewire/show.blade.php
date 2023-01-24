@@ -63,6 +63,8 @@
                 chart.data = data;
                 chart.update();
             });
+
+            
         });
 	</script>
 @endpush

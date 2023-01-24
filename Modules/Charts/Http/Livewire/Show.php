@@ -10,10 +10,10 @@ use Modules\Charts\Repositories\Referral\ReferralRepository;
 class Show extends Component {
 
 	protected $listeners = [
-		'chart::filter' => 'filter',
+		'chart::filter' => 'filterByType',
 	];
 
-	public $listData = [];
+	protected $listData = [];
 
 	public array $chartData = [
 		'labels'   => [],
@@ -32,17 +32,15 @@ class Show extends Component {
 
 	public function mount ()
 	{
-		$this->listData = collect();
+		$this->listData = collect([]);
 	}
 
 	public function filter ( $filters )
 	{
-
 		$this->filterByType($filters);
-
 	}
 
-	protected function filterByType ( $filters )
+	public function filterByType ( $filters )
 	{
 		$type  = $filters['referral'];
 		$dates = $filters['dates'];
@@ -50,7 +48,7 @@ class Show extends Component {
 		$this->loadData['loading'] = TRUE;
 		$this->loadData['view']    = $this->loadData['views'][$type];
 
-		$repo = AssignmentRepository::withOnly(['referral.type', 'carrier'])->dateRange($dates['start'], $dates['end']);
+		$repo = AssignmentRepository::with(['referral.type'])->dateRange($dates['start'], $dates['end']);
 
 		switch( $type ) {
 			case 'referral':
@@ -65,7 +63,8 @@ class Show extends Component {
 				});
 			break;
 			case 'referral_carriers':
-				$repo  = $repo->selectRaw('referral_id, carrier_id, count(*) as total')->has('carrier')->groupBy('referral_id', 'carrier_id')->get();
+				$repo  = $repo->with(['carrier'])->selectRaw('referral_id, carrier_id, count(*) as total')
+												 ->whereNotNull('carrier_id')->groupBy('referral_id', 'carrier_id')->get();
 				$count = $repo->sum('total');
 
 				$repo = $repo->map(function( $item ) use ( $count ) {
@@ -128,53 +127,12 @@ class Show extends Component {
 
 	}
 
-	private function setChartData ( $filters = NULL )
-	{
-		if( !$filters )
-			return;
-
-		$data = ReferralRepository::whereHas('assignments', function( $query ) use ( $filters ) {
-			$query->dateRange($filters['start'], $filters['end']);
-		})->withCount([
-			'assignments' => function( $query ) use ( $filters ) {
-				$query->dateRange($filters['start'], $filters['end']);
-			}
-		])->get();
-
-		$sum = $data->sum('assignments_count');
-
-		$graph = $data->map(fn( $item ) => [
-			'name'    => Str::title($item->full_name),
-			'total'   => $item->assignments_count,
-			'percent' => round(($item->assignments_count * 100) / $sum, 2)
-		])->sortBy('name')->sortByDesc('total');
-
-		$this->chartData['labels']   = $graph->pluck('name')->toArray();
-		$this->chartData['datasets'] = [
-			[
-				'data' => $graph->pluck('percent')->toArray(),
-			],
-		];
-
-		$this->listData = $graph;
-
-		$this->emit('updateChart', $this->chartData);
-
-	}
-
-	public function toMap ( $item )
-	{
-		return [
-			'name'    => $item->name,
-			'total'   => $item->total,
-			'percent' => $item->percent,
-		];
-	}
-
 	public function render ()
 	{
 
-		return view('charts::livewire.show');
+		return view('charts::livewire.show', [
+			'listData' => $this->listData,
+		]);
 	}
 
 }
