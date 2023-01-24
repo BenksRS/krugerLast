@@ -3,30 +3,31 @@
 namespace Modules\Charts\Http\Livewire;
 
 use Livewire\Component;
+use Modules\Charts\Http\Livewire\Filters\WithFilters;
 
 class Filters extends Component {
 
-    public $filters = [];
+	use WithFilters;
 
-    protected $rules = [
-        'filters.start' => 'required',
-        'filters.end'   => 'required',
-    ];
+	protected function addFields ()
+	{
+		return [
+			'referral' => [
+				'type'    => 'radio',
+				'name'    => 'referral',
+				'input'   => [
+					'referral'          => 'Referral',
+					'referral_carriers' => 'Referral / Carrier',
+					'referral_types'    => 'Referral Type',
+				],
+				'checked' => 'referral',
+			],
+		];
+	}
 
-    protected $listeners = [
-        'filter' => 'filter',
-    ];
-
-    public function filterDate ()
-    {
-        $validatedData = $this->validate();
-
-        $this->emitUp('filter', $this->filters);
-    }
-
-    public function render ()
-    {
-        return view('charts::livewire.filters');
-    }
+	public function render ()
+	{
+		return view('charts::livewire.filters');
+	}
 
 }

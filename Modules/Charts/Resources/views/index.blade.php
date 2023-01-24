@@ -4,7 +4,6 @@
     @endpush
 @endonce
 
-
 <x-layouts.app layout="horizontal">
     <div class="row">
         <div class="col-12">
@@ -21,5 +20,8 @@
             </div>
         </div>
     </div>
-    @livewire('charts::referrals', key('charts-referrals'))
+    
+{{--    @livewire('charts::filters', key('charts-filters'))--}}
+    
+    @livewire('charts::index', key('charts-index'))
 </x-layouts.app>

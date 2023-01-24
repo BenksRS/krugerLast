@@ -10,4 +10,11 @@ class AssignmentRepository extends Assignment {
 
     protected $table = 'assignments';
 
+    protected $appends = [
+        'referral_carrier',
+        'referral_carrier_full',
+    ];
+
+    protected $with = [];
+
 }
