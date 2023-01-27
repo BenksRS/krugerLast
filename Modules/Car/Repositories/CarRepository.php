@@ -9,6 +9,7 @@ use Modules\Car\Scopes\CarScope;
 class CarRepository extends Car{
 
     use CarScope;
+
     public function __construct ()
     {
         parent::__construct();
