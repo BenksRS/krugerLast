@@ -8,6 +8,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="btn-group">
@@ -52,9 +53,11 @@
                                 </div>
 
                             </div>
+
                         </div>
                         <div class="col-lg-4 float-end " >
                             <input type="text" class="form-control" placeholder="Search..." wire:model="searchAssignment">
+
                         </div>
                     </div>
                     <div class="table-responsive mb-0" data-pattern="priority-columns">

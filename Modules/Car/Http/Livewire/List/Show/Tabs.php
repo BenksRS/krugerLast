@@ -21,7 +21,7 @@ class Tabs extends Component
     public    $user;
     public    $car;
 
-    public    $isActive  = 'info';
+    public    $isActive  = 'manutencao';
 
     public    $navs      = [
         [
@@ -32,7 +32,7 @@ class Tabs extends Component
             'category' => 'all',
         ],
         [
-            'title'    => 'Manutencao',
+            'title'    => 'Maintenance (Manutenção)',
             'href'     => 'manutencao',
             'key'      => 'car_tab_manutencao',
             'tab'      => 'car::list.show.tabs.manutencao',

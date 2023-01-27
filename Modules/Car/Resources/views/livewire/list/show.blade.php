@@ -18,6 +18,7 @@
     @livewire('car::list.show.header', ['car' => $car->id], key('car_show_header'))
 
     @livewire('car::list.show.tabs', ['car' => $car->id], key('car_show_tabs'))
+
     @push('js')
         <script>
             var taskFlatpickrConfigDate = {

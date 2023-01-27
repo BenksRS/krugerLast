@@ -18,7 +18,6 @@ trait CarScope
                     ->orWhere('plate', 'like', '%' . $search . '%')
                     ->orWhere('epass', 'like', '%' . $search . '%')
                     ->orWhere('vin', 'like', '%' . $search . '%');
-
             });
     }
 }
