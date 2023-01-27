@@ -1,0 +1,13 @@
+{
+    "name": "Alacrity",
+    "alias": "alacrity",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Alacrity\\Providers\\AlacrityServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
