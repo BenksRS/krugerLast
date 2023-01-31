@@ -194,7 +194,7 @@ class AssignmentRepository extends Assignment {
             'claim'                => $this->claim_number,
             'adjuster'             => $this->adjuster_info,
             'order'                => (int) $this->status->ordem,
-            'created_at'           => $this->date_assignment,
+            'created_at'           => $this->date_assignment ?? Carbon::now(),
             'scheduled_order_at'   => $scheduled_order_at,
             'scheduled_start_time' => $scheduled_start_time,
             'address'              => $address,
