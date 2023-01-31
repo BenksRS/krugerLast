@@ -23,6 +23,7 @@ class NewCar extends Component
             'driver' => $this->driver,
         ];
 
+
         // INSERT Car
         $created = Car::create($data);
 

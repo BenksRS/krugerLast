@@ -21,13 +21,6 @@ class Tabs extends Component {
     public    $isActive  = 'commission';
 
     public    $navs      = [
-        //        [
-        //            'title' => 'Personal Details',
-        //            'href' => 'personal-details',
-        //            'key' => 'employees_tab_personal',
-        //            'tab' => 'employees::show.tabs.personal',
-        //            'category' => 'all',
-        //        ],
         [
             'title'    => 'Daily Rates',
             'href'     => 'daily-rates',

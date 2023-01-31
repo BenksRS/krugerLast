@@ -19,7 +19,6 @@ Route::prefix('/employees')->name('employees.')->group(function () {
     Route::get('/rules', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'rules'])->name('rules');
     Route::get('/commissions', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'commissions'])->name('commissions');
 
-
     Route::get('/check_comission/{id}', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'check_comission'])->name('check_comission');
     Route::get('/script_comission', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'script_comission'])->name('script_comission');
     Route::get('/guia', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'guia'])->name('guia');

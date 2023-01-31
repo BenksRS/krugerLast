@@ -15,4 +15,5 @@ class Show extends Component
     {
         return view('employees::livewire.show.show');
     }
+
 }

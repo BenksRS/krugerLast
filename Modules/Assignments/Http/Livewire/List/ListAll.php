@@ -17,12 +17,12 @@ class ListAll extends Component
 //    public $columns = ['Name','Job Type','Schedule','Status','Address','Street','City','State', 'Phone', 'Invoice', 'Created by', 'Created At'];
     public $columns = ['Name','Job Type','Schedule','Status','Referral','Address','Street','City','State', 'Phone', 'Invoice', 'Created by', 'Created At', 'Update By','Update At'];
     public $selectedColumns = [];
+
     public $selectedRows = 10;
 
     public function mount()
     {
         $this->selectedColumns = $this->columns;
-
     }
     public function updatingSearchAssignment()
     {
@@ -30,7 +30,7 @@ class ListAll extends Component
     }
     public function render()
     {
-//
+
         $searchAssignment = "%$this->searchAssignment%";
         $list=Assignment::with(['scheduling','referral','carrier','status','event','phones','user_updated','user_created','job_types','invoices'])->whereLike('first_name',$searchAssignment)
             ->whereLike('id',$searchAssignment)

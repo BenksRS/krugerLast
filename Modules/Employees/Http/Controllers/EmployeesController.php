@@ -41,8 +41,6 @@ class EmployeesController extends Controller
 
     public function index()
     {
-
-
         $page_info = (object)[
             'title' => 'Employees List',
             'back' => url('employees'),
@@ -55,7 +53,9 @@ class EmployeesController extends Controller
     }
     public function profile()
     {
-        $user = Auth::user();
+
+        $userLoged=Auth::user();
+        $user = User::findOrFail($userLoged->id);
         $url =  Route::getCurrentRoute()->uri();
         $page_info = (object)[
             'title' => 'Employee Information',
@@ -140,7 +140,6 @@ class EmployeesController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      * @param int $id

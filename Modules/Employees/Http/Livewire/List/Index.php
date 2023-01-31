@@ -17,7 +17,7 @@ class Index extends Component
         $listOff=User::whereLike('name',$searchEmployes)->where('active','N')->get();
 
 
-        return view('employees::livewire.list.index', [
+        return view('employees::livewire.list.index',[
             'list_actives' =>$listActive,
             'list_off' =>$listOff,
         ]);

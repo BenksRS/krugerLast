@@ -12,7 +12,6 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-12">
-
                                     @if($jobs->isNotEmpty())
                                         <div class="col-lg-6">
                                             <h4>Jobs</h4>
@@ -28,12 +27,7 @@
                                             </table>
                                         </div>
                                     @endif
-
                                 </div>
-
-
-
-
                             </div>
                         </div>
                     </div>
@@ -74,15 +68,14 @@
 $user = Auth::user();
 ?>
 @if(in_array($user->group_id, [1,4]))
-<span style="color: red; background-color: white; ">
+<span style="color: red; background-color: white;">
     <i class="bx bx-money me-2" ></i>
-    <span >
+    <span>
     <?php
-
         $today=\Carbon\Carbon::now();
         $list = \Modules\Assignments\Repositories\AssignmentFinanceRepository::Collection()->whereDate('follow_up', '<=',$today)->get();
     ?>
         {{count($list)}} <small>Jobs follow up</small>
     </span>
 </span>
-    @endif
+@endif

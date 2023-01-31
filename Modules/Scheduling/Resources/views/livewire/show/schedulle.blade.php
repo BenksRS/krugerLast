@@ -336,11 +336,8 @@
 											</div>
 										</div>
 									@endforeach
-
 								@endif
-
 						@endif
-						
 						<div style="height: 800px">
 						
 						</div>

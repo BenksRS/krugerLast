@@ -388,7 +388,6 @@ class Schedulle extends Component
                 $milhas_text=$milhas->text;
                 $milhas_value=$milhas->value;
 
-
 //                $milhas_text='-';
 //                $milhas_value=0;
 
@@ -407,11 +406,6 @@ class Schedulle extends Component
         }else{
             $coll=[];
         }
-
-
-
-
-
         return $coll;
 
     }

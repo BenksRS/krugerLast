@@ -109,7 +109,6 @@ class ReferralInfo extends Component
     {
         if ($field == 'referralSelected')
         {
-//            dd('aqui');
             $this->emit('contentChange');
         }
     }
@@ -133,7 +132,6 @@ class ReferralInfo extends Component
 
         $id =  $this->assignment->id;
         $update = $this->assignment->update($formData);
-
 
         session()->flash('alert' ,[
             'class' => 'success',

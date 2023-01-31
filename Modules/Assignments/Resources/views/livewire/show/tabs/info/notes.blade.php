@@ -8,9 +8,6 @@
     <div class="card">
         <div class="card-body">
 
-
-
-
             @if($show)
                 <div>
                     <div class="d-flex">

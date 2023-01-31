@@ -34,6 +34,7 @@
     "laravel/ui": "^3.3",
     "laravelcollective/html": "^6.2",
     "livewire/livewire": "^2.10",
+    "maatwebsite/excel": "^3.1",
     "mhmiton/laravel-modules-livewire": "^1.5",
     "mpdf/mpdf": "^6.1",
     "nao-pon/flysystem-google-drive": "~1.1",

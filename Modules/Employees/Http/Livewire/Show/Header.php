@@ -20,6 +20,7 @@ class Header extends Component
         'name' => 'required',
         'active' => 'required',
     ];
+
     public function mount(User $user)
     {
         $this->user = $user;

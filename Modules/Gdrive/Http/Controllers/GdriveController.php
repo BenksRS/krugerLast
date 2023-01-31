@@ -1242,9 +1242,6 @@ class GdriveController extends Controller
         }
         fclose($adjust_images);
 
-
-
-
     }
 
 }
