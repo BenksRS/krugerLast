@@ -36,22 +36,15 @@
                         <div class="avatar-xs me-3">
                             <span class="avatar-title rounded-circle bg-warning bg-soft text-warning font-size-18"><i class="bx bx-money"></i></span>
                         </div>
-                        <h5 class="font-size-14 mb-0">Balance Available Total</h5>
+                        <h5 class="font-size-14 mb-0">Available Total</h5>
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="text-muted mt-3">
 
-                                <p>Before {{$MonthActual}}</p>
-                                <h4>${{$this->showMoney($balanceMonthBefore)}}</h4>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="text-muted mt-3">
-
-                                <p>{{$MonthActual}}  Available</p>
-                                <h4>${{$this->showMoney($balanceMonthActual)}}</h4>
+                                <p>Total Available (Next Month)</p>
+                                <h4>${{$this->showMoney($available)}}</h4>
                             </div>
                         </div>
                     </div>

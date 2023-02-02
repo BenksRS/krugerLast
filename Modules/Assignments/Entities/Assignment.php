@@ -51,6 +51,7 @@ class Assignment extends Model {
         'dol_date',
         'created_date',
         'start_date',
+        'tech',
         'destination',
         'referral_carrier',
         'referral_carrier_full',
@@ -255,6 +256,16 @@ class Assignment extends Model {
         }
 
     }
+    public function getTechAttribute ()
+    {
+        if($this->scheduling){
+            return $this->scheduling->tech->id;
+        }else{
+            return null;
+        }
+
+    }
+
     protected static function newFactory ()
     {
         return \Modules\Assignments\Database\factories\AssignmentFactory::new();
