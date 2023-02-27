@@ -15,7 +15,11 @@ class Balance extends Component
     public $user;
     public $pending=0;
     public $available=0;
+    public $availableDueMonth=0;
+    public $availableBeforeMonth=0;
     public $current=0;
+    public $balanceMonthActual=0;
+    public $balanceMonthBefore=0;
     public $dueMonthSelected;
     public $dueMonthShow;
     public $dueMonthNext;
@@ -23,9 +27,20 @@ class Balance extends Component
     public $dueYearSelected;
     public $dueYearShow;
 
+    public $MonthActual;
+    public $YearActual;
+    public $beforeMonthActual;
+    public $beforeYearActual;
+
     public function mount(User $user)
     {
         $this->user = $user;
+
+        $this->MonthActual=Carbon::now()->format('M');
+        $this->YearActual=Carbon::now()->format('Y');
+
+        $this->getBalances();
+
         $this->dueMonthSelected=Carbon::now()->format('n');
         $this->dueMonthShow=Carbon::now()->format('M');
         $this->dueYearSelected=Carbon::now()->format('Y');
@@ -35,6 +50,9 @@ class Balance extends Component
 
         $available=EmployeeCommissions::where('user_id', $this->user->id)->where('status', 'available')->get();
         $this->available=$available->sum('amount');
+
+//        $availableDueMonth
+
 
         $pending=EmployeeCommissions::where('user_id', $this->user->id)->where('status', 'pending')->get();
         $this->pending=$pending->sum('amount');
@@ -64,6 +82,33 @@ class Balance extends Component
     public function showMoney($var){
         return number_format($var,2);
     }
+
+    public function getBalances()
+    {
+        $month=(int)Carbon::now()->format('n');
+        $year=(int)Carbon::now()->format('Y');
+
+        $commissions = EmployeeCommissions::with('rule', 'assignment', 'user')->where('user_id', $this->user->id)
+            ->where('due_month', $month)
+            ->where('due_year', $year)
+            ->where('status', 'available')
+            ->get();
+//
+        $commissionsTotal = EmployeeCommissions::with('rule', 'assignment', 'user')->where('user_id', $this->user->id)
+            ->where('status', 'available')
+            ->get();
+
+
+        if(count($commissionsTotal) > 0 ){
+            $comTotal = $commissionsTotal->sum('amount');
+            $this->balanceMonthActual=$commissions->sum('amount');
+            $this->balanceMonthBefore=$comTotal-$this->balanceMonthActual;
+        }else{
+            $this->balanceMonthActual=0;
+        }
+
+    }
+
     public function getList($due_month, $due_year)
     {
 
