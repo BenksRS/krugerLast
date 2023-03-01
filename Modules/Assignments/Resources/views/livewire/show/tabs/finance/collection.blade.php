@@ -48,6 +48,7 @@
                             <li><button class="dropdown-item" wire:click="setCollectionStatus(19)" type="button">PENDING SOLUTION</button></li>
                             <li><button class="dropdown-item" wire:click="setCollectionStatus(21)"  type="button">CALLED</button></li>
                             <li><button class="dropdown-item" wire:click="setCollectionStatus(22)" type="button">PAYMENT AGREEMENT</button></li>
+                            <li><button class="dropdown-item" wire:click="setCollectionStatus(24)" type="button">Carrier Payment Pending</button></li>
                             <li><button class="dropdown-item" wire:click="setCollectionStatus(11)"  type="button">LEFT MESSAGE</button></li>
                             <li><button class="dropdown-item" wire:click="setCollectionStatus(23)"  type="button">COURT</button></li>
                         </ul>
