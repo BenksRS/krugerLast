@@ -6,6 +6,7 @@
     use Livewire\Component;
     use Livewire\WithPagination;
     use Modules\Assignments\Entities\AssignmentFinance;
+    use Modules\Assignments\Entities\AssignmentsStatusCollection;
     use Modules\Assignments\Repositories\AssignmentFinanceRepository;
     use Modules\Assignments\Repositories\AssignmentRepository;
     use Modules\Referrals\Entities\Referral;
@@ -19,6 +20,9 @@
         public $searchAssignment;
 
         public $totalOverDue;
+        public $sortBy;
+        public $selectedStatus;
+        public $statusCollection;
 
         public $columns = [
             'Billed Date',
@@ -57,6 +61,8 @@
         public function mount ()
         {
             $this->selectedColumns = $this->columns;
+            $this->statusCollection = AssignmentsStatusCollection::all();
+            $this->selectedStatus = $this->statusCollection->pluck('id')->toArray();
 
             $this->allReferrals = Referral::all();
             $this->allCarriers  = Referral::all();
@@ -122,7 +128,7 @@
         public function render ()
         {
             $searchAssignment = $this->searchAssignment;
-            $list             = AssignmentFinanceRepository::collection()->search($searchAssignment)->when($this->filters, function ( $query, $search ) {
+            $list             = AssignmentFinanceRepository::collection($this->selectedStatus)->search($searchAssignment)->when($this->filters, function ( $query, $search ) {
                 $search = array_filter($search);
                 foreach ( $search as $key => $value ) {
                     $query->where($key, $value);

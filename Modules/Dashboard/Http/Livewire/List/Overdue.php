@@ -24,6 +24,7 @@ class Overdue extends Component
     public $total_collection;
 
     public $allReferrals;
+
     public $sortBy;
     public $selectedStatus;
     public $statusCollection;

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Modules\Assignments\Entities\AssignmentsStatusCollection;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
 use Modules\Referrals\Entities\Referral;
 
@@ -20,6 +21,10 @@ class Fallowup60 extends Component
     public $columns = ['Billed Date','Status Collection','Name','Invoices', 'Status','follow_up','days_from_billing','days_from_service', 'Referral','City','State', 'Phone'];
     public $selectedColumns = [];
     public $selectedRows = 100;
+
+    public $sortBy;
+    public $selectedStatus;
+    public $statusCollection;
 
     public $total_collection;
 
@@ -42,6 +47,9 @@ class Fallowup60 extends Component
         $referrals = Referral::all();
 
         $this->selectedColumns = $this->columns;
+
+        $this->statusCollection = AssignmentsStatusCollection::all();
+        $this->selectedStatus = $this->statusCollection->pluck('id')->toArray();
 
         $this->allReferrals = $referrals;
         $this->allCarriers  = $referrals;
@@ -97,7 +105,7 @@ class Fallowup60 extends Component
     {
         $searchAssignment = $this->searchAssignment;
         $today=Carbon::now();
-        $list = AssignmentFinanceRepository::Collection()->whereDate('follow_up', '<=',$today)->search($searchAssignment)->when($this->filters, function ( $query, $search ) {
+        $list = AssignmentFinanceRepository::Collection($this->selectedStatus)->whereDate('follow_up', '<=',$today)->search($searchAssignment)->when($this->filters, function ( $query, $search ) {
             $search = array_filter($search);
             foreach ( $search as $key => $value ) {
                 $query->where($key, $value);
