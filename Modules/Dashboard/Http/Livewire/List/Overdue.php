@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Modules\Assignments\Entities\AssignmentsStatusCollection;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
 use Modules\Referrals\Entities\Referral;
 
@@ -23,6 +24,9 @@ class Overdue extends Component
     public $total_collection;
 
     public $allReferrals;
+    public $sortBy;
+    public $selectedStatus;
+    public $statusCollection;
 
     public $allCarriers;
 
@@ -41,9 +45,12 @@ class Overdue extends Component
         $referrals = Referral::all();
 
         $this->selectedColumns = $this->columns;
+        $this->statusCollection = AssignmentsStatusCollection::all();
+        $this->selectedStatus = $this->statusCollection->pluck('id')->toArray();
 
         $this->allReferrals = $referrals;
         $this->allCarriers  = $referrals;
+        $this->sortBy  = 'follow_up';
 
         /*            $this->fill(['formBuilder.schema' => $this->getFormBuilder()]);*/
 
@@ -94,9 +101,10 @@ class Overdue extends Component
     }
     public function render()
     {
+//        dd($this->selectedStatus);
         $searchAssignment = $this->searchAssignment;
         $today=Carbon::now();
-        $list             = AssignmentFinanceRepository::collection()->search($searchAssignment)->when($this->filters, function ( $query, $search ) {
+        $list             = AssignmentFinanceRepository::collection($this->selectedStatus)->search($searchAssignment)->when($this->filters, function ( $query, $search ) {
             $search = array_filter($search);
             foreach ( $search as $key => $value ) {
                 $query->where($key, $value);
@@ -107,7 +115,7 @@ class Overdue extends Component
         $total_collection=$list->sum('finance.balance.total');
         $this->total_collection = number_format($total_collection, 2);
 
-        $list=$list->sortBy('follow_up');
+        $list=$list->sortBy($this->sortBy);
 
         $items = $list->forPage($this->page, $this->selectedRows);
 

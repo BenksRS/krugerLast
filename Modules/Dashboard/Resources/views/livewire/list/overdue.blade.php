@@ -52,7 +52,35 @@
                                         </ul>
                                     </div>
                                 </div>
-
+                                <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Sort BY<i class="mdi mdi-chevron-down"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-md">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <label> <input type="radio" wire:model="sortBy" value="follow_up">Follow UP</label>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <label> <input type="radio" wire:model="sortBy" value="days_from_billing"> Days from Billing</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Status <i class="mdi mdi-chevron-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-md">
+                                        <ul class="list-group">
+                                            @foreach($statusCollection as $sc)
+                                                <li class="list-group-item">
+                                                    <label>
+                                                        <input type="radio" wire:model="selectedStatus" value="{{$sc->id}}">
+                                                        {{$sc->name}}</label>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4 float-end ">

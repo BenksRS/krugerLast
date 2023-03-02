@@ -61,9 +61,14 @@ trait AssignmentScope {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
 
-    public function scopeCollection (Builder $query, $status = [5, 9, 10,])
+    public function scopeCollection (Builder $query, $status_collection=[5], $status = [5, 9, 10,])
     {
-        return $query->whereIn('status_id', collect($status))->whereNotNull('id');
+        return $query
+            ->whereIn('status_collection_id', collect($status_collection))->whereNotNull('id')
+            ->whereIn('status_id', collect($status))->whereNotNull('id');
+
+
+
     }
     public function scopeFollowup60 (Builder $query, $status = [5, 9, 10,])
     {
@@ -188,6 +193,7 @@ trait AssignmentScope {
                 $q->whereDate('start_date', '<=', $date_to);
             });
     }
+
 
     public function scopeSchedulledSystem (Builder $query, $date, $tech_id = NULL)
     {
