@@ -167,7 +167,7 @@
                                     <th>State</th>
                                 @endif
                                 @if(in_array('Phone', $selectedColumns))
-                                    <th>Phone</th>
+                                    <th>Notes</th>
                                 @endif
                                 @if(in_array('Created by', $selectedColumns))
                                     <th>Created by</th>
@@ -285,9 +285,7 @@
                                     @endif
                                     @if(in_array('Phone', $selectedColumns))
                                         <td>
-                                            @foreach($row->phones as $phone)
-                                                <a href="#"><small>{{$phone->phone}}</small> </a>
-                                            @endforeach
+                                            sadsdsdsd
                                         </td>
                                     @endif
 

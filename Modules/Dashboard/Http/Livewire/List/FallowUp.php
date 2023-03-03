@@ -83,6 +83,7 @@ class FallowUp extends Component
     {
         $searchAssignment = $this->searchAssignment;
         $today=Carbon::now();
+//        dd($this->selectedStatus);
         $list = AssignmentFinanceRepository::collection($this->selectedStatus)->whereDate('follow_up', '<=',$today)->search($searchAssignment)->when($this->filters, function ( $query, $search ) {
             $search = array_filter($search);
             foreach ( $search as $key => $value ) {
