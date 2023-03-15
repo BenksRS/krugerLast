@@ -287,7 +287,10 @@
 <?php $note = \Modules\Notes\Entities\Note::where('notable_id',$row->id)->where('type','finance')->orderBy('id', 'DESC')->first();?>
                                         <td>
                                             @if(isset($note))
-                                            {{$note->text}}
+
+                                                        <h6><smal>{{$note->user->name}}</smal><small class="text-muted mb-0" > <i class="mdi mdi-clock-outline me-1"></i>{{$note->created_datetime}}</small></h6>
+                                                        <p>{{$note->text}} </p>
+
                                                 @endif
                                         </td>
                                     @endif
