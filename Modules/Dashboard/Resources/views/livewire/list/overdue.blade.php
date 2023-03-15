@@ -284,8 +284,11 @@
                                         <td><p>{{$row->state}}</p></td>
                                     @endif
                                     @if(in_array('Phone', $selectedColumns))
+<?php $note = \Modules\Notes\Entities\Note::where('notable_id',$row->id)->where('type','finance')->orderBy('id', 'DESC')->first();?>
                                         <td>
-                                            sadsdsdsd
+                                            @if(isset($note))
+                                            {{$note->text}}
+                                                @endif
                                         </td>
                                     @endif
 
