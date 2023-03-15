@@ -160,12 +160,7 @@
                                 @if(in_array('Street', $selectedColumns))
                                     <th>Street</th>
                                 @endif
-                                @if(in_array('City', $selectedColumns))
-                                    <th>City</th>
-                                @endif
-                                @if(in_array('State', $selectedColumns))
-                                    <th>State</th>
-                                @endif
+                       
                                 @if(in_array('Phone', $selectedColumns))
                                     <th>Notes</th>
                                 @endif
@@ -277,12 +272,7 @@
                                     @if(in_array('Street', $selectedColumns))
                                         <td><p>{{$row->street}}</p></td>
                                     @endif
-                                    @if(in_array('City', $selectedColumns))
-                                        <td><p>{{$row->city}}</p></td>
-                                    @endif
-                                    @if(in_array('State', $selectedColumns))
-                                        <td><p>{{$row->state}}</p></td>
-                                    @endif
+
                                     @if(in_array('Phone', $selectedColumns))
 <?php $note = \Modules\Notes\Entities\Note::where('notable_id',$row->id)->where('type','finance')->orderBy('id', 'DESC')->first();?>
                                         <td>
