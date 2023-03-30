@@ -193,7 +193,7 @@
                                 @if(in_array('Invoice', $selectedColumns))
                                     <td><p>
                                             @foreach($row->invoices as $invoice)
-                                                {{$invoice->id}}
+                                                {{$invoice->invoice_id}}
                                             @endforeach
                                         </p></td>
                                 @endif
