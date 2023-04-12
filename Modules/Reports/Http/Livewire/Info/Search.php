@@ -43,7 +43,7 @@ class Search extends Component
     public $job_types;
     public $ref_type;
     public $reftypeSelected;
-    public $byState='LA';
+    public $byState;
     public $carrierSelected;
 
     public $date_from;
