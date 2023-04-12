@@ -106,7 +106,7 @@
                                     type="submit"><i class="bx bx-search"></i> Search  </button>
                         </div>
 
-                        <div class="col-md-5 col-lg-6">
+                        <div class="col-md-5 col-lg-5">
                             <div class="mb-3" wire:ignore>
                                 <label class="form-label">Referral  </label>
                                 <a href="#" wire:click.prevent="clear('referralSelected')"  onClick="clearReferral()" class="float-end">clear</a>
@@ -124,7 +124,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-5 col-lg-6">
+                        <div class="col-md-5 col-lg-5">
                             <div class="mb-3" wire:ignore>
                                 <label class="form-label">Carrier</label>
                                 <a href="#" wire:click="clear('carrierSelected')" onClick="clearCarrier()" class="float-end">clear</a>
@@ -139,6 +139,20 @@
                                             <option  value="{{$carrier->id}}">{{$carrier->full_name}}</option>
                                         @endif
                                     @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-lg-2">
+                            <div class="mb-3" >
+                                <label class="form-label">State</label>
+                                <a href="#" wire:click="clear('byState')"  class="float-end">clear</a>
+                                <select class=" form-control select2-multiple "
+                                        name="byState" wire:model="byState" data-placeholder="Select ...">
+                                    <option selected>chose...</option>
+{{--                                    @foreach($techs as $tech)--}}
+                                        <option  value="LA">LA</option>
+                                        <option  value="FL">FL</option>
+{{--                                    @endforeach--}}
                                 </select>
                             </div>
                         </div>

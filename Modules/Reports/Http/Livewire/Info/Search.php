@@ -43,6 +43,7 @@ class Search extends Component
     public $job_types;
     public $ref_type;
     public $reftypeSelected;
+    public $byState='LA';
     public $carrierSelected;
 
     public $date_from;
@@ -126,6 +127,11 @@ class Search extends Component
 //                    dd('referralSelected');
                 $this->list=$this->list->where('referral.referral_type_id', $this->reftypeSelected);
             }
+            if($this->byState){
+//                    dd('referralSelected');
+                $this->list=$this->list->where('state', $this->byState);
+            }
+
                 if($this->carrierSelected){
 //                    dd($this->carrierSelected);
                     $this->list=$this->list->where('carrier_id', $this->carrierSelected);
