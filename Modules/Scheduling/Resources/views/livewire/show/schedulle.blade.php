@@ -150,7 +150,7 @@
 															<div class="col-lg-12">
 																<button type="button" class="btn btn-sm btn-warning waves-effect waves-light" wire:loading.attr="disabled" wire:click="$emit('changeRoute',['{{$job_grid->assignment->destination}}', '{{$job_grid->assignment->id}}' ])">
 																	<i class="bx bx-car"></i></button>
-																{{--                                                        <button type="button" class="btn btn-sm btn-info waves-effect waves-light"><i class="bx bx-search"></i></button>--}}
+																                                                        <a href="{{url('assignments/show/'.$job_grid->assignment->id)}}" target="_blank" type="button" class="btn btn-sm btn-info waves-effect waves-light"><i class="bx bx-file"></i></a>
 																{{--                                                        <button type="button" class="btn btn-sm btn-danger waves-effect waves-light" ><i class="bx bx-trash"></i></button>--}}
 															</div>
 														
