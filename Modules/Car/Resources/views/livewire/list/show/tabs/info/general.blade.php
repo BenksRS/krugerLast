@@ -43,6 +43,10 @@
                             <td>{{$car->epass}}</td>
                         </tr>
                         <tr>
+                            <th scope="row">Tag Expires :</th>
+                            <td>{{$car->tag_expires}}</td>
+                        </tr>
+                        <tr>
                             <th scope="row">Created:</th>
                             <td><h5 class="font-size-14" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Dol Date"><i class="bx bx-calendar me-1 text-muted"></i> - </h5></td>
                         </tr>
@@ -136,7 +140,21 @@
                             @enderror
 
                             </div>
+                        <div class="col-md-12 mt-2">
+                            <div class="mb-3 mt-2">
 
+                                <label class="form-label">Tag Expires:</label>
+                                <div class="input-group" id="end_time-input-group" wire:ignore>
+                                    <x-flatpickr  class="flatpickr_date"  id="tag_expires" name="tag_expires" show-time :time24hr="false" alt-format="m/d/Y h:i K" wire:model="tag_expires"   value="{{$tag_expires}}"  />
+                                    <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
+                                </div>
+                                @error('tag_expires')
+                                <div class="invalid-feedback show">
+                                    Please select a valid datetime.
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
 
 
                         <div class="col-lg-12">

@@ -51,6 +51,18 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <div class="btn-group">
+                                <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Sort BY<i class="mdi mdi-chevron-down"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-md">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <label> <input type="radio" wire:model="sortBy" value="tag_expires">TAG EXPIRES</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                </div>
 
                             </div>
 

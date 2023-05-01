@@ -54,7 +54,7 @@
                             </div>
 
                             <div  class="col-md-2">
-                                <button class="btn btn-lg btn-success"   type="submit"   >CONTINUE</button>
+                                <button class="btn btn-lg btn-success"   type="submit">CONTINUE</button>
                             </div>
 
                         </div>

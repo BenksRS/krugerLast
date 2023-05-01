@@ -20,6 +20,8 @@ class General extends Component
     public   $year;
     public   $epass;
 
+    public   $tag_expires;
+
 
     public function mount(Car $car)
     {
@@ -30,6 +32,8 @@ class General extends Component
         $this->vin = $this->car->vin;
         $this->year = $this->car->year;
         $this->epass = $this->car->epass;
+
+        $this->tag_expires = $this->car->tag_expires;
     }
     public function update($formData){
 

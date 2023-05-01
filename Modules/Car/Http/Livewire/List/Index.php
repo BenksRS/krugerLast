@@ -27,10 +27,14 @@ class Index extends Component
     public $selectedColumns = [];
     public $selectedRows = 100;
 
+    public $sortBy;
+
     public function mount()
     {
         $this->selectedColumns = $this->columns;
         $this->auto = 'teste';
+
+        $this->sortBy  = 'auto';
 
     }
     public function updatingSearchAssignment()
@@ -47,7 +51,7 @@ class Index extends Component
         $searchAssignment = $this->searchAssignment;
         $list = CarRepository::Searchtop($searchAssignment)->get();
 
-        $list=$list->sortBy('auto');
+        $list=$list->sortBy($this->sortBy);
 
         $items = $list->forPage($this->page, $this->selectedRows);
 
