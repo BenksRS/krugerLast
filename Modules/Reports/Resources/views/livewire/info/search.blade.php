@@ -1,4 +1,4 @@
-<div>
+<div> 
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -52,7 +52,7 @@
                                     <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
                                            id="filter_date_s" value="schedulled" checked>
                                     <label class="form-check-label" for="filter_date_s">
-                                        Jobs Schedulled
+                                        Jobs Scheduled
                                     </label>
                                 </div>
                                 <div class="form-check-inline mt-1">

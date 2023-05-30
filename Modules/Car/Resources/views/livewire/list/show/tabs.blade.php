@@ -2,6 +2,7 @@
 
     <ul class="nav nav-pills nav-justified" role="tablist" >
 
+
         @foreach($navs as $nav)
 
             @if($url == 'profile')
