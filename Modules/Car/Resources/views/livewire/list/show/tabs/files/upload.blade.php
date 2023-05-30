@@ -16,8 +16,8 @@
             <div class="row g-2">
                 @foreach ($items as $file)
                     <div class="col-sm-2">
-                        <a href="{{ Storage::url($file->path) }}" class="image-popup-vertical-fit">
-                            <img src="{{ Storage::url($file->path) }}" class="car-file" alt="">
+                        <a href="{{ $file->path }}" class="image-popup-vertical-fit">
+                            <img src="{{ $file->path }}" class="car-file" alt="">
                         </a>
                     </div>
                 @endforeach

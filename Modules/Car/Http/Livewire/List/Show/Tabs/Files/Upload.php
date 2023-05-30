@@ -24,14 +24,16 @@ class Upload extends Component
     {
         foreach ($this->files as $file) {
 
-            $path = $file->store($this->savePath);
+            $imagedata = file_get_contents($file->path());
+            $base64 = base64_encode($imagedata);
+            $b64 = 'data:image/jpeg;base64,' . $base64;
 
             CarFile::create([
                 'car_id' => $this->car,
                 'type' => $this->type['key'],
                 'created_by' => auth()->id(),
                 'updated_by' => auth()->id(),
-                'path' => $path
+                'path' => $b64
             ]);
         }
 
