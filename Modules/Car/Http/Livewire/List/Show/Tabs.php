@@ -36,6 +36,15 @@ class Tabs extends Component
             'href'     => 'manutencao',
             'key'      => 'car_tab_manutencao',
             'tab'      => 'car::list.show.tabs.manutencao',
+            'category' => 'manutencao',
+        ],
+        [
+            'title'    => 'Files',
+            'href'     => 'files',
+            'key'      => 'car_tab_files',
+            'tab'      => 'car::list.show.tabs.files',
+            'category' => 'files',
+            'category' => 'manutencao',
         ]
     ];
 

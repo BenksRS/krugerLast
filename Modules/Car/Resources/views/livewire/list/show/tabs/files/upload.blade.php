@@ -7,6 +7,7 @@
                 <div class="input-group mb-3">
                     <input type="file" wire:model="files" class="form-control" id="file-{{ $type['key'] }}-input"
                         multiple accept="mimetype//image/*">
+
                     <button type="submit" class="btn btn-outline-secondary"
                         id="file-{{ $type['key'] }}-addon">Upload</button>
                 </div>
