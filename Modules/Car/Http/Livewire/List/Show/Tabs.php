@@ -37,31 +37,35 @@ class Tabs extends Component
             'key'      => 'car_tab_manutencao',
             'tab'      => 'car::list.show.tabs.manutencao',
             'category' => 'manutencao',
+        ],
+        [
+            'title'    => 'Files',
+            'href'     => 'files',
+            'key'      => 'car_tab_files',
+            'tab'      => 'car::list.show.tabs.files',
+            'category' => 'files',
         ]
     ];
 
-    public function mount (Car $car,User $user)
+    public function mount(Car $car, User $user)
     {
         $this->car = $car;
         $this->user = $user;
         $this->url  = Route::getCurrentRoute()->uri();
 
-        if ( $this->url == 'profile' ) {
+        if ($this->url == 'profile') {
             $this->isActive = 'commission';
         }
-
     }
 
-    public function processChangetab ($newActive)
+    public function processChangetab($newActive)
     {
 
         $this->isActive = $newActive;
-
     }
 
-    public function render ()
+    public function render()
     {
         return view('car::livewire.list.show.tabs');
     }
-
 }
