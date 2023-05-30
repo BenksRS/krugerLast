@@ -14,6 +14,14 @@ return [
         'insurance' => [
             'key' => 'insurance',
             'name' => 'Insurance',
+        ],
+        'maintenance' => [
+            'key' => 'maintenance',
+            'name' => 'Maintenance',
+        ],
+        'others' => [
+            'key' => 'others',
+            'name' => 'Others',
         ]
     ]
 ];
