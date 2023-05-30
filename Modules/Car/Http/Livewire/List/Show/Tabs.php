@@ -44,7 +44,7 @@ class Tabs extends Component
             'key'      => 'car_tab_files',
             'tab'      => 'car::list.show.tabs.files',
             'category' => 'files',
-            'category' => 'manutencao',
+            'category' => 'files',
         ]
     ];
 

@@ -40,6 +40,14 @@ class Upload extends Component
         $this->dispatchBrowserEvent('file-uploaded-' . $this->type['key']);
     }
 
+
+    public function deleteFile($id)
+    {
+        if ($id) {
+            CarFile::find($id)->delete();
+        }
+    }
+
     public function getCarFiles()
     {
         return CarFile::where('car_id', $this->car)->where('type', $this->type['key'])->get();
