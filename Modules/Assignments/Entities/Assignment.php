@@ -37,6 +37,7 @@ class Assignment extends Model {
         'zipcode',
         'claim_number',
         'adjuster_info',
+        'billed_by',
         'status_id',
         'lien_info',
         'lien_date',
@@ -129,7 +130,10 @@ class Assignment extends Model {
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
-
+    public function billed_created()
+    {
+        return $this->belongsTo(User::class, 'billed_by', 'id');
+    }
     public function user_updated ()
     {
         return $this->belongsTo(User::class, 'updated_by', 'id');

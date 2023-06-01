@@ -62,7 +62,29 @@
                                                 <p class="mb-2"><i class="bx bx-calendar-event"></i> {{$assignment->scheduling->schedule_date}} <i class="bx bx-time-five"></i> {{$assignment->scheduling->start_hour}} to {{$assignment->scheduling->end_hour}} <i class="bx bx-user"></i> {{$assignment->scheduling->tech->name}}</p>
                                             @else
                                                 <p class="mb-2"> {{"Not Scheduled!"}}</p>
+                                            @endif
+
+{{--  if    billing  by info --}}
+                                            @if(in_array($assignment->status->id,[4]))
+                                                <p>Billing by :
+                                                @if(is_null($assignment->billed_created))
+                                                     None |
+                                                    <button type="button" class="btn btn-primary btn-sm" wire:click="$emit('startBilling')"><i class="fas fa-money-bill"></i> Start Billing</button>
+                                                @else
+                                                        {{$assignment->billed_created->name}} |
+                                                    <button type="button" class="btn btn-warning btn-sm" wire:click="$emit('resetBilling')"><i class="fas fa-undo-alt"></i> reset</button></p>
                                                 @endif
+                                                </p>
+                                            @else
+                                                <p>Billing by :
+                                                    @if(is_null($assignment->billed_created))
+                                                        None |
+                                                    @else
+                                                        {{$assignment->billed_created->name}} |
+                                                        @endif
+                                            @endif
+
+
 
                                                 </p>
 

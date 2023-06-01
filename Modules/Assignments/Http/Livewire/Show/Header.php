@@ -14,7 +14,6 @@ use Modules\Assignments\Entities\AssignmentsTags;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
 use Modules\Referrals\Entities\Referral;
 
-
 use Auth;
 
 class Header extends Component
@@ -24,6 +23,8 @@ class Header extends Component
         'jobtypeUpdate' => 'processJobtype',
         'showUpdateinfo' => 'processShowinfo',
         'updateScheduling' => 'processScheduling',
+        'startBilling' => 'processStartBilling',
+        'resetBilling' => 'processResetBilling',
     ];
     public $show = true;
 
@@ -71,7 +72,6 @@ class Header extends Component
         $this->user = Auth::user();
     }
 
-
     public function setPreStatus($newStatus){
         $this->preStatus = $newStatus;
     }
@@ -101,6 +101,7 @@ class Header extends Component
             'created_by'=> $this->user->id,
             'type'=> 'assignment',
             'notable_type'=>  Modules\Assignments\Entities\Assignment::class,
+
         ]);
 
         if(in_array($newStatus, [11,12, 27])){
@@ -198,6 +199,23 @@ class Header extends Component
         $this->historic = AssignmentsStatusPivot::where('assignment_id',$this->assignment->id)->get();
         //sync app
 //        callkruger('jobs')->sync($this->assignment->id);
+
+    }
+    public function processResetBilling(){
+        $id =  $this->assignment->id;
+
+        $data['billed_by']=NULL;
+        $this->assignment->update($data);
+
+        $this->assignment = Assignment::find($id);
+    }
+    public function processStartBilling(){
+         $id =  $this->assignment->id;
+
+         $data['billed_by']=$this->user->id;
+         $this->assignment->update($data);
+
+        $this->assignment = Assignment::find($id);
 
     }
     public function processShowinfo(){
