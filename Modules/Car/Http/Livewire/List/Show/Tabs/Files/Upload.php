@@ -22,22 +22,36 @@ class Upload extends Component
 
     public function saveFiles()
     {
+
+        $carFiles = [];
+
         foreach ($this->files as $file) {
 
             $imagedata = file_get_contents($file->path());
             $base64 = base64_encode($imagedata);
             $b64 = 'data:image/jpeg;base64,' . $base64;
 
-            CarFile::create([
+            $carFiles[] = [
                 'car_id' => $this->car,
                 'type' => $this->type['key'],
                 'created_by' => auth()->id(),
                 'updated_by' => auth()->id(),
                 'path' => $b64
-            ]);
+            ];
         }
 
+        CarFile::insert($carFiles);
+
+        $this->reset(['files']);
         $this->dispatchBrowserEvent('file-uploaded-' . $this->type['key']);
+    }
+
+
+    public function deleteFile($id)
+    {
+        if ($id) {
+            CarFile::find($id)->delete();
+        }
     }
 
     public function getCarFiles()
