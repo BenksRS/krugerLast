@@ -63,7 +63,9 @@
                         <tr>
 
                             @if(in_array('Name', $selectedColumns))
+
                                 <th>Name</th>
+                                <th>Billing by</th>
                             @endif
                             @if(in_array('Job Type', $selectedColumns))
                                 <th>Job Type</th>
@@ -124,6 +126,16 @@
 
 
                                     </td>
+                                @endif
+                                @if(in_array('Name', $selectedColumns))
+                                        <td>
+                                            @if(is_null($row->billed_created))
+                                                -
+                                            @else
+                                                {{$row->billed_created->name}}
+                                            @endif
+
+                                        </td>
                                 @endif
                                 @if(in_array('Job Type', $selectedColumns))
                                     <td><p>
