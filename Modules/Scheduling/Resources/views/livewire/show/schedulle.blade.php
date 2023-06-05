@@ -73,7 +73,7 @@
 								<div class="text-muted m-4">
 									<p>
 									<h5>{{$tech->user->name}}</h5>
-									<span>Technician</span></p>
+									<span>{{$tech->base}}</span></p>
 								</div>
 							</div>
 						@endforeach
