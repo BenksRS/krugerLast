@@ -14,6 +14,11 @@ class AlacrityController extends Controller
      */
     public function index()
     {
+
+        $alacrity = alacrity_service()->post('GetAssignmentSummaryList');
+
+        dump($alacrity);
+
         return view('alacrity::index');
     }
 

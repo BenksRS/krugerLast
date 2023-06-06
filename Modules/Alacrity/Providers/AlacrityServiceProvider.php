@@ -2,6 +2,7 @@
 
 namespace Modules\Alacrity\Providers;
 
+use Modules\Alacrity\AlacrityService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
@@ -38,7 +39,13 @@ class AlacrityServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+
+        $this->app->alias('alacrity-service', AlacrityService::class);
+        $this->app->singleton('alacrity-service', function ($app) {
+            return new AlacrityService();
+        });
     }
+
 
     /**
      * Register config.
@@ -51,7 +58,8 @@ class AlacrityServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
         );
     }
 

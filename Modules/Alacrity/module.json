@@ -7,7 +7,11 @@
     "providers": [
         "Modules\\Alacrity\\Providers\\AlacrityServiceProvider"
     ],
-    "aliases": {},
-    "files": [],
+    "aliases": {
+        "AlacrityService": "Modules\\Alacrity\\Facades\\AlacrityService"
+    },
+    "files": [
+        "helpers.php"
+    ],
     "requires": []
 }
