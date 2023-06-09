@@ -67,7 +67,7 @@ class NewAssignment extends Component
     ];
 
     public function mount(){
-        $this->allReferrals = Referral::all();
+        $this->allReferrals = Referral::where('status', 'ACTIVE')->get();
         $this->jobTypes = AssignmentsJobTypes::where('active', 'y')->get();
         $this->user = Auth::user();
 
