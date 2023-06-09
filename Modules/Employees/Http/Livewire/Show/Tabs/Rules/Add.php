@@ -65,7 +65,9 @@ class Add extends Component
             $jobs_types = $formData->job_type;
         }
         if(isset($formData->percentage)){
-            $percentage= $formData->percentage;
+            $perfixed=($formData->percentage > 0.05) ? 0.05 :$formData->percentage;
+
+            $percentage= $perfixed;
         }
         if(isset($formData->referral_id)){
             $referral_id = $formData->referral_id;
