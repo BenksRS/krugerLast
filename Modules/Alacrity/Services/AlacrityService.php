@@ -65,7 +65,7 @@ class AlacrityService
      */
     public function __call($method, $arguments)
     {
-        $response = $this->request($method, $arguments[0], isset($arguments[1]) ? $arguments[1] : []);
+        $response = $this->request($method, $arguments[0], isset($arguments[1]) ? $arguments[1] : [], isset($arguments[2]) ? $arguments[2] : []);
 
 
 
@@ -97,9 +97,10 @@ class AlacrityService
      * @param string $method The HTTP method to use.
      * @param string $endpoint The endpoint to send the request to.
      * @param array|null $data The data to send with the request.
+     * @param array|null $additionalData Any additional data to send with the request.
      * @return mixed The response data.
      */
-    public function request($method, $endpoint, $data = [])
+    public function request($method, $endpoint, $data = [], $additionalData = [])
     {
         $this->authenticate();
 
@@ -116,6 +117,8 @@ class AlacrityService
         $request = [
             'Request' => array_merge($baseData, $data)
         ];
+
+        $request = array_merge($request, $additionalData);
 
         $response = $this->api->withHeaders($headers)->{$method}($endpoint, $request);
 
