@@ -134,6 +134,7 @@ class NewAssignment extends Component
             'date_assignment' => $this->date_create,
             'status_id' => 1,
             'status_collection_id' => 3,
+            'billed_by' => null,
 //
 //            'phone' => $this->phone,
 //            'phone_alternative' => $this->phone_alternative,

@@ -256,7 +256,7 @@
                             <div class="col-md-6">
                                 <label  class="form-label">Percentage</label>
                                 <input type="text" class="form-control"  name="percentage"
-                                       placeholder="Max 0.05 = 5%" wire:model.debounce.1000ms="percentage"  required>
+                                       placeholder="Max 0.05 = 5%   " wire:model.debounce.1000ms="percentage"  required>
 
                                 <div class="valid-feedback">
                                     Looks good!

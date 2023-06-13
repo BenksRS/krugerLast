@@ -43,6 +43,7 @@ class Assignment extends Model {
         'lien_date',
         'event_id',
         'status_collection_id',
+        'allacrity_id',
         'inside_info'
     ];
 
