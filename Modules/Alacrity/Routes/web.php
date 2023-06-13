@@ -12,5 +12,11 @@
 */
 
 Route::prefix('alacrity')->group(function() {
+
+
     Route::get('/', 'AlacrityController@index');
+    Route::get('/getAll/', 'AlacrityController@getAll');
+    Route::get('/acceptJob/', 'AlacrityController@acceptJob');
+
+
 });
