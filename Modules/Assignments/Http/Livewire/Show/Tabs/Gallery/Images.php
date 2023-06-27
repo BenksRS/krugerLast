@@ -23,7 +23,7 @@ class Images extends Component
 
     public function mount(Assignment $assignment)
     {
-        ini_set('memory_limit','1G');
+        ini_set('memory_limit','2G');
 
         $this->assignment = $assignment;
         $this->allCategorys = GalleryCategory::all();
