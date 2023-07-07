@@ -1,0 +1,84 @@
+<x-layouts.app layout="horizontal">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />--}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>--}}
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0 font-size-18">{{$page->title}}</h4>
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{{$page->back}}">{{$page->back_title}}</a></li>
+                        <li class="breadcrumb-item active">{{$page->title}}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end page title -->
+    @livewire('employees::show.header', ['user' => $user->id], key('employees_header'))
+
+    @livewire('profile::show.tabs', ['user' => $user->id], key('profile_tab_panel'))
+
+
+    @push('js')
+    <script>
+        var taskFlatpickrConfigDate = {
+            enableTime: false,
+            altInput: true,
+            dateFormat: "Y-m-d",
+            altFormat: "m\/d\/Y",
+        };
+        var taskFlatpickrConfigDateTime = {
+            enableTime: true,
+            altInput: true,
+            dateFormat: "Y-m-d H:i",
+            altFormat: "m\/d\/Y h:i K",
+            time_24hr: false
+        };
+
+        function componentsLoadPage() {
+            console.log('START components employees');
+            $('.select2').select2();
+            $('.dropzone').dropzone();
+            $('.flatpickr_date').flatpickr(taskFlatpickrConfigDate);
+            $('.flatpickr_datetime').flatpickr(taskFlatpickrConfigDateTime);
+
+
+            $('.list_jobs_item').hide();
+            $('.btn_hide_jobs').hide();
+
+            $('.btn_show_jobs').on('click', function(e) {
+                let data = $(this).data('id');
+                let btn_hide = $(this).data('hide');
+                $('.list_jobs_item').hide();
+                $('.btn_hide_jobs').hide();
+                $('.btn_show_jobs').show();
+
+                $('.list_jobs_' + data).show();
+                $('.btn_hide_' + data).show();
+                $(this).hide();
+
+            });
+            $('.btn_hide_jobs').on('click', function(e) {
+                $('.list_jobs_item').hide();
+                $('.btn_hide_jobs').hide();
+                $('.btn_show_jobs').show();
+
+            });
+
+
+            console.log('END components employees')
+
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+            Livewire.hook('message.processed', (message, component) => {
+                componentsLoadPage()
+            })
+        });
+    </script>
+
+    @endpush
+</x-layouts.app>

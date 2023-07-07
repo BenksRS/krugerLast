@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 use Modules\User\Entities\User;
 
-class Tabs extends Component {
+class Tabs extends Component
+{
 
     protected $listeners = [
         'changeTab'       => 'processChangetab',
@@ -64,6 +65,13 @@ class Tabs extends Component {
             'category' => 'profile',
         ],
         [
+            'title'    => 'Docs',
+            'href'     => 'docs',
+            'key'      => 'employees_tab_docs',
+            'tab'      => 'employees::show.tabs.docs',
+            'category' => 'profile',
+        ],
+        [
             'title'    => 'Account',
             'href'     => 'account',
             'key'      => 'employees_tab_account',
@@ -73,28 +81,25 @@ class Tabs extends Component {
 
     ];
 
-    public function mount (User $user)
+    public function mount(User $user)
     {
 
         $this->user = $user;
         $this->url  = Route::getCurrentRoute()->uri();
 
-        if ( $this->url == 'profile' ) {
+        if ($this->url == 'profile') {
             $this->isActive = 'commission';
         }
-
     }
 
-    public function processChangetab ($newActive)
+    public function processChangetab($newActive)
     {
 
         $this->isActive = $newActive;
-
     }
 
-    public function render ()
+    public function render()
     {
         return view('employees::livewire.show.tabs');
     }
-
 }

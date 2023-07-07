@@ -19,6 +19,6 @@
     "Password": true,
     "Charts": true,
     "Car": true,
-    "Alacrity": true
-
+    "Alacrity": true,
+    "Profile": true
 }

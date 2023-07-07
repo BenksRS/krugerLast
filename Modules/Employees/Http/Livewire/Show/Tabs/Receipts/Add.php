@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\Employees\Http\Livewire\Show\Tabs\Receipts;
+
 use Auth;
 use Illuminate\Http\Request;
 use Livewire\Component;
@@ -29,10 +30,8 @@ class Add extends Component
     {
         $array = array('amount');
 
-        if (in_array($field, $array))
-        {
+        if (in_array($field, $array)) {
             $this->{$field} = ($this->{$field} != '') ? number_format(preg_replace('/[^0-9.]+/', '', $this->{$field}), 2) : '';
-
         }
     }
 
@@ -44,19 +43,18 @@ class Add extends Component
         ]);
         $imagedata = file_get_contents($this->photo->path());
         $base64 = base64_encode($imagedata);
-        $b64='data:image/jpeg;base64,'.$base64;
+        $b64 = 'data:image/jpeg;base64,' . $base64;
 
         EmployeeReceipts::create([
-            'user_id'=>$this->user->id,
-            'b64'=>$b64,
-            'status'=>'pending',
-            'amount'=>$this->amount,
-            'category'=>$this->category,
-            'created_by'=>$this->auth_user->id,
+            'user_id' => $this->user->id,
+            'b64' => $b64,
+            'status' => 'pending',
+            'amount' => $this->amount,
+            'category' => $this->category,
+            'created_by' => $this->auth_user->id,
         ])->save();
 
         $this->emit('backList');
-
     }
 
     public function render()
