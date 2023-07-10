@@ -5,19 +5,20 @@ namespace Modules\Integration\Repositories;
 use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\Builder;
 
-class UserRepository extends User {
+class UserRepository extends User
+{
 
     use IntegrationRepository;
 
     protected $table = 'users';
 
 
-    public function __construct ()
+    public function __construct()
     {
         parent::__construct();
     }
 
-    public function getData ()
+    public function getData()
     {
         return [
             'id'          => $this->id,
@@ -26,14 +27,12 @@ class UserRepository extends User {
             'username'    => $this->email,
             'password'    => $this->password,
             'group'       => $this->group->name ?? 'admin',
-        ];
+            'active'      => $this->active,
+         ];
     }
 
-    protected static function booted()
+    public function notSynced()
     {
-        static::addGlobalScope('users', function (Builder $builder) {
-            $builder->where('active', 'Y');
-        });
+        return parent::notSynced()->where('active', 'Y');
     }
-
 }

@@ -4,34 +4,30 @@ namespace Modules\Integration\Repositories;
 
 use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 
-class WorkerRepository extends Model {
+class WorkerRepository extends Model
+{
 
     use IntegrationRepository;
 
     protected $table = 'workers';
 
-    public function user ()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function getData ()
+    public function getData()
     {
         return [
             'id'   => $this->user_id,
             'name' => $this->user->name,
+            'active' => $this->active,
         ];
     }
 
-
-
-    protected static function booted()
+    public function notSynced()
     {
-        static::addGlobalScope('workers', function (Builder $builder) {
-            $builder->where('active', 'Y');
-        });
+        return parent::notSynced()->where('active', 'Y');
     }
-
 }
