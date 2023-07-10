@@ -29,7 +29,7 @@ class TimesheetController extends Controller
 
     public function build(Request $request)
     {
-        $daysOfWeek = $this->getDaysOfWeek(0);
+        $daysOfWeek = $this->getDaysOfWeek();
 
         $employeesRates = EmployeeRate::where('type', 'D')->get();
 

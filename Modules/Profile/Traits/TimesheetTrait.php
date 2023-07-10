@@ -7,8 +7,11 @@ use Illuminate\Support\Carbon;
 trait TimesheetTrait
 {
 
-    protected function setDaysOfWeek($week = 0)
+    protected function setDaysOfWeek()
     {
+
+        $week = config('profile.week') ?? 0;
+
         $startOfWeek = Carbon::now()->startOfWeek()->addWeeks($week);
         $endOfWeek = Carbon::now()->endOfWeek()->addWeeks($week);
         $period = $startOfWeek->toPeriod($endOfWeek);
@@ -40,8 +43,8 @@ trait TimesheetTrait
         ];
     }
 
-    public function getDaysOfWeek($week = 0)
+    public function getDaysOfWeek()
     {
-        return $this->setDaysOfWeek($week);
+        return $this->setDaysOfWeek();
     }
 }

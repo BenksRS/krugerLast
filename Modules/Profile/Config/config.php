@@ -3,6 +3,7 @@
 return [
     'name' => 'Profile',
 
+    'week' => -1,
     'timesheet' => [
         'morning' => 'Morning',
         'afternoon' => 'Afternoon',
