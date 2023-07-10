@@ -3,6 +3,7 @@
 namespace Modules\Integration\Repositories;
 
 use Modules\User\Entities\User;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserRepository extends User {
 
@@ -24,8 +25,15 @@ class UserRepository extends User {
             'name'        => $this->name,
             'username'    => $this->email,
             'password'    => $this->password,
-            'group'       => 'admin',
+            'group'       => $this->group->name ?? 'admin',
         ];
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope('users', function (Builder $builder) {
+            $builder->where('active', 'Y');
+        });
     }
 
 }

@@ -27,6 +27,13 @@ class IntegrationController extends Controller {
     public function index ()
     {
 
+
+    $data = $this->repository;
+    
+
+    dump($data->notSynced()->get());
+        return;
+
         $data = $this->assignmentRepository->whereId(27868)->first();
 
         dump($data->getData());
