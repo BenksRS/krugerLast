@@ -17,12 +17,7 @@ class DashboardController extends AdminController
      */
     public function index()
     {
-        $userLogged = Auth::user();
 
-        if($userLogged->group_id == 2){
-            return redirect('/profile/app');
-        }
-        return redirect('/dashboard/list/open');
         
     }
     /**
