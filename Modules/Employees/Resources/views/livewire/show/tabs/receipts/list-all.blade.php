@@ -90,7 +90,7 @@
 
                                             @switch($row->status)
                                             @case('pending')
-                                            @if($user->group_id == 1)
+                                            @if($auth_user->group_id == 1)
                                             <button type="button" class="btn btn-sm btn-success  waves-effect waves-light  me-2 float-end" wire:click.prevent="approve('{{$row->id}}')"> <i class="bx bx-check font-size-16 align-middle "></i> Approve</button>
                                             @endif
                                             <button type="button" class="btn btn-sm btn-danger  waves-effect waves-light  me-2 float-end" wire:click.prevent="delete('{{$row->id}}')"> <i class="bx bx-trash font-size-16 align-middle "></i> Delete</button>
