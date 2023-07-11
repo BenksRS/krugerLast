@@ -19,10 +19,11 @@ class DashboardController extends AdminController
     {
         $userLogged = Auth::user();
 
-        if($userLogged->group_id == 1){
-            return redirect('/dashboard/list/open');
+        if($userLogged->group_id == 2){
+            return redirect('/profile/app');
         }
-        return redirect('/profile/app');
+        return redirect('/dashboard/list/open');
+        
     }
     /**
      * Show the form for creating a new resource.
