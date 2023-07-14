@@ -49,7 +49,7 @@ class HeaderScheduling extends Component
     public function mount(Assignment $assignment)
     {
         $this->assignment = $assignment;
-        $this->techs =Techs::all();
+        $this->techs =Techs::where('active','Y')->orderBy('order')->get();
         $this->user = Auth::user();
 
         $this->jbSelected = $this->assignment->job_types;
