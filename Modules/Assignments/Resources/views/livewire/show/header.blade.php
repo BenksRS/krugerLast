@@ -214,7 +214,8 @@
 
                                                     <li><button class="dropdown-item" wire:click="setPreStatus(7)"  type="button">CLOSED</button></li>
                                                 @else
-
+                                                    <li><button class="dropdown-item" wire:click="setPreStatus(11)" type="button">OPEN RESCHEDULE</button></li>
+                                                    <li><button class="dropdown-item" wire:click="setPreStatus(12)" type="button">PENDING</button></li>
                                                     @if(in_array($assignment->status->id,[1, 27, 28]))
                                                         <li><button class="dropdown-item" wire:click="changeStatus(31)" type="button">THIG</button></li>
                                                     @endif
