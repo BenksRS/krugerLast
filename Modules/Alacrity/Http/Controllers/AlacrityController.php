@@ -178,8 +178,9 @@ class AlacrityController extends Controller
 
         $names=explode(' ',$jobInfo->HomeOwner);
 
-        $first=$names[0];
-        $last=$names[1];
+        $first=  str_replace(array("#", "'", ";",",",".",":"), '', $names[0]);
+
+        $last=str_replace(array("#", "'", ";",",",".",":"), '', $names[1]);
 
         $today=Carbon::now();
         $lostDate=Carbon::createFromFormat('m/d/Y', $jobInfo->LossDate)->format('Y-m-d H:i:s');
