@@ -6,8 +6,8 @@ return [
     /**
      * The base URL for the Alacrity API.
      */
-    'base_url' => 'https://em.atst.alacrity.net/WebService/AlacrityService.svc',
-//    'base_url' => 'https://em.alacrity.net/WebService/AlacrityService.svc',
+//    'base_url' => 'https://em.atst.alacrity.net/WebService/AlacrityService.svc',
+    'base_url' => 'https://em.alacrity.net/WebService/AlacrityService.svc',
 
     /**
      * The credentials used to authenticate with the Alacrity API.

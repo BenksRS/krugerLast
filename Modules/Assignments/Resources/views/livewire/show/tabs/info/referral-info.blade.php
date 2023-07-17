@@ -40,7 +40,7 @@
                             <th scope="row">Claim Number:</th>
                             @if($assignment->referral->id == 24)
 
-                                <td><a href="{{url('https://em.atst.alacrity.net/EM/AssignmentList/SearchAssignmentList.aspx?MenuId=117&SubMenuId=195&ClaimNumber='.$assignment->claim_number.'&SearchOptions=0')}}" target="_blank">{{$assignment->claim_number}}
+                                <td><a href="{{url('https://em.alacrity.net/EM/AssignmentList/SearchAssignmentList.aspx?MenuId=117&SubMenuId=195&ClaimNumber='.$assignment->claim_number.'&SearchOptions=0')}}" target="_blank">{{$assignment->claim_number}}
                             @else
                                 <td>{{$assignment->claim_number}}</td>
                             @endif
