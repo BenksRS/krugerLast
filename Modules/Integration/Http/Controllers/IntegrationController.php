@@ -27,6 +27,13 @@ class IntegrationController extends Controller {
     public function index ()
     {
 
+
+    $data = $this->repository;
+    
+
+    dump($data->notSynced()->first());
+        return;
+
         $data = $this->assignmentRepository->whereId(27868)->first();
 
         dump($data->getData());
@@ -66,7 +73,12 @@ class IntegrationController extends Controller {
      * @return Renderable
      */
     public function users (){
-        integration(['users','workers'])->set();
+        dump('teste');
+       
+
+        integration(['users', 'workers'])->set();
+
+       
 
     }
     public function gallery (){

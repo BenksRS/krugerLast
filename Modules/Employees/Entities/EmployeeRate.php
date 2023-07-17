@@ -20,10 +20,11 @@ class EmployeeRate extends Model
     ];
     protected $appends = [
         'type_name'
-        ];
+    ];
 
-    public function getTypeNameAttribute (){
-        switch ($this->type){
+    public function getTypeNameAttribute()
+    {
+        switch ($this->type) {
             case 'D':
                 $info = "Day";
                 break;

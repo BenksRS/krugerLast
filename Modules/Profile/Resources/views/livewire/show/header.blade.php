@@ -1,0 +1,1 @@
+@livewire('employees::show.header', ['user' => $user->id], key('employees_header'))

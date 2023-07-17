@@ -6,6 +6,8 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Core\Http\Controllers\AdminController;
+use Auth;
+
 
 class DashboardController extends AdminController
 {
@@ -16,7 +18,7 @@ class DashboardController extends AdminController
     public function index()
     {
 
-        return redirect('/dashboard/list/open');
+
     }
     /**
      * Show the form for creating a new resource.

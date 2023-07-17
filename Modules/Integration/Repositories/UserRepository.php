@@ -3,20 +3,22 @@
 namespace Modules\Integration\Repositories;
 
 use Modules\User\Entities\User;
+use Illuminate\Database\Eloquent\Builder;
 
-class UserRepository extends User {
+class UserRepository extends User
+{
 
     use IntegrationRepository;
 
     protected $table = 'users';
 
 
-    public function __construct ()
+    public function __construct()
     {
         parent::__construct();
     }
 
-    public function getData ()
+    public function getData()
     {
         return [
             'id'          => $this->id,
@@ -24,8 +26,13 @@ class UserRepository extends User {
             'name'        => $this->name,
             'username'    => $this->email,
             'password'    => $this->password,
-            'group'       => 'admin',
-        ];
+            'group'       => $this->group->name ?? 'admin',
+            'active'      => $this->active,
+         ];
     }
 
+    public function notSynced()
+    {
+        return parent::notSynced()->where('active', 'Y');
+    }
 }
