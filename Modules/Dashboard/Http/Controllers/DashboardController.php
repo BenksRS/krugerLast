@@ -15,6 +15,7 @@ class DashboardController extends AdminController
      */
     public function index()
     {
+
         return redirect('/dashboard/list/open');
     }
     /**
@@ -30,6 +31,7 @@ class DashboardController extends AdminController
         ];
         \session()->flash('page',$page_info);
         $page =\session()->get('page');
+
 
         return view('dashboard::list', compact('page', 'type'));
 

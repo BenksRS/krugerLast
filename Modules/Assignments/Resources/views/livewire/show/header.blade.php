@@ -64,15 +64,15 @@
                                                 <p class="mb-2"> {{"Not Scheduled!"}}</p>
                                             @endif
 
-{{--  if    billing  by info --}}
+                                            {{--  if    billing  by info --}}
                                             @if(in_array($assignment->status->id,[4]))
                                                 <p>Billing by :
-                                                @if(is_null($assignment->billed_created))
-                                                     None |
-                                                    <button type="button" class="btn btn-primary btn-sm" wire:click="$emit('startBilling')"><i class="fas fa-money-bill"></i> Start Billing</button>
-                                                @else
+                                                    @if(is_null($assignment->billed_created))
+                                                        None |
+                                                        <button type="button" class="btn btn-primary btn-sm" wire:click="$emit('startBilling')"><i class="fas fa-money-bill"></i> Start Billing</button>
+                                                    @else
                                                         {{$assignment->billed_created->name}} |
-                                                    <button type="button" class="btn btn-warning btn-sm" wire:click="$emit('resetBilling')"><i class="fas fa-undo-alt"></i> reset</button></p>
+                                                        <button type="button" class="btn btn-warning btn-sm" wire:click="$emit('resetBilling')"><i class="fas fa-undo-alt"></i> reset</button></p>
                                                 @endif
                                                 </p>
                                             @else
@@ -81,8 +81,8 @@
                                                         None |
                                                     @else
                                                         {{$assignment->billed_created->name}} |
-                                                        @endif
-                                            @endif
+                                                    @endif
+                                                    @endif
 
 
 
@@ -188,33 +188,57 @@
                                             <button type="button" class="btn btn-sm btn-secondary dropdown-toggle " data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                                                 <i class="bx bx-dots-horizontal align-middle"></i>
                                             </button>
+                                            <?php $count=0;$check_type=false;?>
+                                            @foreach($assignment->job_types as $job_types)
+                                                <?php $count++;?>
+                                                @if($job_types->id == 15)
+                                                    <?php
+                                                    $check_type=true;
+                                                    ?>
+                                                @else
+                                                @endif
+                                            @endforeach
                                             <ul class="dropdown-menu dropdown-menu-lg-end">
-                                                <li><button class="dropdown-item" wire:click="changeStatusScheduling(1)"  type="button">OPEN</button></li>
-                                                <li><button class="dropdown-item" wire:click="setPreStatus(11)" type="button">OPEN RESCHEDULE</button></li>
-                                                <li><button class="dropdown-item" wire:click="setPreStatus(12)" type="button">PENDING</button></li>
-                                                
-                                                @if(in_array($assignment->status->id,[1, 27, 28]))
-                                                    <li><button class="dropdown-item" wire:click="changeStatus(31)" type="button">THIG</button></li>
+
+
+                                                @if($assignment->status->id == 33)
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(1)"
+                                                                @if($assignment->carrier->id == 583 && $check_type == 1) disabled @endif type="button">OPEN @if($assignment->carrier->id == 583 && $check_type == 1)  <i class="bx bx-time-five"></i> (MISSING JOB TYPE / CARRIER) @endif
+                                                        </button></li>
+                                                    <li><button class="dropdown-item" wire:click="setPreStatus(11)"
+                                                                @if($assignment->carrier->id == 583 && $check_type == 1) disabled @endif type="button">OPEN RESCHEDULE @if($assignment->carrier->id == 583 && $check_type == 1)  <i class="bx bx-time-five"></i> (MISSING JOB TYPE / CARRIER) @endif
+                                                        </button></li>
+                                                    <li><button class="dropdown-item" wire:click="setPreStatus(12)"
+                                                                @if($assignment->carrier->id == 583 && $check_type == 1) disabled @endif type="button">PENDING @if($assignment->carrier->id == 583 && $check_type == 1)  <i class="bx bx-time-five"></i> (MISSING JOB TYPE / CARRIER) @endif
+                                                        </button></li>
+
+                                                    <li><button class="dropdown-item" wire:click="setPreStatus(7)"  type="button">CLOSED</button></li>
+                                                @else
+
+                                                    @if(in_array($assignment->status->id,[1, 27, 28]))
+                                                        <li><button class="dropdown-item" wire:click="changeStatus(31)" type="button">THIG</button></li>
+                                                    @endif
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(32)" type="button">UNIV</button></li>
+
+                                                    @if($assignment->status->id == 4)
+                                                        <li><button class="dropdown-item" wire:click="changeStatus(3)" type="button">IN PROGRESS</button></li>
+                                                    @endif
+
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(28)" type="button">MESSAGE SENT</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(29)" type="button">REQUEST DOCUSIGN</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(14)"  type="button">DOCUSIGN SENT</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(17)"  type="button">READY TO INSTALL</button></li>
+                                                    @if($assignment->scheduling || in_array($assignment->status->id,[28, 17]))
+                                                        <li><button class="dropdown-item" wire:click="changeStatusScheduling(27)"  type="button">LATE</button></li>
+                                                    @endif
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(20)" type="button">UPLOADING PICS</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(4)"  @if(!isset($assignment->scheduling)) disabled @endif type="button">READY TO BILL @if(!isset($assignment->scheduling))  <i class="bx bx-time-five"></i> (MISSING SCHEDULED DATE) @endif   </button></li>
+                                                    <li><button class="dropdown-item" wire:click="setPreStatus(7)"  type="button">CLOSED</button></li>
+                                                    <li><button class="dropdown-item" wire:click="setPreStatus(26)" type="button">NO CHARGE</button></li>
+                                                    <li><button class="dropdown-item" wire:click="setPreStatus(8)"  type="button">NO JOB</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(30)"  type="button">LANDLINE</button></li>
+
                                                 @endif
-                                                <li><button class="dropdown-item" wire:click="changeStatus(32)" type="button">UNIV</button></li>
-                                                
-                                                @if($assignment->status->id == 4)
-                                                    <li><button class="dropdown-item" wire:click="changeStatus(3)" type="button">IN PROGRESS</button></li>
-                                                @endif
-                                                
-                                                <li><button class="dropdown-item" wire:click="changeStatus(28)" type="button">MESSAGE SENT</button></li>
-                                                <li><button class="dropdown-item" wire:click="changeStatus(29)" type="button">REQUEST DOCUSIGN</button></li>
-                                                <li><button class="dropdown-item" wire:click="changeStatus(14)"  type="button">DOCUSIGN SENT</button></li>
-                                                <li><button class="dropdown-item" wire:click="changeStatus(17)"  type="button">READY TO INSTALL</button></li>
-                                                @if($assignment->scheduling || in_array($assignment->status->id,[28, 17]))
-                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(27)"  type="button">LATE</button></li>
-                                                @endif
-                                                <li><button class="dropdown-item" wire:click="changeStatus(20)" type="button">UPLOADING PICS</button></li>
-                                                <li><button class="dropdown-item" wire:click="changeStatus(4)"  @if(!isset($assignment->scheduling)) disabled @endif type="button">READY TO BILL @if(!isset($assignment->scheduling))  <i class="bx bx-time-five"></i> (MISSING SCHEDULED DATE) @endif   </button></li>
-                                                <li><button class="dropdown-item" wire:click="setPreStatus(7)"  type="button">CLOSED</button></li>
-                                                <li><button class="dropdown-item" wire:click="setPreStatus(26)" type="button">NO CHARGE</button></li>
-                                                <li><button class="dropdown-item" wire:click="setPreStatus(8)"  type="button">NO JOB</button></li>
-                                                <li><button class="dropdown-item" wire:click="changeStatus(30)"  type="button">LANDLINE</button></li>
                                             </ul>
                                         </div>
 

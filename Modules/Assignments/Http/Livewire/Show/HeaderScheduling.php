@@ -11,6 +11,7 @@ use Modules\Assignments\Entities\AssignmentsScheduling;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
 use Modules\User\Entities\Techs;
 use Auth;
+use function Ramsey\Uuid\v1;
 
 class HeaderScheduling extends Component
 {
@@ -70,12 +71,9 @@ class HeaderScheduling extends Component
     public function updateJD($id){
 
         if(in_array($id, $this->jtDuplicate)){
-
             $this->jtDuplicate=array_diff($this->jtDuplicate, $id);
         }else{
-
             $this->jtDuplicate=array_unshift($this->jtDuplicate, $id);
-
         }
     }
     public function toggleDuplicate(){
@@ -167,7 +165,28 @@ class HeaderScheduling extends Component
         $this->updateNotes();
     }
 
+    public function alacrityVisitPlanned($date){
 
+        if($this->assignment->referral->id == 24) {
+            // alacrity time zone
+            switch ($this->assignment->state) {
+                case 'LA':
+                    $ContactDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->subHours(1)->format('Y-m-d H:i:s');
+                    break;
+                default:
+                    $ContactDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('Y-m-d H:i:s');
+                    break;
+            }
+
+            alacrity_service()->post('UpdateDates', ['AssignmentId' => $this->assignment->allacrity_id],
+                ["AssignmentDates" => [
+                    'ScheduledVisitDate' => $ContactDate
+                ]]);
+
+            $this->emit('contentCC');
+        }
+
+    }
     public function ScheduleUpdate(){
         $Schedule=AssignmentsScheduling::where('assignment_id', $this->assignment->id)->first();
 
@@ -190,6 +209,9 @@ class HeaderScheduling extends Component
             $AssignmentsScheduling['end_date']=$data_end;
 
             $description = "Scheduled: $data_start_show to $data_end_show - Tech : $tech_name";
+
+            // update schedulle visit
+            $this->alacrityVisitPlanned($data_start);
         }
 
         $Schedule->update($AssignmentsScheduling);
@@ -234,6 +256,9 @@ class HeaderScheduling extends Component
             $data_end_show=Carbon::parse($data_start_show)->addHour()->format('m/d/Y g:i A');
 //            $data_end_show=Carbon::createFromFormat('Y-m-d  H:i', $data_end)->format('m/d/Y g:i A');
             $data_end = date('Y-m-d H:i:s', $data_end);
+
+            // update schedulle visit
+            $this->alacrityVisitPlanned($data_start);
         }
 
         $tech_info = Techs::find($this->techSelected);
@@ -275,6 +300,7 @@ class HeaderScheduling extends Component
     }
     public function checkButons(){
         switch ($this->assignment->status->class){
+
             case 'open':
             case 'open-reschedule':
             case 'pending':

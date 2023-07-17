@@ -16,6 +16,7 @@ class ReferralInfo extends Component
         'referralUpdate' => 'processReferral',
         'editReferralinfo' => 'edit',
         'contentChange' => 'processContent',
+        'contentCC' => 'getCCalacrity',
     ];
 
     public $assignment;
@@ -43,6 +44,10 @@ class ReferralInfo extends Component
     public $date_of_loss;
     public $adjuster_info;
 
+    public $CC_alacrity="-";
+    public $PI_alacrity="-";
+    public $SI_alacrity="-";
+
 
     protected $rules = [
         'referral_id' => 'required',
@@ -60,6 +65,10 @@ class ReferralInfo extends Component
             $this->carrierSelected = $this->carrier->id;
         }
 
+        if($this->referral_id == 24){
+            $this->getCCalacrity();
+        }
+
 
         $this->referral_type_id = $this->assignment->referral->referral_type_id;
         $this->date_of_loss = $this->assignment->date_of_loss;
@@ -74,6 +83,58 @@ class ReferralInfo extends Component
 
     }
 
+
+    public function getCCalacrity(){
+
+        if(isset($this->assignment->allacrity_id)){
+
+            $alacrity=alacrity_service()->post('GetAssignmentDetail', ['AssignmentId'=> $this->assignment->allacrity_id]);
+            if($alacrity){
+                if($alacrity=$alacrity['AssignmentDetail']['AssignmentDates']){
+
+
+                    // alacrity time zone
+                    switch ($this->assignment->state){
+                        case 'LA':
+                            $this->CC_alacrity=($alacrity['ContactDate'] == '') ? 'No action' : Carbon::createFromFormat('Y-m-d H:i:s', $alacrity['ContactDate'])->addHour(1)->format('m/d/Y g:i A');;
+                            $this->PI_alacrity=($alacrity['ScheduledVisitDate']== '') ? 'No action' : Carbon::createFromFormat('Y-m-d H:i:s', $alacrity['ScheduledVisitDate'])->addHour(1)->format('m/d/Y g:i A');
+                            $this->SI_alacrity=($alacrity['VisitDate']== '') ? 'No action' : Carbon::createFromFormat('Y-m-d H:i:s', $alacrity['VisitDate'])->addHour(1)->format('m/d/Y g:i A');
+
+                            break;
+                        default:
+                            $this->CC_alacrity=($alacrity['ContactDate'] == '') ? 'No action' : Carbon::createFromFormat('Y-m-d H:i:s', $alacrity['ContactDate'])->format('m/d/Y g:i A');;
+                            $this->PI_alacrity=($alacrity['ScheduledVisitDate']== '') ? 'No action' : Carbon::createFromFormat('Y-m-d H:i:s', $alacrity['ScheduledVisitDate'])->format('m/d/Y g:i A');
+                            $this->SI_alacrity=($alacrity['VisitDate']== '') ? 'No action' : Carbon::createFromFormat('Y-m-d H:i:s', $alacrity['VisitDate'])->format('m/d/Y g:i A');
+                            break;
+                    }
+
+
+
+
+
+                }else{
+                    $this->CC_alacrity='Error Connect AlecNet';
+                    $this->PI_alacrity='Error Connect AlecNet';
+                    $this->SI_alacrity='Error Connect AlecNet';
+                }
+            }
+
+        }else{
+            $this->updateAlacrityId();
+        }
+    }
+    public function updateAlacrityId(){
+        $alacrity=alacrity_service()->post('SearchAssignment', [],['SearchString'=> $this->assignment->claim_number]);
+        if($alacrity) {
+            $formData['allacrity_id'] = $alacrity['AssignmentSummaryList'][0]['AssignmentId'];
+
+            $id = $this->assignment->id;
+            $update = $this->assignment->update($formData);
+            $this->assignment = Assignment::find($id);
+
+            $this->getCCalacrity();
+        }
+    }
 
     public function processContent(){
         $this->carrierLists=[];

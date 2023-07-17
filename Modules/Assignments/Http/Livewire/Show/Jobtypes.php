@@ -23,14 +23,18 @@ class Jobtypes extends Component
     }
     public function update($id)
     {
+
          if($this->jbSelected->contains($id)){
              // deattach
              $this->assignment->job_types()->detach($id);
+             $this->assignment->job_types()->detach(15);
 
          }else{
              // attach
+             $this->assignment->job_types()->detach(15);
              $this->assignment->job_types()->attach($id);
          }
+
 
         $this->assignment = Assignment::find($this->assignment->id);
         $this->jbSelected = $this->assignment->job_types;

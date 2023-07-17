@@ -160,6 +160,7 @@ class Header extends Component
 
             integration('assignments')->set($this->assignment->id);
             $this->emit('updateScheduling');
+
         }
     }
 

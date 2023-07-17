@@ -50,9 +50,9 @@ class AlacrityService
         $this->baseUrl = $this->config['base_url'];
         $this->credentials = $this->config['credentials'];
 
-        $this->api = Http::withHeaders([
+        $this->api = Http::withoutVerifying()->withHeaders([
             'Token' => $this->credentials['token'],
-        ])->baseUrl($this->baseUrl);
+        ])->withOptions(["verify"=>false])->baseUrl($this->baseUrl);
     }
 
     /**

@@ -33,7 +33,10 @@ class Jobstech extends Component
         $this->selectedColumns = $this->columns;
         $this->techs= Techs::where('active','Y')->orderBy('order')->get();
         $this->user = Auth::user();
+//        $preview= Carbon::create(2023, 2, 16, 0, 0, 0);
         $this->date = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now())->format('Y-m-d');
+
+//        $this->date = Carbon::createFromFormat('Y-m-d H:i:s', $preview)->format('Y-m-d');
         $this->dateDisplay = Carbon::createFromFormat('Y-m-d', $this->date)->format('F d, Y');
         $this->weekDisplay = Carbon::createFromFormat('Y-m-d', $this->date)->format('l');
     }

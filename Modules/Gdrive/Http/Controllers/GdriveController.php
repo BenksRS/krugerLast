@@ -140,6 +140,7 @@ class GdriveController extends Controller
         }
     }
     public function add_queue_dir(){
+
         $list = AssignmentRepository::open()->get();
         foreach ($list as $item){
             $queue=QueeDir::where('assignment_id',$item->id)->first();
@@ -340,9 +341,6 @@ class GdriveController extends Controller
         } catch (Exception $e) {
             $this->errorHistoryFiles($id, 'on removing all Kruger front pictures:', $e->getMessage());
         }
-
-
-
 
         // uploading new Kruger front pictures
         try {

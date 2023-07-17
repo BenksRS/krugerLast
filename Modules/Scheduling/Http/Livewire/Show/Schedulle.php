@@ -508,6 +508,33 @@ class Schedulle extends Component
         }
 
     }
+    public function alacrityVisitPlanned($id,$date){
+
+        $job= Assignment::find($id);
+
+
+        if($job->referral->id == 24){
+
+            // alacrity time zone
+            switch ($job->state){
+                case 'LA':
+                    $ContactDate=Carbon::createFromFormat('Y-m-d H:i:s', $date)->subHours(1)->format('Y-m-d H:i:s');
+                    break;
+                default:
+                    $ContactDate=Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('Y-m-d H:i:s');
+                    break;
+            }
+
+            alacrity_service()->post('UpdateDates',['AssignmentId'=> $job->allacrity_id],
+                ["AssignmentDates" =>[
+                    'ScheduledVisitDate'=> $ContactDate
+                ]]);
+
+            $this->emit('contentCC');
+        }
+
+
+    }
     public function schedulleJobs($JobsReturn){
 //        dd($JobsReturn);
         $message="";
@@ -587,6 +614,8 @@ class Schedulle extends Component
 
                                 integration('assignments')->set($assignment_id);
 
+                                $this->alacrityVisitPlanned($assignment_id, $start_date);
+
                             }else{
                                 $message_error= "<b>ERROR #$assignment_id</b> - This Technician already have a job at this time!";
                             }
@@ -623,6 +652,8 @@ class Schedulle extends Component
                             $assignment->update($updateAssignment);
 
                             integration('assignments')->set($assignment_id);
+
+                            $this->alacrityVisitPlanned($assignment_id, $start_date);
 
                             $message= "<b>#$assignment_id</b> - Schedulled to $start_date";
                         }else{

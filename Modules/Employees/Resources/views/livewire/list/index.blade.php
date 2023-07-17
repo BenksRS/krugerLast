@@ -44,7 +44,7 @@
 
                                 <td>
                                     <div class="text-end">
-                                        <h5 class="font-size-14 mb-0">Technician</h5>
+                                        <h5 class="font-size-14 mb-0">{{$row->group->name}}</h5>
                                     </div>
                                 </td>
 

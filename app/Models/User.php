@@ -25,7 +25,7 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be hidden for serialization.
-     *
+     * sdds sd sds ds jhfie hjewlk l
      * @var array
      */
     protected $hidden = [

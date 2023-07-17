@@ -5,9 +5,11 @@ namespace Modules\Assignments\Http\Livewire\Show\Tabs\Finance;
 use Livewire\Component;
 use Auth;
 use Modules\Assignments\Entities\Assignment;
+use Modules\Notes\Entities\Note;
 
 class Notes extends Component
 {
+
     public $assignment;
     public $notesList;
     public $user;
@@ -30,6 +32,7 @@ class Notes extends Component
 
 
     }
+
 
     public function showAdd(){
         $this->showinfo = true;

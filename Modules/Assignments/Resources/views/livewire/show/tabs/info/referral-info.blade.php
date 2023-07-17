@@ -38,8 +38,34 @@
 
                         <tr>
                             <th scope="row">Claim Number:</th>
-                            <td>{{$assignment->claim_number}}</td>
+                            @if($assignment->referral->id == 24)
+
+                                <td><a href="{{url('https://em.atst.alacrity.net/EM/AssignmentList/SearchAssignmentList.aspx?MenuId=117&SubMenuId=195&ClaimNumber='.$assignment->claim_number.'&SearchOptions=0')}}" target="_blank">{{$assignment->claim_number}}
+                            @else
+                                <td>{{$assignment->claim_number}}</td>
+                            @endif
                         </tr>
+                        @if($assignment->referral->id == 24)
+                        <tr>
+                            <th colspan="2" style="background-color: #eeeebb">Control Points Alacrity:</th>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #eeeebb"><small>Customer Contacted:</small></th>
+                            <td style="background-color: #eeeebb"><small>{{$CC_alacrity}}</small></td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #eeeebb"><small>Planned Inspection:</small></th>
+                            <td style="background-color: #eeeebb"><small>{{$PI_alacrity}}</small></td>
+                        </tr>
+
+                        <tr>
+                            <th style="background-color: #eeeebb"><small>Site Inspected:</small></th>
+                            <td style="background-color: #eeeebb"><small>{{$SI_alacrity}}</small></td>
+                        </tr>
+
+                        @endif
+
+
                         <tr>
                             <th scope="row">Job Type:</th>
                             <td>

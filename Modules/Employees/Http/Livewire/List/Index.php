@@ -16,10 +16,16 @@ class Index extends Component
         $listActive=User::whereLike('name',$searchEmployes)->where('active','Y')->get();
         $listOff=User::whereLike('name',$searchEmployes)->where('active','N')->get();
 
-
         return view('employees::livewire.list.index',[
             'list_actives' =>$listActive,
             'list_off' =>$listOff,
         ]);
     }
 }
+
+
+
+
+
+
+

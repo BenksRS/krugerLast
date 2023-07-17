@@ -11,7 +11,14 @@ class Note extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $fillable = [
+        'text',
+        'notable_id',
+        'notable_type',
+        'created_by',
+        'post_alacnet',
+        'cc_alacnet'
+    ];
     protected $guarded = ['id'];
     protected $appends  = ['created_datetime'];
 
