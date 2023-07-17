@@ -33,7 +33,7 @@ class Notes extends Component
         $this->assignment = Assignment::find($this->assignment->id);
         $this->notesList = $this->assignment->notes->where('type','tech');
     }
-    public function addNewNote(){
+    public function addNewNoteTech(){
 
         $this->assignment->notes()->create([
             'text'=> $this->notetext,

@@ -16,6 +16,7 @@ class Note extends Model
         'notable_id',
         'notable_type',
         'created_by',
+        'type',
         'post_alacnet',
         'cc_alacnet'
     ];

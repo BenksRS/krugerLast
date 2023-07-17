@@ -15,7 +15,7 @@
                 <div>
                     <div class="d-flex">
                         <textarea class="form-control  me-2" wire:model="notetext"  rows="5" placeholder="Enter note here..."></textarea>
-                        <button type="button" {{(empty($this->notetext)) ?'disabled' : '' }} class="btn btn-success waves-effect waves-light  float-end" wire:click.prevent="addNewNote"><i class="bx bx-save font-size-16 align-middle me-2"></i></button>
+                        <button type="button" {{(empty($this->notetext)) ?'disabled' : '' }} class="btn btn-success waves-effect waves-light  float-end" wire:click.prevent="addNewNoteTech"><i class="bx bx-save font-size-16 align-middle me-2"></i></button>
                     </div>
                     <br>
                 </div>
