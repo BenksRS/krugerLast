@@ -282,7 +282,7 @@ class AlacrityController extends Controller
 //
 
             // job accepted message
-            $message="### New Job !!! $jobData->full_name $jobData->city - $jobData->state ### TEST ###";
+            $message="### New Job !!! $jobData->full_name $jobData->city - $jobData->state ###";
             send_wpp($message,'new');
 
 
