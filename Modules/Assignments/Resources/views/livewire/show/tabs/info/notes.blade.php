@@ -30,6 +30,8 @@
                                         <h6>{{$note->user->name}}<small class="text-muted mb-0" > <i class="mdi mdi-clock-outline me-1"></i>{{$note->created_datetime}}</small>
                                             @if($note->user->id != 73)
 
+
+                                                @if($assignment->referral->id == 24)
                                                 @if($note->post_alacnet == 'N')
                                                     <button type="button" wire:click="$emit('postComment', {{$note->id}})" class="btn btn-sm btn-primary me-2 float-end font-size-9"> <i class="bx bx-cloud-upload font-size-16 align-middle "></i> ALACNET</button>
 {{--                                                    <button type="button" class="btn btn-sm btn-primary" wire:click="$emit('sendCC', {{$note->id}})"><i class="fa fa-edit"></i> </button>--}}
@@ -42,6 +44,10 @@
                                                 @else
                                                      <span class="badge badge-soft-warning">cc</span>
                                                 @endif
+                                                @endif
+
+
+
 
                                             @endif
                                         </h6>
