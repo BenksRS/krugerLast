@@ -66,9 +66,14 @@ class AlacrityController extends Controller
 
         $jobs_alert=Assignment::where('status_id',33)->where('created_at','<=', $newDateTime)->get();
 
-        // job accepted message
-        $message="@14079896366 We have 2 new jobs (VIRTUAL_ACCEPTED)  without any activity last 15 min!!!";
-        send_wpp($message,'alert',14079896366);
+        $total_jobs=count($jobs_alert);
+        if($total_jobs > 0){
+            // job accepted message
+            $message="@14079896366 We have $total_jobs new jobs (VIRTUAL_ACCEPTED)  without any activity last 15 min!!!";
+            send_wpp($message,'alert',14079896366);
+            
+        }
+
 
 
     }
