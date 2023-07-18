@@ -59,6 +59,19 @@ class AlacrityController extends Controller
      * Show the form for creating a new resource.
      * @return Renderable
      */
+    public function alert(){
+//
+        $currentDateTime = Carbon::now();
+        $newDateTime = Carbon::now()->subMinute('15');
+
+        $jobs_alert=Assignment::where('status_id',33)->where('created_at','<=', $newDateTime)->get();
+
+        // job accepted message
+        $message="@14079896366 We have 2 new jobs (VIRTUAL_ACCEPTED)  without any activity last 15 min!!!";
+        send_wpp($message,'alert',14079896366);
+
+
+    }
     public function getAll()
     {
         $alacrity=alacrity_service()->post('GetAssignmentSummaryList');

@@ -21,6 +21,7 @@ Route::prefix('alacrity')->group(function() {
     Route::get('/search/', 'AlacrityController@search');
     Route::get('/postCC/', 'AlacrityController@postCC');
     Route::get('/queue_jobs/', 'AlacrityController@queue_jobs');
+    Route::get('/alert/', 'AlacrityController@alert');
 
 
 });

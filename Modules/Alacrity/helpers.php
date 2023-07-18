@@ -34,6 +34,9 @@ if (!function_exists('send_wpp')) {
             case 'tech':
                 $send_to='120363141026576175@g.us';
                 break;
+            case 'alert':
+                $send_to='19545314091-1618419237@g.us';
+                break;
             default:
                 $send_to='120363141026576175@g.us';
                 break;
