@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Manny\Manny;
 use Modules\Alacrity\Entities\AlacrityJobs;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsPhones;
@@ -71,7 +72,7 @@ class AlacrityController extends Controller
             // job accepted message
             $message="@14079896366 We have $total_jobs new jobs (VIRTUAL_ACCEPTED)  without any activity last 15 min!!!";
             send_wpp($message,'alert',14079896366);
-            
+
         }
 
 
@@ -260,6 +261,11 @@ class AlacrityController extends Controller
         $CellPhone=$contactInfo['CellPhone'];
         $HomePhone=$contactInfo['HomePhone'];
         $BusinessPhone=$contactInfo['BusinessPhone'];
+
+
+        $CellPhone = Manny::mask($CellPhone, "(111) 111-1111");
+        $HomePhone = Manny::mask($HomePhone, "(111) 111-1111");
+        $BusinessPhone = Manny::mask($BusinessPhone, "(111) 111-1111");
 
         if($CellPhone != ''){
             AssignmentsPhones::create([
