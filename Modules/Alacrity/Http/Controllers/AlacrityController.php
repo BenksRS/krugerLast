@@ -330,6 +330,8 @@ class AlacrityController extends Controller
             ]]);
 
         dd($alacrity);
+
+
     }
     public function postCC()
     {

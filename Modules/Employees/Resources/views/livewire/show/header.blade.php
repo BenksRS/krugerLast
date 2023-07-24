@@ -10,9 +10,10 @@
                                 <div class="d-flex">
                                     <div class="flex-grow-1 align-self-center">
                                         <div class="text-muted">
-                                            <h5 class="mb-1 upc">{{$user->name}}
-                                            </h5>
-                                            <p class="mb-0">Group</p>
+                                            <h5 class="mb-1 upc"> <small>System:</small> {{$user->name}}</h5>
+                                            <h5 class="mb-1 upc"> <small>Full name:</small> {{$user_info->full_name}}</h5>
+                                            <p class="mb-0"><small>Group: </small>{{$user->group->name}}   / <small>Phone: </small>{{$user_info->phone}} </p>
+                                            <p class="mb-0"><small>D.O.B: </small>{{$user_info->dob_view}}   / <small>Start Date: </small>{{$user_info->start_date_view}} </p>
                                         </div>
                                     </div>
                                 </div>
@@ -45,7 +46,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="mb-3 ">
-                                                        <label  class="form-label">Name</label>
+                                                        <label  class="form-label">System Name</label>
                                                         <input type="text" class="form-control "  name="name"
                                                                placeholder="Name" wire:model="name"  required>
 
@@ -58,6 +59,38 @@
                                                         </div>
                                                         @enderror
                                                     </div>
+
+                                                    <div class="mb-3 ">
+                                                        <label  class="form-label">Full Name</label>
+                                                        <input type="text" class="form-control "  name="full_name"
+                                                               placeholder="Name" wire:model="full_name"  required>
+
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                        @error('full_name')
+                                                        <div class="invalid-feedback">
+                                                            Please type a valid option.
+                                                        </div>
+                                                        @enderror
+                                                    </div>
+
+                                                    <div class="mb-3 ">
+                                                        <label  class="form-label">Phone</label>
+                                                        <input type="text" class="form-control "  name="phone"
+                                                               placeholder="Name" wire:model.debounce.500ms="phone"  required>
+
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                        @error('phone')
+                                                        <div class="invalid-feedback">
+                                                            Please type a valid option.
+                                                        </div>
+                                                        @enderror
+                                                    </div>
+
+
                                                 </div>
                                             </div>
 
@@ -86,6 +119,31 @@
                                                                 Looks good!
                                                             </div>
                                                         </div>
+                                                        <div class="mb-3 ">
+                                                            <label>Date of Birth</label>
+                                                            <div class="input-group" id="dob" wire:ignore>
+                                                                <x-flatpickr   id="dob" class="flatpickr_date" name="dob" wire:model="dob"   value="{{$dob}}" />
+                                                                <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
+                                                            </div>
+                                                            @error('dob')
+                                                            <div class="invalid-feedback show">
+                                                                Please type a valid date.
+                                                            </div>
+                                                            @enderror
+                                                        </div>
+                                                        <div class="mb-3 ">
+                                                            <label>Start Date</label>
+                                                            <div class="input-group" id="start_date" wire:ignore>
+                                                                <x-flatpickr   id="start_date" class="flatpickr_date" name="dob" wire:model="start_date"   value="{{$start_date}}" />
+                                                                <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
+                                                            </div>
+                                                            @error('start_date')
+                                                            <div class="invalid-feedback show">
+                                                                Please type a valid date.
+                                                            </div>
+                                                            @enderror
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                                 <div>
