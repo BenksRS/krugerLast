@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsEvents;
 use Modules\Assignments\Entities\AssignmentsJobTypes;
+use Modules\Employees\Entities\EmployeeInfo;
 use Modules\Employees\Entities\EmployeeRate;
 
 class User extends Authenticatable {
@@ -71,6 +72,10 @@ class User extends Authenticatable {
     public function group ()
     {
         return $this->belongsTo(UserGroup::class, 'group_id');
+    }
+    public function info ()
+    {
+        return $this->belongsTo(EmployeeInfo::class, 'id','user_id');
     }
 
 }

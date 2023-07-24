@@ -13,8 +13,11 @@ class Index extends Component
     public function render()
     {
         $searchEmployes = "%$this->searchEmployes%";
-        $listActive=User::whereLike('name',$searchEmployes)->where('active','Y')->get();
-        $listOff=User::whereLike('name',$searchEmployes)->where('active','N')->get();
+        $listActive=User::With('info')->whereLike('name',$searchEmployes)->where('active','Y')->get();
+        $listOff=User::With('info')->whereLike('name',$searchEmployes)->where('active','N')->get();
+
+
+//        dd($listActive);
 
         return view('employees::livewire.list.index',[
             'list_actives' =>$listActive,
