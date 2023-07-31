@@ -68,6 +68,9 @@
 		@case('revisebill')
 			@livewire('dashboard::list.revisebill', key('dash_list_followup'))
 			@break
+		@case('revisetree')
+		@livewire('dashboard::list.revisetree', key('dash_list_revisetree'))
+		@break
 		@case('landline')
 			@livewire('dashboard::list.landline', key('dash_list_landline'))
 			@break

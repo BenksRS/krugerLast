@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Livewire\Component;
 use Manny\Manny;
 use Modules\Assignments\Entities\Assignment;
+use Modules\Assignments\Entities\AssignmentsJobTypesPivot;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
 use Modules\Assignments\Entities\FinanceBilling;
 use Auth;
@@ -32,12 +33,15 @@ class Billing extends Component
     public $discount_amount;
     public $discount_amount_tr;
     public $settlement_amount;
+    public $tree_amount;
+    public $tree_amount_tr;
     public $settlement_amount_tr;
     public $billed_date_edited;
     public $invoice_total;
     public $billed_date;
 
     public $user;
+    public $job_types;
 
     protected $rules = [
         'invoice_id' => 'required',
@@ -54,13 +58,20 @@ class Billing extends Component
         $this->invoice_total = 0;
         $this->user = Auth::user();
 
+        $job_types = AssignmentsJobTypesPivot::where('assignment_id', $this->assignment->id)->where('assignment_job_type_id',11)->get();
+        $this->job_types = count($job_types);
+
+
+
+
+
         $this->checkJobreport = count(JobReport::where('assignment_id', $this->assignment->id)->get());
 
 
     }
     public function updated($field)
     {
-        $array = array('billed_amount', 'fee_amount', 'discount_amount', 'settlement_amount');
+        $array = array('billed_amount', 'fee_amount', 'discount_amount', 'settlement_amount', 'tree_amount');
 
         if (in_array($field, $array))
         {
@@ -102,6 +113,9 @@ class Billing extends Component
         $settlement_amount_tr=($this->settlement_amount != '') ? preg_replace('/[^0-9.]+/', '', $this->settlement_amount) : 0;
         $this->settlement_amount_tr = $settlement_amount_tr;
 
+        $tree_amount_tr=($this->tree_amount != '') ? preg_replace('/[^0-9.]+/', '', $this->tree_amount) : 0;
+        $this->tree_amount_tr = $tree_amount_tr;
+
         $this->invoice_total =number_format($billed_amount_tr - ($fee_amount_tr+$discount_amount_tr+$settlement_amount_tr),2);
     }
 
@@ -135,6 +149,9 @@ class Billing extends Component
             'billed_date' =>$this->billed_date,
 
         ];
+        if($this->job_types > 0){
+            $data['tree_amount']=$this->tree_amount_tr;
+        }
 
         if($this->invoice_total == 0){
             $data['status'] = 'paid';

@@ -32,7 +32,7 @@ if (!function_exists('send_wpp')) {
 //                $send_to='120363162797306222@g.us';
                 break;
             case 'tech':
-                $send_to='120363141026576175@g.us';
+                $send_to='15619071569-1536333633@g.us';
                 break;
             case 'alert':
                 $send_to='19545314091-1618419237@g.us';

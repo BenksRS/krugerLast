@@ -376,9 +376,8 @@ class AlacrityController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
+x     * @param int $id
+     * @return Renderable sddsds d sd sd s ds;sd l;fl ;g ;l;g
      */
     public function destroy($id)
     {

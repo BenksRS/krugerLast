@@ -24,9 +24,11 @@ class FinanceBilling extends Model
         'type',
         'status',
         'lien',
+        'tree_amount',
     ];
     protected $appends  = [
         'billed_amount_view',
+        'tree_amount_view',
         'updated_at_view',
         'billed_date_view',
         'fee_amount_view',
@@ -52,7 +54,11 @@ class FinanceBilling extends Model
         $result = number_format($this->billed_amount, 2);
         return "$$result";
     }
-
+    public function getTreeAmountViewAttribute ()
+    {
+        $result = number_format($this->tree_amount, 2);
+        return "$$result";
+    }
     public function getFeeAmountViewAttribute ()
     {
         $result = number_format($this->fee_amount, 2);

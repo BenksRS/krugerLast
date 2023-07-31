@@ -116,6 +116,22 @@
                                     </div>
                                     @enderror
                                 </div>
+                                @if($job_types > 0)
+                                <div class="col-md-6">
+                                    <label  class="form-label">Tree Amount</label>
+                                    <input type="text" class="form-control"  name="tree_amount"
+                                           placeholder="-$0.00" wire:model.debounce.1000ms="tree_amount"  required>
+
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    @error('tree_amount')
+                                    <div class="invalid-feedback">
+                                        Please type a valid option.
+                                    </div>
+                                    @enderror
+                                </div>
+                                @endif
                                 <div class="row mt-2">
                                     <div class="col-md-6 mt-2">
                                         <h5> Invoice Total: <span class="text-muted text-success">${{$invoice_total}}</span> </h5>
@@ -170,6 +186,7 @@
                                     <td><h5 class="font-size-11 mb-1">B. Fees</h5></td>
                                     <td><h5 class="font-size-11 mb-1">Discount</h5></td>
                                     <td><h5 class="font-size-11 mb-1">Discount Settlement</h5></td>
+                                    <td><h5 class="font-size-11 mb-1">Tree Amount*</h5></td>
                                     <td><h5 class="font-size-11 mb-1">Invoce A.</h5></td>
                                     <td><h5 class="font-size-11 mb-1" >Date</h5></td>
 
@@ -201,6 +218,9 @@
                                             </td>
                                             <td>
                                                 <p class="text-muted mb-0 font-size-11 text-danger">{{$invoice->settlement_amount_view}}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-muted mb-0 font-size-11 text-danger">{{$invoice->tree_amount_view}}</p>
                                             </td>
                                             <td>
                                                 <p class="text-muted mb-0 font-size-11 text-success">{{$invoice->invoice_amount}}</p>
@@ -238,6 +258,7 @@
                                     <td><h5 class="font-size-11 mb-1">B. Fees</h5></td>
                                     <td><h5 class="font-size-11 mb-1">Discount</h5></td>
                                     <td><h5 class="font-size-11 mb-1">Discount Settlement</h5></td>
+                                    <td><h5 class="font-size-11 mb-1">Tree Amount*</h5></td>
                                     <td><h5 class="font-size-11 mb-1">Invoce A.</h5></td>
                                     <td><h5 class="font-size-11 mb-1" >Date Billed</h5></td>
                                     <td><h5 class="font-size-11 mb-1">Edited</h5></td>
@@ -265,6 +286,9 @@
                                             </td>
                                             <td>
                                                 <p class="text-muted mb-0 font-size-11 ">{{$invoice->settlement_amount_view}}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-muted mb-0 font-size-11 ">{{$invoice->tree_amount_view}}</p>
                                             </td>
                                             <td>
                                                 <p class="text-muted mb-0 font-size-11 ">{{$invoice->invoice_amount}}</p>
