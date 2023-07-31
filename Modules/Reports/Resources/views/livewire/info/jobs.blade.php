@@ -94,6 +94,9 @@
                                 @if(in_array('Total Invoice Amount', $selectedColumns))
                                     <th>Invoice Amount</th>
                                 @endif
+                                    @if(in_array('State', $selectedColumns))
+                                        <th>Tree Amount</th>
+                                    @endif
                                 @if(in_array('Paid Date', $selectedColumns))
                                     <th>Paid Date</th>
                                 @endif
@@ -227,6 +230,13 @@
                                             @endif
                                         </td>
                                     @endif
+                                        @if(in_array('State', $selectedColumns))
+                                            <td>
+                                                @if(isset($row->finance->invoices->tree_amount))
+                                                    <p>${{$row->finance->invoices->tree_amount}}</p>
+                                                @endif
+                                            </td>
+                                        @endif
                                     @if(in_array('Paid Date', $selectedColumns))
 
                                         <td>

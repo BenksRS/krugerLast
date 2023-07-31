@@ -45,6 +45,8 @@ class Finance extends Component
             $total_jobs_billed=count($jobs_billed);
 
             $total_billing=$this->result->sum('finance.invoices.total');
+
+            $total_tree_billing= $this->result->sum('finance.invoices.tree_amount');
             if($total_billing == 0){
                 $media_jobs_billed=0;
             }else{
@@ -74,6 +76,7 @@ class Finance extends Component
                 'closed' =>$total_jobs_closed,
                 'billing' =>$total_jobs_billed,
                 'total_billing' =>$this->numberFormat($total_billing),
+                'total_tree_billing' =>$this->numberFormat($total_tree_billing),
                 'media_billing' =>$this->numberFormat($media_jobs_billed),
                 'paid' =>$total_jobs_paid,
                 'total_paid' =>$this->numberFormat($total_paid),
