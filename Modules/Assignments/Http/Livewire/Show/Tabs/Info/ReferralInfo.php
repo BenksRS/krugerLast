@@ -89,6 +89,7 @@ class ReferralInfo extends Component
         if(isset($this->assignment->allacrity_id)){
 
             $alacrity=alacrity_service()->post('GetAssignmentDetail', ['AssignmentId'=> $this->assignment->allacrity_id]);
+
             if($alacrity){
                 if($alacrity=$alacrity['AssignmentDetail']['AssignmentDates']){
 
@@ -125,7 +126,8 @@ class ReferralInfo extends Component
     }
     public function updateAlacrityId(){
         $alacrity=alacrity_service()->post('SearchAssignment', [],['SearchString'=> $this->assignment->claim_number]);
-        if($alacrity) {
+
+        if(isset($alacrity['AssignmentSummaryList'][0])) {
             $formData['allacrity_id'] = $alacrity['AssignmentSummaryList'][0]['AssignmentId'];
 
             $id = $this->assignment->id;
