@@ -28,7 +28,7 @@ if (!function_exists('send_wpp')) {
                 $send_to='120363141026576175@g.us';
                 break;
             case 'new':
-                $send_to='120363162797306222@g.us';
+                $send_to='19545314091-1618419237@g.us';
 //                $send_to='120363162797306222@g.us';
                 break;
             case 'tech':
