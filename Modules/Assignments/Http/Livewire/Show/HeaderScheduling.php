@@ -9,6 +9,7 @@ use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsJobTypes;
 use Modules\Assignments\Entities\AssignmentsScheduling;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
+use Modules\Assignments\Entities\JobReportTarpSizes;
 use Modules\User\Entities\Techs;
 use Auth;
 use function Ramsey\Uuid\v1;
@@ -95,6 +96,7 @@ class HeaderScheduling extends Component
     public function duplicate(){
 
         $duplicate = $this->assignment;
+
         $old_id = $duplicate->id;
         $duplicate->load('phones', 'notes');
 
@@ -129,16 +131,21 @@ class HeaderScheduling extends Component
         // notes
         foreach ($duplicate->notes as $note){
 
+
             if($note->type == 'assignment'){
                 $note->notable_id = $clone->id;
                 unset($note->id);
-                $clone_note =  $note->replicate();
+//                $clone_note =  $note->replicate();
+                $clone_note = $note->replicate()->fill([
+                    'created_at' => $note->created_at
+                ]);
+//                dd($clone_note);
                 $clone_note->save();
             }
         }
 
         // add cloning note
-            $text = "Job duplicated from #$old_id";
+        $text = "#### Job duplicated from ###$old_id";
         $clone->notes()->create([
             'text'=> $text,
             'notable_id'=> $clone->id,
@@ -147,7 +154,28 @@ class HeaderScheduling extends Component
             'notable_type'=>  Assignment::class,
         ]);
 
-            return $this->redirect("/assignments/show/$clone->id");
+        // ADD cloning notes job info old tarps
+        $text = "#### OLD TARP SIZES ##\n\n";
+        $tarpSizeList = JobReportTarpSizes::where('assignment_id', $old_id)->get();
+//        dd($clone->id);
+        foreach ($tarpSizeList as $ts){
+            $width=$ts->width;
+            $height=$ts->height;
+            $qty=$ts->qty;
+            $text.="=== $width ft x $height ft - $qty un ===";
+        }
+
+        $clone->notes()->create([
+            'text'=> $text,
+            'notable_id'=> $clone->id,
+            'created_by'=> $this->user->id,
+            'type'=> 'tech',
+            'notable_type'=>  Assignment::class,
+        ]);
+
+
+
+        return $this->redirect("/assignments/show/$clone->id");
 
 
 

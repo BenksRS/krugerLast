@@ -18,6 +18,7 @@ class Note extends Model
         'created_by',
         'type',
         'post_alacnet',
+        'created_at',
         'cc_alacnet'
     ];
     protected $guarded = ['id'];
