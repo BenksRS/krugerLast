@@ -23,9 +23,17 @@ Route::prefix('/employees')->name('employees.')->group(function () {
     Route::get('/script_comission', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'script_comission'])->name('script_comission');
     Route::get('/guia', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'guia'])->name('guia');
 });
+
 Route::prefix('/profile')->name('employees.')->group(function () {
     Route::get('/', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'profile'])->name('profile');
 
+    //    Route::prefix('/app')->name('app.')->group(function () {
+    //        Route::get('/', [\Modules\Employees\Http\Controllers\EmployeesAppController::class, 'index'])->name('index');
+    //    });
+});
+Route::prefix('/employees_docs')->name('employees.')->group(function () {
+    Route::get('/', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'docs'])->name('docs');
+    Route::get('/show/{id}', [\Modules\Employees\Http\Controllers\EmployeesController::class, 'show'])->name('show');
     //    Route::prefix('/app')->name('app.')->group(function () {
     //        Route::get('/', [\Modules\Employees\Http\Controllers\EmployeesAppController::class, 'index'])->name('index');
     //    });

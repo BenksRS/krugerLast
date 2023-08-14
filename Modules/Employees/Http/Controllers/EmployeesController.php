@@ -44,6 +44,7 @@ class EmployeesController extends Controller
     {
         $page_info = (object)[
             'title' => 'Employees List',
+            'url_base' => 'employees',
             'back' => url('employees'),
             'back_title' => 'Employees List'
         ];
@@ -60,6 +61,7 @@ class EmployeesController extends Controller
         $url =  Route::getCurrentRoute()->uri();
         $page_info = (object)[
             'title' => 'Employee Information',
+            'url_base' => 'profile',
             'back' => url('#'),
             'back_title' => 'Employee List'
         ];
@@ -69,6 +71,19 @@ class EmployeesController extends Controller
         $page = \session()->get('page');
 
         return view('employees::livewire.profile.show', compact('user', 'page'));
+    }
+    public function docs()
+    {
+        $page_info = (object)[
+            'title' => 'Employees List',
+            'url_base' => 'employees_docs',
+            'back' => url('employees'),
+            'back_title' => 'Employees List'
+        ];
+        \session()->flash('page', $page_info);
+        $page = \session()->get('page');
+
+        return view('employees::index', compact('page'));
     }
     /**
      * Show the form for creating a new resource.

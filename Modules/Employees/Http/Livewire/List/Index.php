@@ -18,10 +18,18 @@ class Index extends Component
 
 
 //        dd($listActive);
+        $currenturl = url()->current();
+        $currenturl_treated = str_replace("http://krugerlast.sys:8080/", "", $currenturl);
+        $currenturl_treated = str_replace("http://system.callkruger.com/", "", $currenturl_treated);
+
+
+
+
 
         return view('employees::livewire.list.index',[
             'list_actives' =>$listActive,
             'list_off' =>$listOff,
+            'url_current' => $currenturl_treated,
         ]);
     }
 }

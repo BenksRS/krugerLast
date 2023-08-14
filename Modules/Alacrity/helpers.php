@@ -18,7 +18,7 @@ if (!function_exists('alacrity_service')) {
 if (!function_exists('send_wpp')) {
 
     /**
-     * @return send_wpp
+     * @return
      */
     function send_wpp($message,$to,$mentions='')
     {

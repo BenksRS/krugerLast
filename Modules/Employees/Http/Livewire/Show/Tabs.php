@@ -80,15 +80,48 @@ class Tabs extends Component
         ],
 
     ];
+    public    $navs_docs      = [
+        [
+            'title'    => 'Time Sheet',
+            'href'     => 'timesheet',
+            'key'      => 'employees_tab_timesheet',
+            'tab'      => 'employees::show.tabs.timesheet',
+            'category' => 'profile',
+        ],
+        [
+            'title'    => 'Docs',
+            'href'     => 'docs',
+            'key'      => 'employees_tab_docs',
+            'tab'      => 'employees::show.tabs.docs',
+            'category' => 'profile',
+        ],
+
+    ];
 
     public function mount(User $user)
     {
 
         $this->user = $user;
-        $this->url  = Route::getCurrentRoute()->uri();
 
-        if ($this->url == 'profile') {
-            $this->isActive = 'commission';
+
+        $rota  = Route::getFacadeRoot()->current()->uri();
+        $rota  =explode('/',$rota);
+        $this->url = $rota[0];
+
+
+        switch ($this->url){
+            case 'profile':
+                $this->isActive = 'commission';
+                break;
+            case 'employees_docs':
+                $this->navs = $this->navs_docs;
+                $this->isActive = 'docs';
+                break;
+            default:
+                break;
+        }
+        if ($this->url == 'employees_docs') {
+
         }
     }
 

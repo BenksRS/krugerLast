@@ -37,7 +37,7 @@
 
                                 <td>
                                     <div>
-                                        <h5 class="font-size-14 mb-1"><a href="{{url('employees/show/'.$row->id)}}">{{$row->name}}</a></h5>
+                                        <h5 class="font-size-14 mb-1"><a href="{{url($url_current.'/show/'.$row->id)}}">{{$row->name}}</a></h5>
 {{--                                        @dump($row->info->phone)--}}
                                         @if(isset($row->info))
                                         <p class="text-muted mb-0">{{$row->info->phone}}</p>
