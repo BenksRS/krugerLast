@@ -20,10 +20,13 @@ class Docs extends Component
     public $payroll_forms;
     public $background_auth;
     public $vcc;
+    public $medical_card;
+    public $drug_test;
+    public $insurance;
 
     public $user_info;
 
-    public $options_chek=['non_compete','drive_license','work_permit','bank_account','payroll_forms','background_auth','vcc'];
+    public $options_chek=['non_compete','drive_license','work_permit','bank_account','payroll_forms','background_auth','vcc','medical_card','insurance', 'drug_test'];
 
     public function mount(User $user)
     {
@@ -39,6 +42,9 @@ class Docs extends Component
         $this->payroll_forms =$this->user_info->payroll_forms;
         $this->background_auth =$this->user_info->background_auth;
         $this->vcc =$this->user_info->vcc;
+        $this->drug_test =$this->user_info->drug_test;
+        $this->medical_card =$this->user_info->medical_card;
+        $this->insurance =$this->user_info->insurance;
 
         $this->docs = config('employees.docs');
     }
@@ -52,6 +58,9 @@ class Docs extends Component
             'bank_account'=> $this->bank_account,
             'payroll_forms'=> $this->payroll_forms,
             'background_auth'=> $this->background_auth,
+            'drug_test'=> $this->drug_test,
+            'medical_card'=> $this->medical_card,
+            'insurance'=> $this->insurance,
             'vcc'=> $this->vcc
         ];
         $update =  $this->user_info->update($update_info);

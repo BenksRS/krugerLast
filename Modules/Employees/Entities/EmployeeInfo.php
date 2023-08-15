@@ -23,6 +23,9 @@ class EmployeeInfo extends Model
         'payroll_forms',
         'background_auth',
         'vcc',
+        'medical_card',
+        'insurance',
+        'drug_test',
         'phone'
     ];
 
