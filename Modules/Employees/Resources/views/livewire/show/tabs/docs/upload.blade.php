@@ -1,4 +1,6 @@
 <div>
+
+
     <h4 class="card-title">{{ $type['name'] }}</h4>
     <div class="card">
         <div class="card-body">

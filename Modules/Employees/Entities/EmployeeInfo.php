@@ -16,6 +16,13 @@ class EmployeeInfo extends Model
         'full_name',
         'dob',
         'start_date',
+        'non_compete',
+        'drive_license',
+        'work_permit',
+        'bank_account',
+        'payroll_forms',
+        'background_auth',
+        'vcc',
         'phone'
     ];
 
