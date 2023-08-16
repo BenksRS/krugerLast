@@ -11,7 +11,9 @@ use Modules\Assignments\Entities\AssignmentsJobTypes;
 use Modules\Assignments\Entities\AssignmentsStatus;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
 use Modules\Assignments\Entities\AssignmentsTags;
+use Modules\Assignments\Entities\AssugnmentsMylist;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
+use Modules\Notes\Entities\Note;
 use Modules\Referrals\Entities\Referral;
 
 use Auth;
@@ -25,6 +27,7 @@ class Header extends Component
         'updateScheduling' => 'processScheduling',
         'startBilling' => 'processStartBilling',
         'resetBilling' => 'processResetBilling',
+        'checkMylist' => 'processMylist',
     ];
     public $show = true;
 
@@ -50,6 +53,7 @@ class Header extends Component
 
     public $preStatus;
     public $historic;
+    public $check_mylist;
 
     protected $rules = [
         'first_name' => 'required',
@@ -70,6 +74,8 @@ class Header extends Component
         $this->first_name = $this->assignment->first_name;
         $this->last_name = $this->assignment->last_name;
         $this->user = Auth::user();
+
+        $this->check_mylist=AssugnmentsMylist::where('assignment_id',$this->assignment->id)->where('user_id',$this->user->id)->first();
     }
 
     public function setPreStatus($newStatus){
@@ -91,6 +97,23 @@ class Header extends Component
         integration('assignments')->set($this->assignment->id);
 
         $this->emit('updateNotes');
+    }
+    public function processMylist(){
+
+        $checkMylist=AssugnmentsMylist::where('assignment_id',$this->assignment->id)->where('user_id',$this->user->id)->first();
+        if(isset($checkMylist)){
+            $checkMylist->delete();
+        }else{
+            AssugnmentsMylist::create([
+                'assignment_id'=> $this->assignment->id,
+                'user_id'=> $this->user->id,
+            ]);
+        }
+
+
+        $this->check_mylist=AssugnmentsMylist::where('assignment_id',$this->assignment->id)->where('user_id',$this->user->id)->first();
+
+
     }
     public function changeStatusNotes($newStatus){
 

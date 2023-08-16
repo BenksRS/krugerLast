@@ -68,7 +68,12 @@
 $user = Auth::user();
 ?>
 @if(in_array($user->group_id, [1,4]))
+
+    <span>
+        <a href="{{url('dashboard/list/my_list')}}" class="btn btn-warning btn-sm waves-effect waves-light" ><i class="fas fa-star"></i> </a>
+    </span>
 <span style="color: red; background-color: white;">
+
     <i class="bx bx-money me-2" ></i>
     <span>
     <?php

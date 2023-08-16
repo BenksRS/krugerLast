@@ -27,6 +27,14 @@
                                                 <span class="badge {{strtolower($assignment->status->name)}}">{{$assignment->status->name}}</span>
 
                                                 <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".history_modal"><i class="bx bx-history" ></i></button>
+                                                @if(!isset($check_mylist))
+                                                <button type="button" class="btn btn-warning btn-sm waves-effect waves-light" wire:click="$emit('checkMylist')"><i class="fas fa-star"></i> </button></p>
+                                                @else
+
+                                                    <button type="button" class="btn btn-outline-warning btn-sm waves-effect waves-light" wire:click="$emit('checkMylist')"><i class="fas fa-star"></i> </button></p>
+                                                @endif
+
+
                                             </h5>
 
                                             <!--  Modal Tags -->

@@ -23,6 +23,9 @@
 		@case('open')
 			@livewire('dashboard::list.open', key('dash_list_open'))
 			@break
+		@case('my_list')
+		@livewire('dashboard::list.mylist', key('dash_list_my_list'))
+		@break
 		@case('message')
 			@livewire('dashboard::list.messages', key('dash_list_message'))
 			@break
