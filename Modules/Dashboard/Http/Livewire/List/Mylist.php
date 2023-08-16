@@ -27,7 +27,7 @@ class Mylist extends Component
         $this->user = Auth::user();
         $this->myjobs=AssugnmentsMylist::where('user_id',$this->user->id)->pluck('assignment_id');
 
-        
+
         $this->selectedColumns = $this->columns;
 
     }
