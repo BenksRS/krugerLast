@@ -307,12 +307,12 @@
                                 <input type="text" class="form-control" id="claim_info" wire:model="claim_info" placeholder="claim number ..." autocomplete="nope">
                             </div>
                         </div>
-                        <div class="col-lg-12">
-                            <div class="mb-3">
-                                <label for="client_id" class="form-label">Costumer Job Number</label>
-                                <input type="text" class="form-control" id="client_id" wire:model="client_id" placeholder="Costumer Job Number ..." autocomplete="nope">
-                            </div>
-                        </div>
+{{--                        <div class="col-lg-12">--}}
+{{--                            <div class="mb-3">--}}
+{{--                                <label for="client_id" class="form-label">Costumer Job Number</label>--}}
+{{--                                <input type="text" class="form-control" id="client_id" wire:model="client_id" placeholder="Costumer Job Number ..." autocomplete="nope">--}}
+
+{{--                        </div>                            </div>--}}
                         <div class="col-lg-12">
                             <div class="mb-3">
                                 <label for="adjuster_info" class="form-label">Adjuster Info</label>

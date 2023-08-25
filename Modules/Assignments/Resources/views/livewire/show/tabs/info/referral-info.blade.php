@@ -45,10 +45,10 @@
                                 <td>{{$assignment->claim_number}}</td>
                             @endif
                         </tr>
-                        <tr>
-                            <th scope="row">Costumer Job Number:</th>
-                                <td>{{$assignment->client_id}}</td>
-                        </tr>
+{{--                        <tr>--}}
+{{--                            <th scope="row">Costumer Job Number:</th>--}}
+{{--                                <td>{{$assignment->client_id}}</td>--}}
+{{--                        </tr>--}}
                         @if($assignment->referral->id == 24)
                         <tr>
                             <th colspan="2" style="background-color: #eeeebb">Control Points Alacrity:</th>
@@ -189,21 +189,21 @@
                                     @enderror
 
                                 </div>
-                                <div class="col-md-12">
-                                    <label  class="form-label mt-2">Costumer Job Number:</label>
-                                    <input type="text" class="form-control "  name="client_id"
-                                           placeholder="Costumer Job Number..." wire:model="client_id"  >
+{{--                                <div class="col-md-12">--}}
+{{--                                    <label  class="form-label mt-2">Costumer Job Number:</label>--}}
+{{--                                    <input type="text" class="form-control "  name="client_id"--}}
+{{--                                           placeholder="Costumer Job Number..." wire:model="client_id"  >--}}
 
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>
-                                    @error('client_id')
-                                    <div class="invalid-feedback">
-                                        Please type client_id.
-                                    </div>
-                                    @enderror
+{{--                                    <div class="valid-feedback">--}}
+{{--                                        Looks good!--}}
+{{--                                    </div>--}}
+{{--                                    @error('client_id')--}}
+{{--                                    <div class="invalid-feedback">--}}
+{{--                                        Please type client_id.--}}
+{{--                                    </div>--}}
+{{--                                    @enderror--}}
 
-                                </div>
+{{--                                </div>--}}
                                 <div class="col-md-12 mt-2">
                                     <div class="mb-3 mt-2">
 
