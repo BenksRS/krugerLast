@@ -44,6 +44,7 @@ class Assignment extends Model {
         'event_id',
         'status_collection_id',
         'allacrity_id',
+        'client_id',
         'inside_info'
     ];
 

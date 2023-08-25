@@ -12,7 +12,7 @@ class Index extends Component
 
 
     public function mount(){
-        //        dd($listActive);
+
         $currenturl = url()->current();
         $currenturl_treated = str_replace("http://krugerlast.sys:8080/", "", $currenturl);
         $this->url_current = str_replace("http://system.callkruger.com/", "", $currenturl_treated);

@@ -41,6 +41,7 @@ class ReferralInfo extends Component
     public $carrier_id;
     public $carrier_info;
     public $claim_number;
+    public $client_id;
     public $date_of_loss;
     public $adjuster_info;
 
@@ -74,6 +75,7 @@ class ReferralInfo extends Component
         $this->date_of_loss = $this->assignment->date_of_loss;
         $this->adjuster_info = $this->assignment->adjuster_info;
         $this->carrier_info = $this->assignment->carrier_info;
+        $this->client_id = $this->assignment->client_id;
         $this->claim_number = $this->assignment->claim_number;
 
         $this->allReferrals = Referral::where('status', 'ACTIVE')->get();
@@ -205,6 +207,7 @@ class ReferralInfo extends Component
         $this->adjuster_info = $this->assignment->adjuster_info;
         $this->carrier_info = $this->assignment->carrier_info;
         $this->claim_number = $this->assignment->claim_number;
+        $this->client_id = $this->assignment->client_id;
 
         $this->show = true;
     }

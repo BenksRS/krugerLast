@@ -51,6 +51,7 @@ class NewAssignment extends Component
     public $carrier_id;
     public $carrier_info;
     public $claim_info;
+    public $client_id;
     public $adjuster_info;
     public $ref;
 
@@ -128,6 +129,7 @@ class NewAssignment extends Component
             'created_by' => $this->user->id,
             'updated_by' => $this->user->id,
             'claim_number' => $this->claim_info,
+            'client_id' => $this->client_id,
             'carrier_info' => $this->carrier_info,
             'email' => $this->email,
             'adjuster_info' => $this->adjuster_info,
