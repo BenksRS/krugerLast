@@ -109,9 +109,9 @@
                                 @if(in_array('Claim Number', $selectedColumns))
                                     <th width="80">Claim<br> Number</th>
                                 @endif
-                                    @if(in_array('Claim Number', $selectedColumns))
-                                        <th width="80">C. Job <br>Number</th>
-                                    @endif
+{{--                                    @if(in_array('Claim Number', $selectedColumns))--}}
+{{--                                        <th width="80">C. Job <br>Number</th>--}}
+{{--                                    @endif--}}
                             </tr>
 
                             </thead>
@@ -265,9 +265,9 @@
                                     @if(in_array('Claim Number', $selectedColumns))
                                         <td><p>{{$row->claim_number}}</p></td>
                                     @endif
-                                        @if(in_array('Claim Number', $selectedColumns))
-                                            <td><p>{{$row->client_id}}</p></td>
-                                        @endif
+{{--                                        @if(in_array('Claim Number', $selectedColumns))--}}
+{{--                                            <td><p>{{$row->client_id}}</p></td>--}}
+{{--                                        @endif--}}
                                 </tr>
                             @endforeach
                             </tbody>
