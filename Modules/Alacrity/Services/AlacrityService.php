@@ -2,6 +2,7 @@
 
 namespace Modules\Alacrity\Services;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
@@ -32,12 +33,12 @@ class AlacrityService
     /**
      * The authentication data for the Alacrity API.
      *
-     * @var array|null
+     * @var array
      */
-    protected $authData;
+    public $authData;
 
 
-    protected $api;
+    public $api;
     /**
      * Create a new instance of the AlacrityApiService.
      *
@@ -47,12 +48,13 @@ class AlacrityService
     {
         $this->config = Config::get('alacrity');
 
+
         $this->baseUrl = $this->config['base_url'];
         $this->credentials = $this->config['credentials'];
 
         $this->api = Http::withoutVerifying()->withHeaders([
             'Token' => $this->credentials['token'],
-        ])->withOptions(["verify"=>false])->baseUrl($this->baseUrl);
+        ])->withOptions(["verify" => false])->baseUrl($this->baseUrl);
     }
 
     /**
@@ -65,9 +67,8 @@ class AlacrityService
      */
     public function __call($method, $arguments)
     {
+
         $response = $this->request($method, $arguments[0], isset($arguments[1]) ? $arguments[1] : [], isset($arguments[2]) ? $arguments[2] : []);
-
-
 
         if ($response->failed()) {
             throw new \Exception("Alacrity API error: {$response->status()} - {$response->json('message')}");
@@ -102,7 +103,6 @@ class AlacrityService
      */
     public function request($method, $endpoint, $data = [], $additionalData = [])
     {
-        $this->authenticate();
 
         $headers = [
             'UserSessionId' => $this->authData['user_session_id'] ?? ''
@@ -133,28 +133,68 @@ class AlacrityService
      */
     public function authenticate()
     {
+        // $this->authData = AlacritySession::first();
 
-        $this->authData = AlacritySession::query()->first();
+        // Retrieve the first instance of the AlacritySession model from the database
+        $session = AlacritySession::first();
 
-        if (!$this->authData || strtotime($this->authData['expires_at']) < time()) {
 
-            // No authentication data or expired, make a new request to authenticate
+        // Check if the session does not exist or if it has expired
+        if (!$session || $this->isSessionExpired($session)) {
+            // Create a new session if it doesn't exist or if it has expired
             $response = $this->api->post('SignIn', $this->credentials);
+            $session = $this->createSessionIfNotExists($response);
+        } else {
+            $this->authData = $session;
+        }
 
-            $userId         = $response->json('UserId');
-            $userSessionId  = $response->header('UserSessionId');
-            $expiresAt      = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . ' + 30 minutes'));
 
-            $this->authData = [
-                'user_id' => $userId,
-                'user_session_id' => $userSessionId,
-                'expires_at' => $expiresAt,
-            ];
 
+        // No authentication data or expired, make a new request to authenticate
+        /*         $response = $this->api->post('SignIn', $this->credentials);
+
+        $userId         = $response->json('UserId');
+        $userSessionId  = $response->header('UserSessionId');
+        $expiresAt      = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . ' + 30 minutes'));
+
+        $this->authData = [
+            'user_id' => $userId,
+            'user_session_id' => $userSessionId,
+            'expires_at' => $expiresAt,
+        ];
+
+        if ($userId) {
             // Cache the authentication data for 30 minutes
             AlacritySession::query()->delete();
             AlacritySession::create($this->authData);
-        }
+        } */
+    }
+
+
+
+    private function isSessionExpired($session)
+    {
+        $expirationDate = Carbon::parse($session->expires_at);
+        return $expirationDate->isPast();
+    }
+
+    /**
+     * Creates a new session.
+     *
+     * @return AlacritySession The newly created session.
+     */
+    private function createSessionIfNotExists($response)
+    {
+        $lifetime = $this->config['session_lifetime'];
+
+        $this->authData = [
+            'user_id' => $response->json('UserId'),
+            'user_session_id' => $response->header('UserSessionId'),
+            'expires_at' => Carbon::now()->addMinutes($lifetime),
+        ];
+
+        AlacritySession::query()->delete();
+        AlacritySession::create($this->authData);
     }
 
     protected function getCacheKeyAuthData()
