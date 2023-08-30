@@ -134,43 +134,29 @@ class AlacrityService
      */
     public function authenticate()
     {
-        // $this->authData = AlacritySession::first();
 
-        // Retrieve the first instance of the AlacritySession model from the database
-        $session = AlacritySession::first();
+        $this->authData = AlacritySession::query()->first();
 
+        if (!$this->authData || strtotime($this->authData['expires_at']) < time()) {
 
-        // // Check if the session does not exist or if it has expired
-        // if (!$session || $this->isSessionExpired($session)) {
-        //     // Create a new session if it doesn't exist or if it has expired
-        //     $response = $this->api->post('SignIn', $this->credentials);
-        //     $session = $this->createSessionIfNotExists($response);
-        // } else {
-        //     $this->authData = $session;
-        // }
+            // No authentication data or expired, make a new request to authenticate
+            $response = $this->api->post('SignIn', $this->credentials);
 
+            $userId         = $response->json('UserId');
+            $userSessionId  = $response->header('UserSessionId');
+            $expiresAt      = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . ' + 5 minutes'));
 
+            $this->authData = [
+                'user_id' => $userId,
+                'user_session_id' => $userSessionId,
+                'expires_at' => $expiresAt,
+            ];
 
-        // No authentication data or expired, make a new request to authenticate
-        $response = $this->api->post('SignIn', $this->credentials);
-
-        $userId         = $response->json('UserId');
-        $userSessionId  = $response->header('UserSessionId');
-        $expiresAt      = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . ' + 5 minutes'));
-
-        $this->authData = [
-            'user_id' => $userId,
-            'user_session_id' => $userSessionId,
-            'expires_at' => $expiresAt,
-        ];
-
-        if ($userId) {
             // Cache the authentication data for 30 minutes
             AlacritySession::query()->delete();
-            AlacritySession::query()->create($this->authData);
-        } 
+            AlacritySession::create($this->authData);
+        }
     }
-
 
 
     private function isSessionExpired($session)
