@@ -26,8 +26,8 @@
     
                           <div class="col-md-12">
                                 <div class="form-check form-check-left mb-3">
-                                    <input class="form-check-input check_event" type="checkbox" id="event_id" wire:model="event_id" value="41">
-                                    <label class="form-check-label" for="event_id">HURRICANE IAN</label>
+                                    <input class="form-check-input check_event" type="checkbox" id="event_id" wire:model="event_id" value="43">
+                                    <label class="form-check-label" for="event_id">HURRICANE IDALIA</label>
                                 </div>
                             </div>
                             
