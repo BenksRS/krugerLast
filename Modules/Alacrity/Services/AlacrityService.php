@@ -103,6 +103,7 @@ class AlacrityService
      */
     public function request($method, $endpoint, $data = [], $additionalData = [])
     {
+        $this->authenticate();
 
         $headers = [
             'UserSessionId' => $this->authData['user_session_id'] ?? ''
@@ -139,23 +140,23 @@ class AlacrityService
         $session = AlacritySession::first();
 
 
-        // Check if the session does not exist or if it has expired
-        if (!$session || $this->isSessionExpired($session)) {
-            // Create a new session if it doesn't exist or if it has expired
-            $response = $this->api->post('SignIn', $this->credentials);
-            $session = $this->createSessionIfNotExists($response);
-        } else {
-            $this->authData = $session;
-        }
+        // // Check if the session does not exist or if it has expired
+        // if (!$session || $this->isSessionExpired($session)) {
+        //     // Create a new session if it doesn't exist or if it has expired
+        //     $response = $this->api->post('SignIn', $this->credentials);
+        //     $session = $this->createSessionIfNotExists($response);
+        // } else {
+        //     $this->authData = $session;
+        // }
 
 
 
         // No authentication data or expired, make a new request to authenticate
-        /*         $response = $this->api->post('SignIn', $this->credentials);
+        $response = $this->api->post('SignIn', $this->credentials);
 
         $userId         = $response->json('UserId');
         $userSessionId  = $response->header('UserSessionId');
-        $expiresAt      = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . ' + 30 minutes'));
+        $expiresAt      = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . ' + 5 minutes'));
 
         $this->authData = [
             'user_id' => $userId,
@@ -166,8 +167,8 @@ class AlacrityService
         if ($userId) {
             // Cache the authentication data for 30 minutes
             AlacritySession::query()->delete();
-            AlacritySession::create($this->authData);
-        } */
+            AlacritySession::query()->create($this->authData);
+        } 
     }
 
 
