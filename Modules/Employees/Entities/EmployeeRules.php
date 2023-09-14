@@ -16,6 +16,7 @@ class EmployeeRules extends Model
         'start_date',
         'end_date',
         'referral_id',
+        'carrier_id',
         'tech_ids',
         'porcentagem',
         'dividir',
@@ -64,7 +65,7 @@ class EmployeeRules extends Model
                 $info = "Technician";
                 break;
             case 'R':
-                $info = "Marketing";
+                $info = "Marketing Referral";
                 break;
             case 'J':
                 $info = "Job Type";
