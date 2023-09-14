@@ -3,6 +3,10 @@
 return [
     'name' => 'Alacrity',
 
+    // Define o tempo de vida da sessão para 5 minutos (300 segundos = 5 minutos).
+    'session_lifetime' => 5,
+    
+
     /**
      * The base URL for the Alacrity API.
      */
