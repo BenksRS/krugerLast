@@ -81,7 +81,6 @@ class ReferralInfo extends Component
         $this->allReferrals = Referral::where('status', 'ACTIVE')->get();
 
         $this->processCarrier($this->referral_id);
-//        $this->validCarrierList($this->assignment->referral_id);
 
     }
 

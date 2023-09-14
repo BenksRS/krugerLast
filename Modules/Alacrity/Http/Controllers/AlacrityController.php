@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Manny\Manny;
 use Modules\Alacrity\Entities\AlacrityJobs;
+use Modules\Alacrity\Entities\AlacritySession;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsPhones;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
@@ -80,6 +81,11 @@ class AlacrityController extends Controller
     }
     public function getAll()
     {
+
+
+       $deleteSession = AlacritySession::first();
+       $deleteSession->delete();
+
         $alacrity=alacrity_service()->post('GetAssignmentSummaryList');
 
         $alacrity=collect($alacrity['AssignmentSummaryList']);
