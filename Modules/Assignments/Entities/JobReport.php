@@ -33,6 +33,9 @@ class JobReport extends Model
         's2x4x8',
         's2x4x12',
         's2x4x16',
+        'mini_use',
+        'mini_type',
+        'mini_hour',
         'created_by',
         'updated_by'
     ];

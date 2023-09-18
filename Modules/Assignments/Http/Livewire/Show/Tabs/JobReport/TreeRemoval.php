@@ -59,6 +59,9 @@ class TreeRemoval extends Component
     public $wood_chipper;
     public $crane;
     public $bobcat_use;
+    public $mini_use;
+    public $mini_type;
+    public $mini_hour;
     public $bobcat_type;
     public $bobcat_hour;
 
@@ -81,6 +84,7 @@ class TreeRemoval extends Component
         'wood_chipper' => 'required',
         'crane' => 'required',
         'bobcat_use' => 'required',
+        'mini_use' => 'required',
 
     ];
 
@@ -106,10 +110,13 @@ class TreeRemoval extends Component
             $this->wood_chipper = $this->jobReport->wood_chipper;
             $this->crane = $this->jobReport->crane;
             $this->bobcat_use = $this->jobReport->bobcat_use;
+            $this->mini_use = $this->jobReport->mini_use;
             $this->bobcat_type = $this->jobReport->bobcat_type;
+            $this->mini_type = $this->jobReport->mini_type;
 //            $this->bobcat_type = $this->jobReport->bobcat_type;
             $this->loads = $this->jobReport->loads;
             $this->bobcat_hour = $this->jobReport->bobcat_hour;
+            $this->mini_hour = $this->jobReport->mini_hour;
 
 //            $this->workersDB = $this->jobReport->workers->pluck('id');
 //            $this->workersSelected = $this->workersDB->toArray();
@@ -224,8 +231,11 @@ class TreeRemoval extends Component
             'wood_chipper' =>$this->wood_chipper,
             'crane' =>$this->crane,
             'bobcat_use' =>$this->bobcat_use,
+            'mini_use' =>$this->mini_use,
             'bobcat_type' =>$this->bobcat_type,
+            'mini_type' =>$this->mini_type,
             'bobcat_hour' =>$this->bobcat_hour,
+            'mini_hour' =>$this->mini_hour,
             'job_info' =>$this->job_info,
             'created_by' => $this->user->id,
             'updated_by' => $this->user->id

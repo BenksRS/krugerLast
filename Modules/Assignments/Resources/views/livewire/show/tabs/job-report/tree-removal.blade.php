@@ -251,7 +251,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="mt-4">
-                                <h5 class="font-size-14 mb-4">Did we use Bobcat/Skid loader ?</h5>
+                                <h5 class="font-size-14 mb-4">Did we use Bobcat ?</h5>
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" type="radio" name="bobcat_use"  wire:model="bobcat_use"
                                            id="formRadios7" value="N" >
@@ -278,7 +278,7 @@
                         @if($bobcat_use == 'Y')
                             <div class="col-md-3">
                                 <div class="mt-4">
-                                    <h5 class="font-size-14 mb-4">Wich one?</h5>
+                                    <h5 class="font-size-14 mb-4">Type?</h5>
                                     <div class="form-check mb-3">
                                         <input class="form-check-input" type="radio" name="bobcat_type"  wire:model="bobcat_type"
                                                id="formRadios9" value="bobcat" >
@@ -286,13 +286,13 @@
                                             Bobcat
                                         </label>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio"  name="bobcat_type"  wire:model="bobcat_type"
-                                               id="formRadios10" value="mini_skid_loader" >
-                                        <label class="form-check-label" for="formRadios10">
-                                            Mini Skid Loader
-                                        </label>
-                                    </div>
+{{--                                    <div class="form-check">--}}
+{{--                                        <input class="form-check-input" type="radio"  name="bobcat_type"  wire:model="bobcat_type"--}}
+{{--                                               id="formRadios10" value="mini_skid_loader" >--}}
+{{--                                        <label class="form-check-label" for="formRadios10">--}}
+{{--                                            Mini Skid Loader--}}
+{{--                                        </label>--}}
+{{--                                    </div>--}}
                                     @error('debris')
                                     <div class="invalid-feedback show">
                                         Please select a valid option.
@@ -314,6 +314,76 @@
                                 @enderror
                             </div>
                             @endif
+                    </div>
+
+
+{{--                    // mini --}}
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mt-4">
+                                <h5 class="font-size-14 mb-4">Did we use Mini Skid loader ?</h5>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="mini_use"  wire:model="mini_use"
+                                           id="formRadios17" value="N" >
+                                    <label class="form-check-label" for="formRadios17">
+                                        No
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio"  name="mini_use"  wire:model="mini_use"
+                                           id="formRadios18" value="Y" >
+                                    <label class="form-check-label" for="formRadios18">
+                                        Yes
+                                    </label>
+                                </div>
+                                @error('debris')
+                                <div class="invalid-feedback show">
+                                    Please select a valid option.
+                                </div>
+                                @enderror
+
+                            </div>
+
+                        </div>
+                        @if($mini_use == 'Y')
+                            <div class="col-md-3">
+                                <div class="mt-4">
+                                    <h5 class="font-size-14 mb-4">Type?</h5>
+{{--                                    <div class="form-check mb-3">--}}
+{{--                                        <input class="form-check-input" type="radio" name="mini_type"  wire:model="mini_type"--}}
+{{--                                               id="formRadios9" value="bobcat" >--}}
+{{--                                        <label class="form-check-label" for="formRadios9">--}}
+{{--                                            Bobcat--}}
+{{--                                        </label>--}}
+{{--                                    </div>--}}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"  name="mini_type"  wire:model="mini_type"
+                                               id="formRadios10" value="mini_skid_loader" >
+                                        <label class="form-check-label" for="formRadios10">
+                                            Mini Skid Loader
+                                        </label>
+                                    </div>
+                                    @error('debris')
+                                    <div class="invalid-feedback show">
+                                        Please select a valid option.
+                                    </div>
+                                    @enderror
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3 mt-4">
+                                    <label for="formrow-firstname-input" class="form-label">How many hours Mini Bobcat?</label>
+                                    <input type="number" class="form-control" id="formrow-firstname-input" name="mini_hour" wire:model="mini_hour">
+                                </div>
+                                @error('bobcat_hour')
+                                <div class="invalid-feedback show">
+                                    Please input a number > 0.
+                                </div>
+                                @enderror
+                            </div>
+                        @endif
                     </div>
                     <div class="col-lg-12">
                         <hr>
@@ -423,13 +493,26 @@
                                 <td colspan="4">{{($this->crane  == 'Y') ? 'Yes' : 'No'}}</td>
                                </tr>
                             <tr>
-                                <th scope="row">Did we use Bobcat/Skid loader ?</th>
+                                <th scope="row">Did we use Bobcat?</th>
                                 <td>{{($this->bobcat_use  == 'Y') ? 'Yes' : 'No'}}</td>
                                 @if($this->bobcat_use == 'Y')
-                                <th scope="row">Wich one? </th>
+                                <th scope="row">Type? </th>
                                 <td>{{$this->bobcat_type}}</td>
                                 <th scope="row">How many hours :</th>
                                 <td>{{$this->bobcat_hour}} hr</td>
+                                @else
+                                    <td colspan="5">
+                                @endif
+
+                            </tr>
+                            <tr>
+                                <th scope="row">Did we use Mini Bobcat?</th>
+                                <td>{{($this->mini_use  == 'Y') ? 'Yes' : 'No'}}</td>
+                                @if($this->mini_use == 'Y')
+                                    <th scope="row">Type? </th>
+                                    <td>{{$this->mini_type}}</td>
+                                    <th scope="row">How many hours :</th>
+                                    <td>{{$this->mini_hour}} hr</td>
                                 @else
                                     <td colspan="5">
                                 @endif
