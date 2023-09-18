@@ -14,7 +14,8 @@
                                 name="type" data-placeholder="Select ...">
                             <option >choose...</option>
                             <option value="T">Technician</option>
-                            <option value="R">Marketing</option>
+                            <option value="R">Marketing Referral Full</option>
+                            <option value="C">Marketing Carrier From Referral</option>
                             <option value="J">Job Type</option>
                             <option value="S">Roof Tarp</option>
                             <option value="P">All Jobs</option>
@@ -59,6 +60,53 @@
                 </div>
                 @enderror
                 @break
+                @case('C')
+                <div>
+                    <div class="mb-3" wire:ignore>
+                        <label class="form-label">Referral</label>
+                        <select class="select2 form-control select2-multiple select_referral"
+                                name="referral_id" data-placeholder="Select ...">
+                            <option selected>chose...</option>
+                            @foreach($allReferrals as $ref)
+
+                                @if($ref->id == $referralSelected)
+                                    <option  selected value="{{$ref->id}}">{{$ref->full_name}}</option>
+                                @else
+                                    <option  value="{{$ref->id}}">{{$ref->full_name}}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="mb-3" >
+                        <label class="form-label">Carrier</label>
+                        <select class=" form-control select2-multiple select_carrier"
+                                name="carrier_id" data-placeholder="Select ...">
+                            <option selected>chose...</option>
+                            @foreach($allReferrals as $carr)
+                                @if($carr)
+                                    <option  value="{{$carr->id}}">{{$carr->full_name}}</option>
+                                @else
+                                    <option selected>chose...</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+
+                </div>
+
+
+
+
+                @error('reportSelected')
+                <div class="invalid-feedback show">
+                    Please select a report valid option.
+                </div>
+            </div>
+            @enderror
+            @break
                 @case('J')
                 <div class="mb-3" >
                     <label class="form-label">Job Type</label>
@@ -179,6 +227,7 @@
                                 type="submit" ><i class="bx bx-save"></i> Save  </button>
                         @break
                         @case('R')
+                        @case('C')
                         <div class="col-md-6">
                             <label  class="form-label">Amount</label>
                             <input type="text" class="form-control"  name="valor"
@@ -294,51 +343,59 @@
 </div>
 @push('js')
     <script>
-        {{--var taskFlatpickrConfigDate = {--}}
-        {{--    enableTime: false,--}}
-        {{--    altInput: true,--}}
-        {{--    dateFormat: "Y-m-d",--}}
-        {{--    altFormat: "m\/d\/Y",--}}
-        {{--};--}}
-        {{--var taskFlatpickrConfigDateTime = {--}}
-        {{--    enableTime: true,--}}
-        {{--    altInput: true,--}}
-        {{--    dateFormat: "Y-m-d H:i",--}}
-        {{--    altFormat: "m\/d\/Y h:i K",--}}
-        {{--    time_24hr: false--}}
-        {{--};--}}
-        {{--$('#date_start').on('change.datetimepicker', function (e){--}}
-        {{--    let data = $(this).val();--}}
-        {{--    @this.set('date_start', data);--}}
-        {{--});--}}
-        {{--$('#date_end').on('change.datetimepicker', function (e){--}}
-        {{--    let data = $(this).val();--}}
-        {{--    @this.set('date_end', data);--}}
-        {{--});--}}
-        {{--$('.select_referral').on('change', function (e){--}}
-        {{--    let data = $(this).val();--}}
-        {{--    @this.set('referralSelected', data);--}}
-        {{--});--}}
+        var taskFlatpickrConfigDate = {
+            enableTime: false,
+            altInput: true,
+            dateFormat: "Y-m-d",
+            altFormat: "m\/d\/Y",
+        };
+        var taskFlatpickrConfigDateTime = {
+            enableTime: true,
+            altInput: true,
+            dateFormat: "Y-m-d H:i",
+            altFormat: "m\/d\/Y h:i K",
+            time_24hr: false
+        };
 
-        function componentsLoadPageADD(){
-            console.log('START components ADD');
-            {{--$('#date_start').on('change.datetimepicker', function (e){--}}
-            {{--    let data = $(this).val();--}}
-            {{--    @this.set('date_start', data);--}}
-            {{--});--}}
-            {{--$('#date_end').on('change.datetimepicker', function (e){--}}
-            {{--    let data = $(this).val();--}}
-            {{--    @this.set('date_end', data);--}}
-            {{--});--}}
-            {{--$('.select_referral').on('change', function (e){--}}
-            {{--    let data = $(this).val();--}}
-            {{--    @this.set('referralSelected', data);--}}
-            {{--});--}}
+        function componentsLoadPage(){
+            console.log('START components employeesdsdssdds');
+            $('.select2').select2();
+            $('.dropzone').dropzone();
+            $('.flatpickr_date').flatpickr(taskFlatpickrConfigDate);
+            $('.flatpickr_datetime').flatpickr(taskFlatpickrConfigDateTime);
 
-            console.log('END components ADD')
+
+            $('.list_jobs_item').hide();
+            $('.btn_hide_jobs').hide();
+
+            $('.btn_show_jobs').on('click', function (e){
+                let data = $(this).data('id');
+                let btn_hide = $(this).data('hide');
+                $('.list_jobs_item').hide();
+                $('.btn_hide_jobs').hide();
+                $('.btn_show_jobs').show();
+
+                $('.list_jobs_'+data).show();
+                $('.btn_hide_'+data).show();
+
+
+                $(this).hide();
+
+            });
+            $('.btn_hide_jobs').on('click', function (e){
+                $('.list_jobs_item').hide();
+                $('.btn_hide_jobs').hide();
+                $('.btn_show_jobs').show();
+
+            });
+
+
+            console.log('END components employeesdsds')
+
         }
         document.addEventListener("DOMContentLoaded", () => {
-            Livewire.hook('message.processed', (message, component) => {componentsLoadPageADD()})
+            Livewire.hook('message.processed', (message, component) => {componentsLoadPage()})
         });
     </script>
+
 @endpush

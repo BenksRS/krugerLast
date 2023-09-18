@@ -39,6 +39,10 @@ class EmployeeRules extends Model
     {
         return $this->belongsTo(Referral::class, 'referral_id', 'id');
     }
+    public function carrier ()
+    {
+        return $this->belongsTo(Referral::class, 'carrier_id', 'id');
+    }
     public function getStartDateViewAttribute(){
 
         $return = "-";
@@ -65,7 +69,10 @@ class EmployeeRules extends Model
                 $info = "Technician";
                 break;
             case 'R':
-                $info = "Marketing Referral";
+                $info = "Marketing Referral Full";
+                break;
+            case 'C':
+                $info = "Marketing Carrier from Referral";
                 break;
             case 'J':
                 $info = "Job Type";
@@ -97,7 +104,15 @@ class EmployeeRules extends Model
               $p=$this->porcentagem*100;
               $referral=$this->referral->company_entity;
 
-              $info = "Marketing - %$p - $referral";
+              $info = "Marketing Referral Full - %$p - $referral #$this->referral_id";
+              break;
+
+          case 'C':
+              $p=$this->porcentagem*100;
+              $referral=$this->referral->company_entity;
+              $carrier=$this->carrier->company_entity;
+
+              $info = "Marketing Carrier from Referral - %$p - $referral #$this->referral_id ==> $carrier #$this->carrier_id";
               break;
           case 'J':
               $job_type=\Modules\Assignments\Entities\AssignmentsJobTypes::find($this->job_type);

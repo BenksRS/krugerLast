@@ -19,7 +19,7 @@ class Show extends Component
     public function mount(User $user)
     {
         $this->user = $user;
-        $this->rules = EmployeeRules::where('user_id',  $this->user->id)->get();
+        $this->rules = EmployeeRules::where('user_id',  $this->user->id)->orderBy("referral_id", "asc")->orderBy("carrier_id", "asc")->get();
         $this->url = \session()->get('url');
 
 //        dd( $this->url);

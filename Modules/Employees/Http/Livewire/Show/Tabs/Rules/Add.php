@@ -11,14 +11,27 @@ use Modules\User\Entities\User;
 
 class Add extends Component
 {
+    protected $listeners = [
+        'contentChange' => 'processContent',
+        'clearContent'
+
+    ];
+
     public $user;
     public $ruleType;
+    public $referral_id;
+    public $carrier_id;
     public $jobTypes;
     public $techs;
     public $jobTypesSelected;
     public $techSelected;
     public $allReferrals;
     public $referralSelected;
+    public $carrierSelected;
+
+    public $showCarrierSelect = false;
+    public $carrierLists;
+    public $referral;
 
     public $date_start;
     public $date_end;
@@ -26,6 +39,10 @@ class Add extends Component
     public $percentage;
     public $sq_min;
     public $sq_max;
+
+    public $ref;
+
+
     protected $rules = [
         'type'
     ];
@@ -38,6 +55,41 @@ class Add extends Component
 
         $this->allReferrals = Referral::all();
     }
+    public function updated($field)
+    {
+        if ($field == 'referral_id') {
+
+
+            $this->loadReferral();
+            $this->emit('contentChange');
+            $this->carrierSelected =  null;
+
+        }
+    }
+    public function loadReferral(){
+        $this->ref = Referral::find($this->referralSelected);
+    }
+    public function processContent(){
+dd($this->referral_id);
+        $this->carrierLists=[];
+        $this->processCarrier($this->referralSelected);
+
+    }
+    public function processCarrier($id){
+        $this->referral = Referral::find($id);
+        $this->carrierLists = $this->referral->carriers;
+
+        if(count($this->carrierLists) > 0){
+            $this->showCarrierSelect = true;
+
+        }else{
+            $this->showCarrierSelect = false;
+
+        }
+
+
+
+    }
     public function addRule($formData){
 
         $formData=(object)$formData;
@@ -48,6 +100,9 @@ class Add extends Component
 
         if(isset($formData->date_start)){
             $date_start =$formData->date_start;
+        }
+        if(isset($formData->carrier_id)){
+            $carrier_id =  $formData->carrier_id;
         }
         if(isset($formData->valor)){
             $valor = $formData->valor;
@@ -81,6 +136,7 @@ class Add extends Component
             'start_date' => $date_start,
             'end_date' => $endDate,
             'referral_id' => $referral_id,
+            'carrier_id' => $carrier_id,
             'tech_ids' => $tech_ids,
             'porcentagem' => $percentage,
             'dividir' => 1,
