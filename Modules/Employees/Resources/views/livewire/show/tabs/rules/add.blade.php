@@ -1,4 +1,7 @@
 <div>
+
+@if($user->id == 2)
+
     <form  class="needs-validation" novalidate action=""  wire:submit.prevent="addRule(Object.fromEntries(new FormData($event.target)))">
     <div class="row">
         <div class="col-lg-4 col-md-12">
@@ -334,6 +337,10 @@
 
     </div>
     </form>
+@else
+    <h3 style="color: red;"> You Don`t Have Access !!!</h3>
+@endif
+
 
 </div>
 
