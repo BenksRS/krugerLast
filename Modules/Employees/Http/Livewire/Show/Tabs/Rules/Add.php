@@ -104,6 +104,7 @@ class Add extends Component
         if(isset($formData->date_start)){
             $date_start =$formData->date_start;
         }
+        $carrier_id =null;
         if(isset($formData->carrier_id)){
             $carrier_id =  $formData->carrier_id;
         }
