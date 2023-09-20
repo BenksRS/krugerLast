@@ -52,8 +52,11 @@ class Add extends Component
         $this->user = $user;
         $this->jobTypes = AssignmentsJobTypes::where('active','Y')->get();
         $this->techs = Techs::where('active','Y')->get();
+        $ref = Referral::all();
 
-        $this->allReferrals = Referral::all();
+//        $ref = $ref->orderBy('company_entity')->get();
+
+        $this->allReferrals = $ref;
     }
     public function updated($field)
     {
@@ -70,7 +73,7 @@ class Add extends Component
         $this->ref = Referral::find($this->referralSelected);
     }
     public function processContent(){
-dd($this->referral_id);
+
         $this->carrierLists=[];
         $this->processCarrier($this->referralSelected);
 

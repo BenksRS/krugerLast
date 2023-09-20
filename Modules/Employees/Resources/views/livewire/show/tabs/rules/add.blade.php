@@ -85,7 +85,7 @@
                         <select class=" form-control select2-multiple select_carrier"
                                 name="carrier_id" data-placeholder="Select ...">
                             <option selected>chose...</option>
-                            @foreach($allReferrals as $carr)
+                            @foreach($allReferrals->sortBy('company_entity') as $carr)
                                 @if($carr)
                                     <option  value="{{$carr->id}}">{{$carr->full_name}}</option>
                                 @else
