@@ -254,6 +254,7 @@ class Header extends Component
         $this->assignment->update($data);
 
         $this->assignment = Assignment::find($id);
+        integration('assignments')->set($this->assignment->id);
 
     }
     public function processRemoveAuth(){
@@ -266,6 +267,7 @@ class Header extends Component
         $this->assignment->update($data);
 
         $this->assignment = Assignment::find($id);
+        integration('assignments')->set($this->assignment->id);
 
     }
     public function processShowinfo(){

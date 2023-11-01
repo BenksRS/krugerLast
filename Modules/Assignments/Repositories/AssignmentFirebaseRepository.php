@@ -79,7 +79,7 @@ class AssignmentFirebaseRepository extends Assignment {
         }else{
             $count_auth = 1;
         }
-        
+
 
         $event="";
         if($this->event){
