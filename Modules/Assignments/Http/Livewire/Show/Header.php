@@ -3,6 +3,7 @@
 namespace Modules\Assignments\Http\Livewire\Show;
 
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Modules\Assignments\Entities\Assignment;
@@ -26,6 +27,8 @@ class Header extends Component
         'showUpdateinfo' => 'processShowinfo',
         'updateScheduling' => 'processScheduling',
         'startBilling' => 'processStartBilling',
+        'addAuth' => 'processAddAuth',
+        'removeAuth' => 'processRemoveAuth',
         'resetBilling' => 'processResetBilling',
         'checkMylist' => 'processMylist',
     ];
@@ -37,7 +40,6 @@ class Header extends Component
     public $selectedTags_ids;
     public $allTags;
     public $allEvents;
-
 
     public $changeStatustext;
 
@@ -109,7 +111,6 @@ class Header extends Component
                 'user_id'=> $this->user->id,
             ]);
         }
-
 
         $this->check_mylist=AssugnmentsMylist::where('assignment_id',$this->assignment->id)->where('user_id',$this->user->id)->first();
 
@@ -238,6 +239,31 @@ class Header extends Component
 
          $data['billed_by']=$this->user->id;
          $this->assignment->update($data);
+
+        $this->assignment = Assignment::find($id);
+
+    }
+
+    public function processAddAuth(){
+        $id =  $this->assignment->id;
+
+        $hoje=Carbon::now();
+        $data['auth_needed']='Y';
+        $data['auth_needed_by']=null;
+        $data['auth_needed_at']=null;
+        $this->assignment->update($data);
+
+        $this->assignment = Assignment::find($id);
+
+    }
+    public function processRemoveAuth(){
+        $id =  $this->assignment->id;
+
+        $hoje=Carbon::now();
+        $data['auth_needed']='N';
+        $data['auth_needed_by']=$this->user->id;
+        $data['auth_needed_at']=$hoje;
+        $this->assignment->update($data);
 
         $this->assignment = Assignment::find($id);
 

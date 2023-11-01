@@ -81,7 +81,7 @@
                                                     @else
                                                         {{$assignment->billed_created->name}} |
                                                         <button type="button" class="btn btn-warning btn-sm" wire:click="$emit('resetBilling')"><i class="fas fa-undo-alt"></i> reset</button></p>
-                                                @endif
+                                                    @endif
                                                 </p>
                                             @else
                                                 <p>Billing by :
@@ -90,11 +90,22 @@
                                                     @else
                                                         {{$assignment->billed_created->name}} |
                                                     @endif
-                                                    @endif
-
-
-
                                                 </p>
+                                             @endif
+
+                                            {{--  if    auth needed   info --}}
+                                            @if($assignment->auth_needed == "Y")
+                                                <p>Authorization Needed :
+                                                    <button type="button" class="btn btn-danger btn-sm" wire:click="$emit('removeAuth')"><i class="fas fa-trash-restore"></i> Remove Authorization</button>
+                                                </p>
+                                            @else
+                                                <p> No Auth Needed :
+                                                    {{$assignment->authneed_created->name}} at {{$assignment->created_authneeded}}
+                                                    <button type="button" class="btn btn-primary btn-sm" wire:click="$emit('addAuth')"><i class="fas fa-file"></i> Add Authorization</button>
+                                                </p>
+                                            @endif
+
+
 
                                         </div>
 

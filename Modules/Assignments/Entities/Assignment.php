@@ -45,6 +45,9 @@ class Assignment extends Model {
         'status_collection_id',
         'allacrity_id',
         'client_id',
+        'auth_needed',
+        'auth_needed_by',
+        'auth_needed_at',
         'inside_info'
     ];
 
@@ -136,6 +139,10 @@ class Assignment extends Model {
     {
         return $this->belongsTo(User::class, 'billed_by', 'id');
     }
+    public function authneed_created()
+    {
+        return $this->belongsTo(User::class, 'auth_needed_by', 'id');
+    }
     public function user_updated ()
     {
         return $this->belongsTo(User::class, 'updated_by', 'id');
@@ -163,6 +170,14 @@ class Assignment extends Model {
         $return = "-";
         if($this->created_at){
             $return = Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('m/d/Y');
+        }
+        return $return;
+    }
+    public function getCreatedAuthneededAttribute (){
+
+        $return = "-";
+        if($this->auth_needed_at){
+            $return = Carbon::createFromFormat('Y-m-d H:i:s', $this->auth_needed_at)->format('m/d/Y g:i A');
         }
         return $return;
     }

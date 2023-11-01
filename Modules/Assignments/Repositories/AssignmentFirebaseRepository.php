@@ -74,6 +74,13 @@ class AssignmentFirebaseRepository extends Assignment {
             }
 
         $count_auth=count($this->authorizations);
+        if($this->auth_needed == 'N'){
+            $count_auth = 0;
+        }else{
+            $count_auth = 1;
+        }
+        
+
         $event="";
         if($this->event){
             $event=$this->event->name;
