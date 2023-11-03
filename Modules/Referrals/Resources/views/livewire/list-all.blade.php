@@ -87,6 +87,9 @@
                                 @if(in_array('Marketing', $selectedColumns))
                                     <th>Type</th>
                                 @endif
+                                    @if(in_array('Marketing', $selectedColumns))
+                                        <th>CREATED AT</th>
+                                    @endif
                                     @if(in_array('Type', $selectedColumns))
                                         <th>LAST JOB SENT</th>
                                     @endif
@@ -130,6 +133,9 @@
                                     @if(in_array('Type', $selectedColumns))
                                         <td><p>{{strtolower($row->type->name)}}</p></td>
                                     @endif
+                                        @if(in_array('Type', $selectedColumns))
+                                            <td><p>{{strtolower($row->created_date)}}</p></td>
+                                        @endif
                                         @if(in_array('Type', $selectedColumns))
                                             <td><p>
                                                     @if($row->lastjob)

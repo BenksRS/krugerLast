@@ -19,6 +19,8 @@ class ReferralController extends AdminController
     public function __construct ()
     {
         $this->middleware('auth:user');
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '2512M');
     }
 
 
