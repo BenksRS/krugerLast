@@ -1,5 +1,5 @@
 <div>
-
+{{--//--}}
 @if($user->id == 2)
 
     <form  class="needs-validation" novalidate action=""  wire:submit.prevent="addRule(Object.fromEntries(new FormData($event.target)))">
