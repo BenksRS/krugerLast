@@ -1,7 +1,7 @@
 <div>
 {{--//--}}
-    @dump($user->id)
-@if($user->id == 1)
+
+    @if(Auth::user()->id == 2)
 
     <form  class="needs-validation" novalidate action=""  wire:submit.prevent="addRule(Object.fromEntries(new FormData($event.target)))">
     <div class="row">
