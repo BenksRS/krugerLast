@@ -18,6 +18,10 @@ return [
         'warnings' => [
             'key' => 'warnings',
             'name' => 'Warnings',
+        ],
+        'w9' => [
+            'key' => 'w9',
+            'name' => 'W9',
         ]
     ]
 ];
