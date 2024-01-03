@@ -11,7 +11,7 @@ class Comission extends Component
     public $user;
     public $dueMonthSelected;
     public $dueYearSelected;
-    public $dueYearList=[2022 => '2022', 2023 => '2023'];
+    public $dueYearList=[2022 => '2022', 2023 => '2023', 2024 => '2024'];
     public $dueMonthList=[
         1 => 'Jan',
         2 => 'Feb',
