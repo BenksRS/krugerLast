@@ -3,7 +3,12 @@
     //    phpinfo();
     ?>
     <div  wire:sortable-group="updateTaskOrder" >
-        <h4 class="card-title mb-4" >1# Picture Front  @if(!$showFront)<button type="button" class="btn btn-warning btn-sm float-end" wire:click="$emit('uploadPics', 'start_job')"><i class="fas fa-plus"></i> <i class="fas fa-images"></i></button>@endif</h4>
+        <h4 class="card-title mb-4" >1# Picture Front  @if(!$showFront)<button type="button" class="btn btn-warning btn-sm float-end" wire:click="$emit('uploadPics', 'start_job')"><i class="fas fa-plus"></i> <i class="fas fa-images"></i></button>@endif
+
+            @if($listGallery->where('type','start_job')->isNotEmpty())
+                <smal style="font-size: 11px;">({{$listGallery->where('type','start_job')->last()->created_date}})</smal>
+                @endif
+        </h4>
         <div class="card"  wire:key="group-front" wire:sortable.item="start_job">
             <div class="card-body">
 
@@ -18,6 +23,8 @@
                                 @else
                                     @if($listGallery->where('type','start_job')->isNotEmpty())
                                         @foreach($listGallery->where('type','start_job') as $imagem)
+
+
                                             {{--                                            ITEM --}}
                                             <div class="float-start position-relative">
                                                 <div class="image_handler" >
@@ -59,7 +66,12 @@
                 </div>
             </div>
         </div>
-        <h4 class="card-title mb-4" >2# Inside pictures of the damaged area @if(!$showInside)<button type="button" class="btn btn-warning btn-sm float-end" wire:click="$emit('uploadPics', 'pics_inside')"><i class="fas fa-plus"></i> <i class="fas fa-images"></i></button>@endif</h4>
+        <h4 class="card-title mb-4" >2# Inside pictures of the damaged area @if(!$showInside)<button type="button" class="btn btn-warning btn-sm float-end" wire:click="$emit('uploadPics', 'pics_inside')"><i class="fas fa-plus"></i> <i class="fas fa-images"></i></button>@endif
+
+            @if($listGallery->where('type','pics_inside')->isNotEmpty())
+                <smal style="font-size: 11px;">({{$listGallery->where('type','pics_inside')->last()->created_date}})</smal>
+            @endif
+        </h4>
         <div class="card"  wire:key="group-inside" wire:sortable.item="pics_inside">
             <div class="card-body">
 
@@ -161,7 +173,11 @@
             </div>
         </div>
 
-        <h4 class="card-title mb-4" >3# Pictures before @if(!$showBefore)<button type="button" class="btn btn-warning btn-sm float-end" wire:click="$emit('uploadPics', 'pics_before')"><i class="fas fa-plus"></i> <i class="fas fa-images"></i></button>@endif</h4>
+        <h4 class="card-title mb-4" >3# Pictures before @if(!$showBefore)<button type="button" class="btn btn-warning btn-sm float-end" wire:click="$emit('uploadPics', 'pics_before')"><i class="fas fa-plus"></i> <i class="fas fa-images"></i></button>@endif
+            @if($listGallery->where('type','pics_before')->isNotEmpty())
+                <smal style="font-size: 11px;">({{$listGallery->where('type','pics_before')->last()->created_date}})</smal>
+            @endif
+        </h4>
         <div class="card"  wire:key="group-before" wire:sortable.item="pics_before">
             <div class="card-body">
 
@@ -213,7 +229,11 @@
                 </div>
             </div>
         </div>
-        <h4 class="card-title mb-4" >4# Pictures after @if(!$showAfter)<button type="button" class="btn btn-warning btn-sm float-end" wire:click="$emit('uploadPics', 'pics_after')"><i class="fas fa-plus"></i> <i class="fas fa-images"></i></button>@endif</h4>
+        <h4 class="card-title mb-4" >4# Pictures after @if(!$showAfter)<button type="button" class="btn btn-warning btn-sm float-end" wire:click="$emit('uploadPics', 'pics_after')"><i class="fas fa-plus"></i> <i class="fas fa-images"></i></button>@endif
+            @if($listGallery->where('type','pics_after')->isNotEmpty())
+                <smal style="font-size: 11px;">({{$listGallery->where('type','pics_after')->last()->created_date}})</smal>
+            @endif
+        </h4>
         <div class="card"  wire:key="group-after" wire:sortable.item="pics_after">
             <div class="card-body">
 

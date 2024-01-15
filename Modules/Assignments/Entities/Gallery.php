@@ -2,6 +2,7 @@
 
 namespace Modules\Assignments\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -24,6 +25,14 @@ class Gallery extends Model
     public function category()
     {
         return $this->hasOne(GalleryCategory::class,'id','category_id');
+    }
+    public function getCreatedDateAttribute (){
+
+        $return = "-";
+        if($this->created_at){
+            $return = Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('m/d/Y g:i A');
+        }
+        return $return;
     }
 
     protected static function newFactory()

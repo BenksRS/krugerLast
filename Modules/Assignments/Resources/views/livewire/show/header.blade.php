@@ -26,6 +26,7 @@
                                             <h5 class="mb-1">{{$assignment->full_name}}
                                                 <span class="badge {{strtolower($assignment->status->name)}}">{{$assignment->status->name}}</span>
 
+
                                                 <button type="button" class="btn btn-info btn-sm waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".history_modal"><i class="bx bx-history" ></i></button>
                                                 @if(!isset($check_mylist))
                                                 <button type="button" class="btn btn-warning btn-sm waves-effect waves-light" wire:click="$emit('checkMylist')"><i class="fas fa-star"></i> </button></p>
@@ -52,6 +53,7 @@
 
                                                                         <li style="border-bottom: 1px solid #c7c5c5;">
                                                                             <span class="badge {{strtolower($h->status->name)}}">{{$h->status->name}}</span> ({{$h->user->name}})- {{$h->created_date}} <br># <small>{{$h->description}}</small>
+
                                                                         </li>
 
                                                                     @endforeach
