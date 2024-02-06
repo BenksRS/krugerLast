@@ -150,8 +150,13 @@
                                         name="byState" wire:model="byState" data-placeholder="Select ...">
                                     <option selected>chose...</option>
 {{--                                    @foreach($techs as $tech)--}}
+	                                      <option  value="AL">AL</option>
+	                                      <option  value="FL">FL</option>
                                         <option  value="LA">LA</option>
-                                        <option  value="FL">FL</option>
+	                                      <option  value="MS">MS</option>
+                                        <option  value="NC">NC</option>
+                                        <option  value="SC">SC</option>
+                                        <option  value="TX">TX</option>
 {{--                                    @endforeach--}}
                                 </select>
                             </div>
