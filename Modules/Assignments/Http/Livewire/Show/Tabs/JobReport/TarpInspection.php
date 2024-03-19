@@ -50,6 +50,8 @@ class TarpInspection extends Component
     public $height_accomodation;
     public $tarp_situation;
     public $anchoring_support='Y';
+		
+		public $removed_old_tarp;
 
     public $workersSelected = [];
     public $reportSelected = [];
@@ -68,6 +70,7 @@ class TarpInspection extends Component
         'height_accomodation' => 'required',
         'pitch' => 'required',
         'tarp_situation' => 'required',
+        'removed_old_tarp' => 'required',
 
     ];
 
@@ -92,6 +95,7 @@ class TarpInspection extends Component
             $this->anchoring_support = $this->jobReport->anchoring_support;
             $this->height_accomodation = $this->jobReport->height_accomodation;
             $this->tarp_situation = $this->jobReport->tarp_situation;
+						$this->removed_old_tarp = $this->jobReport->removed_old_tarp;
             $this->job_info = $this->jobReport->job_info;
             $this->pitch = $this->jobReport->pitch;
             $this->service_date = $this->jobReport->service_date;
@@ -192,6 +196,7 @@ class TarpInspection extends Component
             'tarp_alterations' =>$this->tarp_alterations,
             'tarp_situation' =>$this->tarp_situation,
             'height_accomodation' =>$this->height_accomodation,
+            'removed_old_tarp' =>$this->removed_old_tarp,
             'job_info' =>$this->job_info,
             'pitch' =>$this->pitch,
             'created_by' => $this->user->id,

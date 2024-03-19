@@ -20,6 +20,7 @@ class JobReport extends Model
         'tarp_alterations',
         'tarp_situation',
         'height_accomodation',
+        'removed_old_tarp',
         'debris',
         'loads',
         'wood_chipper',

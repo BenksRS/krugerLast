@@ -241,7 +241,32 @@
                             @enderror
                         </div>
                     </div>
+
+                <div class="col-xl-3 col-sm-6">
+                    <div class="mt-4">
+                        <h5 class="font-size-14 mb-4">Removed Old Tarp</h5>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="radio" name="removed_old_tarp"  wire:model="removed_old_tarp"
+                                   id="removed_old_tarp1" value="N" >
+                            <label class="form-check-label" for="removed_old_tarp1">
+                                No
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="removed_old_tarp"  wire:model="removed_old_tarp"
+                                   id="removed_old_tarp2" value="Y" >
+                            <label class="form-check-label" for="removed_old_tarp2">
+                                Yes
+                            </label>
+                        </div>
+                        @error('removed_old_tarp')
+                        <div class="invalid-feedback show">
+                            Please select a valid option.
+                        </div>
+                        @enderror
+                    </div>
                 </div>
+        </div>
 
                 <hr>
 
@@ -376,6 +401,11 @@
                         <td>{{($jobReport->height_accomodation  == 'Y') ? 'Yes' : 'No'}}</td>
 
                     </tr>
+                        <tr>
+                            <th scope="row">Removed Old Tarp :</th>
+                            <td colspan="5">{{($jobReport->removed_old_tarp  == 'Y') ? 'Yes' : 'No'}}</td>
+
+                        </tr>
                     <tr>
                         <th scope="row">Job Report :</th>
                         <td colspan="5">

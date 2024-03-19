@@ -51,6 +51,8 @@ class RoofTarp extends Component
 
     public $height_accomodation;
     public $anchoring_support='Y';
+		
+		public $removed_old_tarp;
 
     public $workersSelected = [];
     public $reportSelected = [];
@@ -70,6 +72,7 @@ class RoofTarp extends Component
         'tarp_alterations' => 'required',
         'height_accomodation' => 'required',
         'pitch' => 'required',
+        'removed_old_tarp' => 'required',
 
     ];
 
@@ -97,6 +100,7 @@ class RoofTarp extends Component
             $this->tarp_alterations = $this->jobReport->tarp_alterations;
             $this->anchoring_support = $this->jobReport->anchoring_support;
             $this->height_accomodation = $this->jobReport->height_accomodation;
+						$this->removed_old_tarp = $this->jobReport->removed_old_tarp;
             $this->job_info = $this->jobReport->job_info;
             $this->pitch = $this->jobReport->pitch;
             $this->service_date = $this->jobReport->service_date;
@@ -163,6 +167,7 @@ class RoofTarp extends Component
                 'anchoring_support' =>$this->anchoring_support,
                 'tarp_alterations' =>$this->tarp_alterations,
                 'height_accomodation' =>$this->height_accomodation,
+								'removed_old_tarp' => $this->removed_old_tarp,
                 'job_info' =>$this->job_info,
                 'pitch' =>$this->pitch,
                 'created_by' => $this->user->id,
