@@ -20,6 +20,7 @@
                             <option value="T">Technician</option>
                             <option value="R">Marketing Referral Full</option>
                             <option value="C">Marketing Carrier From Referral</option>
+                            <option value="Z">Marketing Carrier From Referral by State</option>
                             <option value="J">Job Type</option>
                             <option value="S">Roof Tarp</option>
                             <option value="P">All Jobs</option>
@@ -111,6 +112,71 @@
             </div>
             @enderror
             @break
+            @case('Z')
+            <div>
+                <div class="mb-3" wire:ignore>
+                    <label class="form-label">Referral</label>
+                    <select class="select2 form-control select2-multiple select_referral"
+                            name="referral_id" data-placeholder="Select ...">
+                        <option selected>chose...</option>
+                        @foreach($allReferrals as $ref)
+
+                            @if($ref->id == $referralSelected)
+                                <option  selected value="{{$ref->id}}">{{$ref->full_name}}</option>
+                            @else
+                                <option  value="{{$ref->id}}">{{$ref->full_name}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="mb-3" >
+                    <label class="form-label">Carrier</label>
+                    <select class=" form-control select2-multiple select_carrier"
+                            name="carrier_id" data-placeholder="Select ...">
+                        <option selected>chose...</option>
+                        @foreach($allReferrals->sortBy('company_entity') as $carr)
+                            @if($carr)
+                                <option  value="{{$carr->id}}">{{$carr->full_name}}</option>
+                            @else
+                                <option selected>chose...</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-lg-12">
+                <div class="mb-3" >
+                    <label class="form-label">State</label>
+                    <select class=" form-control select2-multiple select_state"
+                            name="byState" wire:model="byState" data-placeholder="Select ...">
+                        <option selected>chose...</option>
+                        {{--                                    @foreach($techs as $tech)--}}
+                        <option  value="AL">AL</option>
+                        <option  value="FL">FL</option>
+                        <option  value="LA">LA</option>
+                        <option  value="MS">MS</option>
+                        <option  value="NC">NC</option>
+                        <option  value="SC">SC</option>
+                        <option  value="TX">TX</option>
+                        {{--                                    @endforeach--}}
+                    </select>
+                </div>
+            </div>
+
+
+
+
+            @error('reportSelected')
+            <div class="invalid-feedback show">
+                Please select a report valid option.
+            </div>
+        </div>
+        @enderror
+        @break
                 @case('J')
                 <div class="mb-3" >
                     <label class="form-label">Job Type</label>

@@ -17,6 +17,7 @@ class EmployeeRules extends Model
         'end_date',
         'referral_id',
         'carrier_id',
+        'state',
         'tech_ids',
         'porcentagem',
         'dividir',
@@ -74,6 +75,9 @@ class EmployeeRules extends Model
             case 'C':
                 $info = "Marketing Carrier from Referral";
                 break;
+            case 'Z':
+                $info = "Marketing Carrier from Referral by state";
+                break;
             case 'J':
                 $info = "Job Type";
                 break;
@@ -113,6 +117,14 @@ class EmployeeRules extends Model
               $carrier=$this->carrier->company_entity;
 
               $info = "Marketing Carrier from Referral - %$p - $referral #$this->referral_id ==> $carrier #$this->carrier_id";
+              break;
+          case 'Z':
+              $p=$this->porcentagem*100;
+              $referral=$this->referral->company_entity;
+              $carrier=$this->carrier->company_entity;
+              $state=$this->state;
+
+              $info = "Marketing Carrier from Referral - $state - %$p - $referral #$this->referral_id ==> $carrier #$this->carrier_id";
               break;
           case 'J':
               $job_type=\Modules\Assignments\Entities\AssignmentsJobTypes::find($this->job_type);

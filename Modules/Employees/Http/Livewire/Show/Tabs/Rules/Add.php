@@ -21,6 +21,7 @@ class Add extends Component
     public $ruleType;
     public $referral_id;
     public $carrier_id;
+    public $byState;
     public $jobTypes;
     public $techs;
     public $jobTypesSelected;
@@ -108,6 +109,10 @@ class Add extends Component
         if(isset($formData->carrier_id)){
             $carrier_id =  $formData->carrier_id;
         }
+        $byState =null;
+        if(isset($formData->byState)){
+            $byState =  $formData->byState;
+        }
         if(isset($formData->valor)){
             $valor = $formData->valor;
         }
@@ -141,6 +146,7 @@ class Add extends Component
             'end_date' => $endDate,
             'referral_id' => $referral_id,
             'carrier_id' => $carrier_id,
+            'state' => $byState,
             'tech_ids' => $tech_ids,
             'porcentagem' => $percentage,
             'dividir' => 1,

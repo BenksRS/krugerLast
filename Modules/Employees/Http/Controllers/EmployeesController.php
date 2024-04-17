@@ -519,6 +519,8 @@ class EmployeesController extends Controller
 
         $this->comission_marketing_carrier_rules($id);
 
+        $this->comission_marketing_carrier_state_rules($id);
+
         $this->comission_jobs_rules($id);
 
         Log::channel('commissions')->info("end $id");
@@ -629,6 +631,37 @@ class EmployeesController extends Controller
             }
         }
     }
+
+    public function comission_marketing_carrier_state_rules($id)
+    {
+
+        $assignment = AssignmentFinanceRepository::find($id);
+
+        $rulles = EmployeeRules::where('referral_id', $assignment->referral_id)->where('carrier_id', $assignment->carrier_id)->where('state', $assignment->state)
+            ->where('type', 'Z')
+            ->get();
+
+        foreach ($rulles as $rulle) {
+
+
+            $check_start_date = (!empty($assignment->scheduling->start_date) && ($assignment->scheduling->start_date > $rulle->start_date)) ? TRUE : FALSE;
+
+
+            if (is_null($rulle->end_date)) {
+                $check_end_date = TRUE;
+            } else {
+                $check_end_date = (!empty($assignment->scheduling->start_date) && ($rulle->end_date >= $assignment->scheduling->start_date)) ? TRUE : FALSE;
+            }
+
+            if ($check_start_date === TRUE && $check_end_date === TRUE) {
+
+                if ($assignment->finance->balance->total >= 0) {
+                    $this->apply_comission_rule($rulle->id, $id, "JOB");
+                }
+            }
+        }
+    }
+
     public function comission_jobs_rules($id)
     {
         $assignment = AssignmentFinanceRepository::find($id);
