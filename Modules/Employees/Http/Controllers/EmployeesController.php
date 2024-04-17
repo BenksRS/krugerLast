@@ -805,6 +805,7 @@ class EmployeesController extends Controller
                 }
                 break;
             case 'R': //Marketing Representative referral
+            case 'Z': 
             case 'C': //Marketing carrier by referral
                 if (is_null($assignment->finance->collection->paid_date)) {
                     $due_date = $assignment->finance->collection->billed_date;
