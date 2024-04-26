@@ -72,6 +72,9 @@ class EmployeeRules extends Model
             case 'R':
                 $info = "Marketing Referral Full";
                 break;
+            case 'X':
+                $info = "Marketing Referral by State";
+                break;
             case 'C':
                 $info = "Marketing Carrier from Referral";
                 break;
@@ -110,7 +113,13 @@ class EmployeeRules extends Model
 
               $info = "Marketing Referral Full - %$p - $referral #$this->referral_id";
               break;
+          case 'X':
+              $p=$this->porcentagem*100;
+              $referral=$this->referral->company_entity;
+              $state=$this->state;
 
+              $info = "Marketing Referral Full by State - $state - %$p - $referral #$this->referral_id";
+              break;
           case 'C':
               $p=$this->porcentagem*100;
               $referral=$this->referral->company_entity;
