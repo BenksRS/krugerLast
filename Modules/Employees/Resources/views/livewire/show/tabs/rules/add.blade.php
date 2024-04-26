@@ -347,6 +347,8 @@
                                 type="submit" ><i class="bx bx-save"></i> Save  </button>
                         @break
                         @case('R')
+                        @case('Z')
+                        @case('X')
                         @case('C')
                         <div class="col-md-6">
                             <label  class="form-label">Amount</label>
