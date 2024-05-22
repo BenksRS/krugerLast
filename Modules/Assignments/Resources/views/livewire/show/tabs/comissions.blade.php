@@ -57,7 +57,7 @@
                                     <tr>
                                       <td>
                                           {{$row->id}}
-                                          <button type="button" class="btn btn-sm btn-danger  waves-effect waves-light  me-2 float-end" wire:click.prevent="update_commission({{$row->id}})"> <i class="fas fa-undo-alt font-size-16 align-middle "></i> delete</button>
+                                          <button type="button" class="btn btn-sm btn-danger  waves-effect waves-light  me-2 float-end" wire:click.prevent="update_commission({{$row->id}})"> </i> DELETE</button>
                                       </td>
                                       <td>
                                           {{$row->rule->name}}
