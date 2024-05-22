@@ -1005,7 +1005,9 @@ class EmployeesController extends Controller
         foreach ($job_reports as $jobtype) {
             switch ($jobtype->assignment_job_type_id) {
                 case '1': // ROOF TARP
+                    $workers2 = JobReportWorkers::where('assignment_id', $id)->where('job_type_id', $jobtype->assignment_job_type_id)->pluck('worker_id')->toArray();
 
+                    dump($workers2);
                     // call total sq ft area install
                     $tarp_sizes = JobReportTarpSizes::where('assignment_id', $jobtype->assignment_id)->get();
                     $square_ft_install = 0;
@@ -1047,7 +1049,9 @@ class EmployeesController extends Controller
                     break;
                 case '2':
                 case '3':
+                $workers2 = JobReportWorkers::where('assignment_id', $id)->where('job_type_id', $jobtype->assignment_job_type_id)->pluck('worker_id')->toArray();
 
+                dump($workers2);
                     //                    dd($jobtype->assignment_job_type_id);
                     $job_reports_reports = JobReportReports::where('assignment_id', $jobtype->assignment_id)->where('job_type_id', $jobtype->assignment_job_type_id)->first();
                     //                dd($job_reports_reports->report_option_id);
@@ -1140,6 +1144,9 @@ class EmployeesController extends Controller
 
                     break;
                 default:
+                    $workers2 = JobReportWorkers::where('assignment_id', $id)->where('job_type_id', $jobtype->assignment_job_type_id)->pluck('worker_id')->toArray();
+
+                    dump($workers2);
                     // get rulles for this job type
                     $rulles_comission = EmployeeRules::whereIn('user_id', $workers)
                         ->whereIn('user_id', $workers)
