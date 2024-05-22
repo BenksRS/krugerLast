@@ -542,7 +542,7 @@ class EmployeesController extends Controller
             ->get();
 
 
-        dd($rulles);
+
 
         $technicians = array();
         foreach ($rulles as $rulle) {
@@ -982,7 +982,7 @@ class EmployeesController extends Controller
 
         $assignment = AssignmentFinanceRepository::find($id);
         $workers = JobReportWorkers::where('assignment_id', $id)->pluck('worker_id')->toArray();
-        //dd($workers);
+        dd($workers);
 
 
 
