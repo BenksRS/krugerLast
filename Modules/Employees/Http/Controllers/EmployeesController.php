@@ -492,7 +492,7 @@ class EmployeesController extends Controller
     public function script_comission()
     {
         ini_set('max_execution_time', 0);
-        ini_set('memory_limit', '2512M');
+        ini_set('memory_limit', '8512M');
 
         $assignmnet = AssignmentFinanceRepository::DateSchedulled('2021-01-01', Carbon::now())->whereIn('status_id', [5, 6, 10, 24, 9])->get();
 
@@ -995,7 +995,7 @@ class EmployeesController extends Controller
         //        $deletecomissions=$this->comissionbalance->where('id_assignment', $id)
         //            ->where('status','!=', 'paid')
         //            ->where('job_type','!=', 'JOB')
-        
+
         //            ->whereIn('id_employee','!=',$workers)
         //            ->get();
 

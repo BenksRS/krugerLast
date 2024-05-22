@@ -6,11 +6,13 @@ use Livewire\Component;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Employees\Entities\EmployeeCommissions;
 use Modules\Employees\Http\Controllers\EmployeesController;
+use Modules\Gdrive\Entities\QueeFiles;
 
 class Comissions extends Component
 {
     protected $listeners = [
-        'update_commission_run'
+        'update_commission_run',
+        'delete_commission'
     ];
     public $assignment;
 
@@ -25,6 +27,21 @@ class Comissions extends Component
 
     public function update_commission_run(){
         dd('run');
+    }
+    public function delete_commission($var){
+
+        dd($var);
+        EmployeeCommissions::where('id', $var)->delete();
+
+        if(in_array($this->assignment->status_id,[5,6,10,24,9])){
+            $employees = new EmployeesController();
+
+            $employees->check_comission($this->assignment->id);
+
+            $this->listCommissions = EmployeeCommissions::with('rule')->where('assignment_id', $this->assignment->id)->get();
+        }
+
+
     }
     public function update_commission(){
 
