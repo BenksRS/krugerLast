@@ -30,7 +30,7 @@ class Comissions extends Component
     }
     public function delete_commission($var){
 
-        dump($var);
+
         EmployeeCommissions::where('id', $var)->delete();
 
         if(in_array($this->assignment->status_id,[5,6,10,24,9])){
