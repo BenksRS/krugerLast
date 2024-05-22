@@ -981,14 +981,15 @@ class EmployeesController extends Controller
     {
 
         $assignment = AssignmentFinanceRepository::find($id);
-
+        $workers = JobReportWorkers::where('assignment_id', $id)->pluck('worker_id')->toArray();
+        //sdsd
 //        print_r($workers);
 
 
 
         $comission_types = array('J', 'S');
         $check_newtarp = array(7, 9);
-        $workers=array();
+
 
         // delete comissions workers fora da lista
         //        $deletecomissions=$this->comissionbalance->where('id_assignment', $id)
@@ -1015,8 +1016,7 @@ class EmployeesController extends Controller
                         }
                     }
                     //                    dd($square_ft_install);
-                    // worker by job
-                    $workers = JobReportWorkers::where('assignment_id', $id)->where('job_report_id',$jobtype->assignment_job_type_id)->pluck('worker_id')->toArray();
+
 
                     // get rulles for this job type
                     $rulles_comission = EmployeeRules::whereIn('user_id', $workers)
@@ -1047,8 +1047,7 @@ class EmployeesController extends Controller
                     break;
                 case '2':
                 case '3':
-// worker by job
-                $workers = JobReportWorkers::where('assignment_id', $id)->where('job_report_id',$jobtype->assignment_job_type_id)->pluck('worker_id')->toArray();
+
                     //                    dd($jobtype->assignment_job_type_id);
                     $job_reports_reports = JobReportReports::where('assignment_id', $jobtype->assignment_id)->where('job_type_id', $jobtype->assignment_job_type_id)->first();
                     //                dd($job_reports_reports->report_option_id);
@@ -1141,8 +1140,6 @@ class EmployeesController extends Controller
 
                     break;
                 default:
-                    // worker by job
-                    $workers = JobReportWorkers::where('assignment_id', $id)->where('job_report_id',$jobtype->assignment_job_type_id)->pluck('worker_id')->toArray();
                     // get rulles for this job type
                     $rulles_comission = EmployeeRules::whereIn('user_id', $workers)
                         ->whereIn('user_id', $workers)
