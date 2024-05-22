@@ -982,7 +982,7 @@ class EmployeesController extends Controller
 
         $assignment = AssignmentFinanceRepository::find($id);
         $workers = JobReportWorkers::where('assignment_id', $id)->pluck('worker_id')->toArray();
-        dd($workers);
+//        print_r($workers);
 
 
 
