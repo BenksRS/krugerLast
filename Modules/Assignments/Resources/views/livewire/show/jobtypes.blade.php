@@ -35,7 +35,7 @@
 
 
                 @endif
-
+                @break
                 @default
                     @if($jbSelectedSingle->isNotEmpty())
                         <div class="col-lg-5">
