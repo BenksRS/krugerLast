@@ -542,6 +542,8 @@ class EmployeesController extends Controller
             ->get();
 
 
+        dd($rulles);
+
         $technicians = array();
         foreach ($rulles as $rulle) {
 
