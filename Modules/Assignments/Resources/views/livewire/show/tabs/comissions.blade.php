@@ -57,6 +57,7 @@
                                     <tr>
                                       <td>
                                           {{$row->id}}
+                                          <button type="button" class="btn btn-sm btn-danger  waves-effect waves-light  me-2 float-end" wire:click.prevent="delete_commission({{$row->id}})"> </i> DELETE</button>
                                       </td>
                                       <td>
                                           {{$row->rule->name}}
@@ -82,14 +83,7 @@
                                 </tbody>
                             </table>
                         </div>
-{{--                        <div class="float-start">--}}
-{{--                            Total Receipts: {{$list->total()}}--}}
-{{--                        </div>--}}
-{{--                        <div class="float-end">--}}
 
-{{--                            {{$list->links()}}--}}
-
-{{--                        </div>--}}
                     </div>
                 </div>
             </div> <!-- end col -->

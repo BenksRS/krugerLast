@@ -492,7 +492,7 @@ class EmployeesController extends Controller
     public function script_comission()
     {
         ini_set('max_execution_time', 0);
-        ini_set('memory_limit', '2512M');
+        ini_set('memory_limit', '8512M');
 
         $assignmnet = AssignmentFinanceRepository::DateSchedulled('2021-01-01', Carbon::now())->whereIn('status_id', [5, 6, 10, 24, 9])->get();
 
@@ -540,6 +540,8 @@ class EmployeesController extends Controller
         $rulles = EmployeeRules::whereIn('user_id', $workers)
             ->where('type', 'T')
             ->get();
+
+
 
 
         $technicians = array();
@@ -980,7 +982,8 @@ class EmployeesController extends Controller
 
         $assignment = AssignmentFinanceRepository::find($id);
         $workers = JobReportWorkers::where('assignment_id', $id)->pluck('worker_id')->toArray();
-        //dd($workers);
+        //sdsd
+//        print_r($workers);
 
 
 
@@ -992,6 +995,7 @@ class EmployeesController extends Controller
         //        $deletecomissions=$this->comissionbalance->where('id_assignment', $id)
         //            ->where('status','!=', 'paid')
         //            ->where('job_type','!=', 'JOB')
+
         //            ->whereIn('id_employee','!=',$workers)
         //            ->get();
 
@@ -1002,6 +1006,8 @@ class EmployeesController extends Controller
         foreach ($job_reports as $jobtype) {
             switch ($jobtype->assignment_job_type_id) {
                 case '1': // ROOF TARP
+                    $workers = JobReportWorkers::where('assignment_id', $id)->where('job_type_id', $jobtype->assignment_job_type_id)->pluck('worker_id')->toArray();
+
 
                     // call total sq ft area install
                     $tarp_sizes = JobReportTarpSizes::where('assignment_id', $jobtype->assignment_id)->get();
@@ -1044,6 +1050,8 @@ class EmployeesController extends Controller
                     break;
                 case '2':
                 case '3':
+                $workers = JobReportWorkers::where('assignment_id', $id)->where('job_type_id', $jobtype->assignment_job_type_id)->pluck('worker_id')->toArray();
+
 
                     //                    dd($jobtype->assignment_job_type_id);
                     $job_reports_reports = JobReportReports::where('assignment_id', $jobtype->assignment_id)->where('job_type_id', $jobtype->assignment_job_type_id)->first();
@@ -1137,6 +1145,8 @@ class EmployeesController extends Controller
 
                     break;
                 default:
+                    $workers = JobReportWorkers::where('assignment_id', $id)->where('job_type_id', $jobtype->assignment_job_type_id)->pluck('worker_id')->toArray();
+
                     // get rulles for this job type
                     $rulles_comission = EmployeeRules::whereIn('user_id', $workers)
                         ->whereIn('user_id', $workers)
