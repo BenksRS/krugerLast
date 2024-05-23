@@ -89,4 +89,17 @@ class ReportsController extends Controller
     {
 
     }
+		
+		public function tags()
+		{
+			$page_info = (object)[
+				'title' => 'Reports Tags',
+				'back' => url('reports'),
+				'back_title' => 'Reports'
+			];
+			\session()->flash('page',$page_info);
+			$page =\session()->get('page');
+			
+			return view('reports::tags', compact('page'));
+		}
 }
