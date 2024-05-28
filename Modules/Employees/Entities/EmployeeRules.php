@@ -102,6 +102,28 @@ class EmployeeRules extends Model
     public function getNameAttribute ()
     {
       switch ($this->type){
+          case 'A':
+              $p=$this->porcentagem*100;
+              $explode=explode(',',$this->tech_ids);
+              $tech="";
+              foreach ($explode as $o){
+                  $info=\Modules\User\Entities\User::find($o);
+                  $tech="$tech / $info->name";
+
+              }
+              $info = "Technician TREE REMOVAL- %$p $tech";
+              break;
+          case 'N':
+              $p=$this->porcentagem*100;
+              $explode=explode(',',$this->tech_ids);
+              $tech="";
+              foreach ($explode as $o){
+                  $info=\Modules\User\Entities\User::find($o);
+                  $tech="$tech / $info->name";
+
+              }
+              $info = "Technician NO TREE- %$p $tech";
+              break;
           case 'T':
               $p=$this->porcentagem*100;
               $explode=explode(',',$this->tech_ids);
