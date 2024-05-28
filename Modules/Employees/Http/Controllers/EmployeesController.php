@@ -514,6 +514,8 @@ class EmployeesController extends Controller
         $this->comission_workers_rules($id);
 
         $this->comission_technician_rules($id);
+        $this->comission_technician_tree_rules($id);
+        $this->comission_technician_no_tree_rules($id);
 
         $this->comission_marketing_rules($id);
         $this->comission_marketing_state_rules($id);
