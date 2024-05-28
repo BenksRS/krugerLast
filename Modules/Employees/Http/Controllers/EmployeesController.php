@@ -618,7 +618,9 @@ class EmployeesController extends Controller
     {
 
         $assignment = AssignmentFinanceRepository::find($id);
-        $workers = JobReportWorkers::where('assignment_id', $id)->where('job_type_id','!=',11)->pluck('worker_id')->toArray();
+
+        $jobs_list=array(1,2,3,4,7,8,14);
+        $workers = JobReportWorkers::where('assignment_id', $id)->whereIn('job_type_id',$jobs_list)->pluck('worker_id')->toArray();
 
         $rulles = EmployeeRules::whereIn('user_id', $workers)
             ->where('type', 'N')
