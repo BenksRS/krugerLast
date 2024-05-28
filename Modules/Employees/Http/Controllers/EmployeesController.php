@@ -861,8 +861,8 @@ class EmployeesController extends Controller
                     $due_month = null;
                     $due_year = null;
                     $status = 'pending';
-                    $amount = $assignment->finance->invoices->total;
-                    dump($assignment->finance);
+                    $amount = $assignment->finance->invoices->tree_amount;
+//                    dump($assignment->finance);
 
                     $valor = (($amount * $rule->porcentagem) / $rule->dividir);
                 } else {
@@ -872,9 +872,9 @@ class EmployeesController extends Controller
                     $status = 'available';
 
                     if ($assignment->referral_id == 72) {
-                        $amount = ($assignment->finance->payments->total * 0.92);
+                        $amount = ($assignment->invoices->tree_amount * 0.92);
                     } else {
-                        $amount = $assignment->finance->payments->total;
+                        $amount = $assignment->invoices->tree_amount;
                     }
 
                     $valor = (($amount * $rule->porcentagem) / $rule->dividir);
@@ -918,7 +918,9 @@ class EmployeesController extends Controller
                     $due_month = null;
                     $due_year = null;
                     $status = 'pending';
-                    $amount = $assignment->finance->invoices->total;
+                    $amount_total = $assignment->finance->invoices->total;
+                    $amount_tree = $assignment->finance->invoices->tree_amount;
+                    $amount = $amount_total-$amount_tree;
 
                     $valor = (($amount * $rule->porcentagem) / $rule->dividir);
                 } else {
@@ -927,10 +929,15 @@ class EmployeesController extends Controller
                     $due_year = date("Y", strtotime($due_date));
                     $status = 'available';
 
+
+                    $amount_total = $assignment->finance->payments->total;
+                    $amount_tree = $assignment->finance->invoices->tree_amount;
+
+
                     if ($assignment->referral_id == 72) {
-                        $amount = ($assignment->finance->payments->total * 0.92);
+                        $amount = (($amount_total-$amount_tree) * 0.92);
                     } else {
-                        $amount = $assignment->finance->payments->total;
+                        $amount = ($amount_total-$amount_tree);
                     }
 
                     $valor = (($amount * $rule->porcentagem) / $rule->dividir);
