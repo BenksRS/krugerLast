@@ -610,7 +610,7 @@ class EmployeesController extends Controller
 
             if ($check_start_date === TRUE && $check_end_date === TRUE) {
 
-                $this->apply_comission_rule($f_rulle->id, $id, "JOB TREE");
+                $this->apply_comission_rule($f_rulle->id, $id, "JOB");
             }
         }
     }
@@ -650,7 +650,7 @@ class EmployeesController extends Controller
 
             if ($check_start_date === TRUE && $check_end_date === TRUE) {
 
-                $this->apply_comission_rule($f_rulle->id, $id, "JOB NO TREE");
+                $this->apply_comission_rule($f_rulle->id, $id, "JOB");
             }
         }
     }
