@@ -16,5 +16,6 @@ Route::prefix('/schedulling')->name('schedulling.')->group(function () {
 
     // Assignments
     Route::get('/', [\Modules\Scheduling\Http\Controllers\SchedulingController::class, 'index'])->name('index');
+		Route::get('/techs', [\Modules\Scheduling\Http\Controllers\SchedulingController::class, 'techs'])->name('techs');
 
 });

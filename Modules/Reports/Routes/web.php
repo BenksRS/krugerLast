@@ -13,4 +13,5 @@
 
 Route::prefix('reports')->name('reports.')->group(function() {
     Route::get('/', 'ReportsController@index')->name('index');
+		Route::get('/tags', 'ReportsController@tags')->name('tags');
 });

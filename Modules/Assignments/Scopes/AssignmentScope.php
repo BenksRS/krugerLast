@@ -285,5 +285,15 @@ trait AssignmentScope {
                 $q->whereDate('created_at', '<=', $date_to);
             });
     }
+		
+		public function scopeSearchTags (Builder $query, $tags = NULL){
+			return $query
+				->with('tags')
+				->whereHas('tags', function (Builder $q) use ($tags) {
+					if ( $tags != NULL ) {
+						$q->whereIn('tag_id', $tags);
+					}
+				});
+		}
 
 }
