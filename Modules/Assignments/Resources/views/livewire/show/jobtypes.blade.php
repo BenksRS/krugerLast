@@ -8,7 +8,7 @@
                 @case(16)
                 @case(17)
 
-                @if(Auth::user()->id == 2  || Auth::user()->id == 10)
+                @if(Auth::user()->id == 2  || Auth::user()->id == 10 || Auth::user()->id == 1)
                     @if($jbSelectedSingle->isNotEmpty())
                         <div class="col-lg-5">
                             <div class="form-check form-check-left mb-3">
