@@ -541,9 +541,6 @@ class EmployeesController extends Controller
             ->where('type', 'T')
             ->get();
 
-
-
-
         $technicians = array();
         foreach ($rulles as $rulle) {
 
@@ -557,9 +554,7 @@ class EmployeesController extends Controller
             ->where('type', 'T')
             ->get();
 
-
         foreach ($full_rulles as $f_rulle) {
-
 
             $check_start_date = (!empty($assignment->scheduling->start_date) && ($assignment->scheduling->start_date > $f_rulle->start_date)) ? TRUE : FALSE;
 
@@ -573,6 +568,87 @@ class EmployeesController extends Controller
             if ($check_start_date === TRUE && $check_end_date === TRUE) {
 
                 $this->apply_comission_rule($f_rulle->id, $id, "JOB");
+            }
+        }
+    }
+
+    public function comission_technician_tree_rules($id)
+    {
+
+        $assignment = AssignmentFinanceRepository::find($id);
+        $workers = JobReportWorkers::where('assignment_id', $id)->where('job_type_id', 11)->pluck('worker_id')->toArray();
+
+        $rulles = EmployeeRules::whereIn('user_id', $workers)
+            ->where('type', 'A')
+            ->get();
+
+        $technicians = array();
+        foreach ($rulles as $rulle) {
+
+            $tech = explode(',', $rulle->tech_ids);
+            foreach ($tech as $t) {
+                $technicians[] = $t;
+            }
+        }
+        $technicians = array_unique($technicians);
+        $full_rulles = EmployeeRules::whereIn('user_id', $technicians)
+            ->where('type', 'A')
+            ->get();
+
+        foreach ($full_rulles as $f_rulle) {
+
+            $check_start_date = (!empty($assignment->scheduling->start_date) && ($assignment->scheduling->start_date > $f_rulle->start_date)) ? TRUE : FALSE;
+
+
+            if (is_null($f_rulle->end_date)) {
+                $check_end_date = TRUE;
+            } else {
+                $check_end_date = (!empty($assignment->scheduling->start_date) && ($f_rulle->end_date >= $assignment->scheduling->start_date)) ? TRUE : FALSE;
+            }
+
+            if ($check_start_date === TRUE && $check_end_date === TRUE) {
+
+                $this->apply_comission_rule($f_rulle->id, $id, "JOB TREE");
+            }
+        }
+    }
+    public function comission_technician_no_tree_rules($id)
+    {
+
+        $assignment = AssignmentFinanceRepository::find($id);
+        $workers = JobReportWorkers::where('assignment_id', $id)->where('job_type_id','!=',11)->pluck('worker_id')->toArray();
+
+        $rulles = EmployeeRules::whereIn('user_id', $workers)
+            ->where('type', 'N')
+            ->get();
+
+        $technicians = array();
+        foreach ($rulles as $rulle) {
+
+            $tech = explode(',', $rulle->tech_ids);
+            foreach ($tech as $t) {
+                $technicians[] = $t;
+            }
+        }
+        $technicians = array_unique($technicians);
+        $full_rulles = EmployeeRules::whereIn('user_id', $technicians)
+            ->where('type', 'N')
+            ->get();
+
+        foreach ($full_rulles as $f_rulle) {
+
+            $check_start_date = (!empty($assignment->scheduling->start_date) && ($assignment->scheduling->start_date > $f_rulle->start_date)) ? TRUE : FALSE;
+
+
+            if (is_null($f_rulle->end_date)) {
+                $check_end_date = TRUE;
+            } else {
+                $check_end_date = (!empty($assignment->scheduling->start_date) && ($f_rulle->end_date >= $assignment->scheduling->start_date)) ? TRUE : FALSE;
+            }
+
+            if ($check_start_date === TRUE && $check_end_date === TRUE) {
+
+                $this->apply_comission_rule($f_rulle->id, $id, "JOB NO TREE");
             }
         }
     }
@@ -777,8 +853,120 @@ class EmployeesController extends Controller
 
                 break;
 
-            case 'T': //Technician
+            case 'A': //Technician TREE
+                if (is_null($assignment->finance->collection->paid_date)) {
+                    $due_date = $assignment->finance->collection->billed_date;
+                    $due_month = null;
+                    $due_year = null;
+                    $status = 'pending';
+                    $amount = $assignment->finance->invoices->total;
+                    dump($assignment->finance);
 
+                    $valor = (($amount * $rule->porcentagem) / $rule->dividir);
+                } else {
+                    $due_date = $assignment->finance->collection->paid_date;
+                    $due_month = date("m", strtotime($due_date));
+                    $due_year = date("Y", strtotime($due_date));
+                    $status = 'available';
+
+                    if ($assignment->referral_id == 72) {
+                        $amount = ($assignment->finance->payments->total * 0.92);
+                    } else {
+                        $amount = $assignment->finance->payments->total;
+                    }
+
+                    $valor = (($amount * $rule->porcentagem) / $rule->dividir);
+                }
+
+                if ($exist_comission == true) {
+                    // insert
+
+                    // check if might be updated
+                    if (in_array($comission->status, $status_comission_changed)) {
+                        $date['user_id'] = $rule->user_id;
+                        $date['assignment_id'] = $assignment->id;
+                        if ($job_type_id != 'JOB') {
+                            $date['job_type'] = $job_type_id;
+                        }
+                        $date['amount'] = $valor;
+                        $date['status'] = $status;
+                        $date['rule_id'] = $rule->id;
+                        $date['due_month'] = $due_month;
+                        $date['due_year'] = $due_year;
+                        $comission->update($date);
+                    }
+                } else {
+                    $date['user_id'] = $rule->user_id;
+                    $date['assignment_id'] = $assignment->id;
+                    if ($job_type_id != 'JOB') {
+                        $date['job_type'] = $job_type_id;
+                    }
+                    $date['amount'] = $valor;
+                    $date['status'] = $status;
+                    $date['rule_id'] = $rule->id;
+                    $date['due_month'] = $due_month;
+                    $date['due_year'] = $due_year;
+
+                    EmployeeCommissions::create($date)->save();
+                }
+                break;
+            case 'N': //Technician NO TREE
+                if (is_null($assignment->finance->collection->paid_date)) {
+                    $due_date = $assignment->finance->collection->billed_date;
+                    $due_month = null;
+                    $due_year = null;
+                    $status = 'pending';
+                    $amount = $assignment->finance->invoices->total;
+
+                    $valor = (($amount * $rule->porcentagem) / $rule->dividir);
+                } else {
+                    $due_date = $assignment->finance->collection->paid_date;
+                    $due_month = date("m", strtotime($due_date));
+                    $due_year = date("Y", strtotime($due_date));
+                    $status = 'available';
+
+                    if ($assignment->referral_id == 72) {
+                        $amount = ($assignment->finance->payments->total * 0.92);
+                    } else {
+                        $amount = $assignment->finance->payments->total;
+                    }
+
+                    $valor = (($amount * $rule->porcentagem) / $rule->dividir);
+                }
+
+                if ($exist_comission == true) {
+                    // insert
+
+                    // check if might be updated
+                    if (in_array($comission->status, $status_comission_changed)) {
+                        $date['user_id'] = $rule->user_id;
+                        $date['assignment_id'] = $assignment->id;
+                        if ($job_type_id != 'JOB') {
+                            $date['job_type'] = $job_type_id;
+                        }
+                        $date['amount'] = $valor;
+                        $date['status'] = $status;
+                        $date['rule_id'] = $rule->id;
+                        $date['due_month'] = $due_month;
+                        $date['due_year'] = $due_year;
+                        $comission->update($date);
+                    }
+                } else {
+                    $date['user_id'] = $rule->user_id;
+                    $date['assignment_id'] = $assignment->id;
+                    if ($job_type_id != 'JOB') {
+                        $date['job_type'] = $job_type_id;
+                    }
+                    $date['amount'] = $valor;
+                    $date['status'] = $status;
+                    $date['rule_id'] = $rule->id;
+                    $date['due_month'] = $due_month;
+                    $date['due_year'] = $due_year;
+
+                    EmployeeCommissions::create($date)->save();
+                }
+                break;
+            case 'T': //Technician
                 if (is_null($assignment->finance->collection->paid_date)) {
                     $due_date = $assignment->finance->collection->billed_date;
                     $due_month = null;

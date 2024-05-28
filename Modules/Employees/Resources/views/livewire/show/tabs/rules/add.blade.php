@@ -17,7 +17,9 @@
                         <select class=" form-control select2-multiple" wire:model="ruleType"
                                 name="type" data-placeholder="Select ...">
                             <option >choose...</option>
-                            <option value="T">Technician</option>
+{{--                            <option value="T">Technician</option>--}}
+                            <option value="A">Technician NO TREE</option>
+                            <option value="N">Technician TREE REMOVAL</option>
                             <option value="R">Marketing Referral Full</option>
                             <option value="X">Marketing Referral Full by State</option>
                             <option value="C">Marketing Carrier From Referral</option>
@@ -327,6 +329,8 @@
 
                     @switch($ruleType)
                         @case('T')
+                        @case('A')
+                        @case('N')
                         <div class="col-md-6">
                             <label  class="form-label">Percentage</label>
                             <input type="text" class="form-control"  name="percentage"
