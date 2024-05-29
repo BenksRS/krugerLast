@@ -858,13 +858,16 @@ class EmployeesController extends Controller
                 break;
 
             case 'A': //Technician TREE
+
+                dump($assignment->finance);
                 if (is_null($assignment->finance->collection->paid_date)) {
                     $due_date = $assignment->finance->collection->billed_date;
                     $due_month = null;
                     $due_year = null;
                     $status = 'pending';
                     $amount = $assignment->finance->invoices->tree_amount;
-//                    dump($assignment->finance);
+
+
 
                     $valor = (($amount * $rule->porcentagem) / $rule->dividir);
                 } else {
