@@ -860,6 +860,7 @@ class EmployeesController extends Controller
             case 'A': //Technician TREE
 
                 dump($assignment->finance);
+
                 if (is_null($assignment->finance->collection->paid_date)) {
                     $due_date = $assignment->finance->collection->billed_date;
                     $due_month = null;
@@ -918,6 +919,8 @@ class EmployeesController extends Controller
                 }
                 break;
             case 'N': //Technician NO TREE
+                dump($assignment->finance);
+
                 if (is_null($assignment->finance->collection->paid_date)) {
                     $due_date = $assignment->finance->collection->billed_date;
                     $due_month = null;
