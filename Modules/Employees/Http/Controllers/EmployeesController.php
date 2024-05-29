@@ -866,7 +866,16 @@ class EmployeesController extends Controller
                     $due_month = null;
                     $due_year = null;
                     $status = 'pending';
-                    $amount = $assignment->finance->invoices->tree_amount;
+
+                    if(isset($assignment->finance->invoices->tree_amount)){
+                        $tree_amount = $assignment->finance->invoices->tree_amount;
+                    }else{
+                        $tree_amount = 0;
+                    }
+
+
+
+                    $amount = $tree_amount ;
 
 
 
@@ -877,10 +886,21 @@ class EmployeesController extends Controller
                     $due_year = date("Y", strtotime($due_date));
                     $status = 'available';
 
+                    if(isset($assignment->finance->invoices->tree_amount)){
+                        $tree_amount = $assignment->finance->invoices->tree_amount;
+                    }else{
+                        $tree_amount = 0;
+                    }
+
+
+
+                    $amount = $tree_amount ;
+
+
                     if ($assignment->referral_id == 72) {
-                        $amount = ($assignment->invoices->tree_amount * 0.92);
+                        $amount = ($tree_amount * 0.92);
                     } else {
-                        $amount = $assignment->invoices->tree_amount;
+                        $amount = $tree_amount;
                     }
 
                     $valor = (($amount * $rule->porcentagem) / $rule->dividir);
@@ -919,6 +939,7 @@ class EmployeesController extends Controller
                 }
                 break;
             case 'N': //Technician NO TREE
+
                 dump($assignment->finance);
 
                 if (is_null($assignment->finance->collection->paid_date)) {
