@@ -880,6 +880,7 @@ class EmployeesController extends Controller
 
 
                     $valor = (($amount * $rule->porcentagem) / $rule->dividir);
+                    $valor=abs($valor);
                 } else {
                     $due_date = $assignment->finance->collection->paid_date;
                     $due_month = date("m", strtotime($due_date));
@@ -904,6 +905,7 @@ class EmployeesController extends Controller
                     }
 
                     $valor = (($amount * $rule->porcentagem) / $rule->dividir);
+                    $valor=abs($valor);
                 }
 
                 if ($exist_comission == true) {
@@ -952,6 +954,7 @@ class EmployeesController extends Controller
                     $amount = $amount_total-$amount_tree;
 
                     $valor = (($amount * $rule->porcentagem) / $rule->dividir);
+                    $valor=abs($valor);
                 } else {
                     $due_date = $assignment->finance->collection->paid_date;
                     $due_month = date("m", strtotime($due_date));
@@ -970,6 +973,7 @@ class EmployeesController extends Controller
                     }
 
                     $valor = (($amount * $rule->porcentagem) / $rule->dividir);
+                    $valor=abs($valor);
                 }
 
                 if ($exist_comission == true) {
