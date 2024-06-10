@@ -127,7 +127,7 @@ class EmployeesController extends Controller
 
 
         foreach ($assignmnet as $job){
-            dd($job);
+            dd($job->workers);
         }
 
 
