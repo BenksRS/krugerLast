@@ -137,9 +137,31 @@ class EmployeesController extends Controller
             $rules=$job->commissions->where('user_id',$id);
             foreach ($rules as $rule){
                 $job_type=AssignmentsJobTypes::find($rule->job_type);
-                echo "## $job_type->name<br>";
+
+                $total_job=$job->finance->invoices->total;
+                $total_tree=$job->finance->invoices->tree_amount;
+                $total_tarp=$total_job-$total_tree;
+
+
+                switch ($job_type->id){
+                    case '1':
+                    case '2':
+                    $comission=$total_tarp*0.01;
+                    echo "## $job_type->name  #  Total Tarp: $total_tarp  # comission 1%: $comission <br>";
+                        break;
+                    case '11':
+                        $comission=$total_tree*0.01;
+                        echo "## $job_type->name  #  Total Tree: $total_tarp  # comission 1%: $comission <br>";
+                        break;
+                    default:
+                        $comission=0;
+                        echo "## $job_type->name  #  No Extra comission <br>";
+                        break;
+                }
+
+
             }
-            dump($job->finance);
+//            dump($job->finance);
         }
 
 
