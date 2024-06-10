@@ -127,7 +127,7 @@ class EmployeesController extends Controller
         $user = User::find($id);
 $total_commission=0;
         echo "$user->name<br><br>";
-        echo "Total comission : $total_commission<br><br>";
+
 
         $assignmnet = AssignmentFinanceRepository::DateSchedulledWorker('2024-05-10', '2024-05-19',$id)->whereIn('status_id', [5, 6, 10, 24, 9])->get();
 
@@ -165,7 +165,7 @@ $total_commission=0;
 //            dump($job->finance);
         }
 
-
+        echo "<br><br> ####### Total comission : $total_commission<br><br>";
 
     }
     public function show($id)
