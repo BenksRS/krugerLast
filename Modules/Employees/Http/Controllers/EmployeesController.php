@@ -128,7 +128,7 @@ class EmployeesController extends Controller
 
         foreach ($assignmnet as $job){
             dump($job->id);
-            dump($job->commissions);
+            dump($job->commissions->where('user_id',$id));
         }
 
 
