@@ -151,7 +151,7 @@ class EmployeesController extends Controller
                         break;
                     case '11':
                         $comission=$total_tree*0.01;
-                        echo "## $job_type->name  #  Total Tree: $total_tarp  # comission 1%: $comission <br>";
+                        echo "## $job_type->name  #  Total Tree: $total_tree  # comission 1%: $comission <br>";
                         break;
                     default:
                         $comission=0;
