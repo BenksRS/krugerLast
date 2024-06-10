@@ -120,10 +120,15 @@ class EmployeesController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function list_worker($id){
+    public function list_worker($id)
+    {
+
+        $assignmnet = AssignmentFinanceRepository::DateSchedulled('2024-05-10', '2024-05-19')->whereIn('status_id', [5, 6, 10, 24, 9])->get();
 
 
-        dump("TESTE $id");
+        foreach ($assignmnet as $job){
+            dd($job);
+        }
 
 
 
