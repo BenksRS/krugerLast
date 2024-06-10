@@ -127,6 +127,7 @@ class EmployeesController extends Controller
 
 
         foreach ($assignmnet as $job){
+            dump($job->id);
             if(isset($job->workers->worker_id) && $job->workers->worker_id == $id ){
                 dump($job->id);
             }
