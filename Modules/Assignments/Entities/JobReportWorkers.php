@@ -20,6 +20,7 @@ class JobReportWorkers extends Model
     {
         return $this->belongsTo(AssignmentFinanceRepository::class, 'assignment_id', 'id');
     }
+    //new
 
     protected static function newFactory()
     {
