@@ -123,15 +123,11 @@ class EmployeesController extends Controller
     public function list_worker($id)
     {
 
-        $assignmnet = AssignmentFinanceRepository::DateSchedulled('2024-05-10', '2024-05-19')->whereIn('status_id', [5, 6, 10, 24, 9])->get();
+        $assignmnet = AssignmentFinanceRepository::DateSchedulledWorker('2024-05-10', '2024-05-19',$id)->whereIn('status_id', [5, 6, 10, 24, 9])->get();
 
 
         foreach ($assignmnet as $job){
             dump($job->id);
-
-                dd($job->workers);
-
-
         }
 
 

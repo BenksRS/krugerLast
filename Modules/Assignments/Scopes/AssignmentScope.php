@@ -204,7 +204,23 @@ trait AssignmentScope {
                 $q->whereDate('start_date', '<=', $date_to);
             });
     }
-
+    public function scopeDateSchedulledWorker (Builder $query, $date_from, $date_to, $tech_id = NULL)
+    {
+        return $query
+            ->with('scheduling')
+            ->with('job_types')
+            ->whereHas('workers', function (Builder $q) use ($tech_id) {
+                if ( $tech_id != NULL ) {
+                    $q->whereIn('worker_id', [$tech_id]);
+                }
+            })
+            ->whereHas('scheduling', function (Builder $q) use ($date_from) {
+                $q->whereDate('start_date', '>=', $date_from);
+            })
+            ->whereHas('scheduling', function (Builder $q) use ($date_to) {
+                $q->whereDate('start_date', '<=', $date_to);
+            });
+    }
 
     public function scopeSchedulledSystem (Builder $query, $date, $tech_id = NULL)
     {
