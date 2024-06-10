@@ -148,11 +148,15 @@ $total_commission=0;
                     case '1':
                     case '2':
                     $comission=$total_tarp*0.01;
-                    echo "## $job_type->name  #  Total Tarp: $total_tarp  # comission 1%: $comission <br>";
+                    $tp=number_format($total_tarp,2);
+                    $tc=number_format($comission,2);
+                    echo "## $job_type->name  #  Total Tarp: $$tp  # comission 1%: $$tc <br>";
                         break;
                     case '11':
                         $comission=$total_tree*0.01;
-                        echo "## $job_type->name  #  Total Tree: $total_tree  # comission 1%: $comission <br>";
+                        $tt=number_format($total_tree,2);
+                        $tc=number_format($comission,2);
+                        echo "## $job_type->name  #  Total Tree: $$tt  # comission 1%: $$tc <br>";
                         break;
                     default:
                         $comission=0;
@@ -165,7 +169,7 @@ $total_commission=0;
 //            dump($job->finance);
         }
 
-        echo "<br><br> ####### Total comission : $total_commission)<br><br>";
+        echo "<br><br> ####### Total comission : $$total_commission<br><br>";
 
     }
     public function show($id)
