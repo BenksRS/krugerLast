@@ -123,8 +123,8 @@ class EmployeesController extends Controller
     public function list_worker($id){
 
 
-        dump("TESTE");
-        
+        dump("TESTE $id");
+
 
 
     }
