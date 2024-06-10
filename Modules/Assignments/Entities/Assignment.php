@@ -91,6 +91,11 @@ class Assignment extends Model {
     {
         return $this->hasMany(EmployeeCommissions::class, 'assignment_id', 'id');
     }
+    public function workers()
+    {
+        return $this->hasMany(JobReportWorkers::class, 'assignment_id', 'id');
+    }
+
     public function payments()
     {
         return $this->hasMany(FinancePayment::class, 'assignment_id', 'id')->where('type','active');

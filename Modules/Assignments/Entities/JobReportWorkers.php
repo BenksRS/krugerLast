@@ -4,6 +4,7 @@ namespace Modules\Assignments\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Assignments\Repositories\AssignmentFinanceRepository;
 
 class JobReportWorkers extends Model
 {
@@ -15,7 +16,10 @@ class JobReportWorkers extends Model
         'job_type_id',
         'assignment_id'
     ];
-
+    public function assignment()
+    {
+        return $this->belongsTo(AssignmentFinanceRepository::class, 'assignment_id', 'id');
+    }
 
     protected static function newFactory()
     {
