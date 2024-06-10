@@ -128,6 +128,7 @@ class EmployeesController extends Controller
 
         foreach ($assignmnet as $job){
             dump($job->id);
+            dump($job->)
         }
 
 

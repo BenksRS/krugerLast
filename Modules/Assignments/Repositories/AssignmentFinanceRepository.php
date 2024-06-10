@@ -10,7 +10,7 @@ class AssignmentFinanceRepository extends Assignment {
 
     use AssignmentScope;
 
-    protected $with    =['scheduling','referral','commissions','carrier','status','status_collection','event','phones','user_updated','user_created','job_types','invoices', 'payments','tags', 'workers'];
+    protected $with    =['scheduling','referral','commissions','carrier','status','status_collection','event','phones','user_updated','user_created','job_types','invoices', 'payments','tags', 'workers', 'commissions'];
 
     protected $appends = ['finance','follow_up_date', 'lien_date_view'];
 
