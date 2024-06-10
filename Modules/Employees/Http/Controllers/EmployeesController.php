@@ -120,6 +120,14 @@ class EmployeesController extends Controller
      * @param int $id
      * @return Renderable
      */
+    public function list_worker($id){
+
+
+        dump("TESTE");
+        
+
+
+    }
     public function show($id)
     {
         $user = User::findOrFail($id);
