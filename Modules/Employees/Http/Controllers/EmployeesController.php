@@ -127,8 +127,10 @@ class EmployeesController extends Controller
 
 
         foreach ($assignmnet as $job){
+            if(isset($job->workers->worker_id) && $job->workers->worker_id == $id ){
+                dd($job->id);
+            }
 
-         dd($job->workers->worker_id);
         }
 
 
@@ -825,7 +827,7 @@ class EmployeesController extends Controller
         $status_comission_changed = array('available', 'pending');
 
         switch ($rule->type) {
-                // S & J - this rules just for workers
+            // S & J - this rules just for workers
             case 'S': // Square foot
             case 'J': //Job type
                 // check if exist comission added
@@ -1294,7 +1296,7 @@ class EmployeesController extends Controller
                     break;
                 case '2':
                 case '3':
-                $workers = JobReportWorkers::where('assignment_id', $id)->where('job_type_id', $jobtype->assignment_job_type_id)->pluck('worker_id')->toArray();
+                    $workers = JobReportWorkers::where('assignment_id', $id)->where('job_type_id', $jobtype->assignment_job_type_id)->pluck('worker_id')->toArray();
 
 
                     //                    dd($jobtype->assignment_job_type_id);
