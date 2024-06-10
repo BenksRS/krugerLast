@@ -160,12 +160,12 @@ $total_commission=0;
                         break;
                 }
                 $total_commission = $total_commission+$comission;
-
+                $total_commission=number_format($total_commission,2);
             }
 //            dump($job->finance);
         }
 
-        echo "<br><br> ####### Total comission : $total_commission<br><br>";
+        echo "<br><br> ####### Total comission : $total_commission)<br><br>";
 
     }
     public function show($id)
