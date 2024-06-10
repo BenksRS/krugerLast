@@ -123,6 +123,10 @@ class EmployeesController extends Controller
     public function list_worker($id)
     {
 
+        $user = User::find($id);
+
+        echo "$user->name<br><br>";
+
         $assignmnet = AssignmentFinanceRepository::DateSchedulledWorker('2024-05-10', '2024-05-19',$id)->whereIn('status_id', [5, 6, 10, 24, 9])->get();
 
 
