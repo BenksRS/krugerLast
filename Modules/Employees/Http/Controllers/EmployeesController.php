@@ -163,16 +163,18 @@ $total_commission=0;
                         echo "## $job_type->name  #  No Extra comission <br>";
                         break;
                 }
-                echo "<br>tc: $total_commission c:$comission<br>";
+
                 $total_commission = $total_commission+$comission;
 
 
-                $total_commission=number_format($total_commission,2);
+                $total_commissionShow=number_format($total_commission,2,'.',',');
+
+                echo "<br>tc: $total_commission c:$comission<br>";
             }
 //            dump($job->finance);
         }
 
-        echo "<br><br> ####### Total comission : $$total_commission<br><br>";
+        echo "<br><br> ####### Total comission : $$total_commissionShow<br><br>";
 
     }
     public function show($id)
