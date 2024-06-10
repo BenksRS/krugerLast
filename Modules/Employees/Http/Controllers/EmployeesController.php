@@ -133,7 +133,7 @@ class EmployeesController extends Controller
 
         foreach ($assignmnet as $job){
 
-            echo "## $job->id<br>";
+            echo "<br>## $job->id<br>";
             $rules=$job->commissions->where('user_id',$id);
             foreach ($rules as $rule){
                 $job_type=AssignmentsJobTypes::find($rule->job_type);
