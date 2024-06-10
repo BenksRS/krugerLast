@@ -163,7 +163,7 @@ $total_commission=0;
                         echo "## $job_type->name  #  No Extra comission <br>";
                         break;
                 }
-                dump("$total_commission $comission");
+                echo "<br>tc: $total_commission c:$comission<br>";
                 $total_commission = $total_commission+$comission;
 
 
