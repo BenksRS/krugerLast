@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Modules\Assignments\Entities\Assignment;
+use Modules\Assignments\Entities\AssignmentsJobTypes;
 use Modules\Assignments\Entities\JobReport;
 use Modules\Assignments\Entities\JobReportReports;
 use Modules\Assignments\Entities\JobReportTarpSizes;
@@ -131,8 +132,14 @@ class EmployeesController extends Controller
 
 
         foreach ($assignmnet as $job){
-            dump($job->id);
-            dump($job->commissions->where('user_id',$id));
+
+            echo "## $job->id<br>";
+            $rules=$job->commissions->where('user_id',$id);
+            foreach ($rules as $rule){
+                $job_type=AssignmentsJobTypes::find($rule->job_type);
+                echo "## $job_type->name<br>";
+            }
+            dump($job->finance);
         }
 
 
