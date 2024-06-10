@@ -169,7 +169,7 @@ $total_commission=0;
 
                 $total_commissionShow=number_format($total_commission,2,'.',',');
 
-                echo "<br>tc: $total_commission c:$comission<br>";
+//                echo "<br>tc: $total_commission c:$comission<br>";
             }
 //            dump($job->finance);
         }
