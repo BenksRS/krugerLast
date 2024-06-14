@@ -86,6 +86,9 @@
 		@case('jobstech')
 		@livewire('dashboard::list.jobstech', key('dash_list_jobstech'))
 		@break
+		@case('clean_up')
+	  		@livewire('dashboard::list.clean-up', key('dash_list_clean_up'))
+	  		@break
 		@case('magic_message_sent')
 		@case('magic_docusign_sent')
 		@case('magic_ready_to_install')

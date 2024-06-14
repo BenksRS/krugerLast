@@ -159,6 +159,31 @@ class Header extends Component
         $this->emit('updateNotes');
 
     }
+		
+		public function changeStatusCleanUp($newStatus, $jobType){
+			
+			$jobTypes = [16, 17];
+			if(in_array($jobType, $jobTypes)){
+				$this->assignment->job_types()->detach($jobTypes);
+				$this->assignment->job_types()->attach($jobType);
+			}
+			$status= AssignmentsStatus::find($newStatus);
+			$this->assignment->notes()->create([
+				'text'=> "### CHANGE STATUS TO: $status->name ### $this->changeStatustext",
+				'notable_id'=> $this->assignment->id,
+				'created_by'=> $this->user->id,
+				'type'=> 'assignment',
+				'notable_type'=>  Modules\Assignments\Entities\Assignment::class,
+			
+			]);
+
+			$this->changeStatus($newStatus);
+			$this->assignment = Assignment::find($this->assignment->id);
+			$this->preStatus = $this->changeStatustext = null;
+			integration('assignments')->set($this->assignment->id);
+			$this->emit('updateNotes');
+
+		}
     public function changeStatus($newStatus){
         $this->preStatus = null;
         if($this->assignment->status_id != $newStatus){

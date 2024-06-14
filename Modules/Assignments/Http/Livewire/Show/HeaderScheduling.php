@@ -338,8 +338,8 @@ class HeaderScheduling extends Component
             case 'scheduled':
             case 'in_progress':
             case 'comparative':
-            $this->showChangeTech = true;
-            $this->showChangeSched = true;
+              $this->showChangeTech = true;
+              $this->showChangeSched = true;
                 break;
             case 'uploading':
             case 'uploading_pics':
@@ -355,6 +355,12 @@ class HeaderScheduling extends Component
             case 'lien':
                 $this->showChangeTech = true;
                 break;
+	          case 'clean_up_curbside':
+	          case 'clean_up_haul_away':
+		          $this->showSched = true;
+	            $this->showChangeTech = true;
+	            $this->showChangeSched = true;
+		          break;
             default:
                 break;
         }

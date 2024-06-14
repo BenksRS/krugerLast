@@ -11,7 +11,7 @@ trait AssignmentScope {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
 
-    public function scopeOpen (Builder $query, $status = [1, 2, 3, 4, 8, 11, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 28, 14, 29, 27, 33])
+    public function scopeOpen (Builder $query, $status = [1, 2, 3, 4, 8, 11, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 28, 14, 29, 27, 33, 34, 35])
     {
 
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
@@ -109,6 +109,10 @@ trait AssignmentScope {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
 
+		public function scopeCleanUp (Builder $query, $status = [34, 35])
+		{
+			return $query->whereIn('status_id', collect($status))->whereNotNull('id');
+		}
     public function scopeSchedJobs (Builder $query, $date, $status = [2,3,4,5,8,7,20]){
         return $query
             ->with('scheduling')
