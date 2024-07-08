@@ -25,7 +25,7 @@
         }
         .schedTechboxContent{
             width: 100%;
-            max-height: 700px;
+            max-height: 900px;
             overflow-x: scroll;
         }
         .schedsgridHeader{
@@ -47,12 +47,12 @@
         }
         .schedsgridContent{
             width: 100%;
-            max-height: 700px;
+            max-height: 900px;
             overflow-x: scroll;
 
         }
         .jobsOpen{
-            max-height: 700px;
+            max-height: 900px;
             overflow-x: scroll;
         }
         .job_route{
