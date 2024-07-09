@@ -265,6 +265,9 @@
                                                     <li><button class="dropdown-item" wire:click="setPreStatus(26)" type="button">NO CHARGE</button></li>
                                                     <li><button class="dropdown-item" wire:click="setPreStatus(8)"  type="button">NO JOB</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatus(30)"  type="button">LANDLINE</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(36)"  type="button">EXTREME</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(37)"  type="button">NOBODY WAS HOME</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(28)"  type="button">CRANE NEEDED</button></li>
 
                                                 @endif
                                             </ul>
