@@ -268,7 +268,7 @@
                                                     <li><button class="dropdown-item" wire:click="changeStatus(36)"  type="button">EXTREME</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatus(37)"  type="button">NOBODY WAS HOME</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatus(38)"  type="button">CRANE NEEDED</button></li>
-                                                    <li><button class="dropdown-item" wire:click="changeStatus(39)"  type="button">CRANE NEEDED</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(39)"  type="button">NOT ENOUGH TIME</button></li>
                                                 @endif
                                             </ul>
                                         </div>
