@@ -38,7 +38,7 @@ class CraneNeeded extends Component
 
         $list = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
 
-        return view('dashboard::livewire.list.crane_needed', [
+        return view('dashboard::livewire.list.crane-needed', [
             'list' =>$list
         ]);
 

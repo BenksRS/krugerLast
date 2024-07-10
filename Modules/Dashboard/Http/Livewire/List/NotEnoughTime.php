@@ -38,7 +38,7 @@ use Modules\Assignments\Repositories\AssignmentRepository;
 
         $list = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
 
-        return view('dashboard::livewire.list.not_enough_time', [
+        return view('dashboard::livewire.list.not-enough-time', [
             'list' =>$list
         ]);
 

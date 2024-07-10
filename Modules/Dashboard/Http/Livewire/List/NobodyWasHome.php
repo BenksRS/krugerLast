@@ -38,7 +38,7 @@ class NobodyWasHome extends Component
 
         $list = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
 
-        return view('dashboard::livewire.list.nobody_was_home', [
+        return view('dashboard::livewire.list.nobody-was-home', [
             'list' =>$list
         ]);
 
