@@ -89,6 +89,18 @@
 		@case('clean_up')
 	  		@livewire('dashboard::list.clean-up', key('dash_list_clean_up'))
 	  		@break
+	@case('extreme')
+	  @livewire('dashboard::list.extreme', key('dash_list_extreme'))
+	  @break
+	@case('crane_needed')
+	  @livewire('dashboard::list.crane_needed', key('dash_list_crane_needed'))
+	  @break
+	@case('nobody_was_home')
+	  @livewire('dashboard::list.nobody_was_home', key('dash_list_nobody_was_home'))
+	  @break
+	@case('not_enough_time')
+	  @livewire('dashboard::list.not_enough_time', key('dash_list_not_enough_time'))
+	  @break
 		@case('magic_message_sent')
 		@case('magic_docusign_sent')
 		@case('magic_ready_to_install')
