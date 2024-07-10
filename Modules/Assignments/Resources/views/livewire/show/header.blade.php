@@ -265,10 +265,10 @@
                                                     <li><button class="dropdown-item" wire:click="setPreStatus(26)" type="button">NO CHARGE</button></li>
                                                     <li><button class="dropdown-item" wire:click="setPreStatus(8)"  type="button">NO JOB</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatus(30)"  type="button">LANDLINE</button></li>
-                                                    <li><button class="dropdown-item" wire:click="setPreStatus(36)"  type="button">EXTREME</button></li>
-                                                    <li><button class="dropdown-item" wire:click="setPreStatus(37)"  type="button">NOBODY WAS HOME</button></li>
-                                                    <li><button class="dropdown-item" wire:click="setPreStatus(38)"  type="button">CRANE NEEDED</button></li>
-                                                    <li><button class="dropdown-item" wire:click="setPreStatus(39)"  type="button">NOT ENOUGH TIME</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(36)"  type="button">EXTREME</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(37)"  type="button">NOBODY WAS HOME</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(38)"  type="button">CRANE NEEDED</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(39)"  type="button">NOT ENOUGH TIME</button></li>
                                                 @endif
                                             </ul>
                                         </div>
