@@ -65,7 +65,7 @@
 		public    $statusList;
 		
 		public    $checklist    = [1  => TRUE, 11 => TRUE, 12 => FALSE, 17 => TRUE, 27 => FALSE, 28 => FALSE, 14 => FALSE,
-		                           29 => FALSE, 31 => FALSE, 32 => FALSE, 34 => TRUE, 35 => TRUE
+		                           29 => FALSE, 31 => FALSE, 32 => FALSE, 34 => TRUE, 35 => TRUE, 36 => FALSE, 37 => FALSE, 38 => FALSE, 39 => FALSE,
 		];
 		
 		public function mount ()
@@ -106,6 +106,10 @@
 				case 'checklist.32':
 				case 'checklist.34':
 				case 'checklist.35':
+				case 'checklist.36':
+				case 'checklist.37':
+				case 'checklist.38':
+				case 'checklist.39':
 					$this->checkFilter();
 					break;
 				default:
