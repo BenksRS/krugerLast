@@ -7,7 +7,7 @@
 			<div class="boxleftsched">
 				<div class="headerControls">
 					<div class="row">
-						<div class="col-lg-5">
+						<div class="col-lg-4">
 							<div class="d-flex flex-wrap text-center text-sm-start align-items-center p-4">
 								<div class="d-sm-flex flex-wrap gap-2">
 									<div class="btn-group" role="group" aria-label="Basic example">
@@ -46,7 +46,7 @@
 								</script>
 							@endif
 						</div>
-						<dic class="col-lg-3 float-end">
+						<div class="col-lg-4 float-end">
 							@foreach($statusList->sortby('ordem') as $data)
 								<div class="form-check form-check-inline user-select-none font" wire:key="check-status-{{ $data->id }}">
 									<input class="form-check-input" type="checkbox" id="check-status-{{ $data->id }}" wire:model="checklist.{{ $data->id }}">
@@ -57,7 +57,7 @@
 									</label>
 								</div>
 							@endforeach
-						</dic>
+						</div>
 					
 					
 					</div>
