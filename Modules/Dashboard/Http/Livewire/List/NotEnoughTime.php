@@ -8,7 +8,7 @@ use Livewire\WithPagination;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Repositories\AssignmentRepository;
 
-class NotEnoughTime extends Component
+	class NotEnoughTime extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -30,7 +30,7 @@ class NotEnoughTime extends Component
     public function render()
     {
         $searchAssignment = $this->searchAssignment;
-        $list = AssignmentRepository::status([39])->search($searchAssignment)->get();
+        $list = AssignmentRepository::open([39])->search($searchAssignment)->get();
 
         $list=$list->sortBy('start_date')->sortBy('order_status');
 

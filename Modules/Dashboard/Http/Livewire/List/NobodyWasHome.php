@@ -30,7 +30,7 @@ class NobodyWasHome extends Component
     public function render()
     {
         $searchAssignment = $this->searchAssignment;
-        $list = AssignmentRepository::status([37])->search($searchAssignment)->get();
+        $list = AssignmentRepository::open([37])->search($searchAssignment)->get();
 
         $list=$list->sortBy('start_date')->sortBy('order_status');
 
