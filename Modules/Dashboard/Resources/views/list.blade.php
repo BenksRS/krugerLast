@@ -101,6 +101,12 @@
 	@case('not_enough_time')
 	  @livewire('dashboard::list.not-enough-time', key('dash_list_not_enough_time'))
 	  @break
+	@case('tree_done_need_tarp')
+	  @livewire('dashboard::list.tree-done-need-tarp', key('dash_list_tree_done_need_tarp'))
+	  @break
+	@case('tree_easy')
+	  @livewire('dashboard::list.tree-easy', key('dash_list_tree_easy'))
+	  @break
 		@case('magic_message_sent')
 		@case('magic_docusign_sent')
 		@case('magic_ready_to_install')

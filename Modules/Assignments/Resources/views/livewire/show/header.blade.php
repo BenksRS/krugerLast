@@ -269,6 +269,8 @@
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(37)"  type="button">NOBODY WAS HOME</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(38)"  type="button">CRANE NEEDED</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(39)"  type="button">NOT ENOUGH TIME</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(40)"  type="button">TREE DONE NEED TARP</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(41)"  type="button">TREE EASY</button></li>
                                                 @endif
                                             </ul>
                                         </div>
