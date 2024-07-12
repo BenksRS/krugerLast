@@ -86,7 +86,9 @@ class ReferralInfo extends Component
 
 
     public function getCCalacrity(){
-
+	    
+	    $this->updateAlacrityId();
+			return;
         if(isset($this->assignment->allacrity_id)){
 
             $alacrity=alacrity_service()->post('GetAssignmentDetail', ['AssignmentId'=> $this->assignment->allacrity_id]);
