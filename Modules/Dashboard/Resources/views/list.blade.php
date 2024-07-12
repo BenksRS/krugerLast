@@ -110,6 +110,9 @@
 	@case('not_confirmed')
 	  @livewire('dashboard::list.not-confirmed', key('dash_list_not_confirmed'))
 	  @break
+	@case('tree_signed')
+	  @livewire('dashboard::list.tree-signed', key('dash_list_tree_signed'))
+	  @break
 		@case('magic_message_sent')
 		@case('magic_docusign_sent')
 		@case('magic_ready_to_install')
