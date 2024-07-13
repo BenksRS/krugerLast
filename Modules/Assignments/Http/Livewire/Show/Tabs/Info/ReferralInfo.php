@@ -68,6 +68,7 @@ class ReferralInfo extends Component
 
         if($this->referral_id == 24){
             $this->getCCalacrity();
+            $this->getVisitDate();
         }
 
 
@@ -83,11 +84,47 @@ class ReferralInfo extends Component
         $this->processCarrier($this->referral_id);
 
     }
+	
+	public function alacrityVisitSite($date){
+		
+		if($this->assignment->referral->id == 24) {
+			// alacrity time zone
+			switch ($this->assignment->state) {
+				case 'LA':
+				case 'TX':
+					$ContactDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->subHours(1)->format('Y-m-d H:i:s');
+					break;
+				default:
+					$ContactDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('Y-m-d H:i:s');
+					break;
+			}
+			
+			alacrity_service()->post('UpdateDates', ['AssignmentId' => $this->assignment->allacrity_id],
+				["AssignmentDates" => [
+					'VisitDate' => $ContactDate
+				]]);
+			$this->getCCalacrity();
+			$this->emit('contentCC');
+		}
+		
+	}
+	
+	public function getVisitDate(){
+		$firstImage = $this->assignment->gallery->first();
+		$firstImageDate = $firstImage->created_at;
+		
+		if($firstImageDate && $this->SI_alacrity == 'No action') {
+			$this->alacrityVisitSite($firstImageDate);
+		}
+		
+	}
 
 
     public function getCCalacrity(){
 			
         if(isset($this->assignment->allacrity_id)){
+					
+	
 
             $alacrity=alacrity_service()->post('GetAssignmentDetail', ['AssignmentId'=> $this->assignment->allacrity_id]);
 
