@@ -111,7 +111,7 @@ class ReferralInfo extends Component
 	
 	public function getVisitDate(){
 		$firstImage = $this->assignment->gallery->first();
-		$firstImageDate = $firstImage->created_at;
+		$firstImageDate = $firstImage->created_at ?? null;
 		
 		if($firstImageDate && $this->SI_alacrity == 'No action') {
 			$this->alacrityVisitSite($firstImageDate);
