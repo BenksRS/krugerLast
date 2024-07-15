@@ -33,7 +33,8 @@ class Readytobill extends Component
         $searchAssignment = $this->searchAssignment;
         $list = AssignmentRepository::readytobill()->search($searchAssignment)->get();
 
-        $list=$list->sortBy('start_date')->sortBy('order_status');
+/*        $list=$list->sortBy('start_date')->sortBy('order_status');*/
+        $list=$list->sortBy('start_date')->sortBy('created_at');
 
         $items = $list->forPage($this->page, $this->selectedRows);
 
