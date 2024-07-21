@@ -197,7 +197,7 @@ class Header extends Component
                 'updated_by'  => $this->user->id,
             ];
 
-            $status_collection=array(5,6);
+            $status_collection=array(5,6,44);
             if(in_array($newStatus, $status_collection)){
                 $update_status['status_collection_id']=$newStatus;
             }
