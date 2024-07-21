@@ -184,6 +184,25 @@ class Header extends Component
 			$this->emit('updateNotes');
 
 		}
+	public function changeStatusMissingAssignment($newStatus){
+		AssignmentsStatusPivot::create([
+			'assignment_id'=> $this->assignment->id,
+			'assignment_status_id'=> $newStatus,
+			'created_by'=> 73,
+		]);
+		$update_status=[
+			'status_id'  => $newStatus,
+			'updated_by'  => $this->user->id,
+		];
+		
+		
+		$this->assignment->update($update_status);
+		
+		$this->assignment = AssignmentFinanceRepository::find($this->assignment->id);
+		
+		integration('assignments')->set($this->assignment->id);
+		$this->emit('updateScheduling');
+	}
     public function changeStatus($newStatus){
         $this->preStatus = null;
         if($this->assignment->status_id != $newStatus){
@@ -197,7 +216,7 @@ class Header extends Component
                 'updated_by'  => $this->user->id,
             ];
 
-            $status_collection=array(5,6,44);
+            $status_collection=array(5,6);
             if(in_array($newStatus, $status_collection)){
                 $update_status['status_collection_id']=$newStatus;
             }
