@@ -113,6 +113,9 @@
 	@case('tree_signed')
 	  @livewire('dashboard::list.tree-signed', key('dash_list_tree_signed'))
 	  @break
+	@case('missing_assignment')
+	  @livewire('dashboard::list.missing-assignment', key('dash_list_missing_assignment'))
+	  @break
 		@case('magic_message_sent')
 		@case('magic_docusign_sent')
 		@case('magic_ready_to_install')
