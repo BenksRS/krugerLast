@@ -273,6 +273,7 @@
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(41)"  type="button">TREE EASY</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(42)"  type="button">NOT CONFIRMED</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(43)"  type="button">TREE SIGNED</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(44)"  type="button">MISSING ASSIGNMENT</button></li>
                                                 @endif
                                             </ul>
                                         </div>
