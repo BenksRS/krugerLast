@@ -212,7 +212,7 @@ class Actions extends Component
         $this->dateupdate = Carbon::now();
 
 
-        if($status_finance!='pending' || $this->assignment->status_id != 44){
+        if($status_finance!='pending'){
             $this->changeStatus($status_finance);
         }
 

@@ -315,5 +315,20 @@ trait AssignmentScope {
 					}
 				});
 		}
+		
+		public function scopeMissingAssignments (Builder $query, $status = [], $tags = []){
+
+			return $query
+				->with('tags')
+				->whereHas('tags', function (Builder $q) use ($tags) {
+					if ( $tags != NULL ) {
+						$q->whereIn('tag_id', $tags);
+					}
+				})
+				->orWhere->when($status, function (Builder $query, $status) {
+					$query->whereIn('status_id', $status);
+				});
+		}
+
 
 }
