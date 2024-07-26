@@ -84,7 +84,9 @@ class AlacrityController extends Controller
 
 
        $deleteSession = AlacritySession::first();
-       $deleteSession->delete();
+       if($deleteSession){
+           $deleteSession->delete();
+       }
 
         $alacrity=alacrity_service()->post('GetAssignmentSummaryList');
 
