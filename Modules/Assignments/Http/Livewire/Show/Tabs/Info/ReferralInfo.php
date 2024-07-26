@@ -67,8 +67,8 @@ class ReferralInfo extends Component
         }
 
         if($this->referral_id == 24){
-            $this->getCCalacrity();
-            $this->getVisitDate();
+            //$this->getCCalacrity();
+            //$this->getVisitDate();
         }
 
 
