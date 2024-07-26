@@ -71,7 +71,7 @@ class AlacrityService
         $response = $this->request($method, $arguments[0], isset($arguments[1]) ? $arguments[1] : [], isset($arguments[2]) ? $arguments[2] : []);
 
         if ($response->failed()) {
-            throw new \Exception("Alacrity API error: {$response->status()} - {$response->json('message')}");
+            //throw new \Exception("Alacrity API error: {$response->status()} - {$response->json('message')}");
         }
 
         return $response->json();
