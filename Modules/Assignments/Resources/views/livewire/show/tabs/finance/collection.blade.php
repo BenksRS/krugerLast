@@ -49,13 +49,16 @@
 {{--                            <li><button class="dropdown-item" wire:click="setCollectionStatus(21)"  type="button">CALLED</button></li>--}}
                             <li><button class="dropdown-item" wire:click="setCollectionStatus(22)" type="button">PAYMENT AGREEMENT</button></li>
                             <li><button class="dropdown-item" wire:click="setCollectionStatus(25)" type="button">PAYMENT PLAN</button></li>
-                            <li><button class="dropdown-item" wire:click="setCollectionStatus(26)" type="button">NTO</button></li>
+                            {{--<li><button class="dropdown-item" wire:click="setCollectionStatus(26)" type="button">NTO</button></li>--}}
                             <li><button class="dropdown-item" wire:click="setCollectionStatus(27)" type="button">LAWYER</button></li>
                             <li><button class="dropdown-item" wire:click="setCollectionStatus(28)" type="button">COLLECTION AGENCY</button></li>
-                            <li><button class="dropdown-item" wire:click="setCollectionStatus(29)" type="button">INCLUDED IN SS</button></li>
+                            {{--<li><button class="dropdown-item" wire:click="setCollectionStatus(29)" type="button">INCLUDED IN SS</button></li>--}}
                             <li><button class="dropdown-item" wire:click="setCollectionStatus(24)" type="button">CARRIER PAYMENT PENDING</button></li>
 {{--                            <li><button class="dropdown-item" wire:click="setCollectionStatus(11)"  type="button">LEFT MESSAGE</button></li>--}}
                             <li><button class="dropdown-item" wire:click="setCollectionStatus(23)"  type="button">COURT</button></li>
+                            <li><button class="dropdown-item" wire:click="setCollectionStatus(30)"  type="button">PAS</button></li>
+                            <li><button class="dropdown-item" wire:click="setCollectionStatus(31)"  type="button">DENIED CLAIM</button></li>
+                            <li><button class="dropdown-item" wire:click="setCollectionStatus(32)"  type="button">UNDER DEDUCTIBLE</button></li>
                         </ul>
                     </div>
                 </h7>
