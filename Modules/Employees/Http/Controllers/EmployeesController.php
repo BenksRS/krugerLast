@@ -117,19 +117,33 @@ class EmployeesController extends Controller
     }
 
     /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function list_worker($id)
+     * Lists the jobs and commissions for a specific worker in a given month.
+     * *
+     * * @param int $id The ID of the worker.
+     * * @param int $month The month to filter the jobs by (default: 07).
+     * * @param int $startDay The start day of the month to filter the jobs by (default: 08).
+     * * @param int $endDay The end day of the month to filter the jobs by (default: 21).
+     * * @return void
+ */
+    public function list_worker($id, $month = 07, $startDay = 8, $endDay = 21)
     {
 
         $user = User::find($id);
 $total_commission=0;
         echo "$user->name<br><br>";
+	    
+	    $year = 2024;
+	    
+	    // Use o operador de coalescência nula para garantir que as variáveis opcionais estejam definidas
+	    $month     = str_pad($month ?? '01', 2, '0', STR_PAD_LEFT);
+	    $startDay  = str_pad($startDay ?? '01', 2, '0', STR_PAD_LEFT);
+	    $endDay    = str_pad($endDay ?? '01', 2, '0', STR_PAD_LEFT);
+	    
+	    $startDate = sprintf('%s-%s-%s', $year, $month, $startDay);
+	    $endDate   = sprintf('%s-%s-%s', $year, $month, $endDay);
 
-
-        $assignmnet = AssignmentFinanceRepository::DateSchedulledWorker('2024-07-08', '2024-07-21',$id)->whereIn('status_id', [5, 6, 10, 24, 9])->get();
+				
+        $assignmnet = AssignmentFinanceRepository::DateSchedulledWorker($startDate, $endDate,$id)->whereIn('status_id', [5, 6, 10, 24, 9])->get();
 
 
         foreach ($assignmnet as $job){
