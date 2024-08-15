@@ -31,11 +31,20 @@
 		.datepicker > div {
 			display : block;
 		}
+		select.form-control {
+			appearance: auto;
+		}
 	</style>
 @endpush
 
 @push('js')
 	<script>
+		// loadSelectState();
+		function loadSelectState() {
+			$('.select-state').select2({
+				placeholder: "Select State"
+			})
+		}
         document.addEventListener('livewire:load', function () {
             const ctx   = document.getElementById('myChart');
             const chart = new Chart(ctx, {
@@ -64,7 +73,10 @@
                 chart.update();
             });
 
-            
+        });
+
+        $(document).ready(function() {
+			loadSelectState();
         });
 	</script>
 @endpush

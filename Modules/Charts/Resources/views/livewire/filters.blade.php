@@ -3,7 +3,20 @@
 		<div class="card-body">
 			
 			<form class="row flex-xl-row flex-column align-items-center justify-content-end">
-				
+				<div class="col-sm-3" wire:ignore>
+				  <select class="form-control select-state select2 select2-multiple" multiple data-placelholder="Select State..." id="filter_state" name="filters.state" wire:model.defer="filters.state">
+					<option value="AL">AL</option>
+					<option value="FL">FL</option>
+					<option value="LA">LA</option>
+					<option value="MS">MS</option>
+					<option value="NC">NC</option>
+					<option value="SC">SC</option>
+					<option value="TX">TX</option>
+				  </select>
+				</div>
+			  <div class="col-sm-auto hstack">
+				<div class="vr"></div>
+			  </div>
 				@foreach($fields as $key => $field)
 					<div class="col-sm-auto">
 						@switch($field['type'])
@@ -68,10 +81,16 @@
                 /*             let date = e.format();*/
                 if (!name || !date) return;
 				
-				@this.
-                set(`${ name }`, date, true)
+				@this.set(`${ name }`, date, true);
             });
+
+            $('.select-state').on('change', function () {
+                let data = $(this).val();
+            @this.set('filters.state', data, true);
+            })
+
         })
+
 	</script>
 @endpush
 

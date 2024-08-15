@@ -44,11 +44,12 @@ class Show extends Component {
 	{
 		$type  = $filters['referral'];
 		$dates = $filters['dates'];
+		$state = $filters['state'] ?? NULL;
 
 		$this->loadData['loading'] = TRUE;
 		$this->loadData['view']    = $this->loadData['views'][$type];
 
-		$repo = AssignmentRepository::with(['referral.type'])->dateRange($dates['start'], $dates['end']);
+		$repo = AssignmentRepository::with(['referral.type'])->dateRange($dates['start'], $dates['end'])->state($state);
 
 		switch( $type ) {
 			case 'referral':

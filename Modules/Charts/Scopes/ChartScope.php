@@ -24,5 +24,16 @@ trait ChartScope {
 	{
 		return $query->with(['referral.type', 'carrier'])->selectRaw('referral_id, count(*) as total')->groupBy('referral_id');
 	}
+	
+	public function scopeState ( Builder $query, $state = NULL )
+	{
+		if ( empty($state) || $state == 'Select State...' ) {
+			return $query;
+		}
+		if(is_array($state)) {
+			return $query->whereIn('state', $state);
+		}
+		return $query->where('state', $state);
+	}
 
 }
