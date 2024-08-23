@@ -12,6 +12,7 @@
 					<option value="NC">NC</option>
 					<option value="SC">SC</option>
 					<option value="TX">TX</option>
+					<option value="GA">GA</option>
 				  </select>
 				</div>
 			  <div class="col-sm-auto hstack">
