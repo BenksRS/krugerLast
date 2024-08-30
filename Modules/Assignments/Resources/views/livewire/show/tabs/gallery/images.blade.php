@@ -189,20 +189,25 @@
                                 @if($showBefore)
                                     @livewire('assignments::show.tabs.gallery.fileupload', ['assignment' => $assignment->id, 'type' => 'pics_before'], key('assignment_gallery_fileupload_before'))
                                 @else
-                                    @if($listGallery->where('type','pics_before')->isNotEmpty())
-                                        @foreach($listGallery->where('type','pics_before') as $imagem)
-                                            <div class="float-start position-relative">
-                                                <div class="image_handler" >
-                                                    <i class="fa fa-arrows-alt"></i>
+                                    @if($listGallery->whereIn('type',['pics_before', 'pics_the_ladder'])->isNotEmpty())
+                                        @foreach($listGallery->whereIn('type',['pics_before', 'pics_the_ladder']) as $imagem)
+                                            <div class="float-start position-relative imagem_label">
+                                                <div class="col-12">
+                                                    <div class="image_handler" >
+                                                        <i class="fa fa-arrows-alt"></i>
+                                                    </div>
+                                                    <div class="delete_image">
+                                                        <a class="btn btn-danger" wire:click.prevent="deleteImage({{$imagem->id}})" ><i class="fa fa-trash"></i></a>
+                                                    </div>
+                                                    <div class="zoom_image">
+                                                        <button type="button" class="btn btn-info waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".modal_gallery{{$imagem->id}}"><i class="bx bx-zoom-in"></i></button>
+                                                        {{--                                            <a class="btn btn-info" wire:click.prevent="deleteImage({{$imagem->id}})" ></a>--}}
+                                                    </div>
+                                                    <img class="img-thumbnail" id="upimagem-{{$imagem->id}}" wire:key="imagem-{{$imagem->id}}" wire:sortable-group.item="{{$imagem->id}}" alt="200x200"  src="{{$imagem->b64}}" data-holder-rendered="true">
                                                 </div>
-                                                <div class="delete_image">
-                                                    <a class="btn btn-danger" wire:click.prevent="deleteImage({{$imagem->id}})" ><i class="fa fa-trash"></i></a>
+                                                <div class="col-12">
+                                                    <span style="padding-left: 5px;">{{$imagem->label ?? ''}}</span>
                                                 </div>
-                                                <div class="zoom_image">
-                                                    <button type="button" class="btn btn-info waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".modal_gallery{{$imagem->id}}"><i class="bx bx-zoom-in"></i></button>
-                                                    {{--                                            <a class="btn btn-info" wire:click.prevent="deleteImage({{$imagem->id}})" ></a>--}}
-                                                </div>
-                                                <img class="img-thumbnail" id="upimagem-{{$imagem->id}}" wire:key="imagem-{{$imagem->id}}" wire:sortable-group.item="{{$imagem->id}}" alt="200x200"  src="{{$imagem->b64}}" data-holder-rendered="true">
                                             </div>
 
                                             <div class="modal fade modal_gallery{{$imagem->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -246,19 +251,24 @@
                                 @else
                                     @if($listGallery->where('type','pics_after')->isNotEmpty())
                                         @foreach($listGallery->where('type','pics_after') as $imagem)
-                                            <div class="float-start position-relative">
-                                                <div class="image_handler" >
-                                                    <i class="fa fa-arrows-alt"></i>
-                                                </div>
-                                                <div class="delete_image">
-                                                    <a class="btn btn-danger" wire:click.prevent="deleteImage({{$imagem->id}})" ><i class="fa fa-trash"></i></a>
-                                                </div>
-                                                <div class="zoom_image">
-                                                    <button type="button" class="btn btn-info waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".modal_gallery{{$imagem->id}}"><i class="bx bx-zoom-in"></i></button>
-                                                    {{--                                            <a class="btn btn-info" wire:click.prevent="deleteImage({{$imagem->id}})" ></a>--}}
-                                                </div>
-                                                <img class="img-thumbnail" id="upimagem-{{$imagem->id}}" wire:key="imagem-{{$imagem->id}}" wire:sortable-group.item="{{$imagem->id}}" alt="200x200"  src="{{$imagem->b64}}" data-holder-rendered="true">
-                                            </div>
+                                            <div class="float-start position-relative imagem_label">
+                                                    <div class="col-12">
+                                                        <div class="image_handler" >
+                                                            <i class="fa fa-arrows-alt"></i>
+                                                        </div>
+                                                        <div class="delete_image">
+                                                            <a class="btn btn-danger" wire:click.prevent="deleteImage({{$imagem->id}})" ><i class="fa fa-trash"></i></a>
+                                                        </div>
+                                                        <div class="zoom_image">
+                                                            <button type="button" class="btn btn-info waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".modal_gallery{{$imagem->id}}"><i class="bx bx-zoom-in"></i></button>
+                                                            {{--                                            <a class="btn btn-info" wire:click.prevent="deleteImage({{$imagem->id}})" ></a>--}}
+                                                        </div>
+                                                        <img class="img-thumbnail" id="upimagem-{{$imagem->id}}" wire:key="imagem-{{$imagem->id}}" wire:sortable-group.item="{{$imagem->id}}" alt="200x200"  src="{{$imagem->b64}}" data-holder-rendered="true">
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <span style="padding-left: 5px;">{{$imagem->label ?? ''}}</span>
+                                                    </div>
+                                           </div>
 
                                             <div class="modal fade modal_gallery{{$imagem->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
