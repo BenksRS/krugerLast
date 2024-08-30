@@ -27,6 +27,7 @@ class PictureRepository extends Gallery {
             'img_id'        => $data['id'],
             'b64'           => $data['file'],
             'type'          => $data['type'] ?? $this->checkType($data['section']),
+            'label'         => $data['section'] ?? '',
             'created_by'    => 73,
             'updated_by'    => 73,
         ];
