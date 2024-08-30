@@ -62,6 +62,12 @@
 		@case('overdue')
 			@livewire('dashboard::list.overdue', key('dash_list_overdue'))
 		@break
+	    @case('followup30')
+	    @livewire('dashboard::list.fallowup30', key('dash_list_followup30'))
+	    @break
+	    @case('followup45')
+	    @livewire('dashboard::list.fallowup45', key('dash_list_followup45'))
+	    @break
 		@case('followup60')
 		@livewire('dashboard::list.fallowup60', key('dash_list_followup60'))
 		@break
