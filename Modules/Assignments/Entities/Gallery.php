@@ -19,6 +19,7 @@ class Gallery extends Model
         'img_id',
         'b64',
         'type',
+        'label',
     ];
 
 
