@@ -44,16 +44,16 @@
 		
 		public function getLabelAttribute ($value)
 		{
-			return $this->formatLabel($value ?? null);
+			return $this->formatLabel($value ?? NULL);
 		}
 		
 		protected function formatLabel ($value)
 		{
 			
-			if (is_null($value)) {
-				return null;
+			if ( is_null($value) ) {
+				return NULL;
 			}
-
+			
 			$prefixes = ['bf_', 'bf_of_', 'af_', 'af_of_'];
 			$labelMap = [
 				'the_ladder'       => 'The Ladder',
@@ -66,8 +66,9 @@
 			];
 			
 			$labelKey = Str::replace($prefixes, '', $value);
+			$label    = ucwords($labelMap[$labelKey] ?? $labelKey);
 			
-			return $labelMap[$labelKey] ?? $labelKey;
+			return $label;
 		}
 		
 		protected static function newFactory ()
