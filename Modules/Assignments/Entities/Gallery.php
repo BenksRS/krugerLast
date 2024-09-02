@@ -42,9 +42,9 @@
 			return $return;
 		}
 		
-		public function getLabelAttribute ()
+		public function getLabelAttribute ($value)
 		{
-			return $this->formatLabel($this->label);
+			return $this->formatLabel($value ?? null);
 		}
 		
 		protected function formatLabel ($value)
