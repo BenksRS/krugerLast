@@ -54,7 +54,7 @@
 				return NULL;
 			}
 			
-			$prefixes = ['bf_', 'bf_of_', 'af_', 'af_of_'];
+			$prefixes = ['bf_', 'bf_of_', 'af_', 'af_of_', 'of_'];
 			$labelMap = [
 				'the_ladder'       => 'The Ladder',
 				'front_view_right' => 'Front View Right',
