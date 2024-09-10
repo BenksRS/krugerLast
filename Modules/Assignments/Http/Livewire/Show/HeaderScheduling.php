@@ -195,6 +195,9 @@ class HeaderScheduling extends Component
 
     public function alacrityVisitPlanned($date){
 
+				if(empty($this->assignment->allacrity_id)){
+					return;
+				}
         if($this->assignment->referral->id == 24) {
             // alacrity time zone
             switch ($this->assignment->state) {
