@@ -222,6 +222,23 @@ class ReferralInfo extends Component
     public function processJobtype($id){
         $this->assignment = Assignment::find($id);
     }
+	
+		protected function processCarrierTags ()
+		{
+			$tag  = 39;
+			$tags = $this->assignment->tags->pluck('id');
+			
+			$referral = $this->assignment->referral_id;
+			
+			$carrier  = $this->assignment->carrier_id;
+			$carriers = [217, 496];
+			
+			if ( $referral === 24 && in_array($carrier, $carriers) && !$tags->contains($tag) ) {
+				$this->assignment->tags()->attach($tag);
+				$this->emit('tagsUpdate', $this->assignment->id);
+				integration('assignments')->set($this->assignment->id);
+			}
+		}
     public function update($formData){
         $this->validate();
 
@@ -244,6 +261,8 @@ class ReferralInfo extends Component
         $this->carrier_info = $this->assignment->carrier_info;
         $this->claim_number = $this->assignment->claim_number;
         $this->client_id = $this->assignment->client_id;
+				
+				$this->processCarrierTags();
 
         $this->show = true;
     }
