@@ -125,7 +125,7 @@ class EmployeesController extends Controller
      * * @param int $endDay The end day of the month to filter the jobs by (default: 21).
      * * @return void
  */
-    public function list_worker($id, $month = 07, $startDay = 8, $endDay = 21)
+    public function list_worker($id, $month = 8, $startDay = 5, $endDay = 9)
     {
 
         $user = User::find($id);
