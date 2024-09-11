@@ -225,16 +225,16 @@ class ReferralInfo extends Component
 	
 		protected function processCarrierTags ()
 		{
-			$tag  = 39;
-			$tags = $this->assignment->tags->pluck('id');
+			$tagId        = 39;
+			$referralIds  = [674];
+			$carrierIds   = [217, 496];
 			
-			$referral = $this->assignment->referral_id;
+			$referral   = $this->assignment->referral_id ?? 0;
+			$carrier    = $this->assignment->carrier_id ?? 0;
+			$tags       = $this->assignment->tags->pluck('id');
 			
-			$carrier  = $this->assignment->carrier_id;
-			$carriers = [217, 496];
-			
-			if ( $referral === 24 && in_array($carrier, $carriers) && !$tags->contains($tag) ) {
-				$this->assignment->tags()->attach($tag);
+			if ((in_array($referral, $referralIds) || in_array($carrier, $carrierIds)) && !$tags->contains($tagId)) {
+				$this->assignment->tags()->attach($tagId);
 				$this->emit('tagsUpdate', $this->assignment->id);
 				integration('assignments')->set($this->assignment->id);
 			}
