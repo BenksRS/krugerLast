@@ -59,6 +59,7 @@
                             <li><button class="dropdown-item" wire:click="setCollectionStatus(30)"  type="button">PAS</button></li>
                             <li><button class="dropdown-item" wire:click="setCollectionStatus(31)"  type="button">DENIED CLAIM</button></li>
                             <li><button class="dropdown-item" wire:click="setCollectionStatus(32)"  type="button">UNDER DEDUCTIBLE</button></li>
+                            <li><button class="dropdown-item" wire:click="setCollectionStatus(33)"  type="button">PAID TO THE INSURED</button></li>
                         </ul>
                     </div>
                 </h7>
