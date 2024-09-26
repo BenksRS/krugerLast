@@ -203,10 +203,13 @@
                                                         <button type="button" class="btn btn-info waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".modal_gallery{{$imagem->id}}"><i class="bx bx-zoom-in"></i></button>
                                                         {{--                                            <a class="btn btn-info" wire:click.prevent="deleteImage({{$imagem->id}})" ></a>--}}
                                                     </div>
+                                                    <div class="edit_image">
+                                                        <button type="button" class="btn btn-warning waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".modal_gallery_category{{$imagem->id}}"><i class="bx bx-edit-alt"></i></button>
+                                                    </div>
                                                     <img class="img-thumbnail" id="upimagem-{{$imagem->id}}" wire:key="imagem-{{$imagem->id}}" wire:sortable-group.item="{{$imagem->id}}" alt="200x200"  src="{{$imagem->b64}}" data-holder-rendered="true">
                                                 </div>
                                                 <div class="col-12">
-                                                    <span style="padding-left: 5px;">{{$imagem->label ?? ''}}</span>
+                                                    <span style="padding-left: 5px;" class="text-uppercase">{{$imagem->label_format ?? ''}}</span>
                                                 </div>
                                             </div>
 
@@ -219,6 +222,45 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <img src="{{$imagem->b64}}" class="img-fluid">
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div><!-- /.modal -->
+                                            {{--                                            EDIT CATEGORY MODAL--}}
+                                            <div class="modal fade modal_gallery_category{{$imagem->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+
+                                                                    <label class="form-label">Select new Label:</label>
+                                                                    <div class="row">
+                                                                        @foreach($allTypes['pics_before'] as $label => $labelName)
+                                                                            <div class="col-auto float-start">
+                                                                                <div class="form-check form-checkbox-outline form-check-primary mb-3">
+                                                                                    @if($imagem->label == $label)
+                                                                                        <input class="form-check-input" type="radio" id="radio_{{$imagem->id}}_{{$label}}" value="{{$label}}"  checked="">
+                                                                                    @else
+                                                                                        <input class="form-check-input" type="radio" id="radio_{{$imagem->id}}_{{$label}}" wire:click="changeTypeLabel('pics_before', '{{$label}}', {{$imagem->id}})" value="{{$label}}"  data-bs-dismiss="modal" aria-label="Close">
+                                                                                    @endif
+                                                                                    <label class="form-check-label text-uppercase" for="radio_{{$imagem->id}}_{{$label}}">
+                                                                                        {{$labelName}}
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            {{--                                                                <img src="{{$imagem->b64}}" class="img-fluid">--}}
                                                         </div>
                                                     </div><!-- /.modal-content -->
                                                 </div><!-- /.modal-dialog -->
@@ -263,10 +305,13 @@
                                                             <button type="button" class="btn btn-info waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".modal_gallery{{$imagem->id}}"><i class="bx bx-zoom-in"></i></button>
                                                             {{--                                            <a class="btn btn-info" wire:click.prevent="deleteImage({{$imagem->id}})" ></a>--}}
                                                         </div>
+                                                        <div class="edit_image">
+                                                            <button type="button" class="btn btn-warning waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".modal_gallery_category{{$imagem->id}}"><i class="bx bx-edit-alt"></i></button>
+                                                        </div>
                                                         <img class="img-thumbnail" id="upimagem-{{$imagem->id}}" wire:key="imagem-{{$imagem->id}}" wire:sortable-group.item="{{$imagem->id}}" alt="200x200"  src="{{$imagem->b64}}" data-holder-rendered="true">
                                                     </div>
                                                     <div class="col-12">
-                                                        <span style="padding-left: 5px;">{{$imagem->label ?? ''}}</span>
+                                                        <span style="padding-left: 5px;" class="text-uppercase">{{$imagem->label_format ?? ''}}</span>
                                                     </div>
                                            </div>
 
@@ -279,6 +324,45 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <img src="{{$imagem->b64}}" class="img-fluid">
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div><!-- /.modal -->
+                                            {{--                                            EDIT CATEGORY MODAL--}}
+                                            <div class="modal fade modal_gallery_category{{$imagem->id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+
+                                                                    <label class="form-label">Select new Label:</label>
+                                                                    <div class="row">
+                                                                        @foreach($allTypes['pics_after'] as $label => $labelName)
+                                                                            <div class="col-auto float-start">
+                                                                                <div class="form-check form-checkbox-outline form-check-primary mb-3">
+                                                                                    @if($imagem->label == $label)
+                                                                                        <input class="form-check-input" type="radio" id="radio_{{$imagem->id}}_{{$label}}" value="{{$label}}"  checked="">
+                                                                                    @else
+                                                                                        <input class="form-check-input" type="radio" id="radio_{{$imagem->id}}_{{$label}}" wire:click="changeTypeLabel('pics_after', '{{$label}}', {{$imagem->id}})" value="{{$label}}"  data-bs-dismiss="modal" aria-label="Close">
+                                                                                    @endif
+                                                                                    <label class="form-check-label text-uppercase" for="radio_{{$imagem->id}}_{{$label}}">
+                                                                                        {{$labelName}}
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            {{--                                                                <img src="{{$imagem->b64}}" class="img-fluid">--}}
                                                         </div>
                                                     </div><!-- /.modal-content -->
                                                 </div><!-- /.modal-dialog -->

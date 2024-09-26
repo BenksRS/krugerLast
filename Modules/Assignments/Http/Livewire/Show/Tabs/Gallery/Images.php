@@ -18,6 +18,7 @@ class Images extends Component
     public $assignment;
     public $gallery;
     public $allCategorys;
+		public $allTypes;
     public $gallery_category_id;
 
 
@@ -27,9 +28,22 @@ class Images extends Component
 
         $this->assignment = $assignment;
         $this->allCategorys = GalleryCategory::all();
+				$this->allTypes = config('assignments.gallery_types');
         $this->gallery = Gallery::where('assignment_id', $this->assignment->id)->get();
 
     }
+		
+		public function changeTypeLabel($type, $label, $image_id){
+			$type = $label == 'the_ladder' ? 'pics_the_ladder' : $type;
+			
+			$Image = Gallery::find($image_id);
+			$update=[
+				'type' => $type,
+				'label' => $label
+			];
+			$Image->update($update);
+			$this->gallery = Gallery::where('assignment_id', $this->assignment->id)->get();
+		}
 
     public function changeLabel($category_id, $image_id )
     {
