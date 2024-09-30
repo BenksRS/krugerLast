@@ -122,6 +122,9 @@
 	@case('missing_assignment')
 	  @livewire('dashboard::list.missing-assignment', key('dash_list_missing_assignment'))
 	  @break
+	@case('nadal_problem')
+	  @livewire('dashboard::list.nadal-problem', key('dash_list_nadal_problem'))
+	  @break
 		@case('magic_message_sent')
 		@case('magic_docusign_sent')
 		@case('magic_ready_to_install')
