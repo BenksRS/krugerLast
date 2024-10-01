@@ -234,6 +234,9 @@ class Header extends Component
 
     public function changeStatusScheduling($newStatus){
         $this->preStatus = null;
+		    if(in_array($newStatus, [37])){
+			    $this->createStatusNotes($newStatus);
+		    }
         if($this->assignment->status_id != $newStatus){
             AssignmentsStatusPivot::create([
                 'assignment_id'=> $this->assignment->id,
@@ -261,9 +264,6 @@ class Header extends Component
             integration('assignments')->set($this->assignment->id);
             $this->emit('updateScheduling');
         }
-	    if(in_array($newStatus, [37])){
-		    $this->createStatusNotes($newStatus);
-	    }
     }
 		
 		protected function createStatusNotes($newStatus){
@@ -275,7 +275,6 @@ class Header extends Component
 				'type'=> 'assignment',
 				'notable_type'=>  Modules\Assignments\Entities\Assignment::class,
 			]);
-			$this->emit('updateNotes');
 		}
 
     public function processScheduling(){
