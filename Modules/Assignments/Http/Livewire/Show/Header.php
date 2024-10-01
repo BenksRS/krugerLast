@@ -260,11 +260,10 @@ class Header extends Component
 
             integration('assignments')->set($this->assignment->id);
             $this->emit('updateScheduling');
-						
-						if(in_array($newStatus, [37])){
-							$this->createStatusNotes($newStatus);
-						}
         }
+	    if(in_array($newStatus, [37])){
+		    $this->createStatusNotes($newStatus);
+	    }
     }
 		
 		protected function createStatusNotes($newStatus){
