@@ -275,6 +275,7 @@ class Header extends Component
 				'type'=> 'assignment',
 				'notable_type'=>  Modules\Assignments\Entities\Assignment::class,
 			]);
+			$this->emit('updateNotes');
 		}
 
     public function processScheduling(){
