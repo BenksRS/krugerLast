@@ -17,7 +17,7 @@ class Jobs extends Component
     ];
     protected $paginationTheme = 'bootstrap';
 
-    public $columns = ['Name','Job Type','Schedule','Status','Referral','City','State', 'Created At','invoice`s', 'Billied Date', 'Total Invoice Amount', 'Paid Date', 'Paid Amount', 'Balance Amount', 'Claim Number'];
+    public $columns = ['Name','Job Type','Schedule','Status','Referral','City','State', 'Created At','invoice`s', 'Billied Date', 'Total Invoice Amount', 'Paid Date', 'Paid Amount', 'Balance Amount', 'Claim Number', 'Billed By'];
     public $selectedColumns = [];
     public $selectedRows = 100;
     public $searchInfo;
