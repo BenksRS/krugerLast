@@ -260,8 +260,24 @@ class Header extends Component
 
             integration('assignments')->set($this->assignment->id);
             $this->emit('updateScheduling');
+						
+						if(in_array($newStatus, [37])){
+							$this->createStatusNotes($newStatus);
+						}
         }
     }
+		
+		protected function createStatusNotes($newStatus){
+			$status= AssignmentsStatus::find($newStatus);
+			$this->assignment->notes()->create([
+				'text'=> "### CHANGE STATUS TO: $status->name ### $this->changeStatustext",
+				'notable_id'=> $this->assignment->id,
+				'created_by'=> $this->user->id,
+				'type'=> 'assignment',
+				'notable_type'=>  Modules\Assignments\Entities\Assignment::class,
+			]);
+			$this->emit('updateNotes');
+		}
 
     public function processScheduling(){
         $this->assignment = Assignment::find($this->assignment->id);
