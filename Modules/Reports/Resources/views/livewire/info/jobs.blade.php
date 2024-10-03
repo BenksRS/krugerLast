@@ -295,5 +295,18 @@
                 </div>
             </div>
         </div> <!-- end col -->
+
+      @if(!empty($jobsBilled))
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Jobs Billed</h5>
+                @foreach($jobsBilled as $user => $jobs)
+                  <span><b>{{ $user }}</b>: {{ $jobs->count() }}</span><br>
+                @endforeach
+            </div>
+          </div>
+        </div>
+      @endif
     </div> <!-- end row -->
 </div>

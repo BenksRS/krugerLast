@@ -45,6 +45,11 @@ class Jobs extends Component
 
         return AssignmentFinanceRepository::DateSchedulled($date_from,$date_to)->get();
     }
+		protected function getTotalJobsBilled($list)
+		{
+			$jobs_billed = collect($list)->whereNotNull('billed_by');
+			return $jobs_billed->groupBy('billed_created.name');
+		}
     public function render()
     {
 
@@ -55,13 +60,12 @@ class Jobs extends Component
             $items = $list->forPage($this->page, $this->selectedRows);
 
         $listaall = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
-
-
-
-
-
+	    
+	      $jobsBilled = $this->getTotalJobsBilled($list);
+				
         return view('reports::livewire.info.jobs',[
-                'listALl'=>$listaall
+                'listALl'=>$listaall,
+								'jobsBilled'=>$jobsBilled
             ]
         );
     }
