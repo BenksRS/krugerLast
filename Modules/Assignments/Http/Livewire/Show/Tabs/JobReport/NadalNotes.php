@@ -51,7 +51,7 @@ class NadalNotes extends Component
         $this->notesList = $this->assignment->notes->where('type','nadal');
 
         if(in_array($this->assignment->status_id, [2,3])){
-            integration('assignments')->set($this->assignment->id);
+            //integration('assignments')->set($this->assignment->id);
         }
 
     }
