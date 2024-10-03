@@ -74,6 +74,8 @@
         </div>
         <div class="col-lg-4">
             @livewire('assignments::show.tabs.job-report.notes', ['assignment' => $assignment->id, 'job_type' => $job_types->id], key("jobreport_notes_tech"))
+            <hr>
+            @livewire('assignments::show.tabs.job-report.nadal-notes', ['assignment' => $assignment->id, 'job_type' => $job_types->id], key("jobreport_notes_nadal"))
         </div>
     </div>
 </div>
