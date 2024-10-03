@@ -160,10 +160,23 @@ trait AssignmentScope {
                     ->orWhere('state', 'like', '%' . $search . '%')
                     ->orWhere('zipcode', 'like', '%' . $search . '%')
                     ->orWhere('claim_number', 'like', '%' . $search . '%')
+	                  ->orWhere->searchUsers($search)
                     ->orWhere->searchReferral($search)
-                    ->orWhere->searchPhones($search);
+                    ->orWhere->searchPhones($search)
+	                  ->orWhere->searchStatus($search);
+								
             });
     }
+		
+		public function scopeSearchUsers (Builder $query, $search) {
+			return $query
+				->whereHas('user_created', function (Builder $q) use ($search) {
+					$q->where('name', 'like', '%' . $search . '%');
+				})
+				->orWhereHas('user_updated', function (Builder $q) use ($search) {
+					$q->where('name', 'like', '%' . $search . '%');
+				});
+		}
 
     public function scopeSearchReferral (Builder $query, $search)
     {
@@ -185,6 +198,14 @@ trait AssignmentScope {
                 $q->where('phone', 'like', '%' . $search . '%');
             });
     }
+	
+	public function scopeSearchStatus (Builder $query, $search)
+	{
+		return $query
+			->whereHas('status', function (Builder $q) use ($search) {
+				$q->where('name', 'like', '%' . $search . '%');
+			});
+	}
 
     public function scopeDateSchedulled (Builder $query, $date_from, $date_to, $tech_id = NULL, $job_type = NULL)
     {

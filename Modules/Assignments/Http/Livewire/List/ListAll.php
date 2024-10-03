@@ -7,6 +7,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentFinance;
+use Modules\Assignments\Repositories\AssignmentRepository;
 
 class ListAll extends Component
 {
@@ -31,17 +32,8 @@ class ListAll extends Component
     public function render()
     {
 
-        $searchAssignment = "%$this->searchAssignment%";
-        $list=Assignment::with(['scheduling','referral','carrier','status','event','phones','user_updated','user_created','job_types','invoices'])->whereLike('first_name',$searchAssignment)
-            ->whereLike('id',$searchAssignment)
-            ->whereLike('last_name',$searchAssignment)
-            ->whereLike('email',$searchAssignment)
-            ->whereLike('street',$searchAssignment)
-            ->whereLike('city',$searchAssignment)
-            ->whereLike('state',$searchAssignment)
-            ->whereLike('zipcode',$searchAssignment)
-            ->whereLike('claim_number',$searchAssignment)
-            ->orderBy('id', 'DESC');
+        $searchAssignment = $this->searchAssignment;
+        $list=AssignmentRepository::search($searchAssignment)->orderBy('id', 'DESC');
 
 
         $list = $list->paginate($this->selectedRows);
