@@ -125,6 +125,9 @@
 	@case('nadal_problem')
 	  @livewire('dashboard::list.nadal-problem', key('dash_list_nadal_problem'))
 	  @break
+	@case('crane_approved')
+	  @livewire('dashboard::list.nadal-problem', key('dash_list_crane_approved'))
+	  @break
 		@case('magic_message_sent')
 		@case('magic_docusign_sent')
 		@case('magic_ready_to_install')

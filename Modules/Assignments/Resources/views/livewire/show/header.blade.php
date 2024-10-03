@@ -275,6 +275,7 @@
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(43)"  type="button">TREE SIGNED</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusMissingAssignment(44)"  type="button">MISSING ASSIGNMENT</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(45)"  type="button">NADAL PROBLEM</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(46)"  type="button">CRANE APPROVED</button></li>
                                                 @endif
                                             </ul>
                                         </div>
