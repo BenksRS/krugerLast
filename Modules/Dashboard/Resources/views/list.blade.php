@@ -126,7 +126,7 @@
 	  @livewire('dashboard::list.nadal-problem', key('dash_list_nadal_problem'))
 	  @break
 	@case('crane_approved')
-	  @livewire('dashboard::list.nadal-problem', key('dash_list_crane_approved'))
+	  @livewire('dashboard::list.crane-approved', key('dash_list_crane_approved'))
 	  @break
 		@case('magic_message_sent')
 		@case('magic_docusign_sent')
