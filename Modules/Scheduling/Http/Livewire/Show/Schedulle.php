@@ -64,7 +64,7 @@
 		
 		public    $statusList;
 		
-		public    $checklist    = [1  => TRUE, 11 => TRUE, 12 => FALSE, 17 => TRUE, 28 => FALSE, 34 => TRUE, 35 => TRUE, 37 => FALSE, 38 => FALSE, 39 => FALSE, 40 => FALSE, 41 => FALSE, 43 => FALSE, 45 => TRUE, 46 => TRUE,];
+		public    $checklist    = [1  => TRUE, 11 => TRUE, 12 => FALSE, 17 => TRUE, 28 => FALSE, 34 => TRUE, 35 => TRUE, 37 => FALSE, 38 => FALSE, 39 => FALSE, 40 => FALSE, 41 => FALSE, 43 => FALSE, 45 => TRUE, 46 => TRUE, 47 => FALSE, 48 => false];
 		
 		public function mount ()
 		{
@@ -533,6 +533,18 @@
 			}
 		}
 		
+		public function checkJobTypeByTech($tech_id, $assignment)
+		{
+			$jobType = 18;
+			$techs = collect([124, 130, 140]);
+			
+			$jobTypes = $assignment->job_types();
+			
+			$techs->contains($tech_id)
+				? $jobTypes->syncWithoutDetaching($jobType)
+				: $jobTypes->detach($jobType);
+		}
+		
 		public function alacrityVisitPlanned ($id, $date)
 		{
 			
@@ -630,6 +642,9 @@
 									];
 									AssignmentsStatusPivot::create($AssignmentStatus);
 									
+									// add job type by tech
+									$this->checkJobTypeByTech($tech_id, $assignment);
+									
 									integration('assignments')->set($assignment_id);
 									
 									$this->alacrityVisitPlanned($assignment_id, $start_date);
@@ -664,6 +679,9 @@
 									'updated_by' => $this->user->id
 								];
 								$assignment->update($updateAssignment);
+								
+								// add job type by tech
+								$this->checkJobTypeByTech($tech_id, $assignment);
 								
 								integration('assignments')->set($assignment_id);
 								

@@ -3,7 +3,9 @@
 
     @foreach($jobTypes as $js)
 
-
+            @if(in_array($js->id, [18]) && !in_array(Auth::user()->id, [1, 2, 10]))
+              @continue
+            @endif
             @switch($js->id)
                 @case(16)
                 @case(17)
