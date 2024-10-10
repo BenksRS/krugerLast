@@ -87,7 +87,7 @@ class AlacrityController extends Controller
        if($deleteSession){
            $deleteSession->delete();
        }
-
+return;
         $alacrity=alacrity_service()->post('GetAssignmentSummaryList');
 
         $alacrity=collect($alacrity['AssignmentSummaryList']);
