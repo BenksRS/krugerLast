@@ -357,6 +357,8 @@ class HeaderScheduling extends Component
                 break;
 	          case 'clean_up_curbside':
 	          case 'clean_up_haul_away':
+	          case 'ready_to_install':
+	          case 'message_sent':
 		          $this->showSched = true;
 	            $this->showChangeTech = true;
 	            $this->showChangeSched = true;
