@@ -99,9 +99,9 @@
 				}
 			}
 			
-			if ($data['status']['new'] == 'uploading_pics' && $data['job_type'] == 'TREE 3RD') {
+/*			if ($data['status']['new'] == 'uploading_pics' && $data['job_type'] == 'TREE 3RD') {
 				$statusId = 48;
-			}
+			}*/
 			
 			return [
 				'status_id' => $statusId,
