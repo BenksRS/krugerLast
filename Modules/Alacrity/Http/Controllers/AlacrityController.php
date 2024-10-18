@@ -81,8 +81,7 @@ class AlacrityController extends Controller
     }
     public function getAll()
     {
-	    
-	    return;
+			
        $deleteSession = AlacritySession::first();
        if($deleteSession){
            $deleteSession->delete();
