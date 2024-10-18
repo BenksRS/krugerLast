@@ -150,9 +150,9 @@
 
                                         </td>
                                     @endif
-                                    @if(in_array('Street', $selectedColumns))
-                                        <td><p>{{$row->street}}</p></td>
-                                    @endif
+                                      @if(in_array('Address', $selectedColumns))
+                                        <td><p><a href="{{$row->address->link}}" target="{{$row->address->target}}" >{{$row->address->message}}</a></p></td>
+                                      @endif
                                     @if(in_array('Job Type', $selectedColumns))
                                         <td><p>
                                                 @foreach($row->job_types as $job)
@@ -188,10 +188,10 @@
                                                 </p></td>
 
                                         @endif
-                                    @if(in_array('Address', $selectedColumns))
-                                        <td><p><a href="{{$row->address->link}}" target="{{$row->address->target}}" >{{$row->address->message}}</a></p></td>
-                                    @endif
 
+                                    @if(in_array('Street', $selectedColumns))
+                                      <td><p>{{$row->street}}</p></td>
+                                    @endif
                                     @if(in_array('City', $selectedColumns))
                                         <td><p>{{$row->city}}</p></td>
                                     @endif
