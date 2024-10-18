@@ -46,6 +46,9 @@
                                 @if(in_array('Name', $selectedColumns))
                                     <th>Name</th>
                                 @endif
+                                @if(in_array('Address', $selectedColumns))
+                                  <th>Address</th>
+                                @endif
                                 @if(in_array('Job Type', $selectedColumns))
                                     <th width="120">Job Type</th>
                                 @endif
@@ -61,9 +64,6 @@
                                     @if(in_array('Referral', $selectedColumns))
                                         <th>Marketing</th>
                                     @endif
-                                @if(in_array('Address', $selectedColumns))
-                                    <th>Address</th>
-                                @endif
                                 @if(in_array('Street', $selectedColumns))
                                     <th>Street</th>
                                 @endif
@@ -150,6 +150,9 @@
 
                                         </td>
                                     @endif
+                                    @if(in_array('Street', $selectedColumns))
+                                        <td><p>{{$row->street}}</p></td>
+                                    @endif
                                     @if(in_array('Job Type', $selectedColumns))
                                         <td><p>
                                                 @foreach($row->job_types as $job)
@@ -188,9 +191,7 @@
                                     @if(in_array('Address', $selectedColumns))
                                         <td><p><a href="{{$row->address->link}}" target="{{$row->address->target}}" >{{$row->address->message}}</a></p></td>
                                     @endif
-                                    @if(in_array('Street', $selectedColumns))
-                                        <td><p>{{$row->street}}</p></td>
-                                    @endif
+
                                     @if(in_array('City', $selectedColumns))
                                         <td><p>{{$row->city}}</p></td>
                                     @endif
