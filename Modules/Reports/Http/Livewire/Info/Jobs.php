@@ -55,7 +55,7 @@ class Jobs extends Component
 
 
             $list =  $this->list;
-            $list= $list->sortBy('start_date')->sortBy('order_status');
+            $list= $list->sortBy('created_at')->sortBy('order_status');
 
             $items = $list->forPage($this->page, $this->selectedRows);
 
