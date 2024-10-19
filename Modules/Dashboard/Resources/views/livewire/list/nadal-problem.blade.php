@@ -66,7 +66,9 @@
                                     @if(in_array('Name', $selectedColumns))
                                         <th>Name</th>
                                     @endif
-                                    
+                                      @if(in_array('Address', $selectedColumns))
+                                        <th>Address</th>
+                                      @endif
                                     @if(in_array('Job Type', $selectedColumns))
                                         <th>Job Type</th>
                                     @endif
@@ -79,9 +81,7 @@
                                     @if(in_array('Referral', $selectedColumns))
                                         <th>Referral</th>
                                     @endif
-                                    @if(in_array('Address', $selectedColumns))
-                                        <th>Address</th>
-                                    @endif
+
                                     
                                     @if(in_array('Street', $selectedColumns))
                                         <th>Street</th>
@@ -139,7 +139,9 @@
                                             
                                             </td>
                                         @endif
-                                        
+                                          @if(in_array('Address', $selectedColumns))
+                                            <td><p><a href="{{$row->address->link}}" target="{{$row->address->target}}" >{{$row->address->message}}</a></p></td>
+                                          @endif
                                         @if(in_array('Job Type', $selectedColumns))
                                             <td><p>
                                                         <?php $count=0;?>
@@ -173,10 +175,7 @@
                                                 @endif
                                             </td>
                                         @endif
-                                        @if(in_array('Address', $selectedColumns))
-                                            <td><p><a href="{{$row->address->link}}" target="{{$row->address->target}}" >{{$row->address->message}}</a></p></td>
-                                        @endif
-                                        
+
                                         @if(in_array('Street', $selectedColumns))
                                             <td><p>{{$row->street}}</p></td>
                                         @endif
