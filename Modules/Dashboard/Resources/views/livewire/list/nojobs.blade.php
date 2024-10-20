@@ -68,7 +68,7 @@
                                 @endif
 
                                 @if(in_array('Job Type', $selectedColumns))
-                                    <th>Job Type</th>
+                                    <th width="120">Job Type</th>
                                 @endif
                                 @if(in_array('Schedule', $selectedColumns))
                                     <th>Schedule</th>
@@ -84,25 +84,31 @@
                                 @endif
 
                                 @if(in_array('Street', $selectedColumns))
-                                    <th>Street</th>
+                                    <th width="120">Street</th>
                                 @endif
                                 @if(in_array('City', $selectedColumns))
-                                    <th>City</th>
+                                    <th width="80">City</th>
                                 @endif
                                 @if(in_array('State', $selectedColumns))
                                     <th>State</th>
                                 @endif
                                 @if(in_array('Phone', $selectedColumns))
-                                    <th>Phone</th>
+                                    <th width="120">Phone</th>
                                 @endif
                                 {{--                            @if(in_array('Invoice', $selectedColumns))--}}
                                 {{--                                <th>Invoice</th>--}}
                                 {{--                            @endif--}}
+                                  @if(in_array('Claim Number', $selectedColumns))
+                                    <th width="120">C. Number</th>
+                                  @endif
+                                  @if(in_array('NoJob Info', $selectedColumns))
+                                    <th>NoJob Info</th>
+                                  @endif
                                 @if(in_array('Created by', $selectedColumns))
-                                    <th>Created by</th>
+                                    <th width="120">Created by</th>
                                 @endif
                                 @if(in_array('Created At', $selectedColumns))
-                                    <th>Created At</th>
+                                    <th width="120">Created At</th>
                                 @endif
                             </tr>
 
@@ -193,7 +199,12 @@
                                             @endforeach
                                         </td>
                                     @endif
-
+                                      @if(in_array('Claim Number', $selectedColumns))
+                                        <td><p>{{$row->claim_number}}</p></td>
+                                      @endif
+                                      @if(in_array('NoJob Info', $selectedColumns))
+                                        <td><p>{{$row->nojob_info->text ?? ''}}</p></td>
+                                      @endif
                                     @if(in_array('Created by', $selectedColumns))
                                         <td><p>{{$row->user_created->name}}</p></td>
                                     @endif
