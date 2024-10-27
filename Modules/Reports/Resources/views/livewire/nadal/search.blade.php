@@ -87,7 +87,7 @@
 				  @if(!empty($list['assignments']))
 					<tr>
 					  <td colspan="8">
-						<div class="table-responsive collapse accordion-collapse {{ $loop->first ? 'show' : '' }}"
+						<div class="table-responsive collapse accordion-collapse {{ $loop->first ? '' : '' }}"
 							 id="r{{ $key }}" data-bs-parent=".table-accordion">
 						  <table class="table table-bordered table-nowrap align-middle mb-0">
 							<thead>
