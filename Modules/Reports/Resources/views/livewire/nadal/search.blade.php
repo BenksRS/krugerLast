@@ -104,7 +104,9 @@
 							  @foreach($list['assignments']->sortByDesc('assignment_id') as $data)
 								<tr>
 								  <td class="text-center">{{ $data['id'] }}</td>
-								  <td class="text-center">{{ $data['assignment_id'] }}</td>
+								  <td class="text-center">
+									<a target="_blank" href="{{ route('assignments.show', $data['assignment_id']) }}">{{ $data['assignment_id'] }}</a>
+								  </td>
 								  <td>{{ $jobTypes->firstWhere('id', $data['job_type'])->name }} - ${{ $data['amount'] }}</td>
 								  <td class="text-center">
 									<span class="badge text-uppercase {{ $data['status'] }}" style="display: block; line-height: normal; padding: 7px">{{ $data['status'] }}</span>
