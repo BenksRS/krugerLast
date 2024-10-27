@@ -101,7 +101,7 @@
 							  </tr>
 							</thead>
 							<tbody>
-							  @foreach($list['assignments'] as $data)
+							  @foreach($list['assignments']->sortByDesc('assignment_id') as $data)
 								<tr>
 								  <td class="text-center">{{ $data['id'] }}</td>
 								  <td class="text-center">{{ $data['assignment_id'] }}</td>
