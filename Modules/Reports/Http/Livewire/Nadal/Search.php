@@ -32,7 +32,7 @@
 		
 		public function mount()
 		{
-			$this->status = ['pending' => 'Pending', 'available' => 'Available', 'paid' => 'Paid'];
+			$this->status   = ['pending' => 'Pending', 'available' => 'Available', 'paid' => 'Paid'];
 			$this->techs    = User::where('active', 'Y')->where('group_id', 2)->get();
 			$this->jobTypes = AssignmentsJobTypes::where('active', 'Y')->get();
 			$this->listData = [];
@@ -64,9 +64,12 @@
 		public function render()
 		{
 			
-			$employeeCommissions = CommissionsRepository::whereIn('assignment_id', [
-				44703, 44709, 44710, 44716, 44717, 44778, 44713
-			])->whereNotNull('job_type');
+			$employeeCommissions = CommissionsRepository::whereIn('status', ['pending', 'available'])
+			                                            ->whereDate('created_at', '>=', '2024-09-01')
+			                                            ->whereNotNull('job_type');
+			/*			->whereIn('assignment_id', [
+							44703, 44709, 44710, 44716, 44717, 44778, 44713
+						])*/
 			
 			$employeeCommissions = $employeeCommissions->get();
 			
