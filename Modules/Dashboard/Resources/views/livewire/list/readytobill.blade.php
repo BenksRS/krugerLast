@@ -94,6 +94,9 @@
                             @if(in_array('Phone', $selectedColumns))
                                 <th>Phone</th>
                             @endif
+                               @if(in_array('Claim Number', $selectedColumns))
+                                  <th width="120">C. Number</th>
+                               @endif
                             {{--                            @if(in_array('Invoice', $selectedColumns))--}}
                             {{--                                <th>Invoice</th>--}}
                             {{--                            @endif--}}
@@ -189,6 +192,9 @@
                                         @endforeach
                                     </td>
                                 @endif
+                                   @if(in_array('Claim Number', $selectedColumns))
+                                      <td><p>{{$row->claim_number}}</p></td>
+                                   @endif
                                 {{--                                @if(in_array('Invoice', $selectedColumns))--}}
                                 {{--                                    <td>--}}
                                 {{--                                        @foreach($row->invoices as $invoice)--}}
