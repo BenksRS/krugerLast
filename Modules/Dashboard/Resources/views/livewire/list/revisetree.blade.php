@@ -112,7 +112,7 @@
                             </thead>
                             <tbody>
                             @foreach($list as $row)
-                                @if($row->finance->invoices->tree_amount <= 0)
+                                {{--@if($row->finance->invoices->tree_amount <= 0)@endif--}}
 
                                 <tr>
                                     @if(in_array('Name', $selectedColumns))
@@ -232,7 +232,7 @@
                                         </td>
                                     @endif
                                 </tr>
-                                @endif
+
                             @endforeach
                             </tbody>
                         </table>

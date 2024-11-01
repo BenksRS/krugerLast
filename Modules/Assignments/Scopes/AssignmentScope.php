@@ -238,12 +238,12 @@ trait AssignmentScope {
                     $q->whereIn('worker_id', $tech_id);
                 }
             })
-/*            ->whereHas('job_types', function(Builder $q) use ($job_type) {
+           ->whereHas('job_types', function(Builder $q) use ($job_type) {
                 if ($job_type != NULL) {
                     $job_type = is_array($job_type) ? $job_type : [$job_type];
                     $q->whereIn('assignment_job_type_id', $job_type);
                 }
-            })*/
+            })
             ->whereHas('scheduling', function(Builder $q) use ($date_from, $date_to) {
                 $q->whereDate('start_date', '>=', $date_from)
                   ->whereDate('start_date', '<=', $date_to);

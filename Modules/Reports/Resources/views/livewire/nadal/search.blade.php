@@ -97,11 +97,12 @@
                                                 <th width="150px" class="text-center">Assignment ID</th>
                                                 <th width="150px" class="text-center">Technician</th>
                                                 <th>Text</th>
+                                                <th width="150px" class="text-end">Tree Amount</th>
                                                 <th width="150px" class="text-end">Commission</th>
                                              </tr>
                                           </thead>
                                           <tbody>
-                                             @foreach($list['assignments']->sortByDesc('commission') as $data)
+                                             @foreach($list['assignments']->sortBy('assignment_id') as $data)
                                                 <tr>
                                                    <td class="text-center">{{ $data['id'] }}</td>
                                                    <td class="text-center">
@@ -112,6 +113,7 @@
                               {{--                     <td class="text-center">
                                                       <span class="badge text-uppercase {{ $data['status'] }}" style="display: block; line-height: normal; padding: 7px">{{ $data['status'] }}</span>
                                                    </td>--}}
+                                                   <td class="text-end">${{ $data['tree_amount'] ?? 0 }}</td>
                                                    <td class="text-end">${{ $data['commission'] ?? 0 }}</td>
                      {{--                              <td class="text-center">{{ $data['due_month'] }}/{{ $data['due_year'] }}</td>--}}
                                                 </tr>

@@ -102,6 +102,7 @@ class Search extends Component
                         break;
                     case 'billed':
                         $this->list=AssignmentFinanceRepository::DateBilled($date_from,$date_to,$this->techSelected,$this->commissionsSelected)->get();
+                        $this->list = $this->list->where('status_id', 5);
                         if($this->techSelected){
                             $this->list=$this->list->where('scheduling.tech_id', $this->techSelected);
                         }

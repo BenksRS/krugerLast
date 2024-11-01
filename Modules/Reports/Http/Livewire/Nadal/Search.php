@@ -92,7 +92,7 @@ class Search extends Component {
                     default:
                         $comission = 0;
                         //echo "## $job_type->name  #  No Extra comission <br>";
-                        $text = "## $jobTypeName " ?? ''." - # No Extra comission";
+                        $text = "## $jobTypeName - # No Extra comission";
                     break;
                 }
 
@@ -105,6 +105,7 @@ class Search extends Component {
                     'amount'        => $rule->amount,
                     'job_type'      => $rule->job_type,
                     'text'          => $text,
+                    'tree_amount'   => number_format($total_tree, 2, '.', ','),
                     'commission'    => number_format($comission, 2, '.', ',')
                 ];
 
