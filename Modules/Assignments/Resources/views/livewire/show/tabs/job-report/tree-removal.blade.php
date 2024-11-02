@@ -487,8 +487,8 @@
                                 @endif
                             </tr>
                             <tr>
-                                <th scope="row">Did we use wood chipper?</th>
-                                <td>{{($this->wood_chipper  == 'Y') ? 'Yes' : 'No'}}</td>
+                                <th scope="row" class="d-none">Did we use wood chipper?</th>
+                                <td class="d-none">{{($this->wood_chipper  == 'Y') ? 'Yes' : 'No'}}</td>
                                 <th scope="row" >Did we use Crane? :</th>
                                 <td colspan="4">{{($this->crane  == 'Y') ? 'Yes' : 'No'}}</td>
                                </tr>
