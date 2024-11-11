@@ -81,6 +81,14 @@ class Search extends Component {
 
                 $jobTypeName = $job_type->name ?? '';
 
+                $amounts = [
+                    'total_job'        => $total_job,
+                    'total_tree'       => 0,
+                    'total_tarp'       => 0,
+                    'total_commission' => 0,
+                    'description'      => ''
+                ];
+
                 switch ($job_type->id ?? NULL) {
                     case '1':
                     case '2':
@@ -89,13 +97,18 @@ class Search extends Component {
                         $tc        = number_format($comission, 2);
                         //echo "## $job_type->name  #  Total Tarp: $$tp  # comission 1%: $$tc <br>";
                         $text = "## $jobTypeName - # Total Tarp: <b>$$tp</b> - # comission 1%: <b>$$tc</b>";
+
+                        $amounts['total_tarp'] = $tp;
                     break;
                     case '11':
                         $comission = $total_tree * 0.01;
                         $tt        = number_format($total_tree, 2);
                         $tc        = number_format($comission, 2);
+
                         //echo "## $job_type->name  #  Total Tree: $$tt  # comission 1%: $$tc <br>";
                         $text = "## $jobTypeName - # Total Tree: <b>$$tt</b> - # comission 1%: <b>$$tc</b>";
+
+                        $amounts['total_tree'] = $tt;
                     break;
                     default:
                         $comission = 0;
@@ -104,6 +117,9 @@ class Search extends Component {
                     break;
                 }
 
+                $amounts['total_commission'] = $comission;
+                $amounts['description']      = $text;
+
                 $comissionsTechs[$rule->id] = [
                     'id'            => $rule->id,
                     'user_id'       => $user->id,
@@ -111,11 +127,13 @@ class Search extends Component {
                     'assignment_id' => $rule->assignment_id,
                     'status'        => $rule->status,
                     'amount'        => $rule->amount,
+                    'amounts'       => $amounts,
                     'job_type'      => $rule->job_type,
                     'text'          => $text,
                     'address'       => $job->address,
                     'rule_name'     => $rule->rule->name,
-                    'tree_amount'   => number_format($total_tree, 2, '.', ','),
+                    'tree_amount'   => (int) $total_tree ?? 0,
+                    'tarp_amount'   => (int) $total_tarp ?? 0,
                     'commission'    => number_format($comission, 2, '.', ',')
                 ];
 
@@ -141,9 +159,16 @@ class Search extends Component {
             $item    = collect($item);
             $collect = collect();
 
+            $total_tree = $item->sum('tree_amount');
+            $total_tarp = $item->sum('tarp_amount');
+            $total_bill = ($total_tree + $total_tarp);
+
             $commissions                     = $item->groupBy('status')->map(fn ($item, $key) => $item->sum('amount'));
             $commissions['total']            = number_format($commissions->sum(), 2, '.', ',');
             $commissions['total_commission'] = number_format($item->sum('commission'), 2, '.', ',');
+            $commissions['total_tree']       = number_format($total_tree, 2, '.', ',');
+            $commissions['total_tarp']       = number_format($total_tarp, 2, '.', ',');
+            $commissions['total_bill']       = number_format($total_bill, 2, '.', ',');
 
             $collect['tech']        = $this->commissionsTechs->firstWhere('id', $key);
             $collect['commissions'] = $commissions;

@@ -100,6 +100,9 @@
                            <th scope="col" width="100px" class="text-center">ID</th>
                            <th scope="col">Technician</th>
                            <th scope="col" width="150px" class="text-center">Total Jobs</th>
+                           <th scope="col" width="200px" class="text-end">Total Bill</th>
+                           <th scope="col" width="200px" class="text-end">Total Tree</th>
+                           <th scope="col" width="200px" class="text-end">Total Tarp</th>
                            <th scope="col" width="200px" class="text-end">Total Commissions</th>
                         </tr>
                      </thead>
@@ -112,6 +115,16 @@
                               <td class="text-center"><p class="mb-0">{{ $key }}</p></td>
                               <td><p class="mb-0">{{ $list['tech']['name'] ?? '' }}</p></td>
                               <td class="text-center"><p class="mb-0">{{ $list['assignments']->count() ?? 0 }}</p></td>
+                              <td class="text-end">
+                                 <p class="mb-0">${{ $list['commissions']['total_bill'] ?? 0 }}</p>
+                              </td>
+                              <td class="text-end">
+                                 <p class="mb-0">${{ $list['commissions']['total_tree'] ?? 0 }}</p>
+                              </td>
+                              <td class="text-end">
+                                 <p class="mb-0">${{ $list['commissions']['total_tarp'] ?? 0 }}</p>
+                              </td>
+
                               <td class="text-end">
                                  <p class="mb-0">${{ $filters['commission'] == 'percentage' ? $list['commissions']['total_commission'] : $list['commissions']['total'] ?? 0 }}</p>
                               </td>
@@ -129,6 +142,7 @@
                                                 <th>Description</th>
                                                 <th width="150px" class="text-center">Status</th>
                                                 <th width="150px" class="text-end">Tree Amount</th>
+                                                <th width="150px" class="text-end">Tarp Amount</th>
                                                 <th width="150px" class="text-end">Commission</th>
                                              </tr>
                                           </thead>
@@ -141,11 +155,12 @@
                                                    <td>
                                                       <a href="{{$data['address']->link}}" target="{{$data['address']->target}}">{{$data['address']->message}}</a>
                                                    </td>
-                                                   <td>{{ $data['rule_name'] }}</td>
+                                                   <td>{!! $data['amounts']['description'] !!}</td>
                                                    <td class="text-center">
                                                       <span class="badge text-uppercase {{ $data['status'] }}" style="display: block; line-height: normal; padding: 7px">{{ $data['status'] }}</span>
                                                    </td>
-                                                   <td class="text-end">${{ $data['tree_amount'] ?? 0 }}</td>
+                                                   <td class="text-end">${{ $data['amounts']['total_tree'] ?? 0 }}</td>
+                                                   <td class="text-end">${{ $data['amounts']['total_tarp'] ?? 0 }}</td>
                                                    <td class="text-end">${{ $filters['commission'] == 'percentage' ? $data['commission'] : $data['amount'] ?? 0 }}</td>
                                                    {{--                              <td class="text-center">{{ $data['due_month'] }}/{{ $data['due_year'] }}</td>--}}
                                                 </tr>
@@ -175,9 +190,9 @@
            display: block;
        }
 
-       select.form-control {
+ /*      select.form-control {
            appearance: auto;
-       }
+       }*/
    </style>
 @endpush
 @push('js')
