@@ -122,7 +122,7 @@
                                  <p class="mb-0">${{ $list['commissions']['total_tree'] ?? 0 }}</p>
                               </td>
                               <td class="text-end">
-                                 <p class="mb-0">${{ $list['commissions']['total_tarp'] ?? 0 }}</p>
+                                 <p class="mb-0">${{ $list['commissions']['total_tarp'] ?? 0 }} </p>
                               </td>
 
                               <td class="text-end">

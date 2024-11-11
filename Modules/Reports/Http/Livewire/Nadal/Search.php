@@ -173,7 +173,7 @@ class Search extends Component {
 
     protected function toCollection($data)
     {
-
+ 
         if (empty($data)) {
             return [];
         }
