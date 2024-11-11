@@ -89,6 +89,9 @@ class Search extends Component {
                     'description'      => ''
                 ];
 
+                $tarp_done = 0;
+                $tree_done = 0;
+
                 switch ($job_type->id ?? NULL) {
                     case '1':
                     case '2':
@@ -99,6 +102,7 @@ class Search extends Component {
                         $text = "## $jobTypeName - # Total Tarp: <b>$$tp</b> - # comission 1%: <b>$$tc</b>";
 
                         $amounts['total_tarp'] = $tp;
+                        $tarp_done             = $total_tarp;
                     break;
                     case '11':
                         $comission = $total_tree * 0.01;
@@ -109,6 +113,7 @@ class Search extends Component {
                         $text = "## $jobTypeName - # Total Tree: <b>$$tt</b> - # comission 1%: <b>$$tc</b>";
 
                         $amounts['total_tree'] = $tt;
+                        $tree_done             = $total_tree;
                     break;
                     default:
                         $comission = 0;
@@ -132,8 +137,8 @@ class Search extends Component {
                     'text'          => $text,
                     'address'       => $job->address,
                     'rule_name'     => $rule->rule->name,
-                    'tree_amount'   => (int) $total_tree ?? 0,
-                    'tarp_amount'   => (int) $total_tarp ?? 0,
+                    'tree_amount'   => (int) $tree_done,
+                    'tarp_amount'   => (int) $tarp_done,
                     'commission'    => number_format($comission, 2, '.', ',')
                 ];
 
