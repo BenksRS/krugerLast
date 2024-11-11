@@ -19,7 +19,9 @@ class Search extends Component {
 
     public    $loading  = FALSE;
 
-    public    $filters;
+    public    $filters  = [
+        'commission' => 'percentage'
+    ];
 
     protected $listData = [];
 
@@ -47,7 +49,10 @@ class Search extends Component {
 
         $total_commission = 0;
 
-        $assignmnet = AssignmentFinanceRepository::without(['referral','carrier','status','status_collection','event','phones','user_updated','user_created','job_types','tags', 'workers'])
+        $assignmnet = AssignmentFinanceRepository::without([
+            'referral', 'carrier', 'status', 'status_collection', 'event', 'phones', 'user_updated', 'user_created',
+            'job_types', 'tags', 'workers'
+        ])
                                                  ->DateSchedulledWorker($startDate, $endDate, $id, $jobTypes)
                                                  ->whereIn('status_id', [5, 6, 10, 24, 9])
                                                  ->get();
@@ -57,6 +62,9 @@ class Search extends Component {
         foreach ($assignmnet as $job) {
 
             $rules = $job->commissions->whereIn('user_id', $id);
+            if ($filters['commission'] == 'amount') {
+                $rules = $rules->whereIn('status', ['pending', 'available']);
+            }
 
             /*            echo "<br>## $job->id<br>";*/
             /*     if (!$rules->count()) {
@@ -105,6 +113,7 @@ class Search extends Component {
                     'amount'        => $rule->amount,
                     'job_type'      => $rule->job_type,
                     'text'          => $text,
+                    'address'       => $job->address,
                     'tree_amount'   => number_format($total_tree, 2, '.', ','),
                     'commission'    => number_format($comission, 2, '.', ',')
                 ];
@@ -132,7 +141,7 @@ class Search extends Component {
             $collect = collect();
 
             $commissions                     = $item->groupBy('status')->map(fn ($item, $key) => $item->sum('amount'));
-            $commissions['total']            = $commissions->sum();
+            $commissions['total']            = number_format($commissions->sum(), 2, '.', ',');
             $commissions['total_commission'] = number_format($item->sum('commission'), 2, '.', ',');
 
             $collect['tech']        = $this->commissionsTechs->firstWhere('id', $key);
