@@ -84,12 +84,8 @@ class Search extends Component {
 
                     $ruleType  = $rulesJobTypes[$rule->rule->type];
                     $jobTypeId = $jobTypeId ?? $ruleType;
-
-
                 }
-             /*   dump($jobTypeId, $rule->rule);*/
-
-
+                /*   dump($jobTypeId, $rule->rule);*/
 
                 $job_type = $this->jobTypes->find($jobTypeId);
                 $user     = $this->commissionsTechs->find($rule->user_id);
@@ -108,8 +104,9 @@ class Search extends Component {
                     'description'      => ''
                 ];
 
-                $tarp_done = 0;
-                $tree_done = 0;
+                $tarpDone     = 0;
+                $treeDone     = 0;
+                $comissionType = 'B';
 
                 // A tree 11
                 // N tarp 1, 2
@@ -124,7 +121,8 @@ class Search extends Component {
                         $text = "## $jobTypeName - # Total Tarp: <b>$$tp</b> - # comission 1%: <b>$$tc</b>";
 
                         $amounts['total_tarp'] = $tp;
-                        $tarp_done             = $total_tarp;
+                        $tarpDone             = $total_tarp;
+                        $comissionType         = 'N';
                     break;
                     case '11':
                         $comission = $total_tree * 0.01;
@@ -135,7 +133,8 @@ class Search extends Component {
                         $text = "## $jobTypeName - # Total Tree: <b>$$tt</b> - # comission 1%: <b>$$tc</b>";
 
                         $amounts['total_tree'] = $tt;
-                        $tree_done             = $total_tree;
+                        $treeDone             = $total_tree;
+                        $comissionType         = 'A';
                     break;
                     default:
                         $comission = 0;
@@ -150,20 +149,21 @@ class Search extends Component {
                 $description = $filters['commission'] == 'amount' ? $rule->rule->name : $text;
 
                 $comissionsTechs[$rule->id] = [
-                    'id'            => $rule->id,
-                    'user_id'       => $user->id,
-                    'user_name'     => $user->name,
-                    'assignment_id' => $rule->assignment_id,
-                    'status'        => $rule->status,
-                    'amount'        => $rule->amount,
-                    'amounts'       => $amounts,
-                    'job_type'      => $rule->job_type,
-                    'description'   => $description,
-                    'address'       => $job->address,
-                    'rule_name'     => $rule->rule->name,
-                    'tree_amount'   => (int) $tree_done,
-                    'tarp_amount'   => (int) $tarp_done,
-                    'commission'    => number_format($comission, 2, '.', ',')
+                    'id'             => $rule->id,
+                    'user_id'        => $user->id,
+                    'user_name'      => $user->name,
+                    'assignment_id'  => $rule->assignment_id,
+                    'status'         => $rule->status,
+                    'amount'         => $rule->amount,
+                    'amounts'        => $amounts,
+                    'job_type'       => $rule->job_type,
+                    'description'    => $description,
+                    'address'        => $job->address,
+                    'rule_name'      => $rule->rule->name,
+                    'comission_type' => $comissionType,
+                    'tree_amount'    => (int) $treeDone,
+                    'tarp_amount'    => (int) $tarpDone,
+                    'commission'     => number_format($comission, 2, '.', ',')
                 ];
 
                 $total_commission = $total_commission + $comission;
@@ -192,12 +192,15 @@ class Search extends Component {
             $total_tarp = $item->sum('tarp_amount');
             $total_bill = ($total_tree + $total_tarp);
 
+            $countType = $item->groupBy('comission_type')->map->count();
+
             $commissions                     = $item->groupBy('status')->map(fn ($item, $key) => $item->sum('amount'));
             $commissions['total']            = number_format($commissions->sum(), 2, '.', ',');
             $commissions['total_commission'] = number_format($item->sum('commission'), 2, '.', ',');
             $commissions['total_tree']       = number_format($total_tree, 2, '.', ',');
             $commissions['total_tarp']       = number_format($total_tarp, 2, '.', ',');
             $commissions['total_bill']       = number_format($total_bill, 2, '.', ',');
+            $commissions['total_count']      = $countType;
 
             $collect['tech']        = $this->commissionsTechs->firstWhere('id', $key);
             $collect['commissions'] = $commissions;
