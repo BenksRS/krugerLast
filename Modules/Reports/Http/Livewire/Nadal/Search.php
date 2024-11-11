@@ -67,9 +67,9 @@ class Search extends Component {
         foreach ($assignmnet as $job) {
 
             $rules = $job->commissions->whereIn('user_id', $id);
-            if ($filters['commission'] == 'amount') {
+    /*        if ($filters['commission'] == 'amount') {
                 $rules = $rules->whereIn('status', ['pending', 'available']);
-            }
+            }*/
 
             /*            echo "<br>## $job->id<br>";*/
             /*     if (!$rules->count()) {
