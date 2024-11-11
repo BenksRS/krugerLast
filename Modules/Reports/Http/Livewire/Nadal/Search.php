@@ -59,6 +59,11 @@ class Search extends Component {
 
         $comissionsTechs = [];
 
+        $rulesJobTypes = [
+            'A' => 11,
+            'N' => 1
+        ];
+
         foreach ($assignmnet as $job) {
 
             $rules = $job->commissions->whereIn('user_id', $id);
@@ -72,7 +77,16 @@ class Search extends Component {
                  }*/
 
             foreach ($rules as $rule) {
-                $job_type = $this->jobTypes->find($rule->job_type);
+
+                $jobTypeId = $rule->job_type;
+
+                if ($filters['commission'] == 'amount' && in_array($rule->rule->type, $rulesJobTypes)) {
+
+                    $ruleType  = $rulesJobTypes[$rule->rule->type];
+                    $jobTypeId = $jobTypeId ?? $ruleType;
+                }
+
+                $job_type = $this->jobTypes->find($jobTypeId);
                 $user     = $this->commissionsTechs->find($rule->user_id);
 
                 $total_job  = $job->finance->invoices->total;
@@ -91,6 +105,9 @@ class Search extends Component {
 
                 $tarp_done = 0;
                 $tree_done = 0;
+
+                // A tree 11
+                // N tarp 1, 2
 
                 switch ($job_type->id ?? NULL) {
                     case '1':
@@ -125,6 +142,8 @@ class Search extends Component {
                 $amounts['total_commission'] = $comission;
                 $amounts['description']      = $text;
 
+                $description = $filters['commission'] == 'amount' ? $rule->rule->name : $text;
+
                 $comissionsTechs[$rule->id] = [
                     'id'            => $rule->id,
                     'user_id'       => $user->id,
@@ -134,7 +153,7 @@ class Search extends Component {
                     'amount'        => $rule->amount,
                     'amounts'       => $amounts,
                     'job_type'      => $rule->job_type,
-                    'text'          => $text,
+                    'description'   => $description,
                     'address'       => $job->address,
                     'rule_name'     => $rule->rule->name,
                     'tree_amount'   => (int) $tree_done,

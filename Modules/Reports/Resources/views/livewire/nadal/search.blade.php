@@ -155,7 +155,7 @@
                                                    <td>
                                                       <a href="{{$data['address']->link}}" target="{{$data['address']->target}}">{{$data['address']->message}}</a>
                                                    </td>
-                                                   <td>{!! $data['amounts']['description'] !!}</td>
+                                                   <td class="text-uppercase">{!! $data['description'] !!}</td>
                                                    <td class="text-center">
                                                       <span class="badge text-uppercase {{ $data['status'] }}" style="display: block; line-height: normal; padding: 7px">{{ $data['status'] }}</span>
                                                    </td>
