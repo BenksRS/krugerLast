@@ -126,6 +126,7 @@
                                              <tr style="background-color:#f9f9f9;">
                                                 <th width="150px" class="text-center">Assignment ID</th>
                                                 <th>Address</th>
+                                                <th>Description</th>
                                                 <th width="150px" class="text-center">Status</th>
                                                 <th width="150px" class="text-end">Tree Amount</th>
                                                 <th width="150px" class="text-end">Commission</th>
@@ -140,6 +141,7 @@
                                                    <td>
                                                       <a href="{{$data['address']->link}}" target="{{$data['address']->target}}">{{$data['address']->message}}</a>
                                                    </td>
+                                                   <td>{{ $data['rule_name'] }}</td>
                                                    <td class="text-center">
                                                       <span class="badge text-uppercase {{ $data['status'] }}" style="display: block; line-height: normal; padding: 7px">{{ $data['status'] }}</span>
                                                    </td>

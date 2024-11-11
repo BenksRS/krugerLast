@@ -114,6 +114,7 @@ class Search extends Component {
                     'job_type'      => $rule->job_type,
                     'text'          => $text,
                     'address'       => $job->address,
+                    'rule_name'     => $rule->rule->name,
                     'tree_amount'   => number_format($total_tree, 2, '.', ','),
                     'commission'    => number_format($comission, 2, '.', ',')
                 ];
