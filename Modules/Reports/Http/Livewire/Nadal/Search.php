@@ -80,11 +80,16 @@ class Search extends Component {
 
                 $jobTypeId = $rule->job_type;
 
-                if ($filters['commission'] == 'amount' && in_array($rule->rule->type, $rulesJobTypes)) {
+                if ($filters['commission'] == 'amount' && in_array($rule->rule->type, ['N', 'A'])) {
 
                     $ruleType  = $rulesJobTypes[$rule->rule->type];
                     $jobTypeId = $jobTypeId ?? $ruleType;
+
+
                 }
+             /*   dump($jobTypeId, $rule->rule);*/
+
+
 
                 $job_type = $this->jobTypes->find($jobTypeId);
                 $user     = $this->commissionsTechs->find($rule->user_id);
@@ -173,7 +178,7 @@ class Search extends Component {
 
     protected function toCollection($data)
     {
- 
+
         if (empty($data)) {
             return [];
         }
