@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\User\Entities\User;
 
-class JobReport extends Model
-{
+class JobReport extends Model {
+
     use HasFactory;
-    protected $table = 'job_report';
+
+    protected $table    = 'job_report';
+
     protected $fillable = [
         'assignment_id',
         'assignment_job_type_id',
@@ -41,27 +43,42 @@ class JobReport extends Model
         'created_by',
         'updated_by'
     ];
+
     protected $appends  = [
         'service_date_view'
     ];
-//    public function workers ()
-//    {
-//        return $this->belongsToMany(User::class, 'job_report_workers', 'job_report_id', 'worker_id', 'id');
-//    }
-//    public function reports ()
-//    {
-//        return $this->belongsToMany(JobReportOptions::class, 'job_report_reports', 'job_report_id', 'report_option_id', 'id');
-//    }
-    public function getServiceDateViewAttribute (){
+
+    //    public function workers ()
+    //    {
+    //        return $this->belongsToMany(User::class, 'job_report_workers', 'job_report_id', 'worker_id', 'id');
+    //    }
+    //    public function reports ()
+    //    {
+    //        return $this->belongsToMany(JobReportOptions::class, 'job_report_reports', 'job_report_id', 'report_option_id', 'id');
+    //    }
+    public function getServiceDateViewAttribute()
+    {
 
         $return = "-";
-        if($this->service_date){
+        if ($this->service_date) {
             $return = Carbon::createFromFormat('Y-m-d H:i:s', $this->service_date)->format('m/d/Y');
         }
+
         return $return;
     }
+
+    public function setCraneAmountAttribute($value)
+    {
+        if (!empty($value)) {
+            // Remove caracteres indesejados (como vírgulas) e atribui o valor formatado
+            $cleanValue = preg_replace('/[^0-9.]+/', '', $value);
+            $this->attributes['crane_amount'] = $cleanValue;
+        }
+    }
+
     protected static function newFactory()
     {
         return \Modules\Assignments\Database\factories\JobReportFactory::new();
     }
+
 }

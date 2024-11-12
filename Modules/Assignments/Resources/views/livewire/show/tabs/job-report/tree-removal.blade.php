@@ -238,7 +238,7 @@
                      <div class="col-md-3">
                         <div class="mb-3 mt-4">
                            <label for="formrow-crane_amount-input" class="form-label">Crane Amount</label>
-                           <input type="text" class="form-control" id="formrow-crane_amount-input" name="crane_amount" wire:model="crane_amount">
+                           <input type="text" class="form-control" id="formrow-crane_amount-input" name="crane_amount" placeholder="$0.00" wire:model.debounce.1000ms="crane_amount">
                         </div>
                      </div>
                   @endif
@@ -477,8 +477,8 @@
                            <td>{{($this->crane  == 'Y') ? 'Yes' : 'No'}}</td>
 
                            @if($this->crane == 'Y')
-                              <th scope="row">Crane amount</th>
-                              <td colspan="5">{{ $this->crane_amount}}</td>
+                              <th scope="row">Crane Amount</th>
+                              <td colspan="5">${{ $this->crane_amount ?? '0.00' }}</td>
                            @else
                               <td colspan="5">
                            @endif
