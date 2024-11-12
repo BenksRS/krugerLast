@@ -25,7 +25,7 @@ class JobReport extends Model
         'loads',
         'wood_chipper',
         'crane',
-        'crane_info',
+        'crane_amount',
         'bobcat_use',
         'bobcat_type',
         'bobcat_hour',
