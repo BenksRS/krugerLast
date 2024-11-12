@@ -58,6 +58,7 @@ class TreeRemoval extends Component
     public $loads;
     public $wood_chipper;
     public $crane;
+    public $crane_info;
     public $bobcat_use;
     public $mini_use;
     public $mini_type;
@@ -109,6 +110,7 @@ class TreeRemoval extends Component
             $this->debris = $this->jobReport->debris;
             $this->wood_chipper = $this->jobReport->wood_chipper;
             $this->crane = $this->jobReport->crane;
+            $this->crane_info = $this->jobReport->crane_info;
             $this->bobcat_use = $this->jobReport->bobcat_use;
             $this->mini_use = $this->jobReport->mini_use;
             $this->bobcat_type = $this->jobReport->bobcat_type;
@@ -230,6 +232,7 @@ class TreeRemoval extends Component
             'loads' =>$this->loads,
             'wood_chipper' =>$this->wood_chipper,
             'crane' =>$this->crane,
+            'crane_info' =>$this->crane_info,
             'bobcat_use' =>$this->bobcat_use,
             'mini_use' =>$this->mini_use,
             'bobcat_type' =>$this->bobcat_type,
