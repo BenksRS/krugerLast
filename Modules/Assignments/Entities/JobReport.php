@@ -69,7 +69,7 @@ class JobReport extends Model {
 
     public function setCraneAmountAttribute($value)
     {
-        if (!empty($value)) {
+        if ($value != null) {
             // Remove caracteres indesejados (como vírgulas) e atribui o valor formatado
             $cleanValue = preg_replace('/[^0-9.]+/', '', $value);
             $this->attributes['crane_amount'] = $cleanValue;
