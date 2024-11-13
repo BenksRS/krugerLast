@@ -4,6 +4,7 @@ namespace Modules\Reports\Http\Livewire\Nadal;
 
 use Livewire\Component;
 use Modules\Assignments\Entities\AssignmentsJobTypes;
+use Modules\Assignments\Entities\JobReport;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
 use Modules\Employees\Entities\EmployeeCommissions;
 use Modules\Employees\Repositories\CommissionsRepository;
@@ -50,12 +51,11 @@ class Search extends Component {
         $total_commission = 0;
 
         $assignmnet = AssignmentFinanceRepository::without([
-            'referral', 'carrier', 'status', 'status_collection', 'event', 'phones', 'user_updated', 'user_created',
-            'job_types', 'tags', 'workers'
-        ])
-                                                 ->DateSchedulledWorker($startDate, $endDate, $id, $jobTypes)
-                                                 ->whereIn('status_id', [5, 6, 10, 24, 9])
-                                                 ->get();
+            'referral', 'carrier', 'status', 'status_collection', 'event', 'phones', 'user_updated', 'user_created', 'tags', 'workers'
+        ])->with(['commissions.rule'])
+            ->DateSchedulledWorker($startDate, $endDate, $id, $jobTypes)
+            ->whereIn('status_id', [5, 6, 10, 24, 9])
+            ->get();
 
         $comissionsTechs = [];
 
@@ -67,9 +67,10 @@ class Search extends Component {
         foreach ($assignmnet as $job) {
 
             $rules = $job->commissions->whereIn('user_id', $id);
-    /*        if ($filters['commission'] == 'amount') {
-                $rules = $rules->whereIn('status', ['pending', 'available']);
-            }*/
+            $jobReports = JobReport::where('assignment_id', $job->id)->get();
+            /*        if ($filters['commission'] == 'amount') {
+                        $rules = $rules->whereIn('status', ['pending', 'available']);
+                    }*/
 
             /*            echo "<br>## $job->id<br>";*/
             /*     if (!$rules->count()) {
@@ -86,6 +87,9 @@ class Search extends Component {
                     $jobTypeId = $jobTypeId ?? $ruleType;
                 }
                 /*   dump($jobTypeId, $rule->rule);*/
+
+
+
 
                 $job_type = $this->jobTypes->find($jobTypeId);
                 $user     = $this->commissionsTechs->find($rule->user_id);
@@ -104,12 +108,15 @@ class Search extends Component {
                     'description'      => ''
                 ];
 
-                $tarpDone     = 0;
-                $treeDone     = 0;
+                $tarpDone      = 0;
+                $treeDone      = 0;
                 $comissionType = 'B';
 
                 // A tree 11
                 // N tarp 1, 2
+                if($jobTypeId){
+                     $jobReport = $jobReports->where('assignment_job_type_id', $jobTypeId)->first();
+                }
 
                 switch ($job_type->id ?? NULL) {
                     case '1':
@@ -121,7 +128,7 @@ class Search extends Component {
                         $text = "## $jobTypeName - # Total Tarp: <b>$$tp</b> - # comission 1%: <b>$$tc</b>";
 
                         $amounts['total_tarp'] = $tp;
-                        $tarpDone             = $total_tarp;
+                        $tarpDone              = $total_tarp;
                         $comissionType         = 'N';
                     break;
                     case '11':
@@ -133,7 +140,7 @@ class Search extends Component {
                         $text = "## $jobTypeName - # Total Tree: <b>$$tt</b> - # comission 1%: <b>$$tc</b>";
 
                         $amounts['total_tree'] = $tt;
-                        $treeDone             = $total_tree;
+                        $treeDone              = $total_tree;
                         $comissionType         = 'A';
                     break;
                     default:
@@ -163,6 +170,8 @@ class Search extends Component {
                     'comission_type' => $comissionType,
                     'tree_amount'    => (int) $treeDone,
                     'tarp_amount'    => (int) $tarpDone,
+                    'crane'          => $jobReport->crane ?? 'N',
+                    'crane_amount'   => number_format($jobReport->crane_amount ?? 0,2, '.', ','),
                     'commission'     => number_format($comission, 2, '.', ',')
                 ];
 
@@ -212,11 +221,12 @@ class Search extends Component {
         return $collection;
     }
 
+
     protected function getCommissions()
     {
         $employeeCommissions = CommissionsRepository::whereIn('status', ['pending', 'available'])
-                                                    ->whereDate('created_at', '>=', '2024-01-01')
-                                                    ->whereNotNull('job_type');
+            ->whereDate('created_at', '>=', '2024-01-01')
+            ->whereNotNull('job_type');
         /*			->whereIn('assignment_id', [
                         44703, 44709, 44710, 44716, 44717, 44778, 44713
                     ])*/

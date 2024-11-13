@@ -136,12 +136,12 @@ class TreeRemoval extends Component
     }
     public function updated($field)
     {
- /*       $arrayAmount = array('crane_amount');
+      $arrayAmount = array('crane_amount');
 
         if (in_array($field, $arrayAmount))
         {
             $this->{$field} = ($this->{$field} != '') ? number_format(preg_replace('/[^0-9.]+/', '', $this->{$field}), 2) : '';
-        }*/
+        }
 
         if ($field == 'service_date')
         {

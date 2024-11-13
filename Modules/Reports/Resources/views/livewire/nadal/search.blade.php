@@ -140,7 +140,8 @@
                                                 <th width="150px" class="text-center">Assignment ID</th>
                                                 <th>Address</th>
                                                 <th>Description</th>
-                                                <th width="150px" class="text-center">Status</th>
+                                                <th width="50px" class="text-center">Crane</th>
+                                                <th width="150px" class="text-end">Crane Amount</th>
                                                 <th width="150px" class="text-end">Tree Amount</th>
                                                 <th width="150px" class="text-end">Tarp Amount</th>
                                                 <th width="150px" class="text-end">Commission</th>
@@ -153,12 +154,11 @@
                                                       <a target="_blank" href="{{ route('assignments.show', $data['assignment_id']) }}">#{{ $data['assignment_id'] }}</a>
                                                    </td>
                                                    <td>
-                                                      <a href="{{$data['address']->link}}" target="{{$data['address']->target}}">{{$data['address']->message}}</a>
+                                                      {{$data['address']->message}}
                                                    </td>
                                                    <td class="text-uppercase">{!! $data['description'] !!}</td>
-                                                   <td class="text-center">
-                                                      <span class="badge text-uppercase {{ $data['status'] }}" style="display: block; line-height: normal; padding: 7px">{{ $data['status'] }}</span>
-                                                   </td>
+                                                   <td class="text-center">{{ $data['crane'] }}</td>
+                                                   <td class="text-end">${{ $data['crane_amount'] ?? 0 }}</td>
                                                    <td class="text-end">${{ $data['amounts']['total_tree'] ?? 0 }}</td>
                                                    <td class="text-end">${{ $data['amounts']['total_tarp'] ?? 0 }}</td>
                                                    <td class="text-end">${{ $filters['commission'] == 'percentage' ? $data['commission'] : $data['amount'] ?? 0 }}</td>
