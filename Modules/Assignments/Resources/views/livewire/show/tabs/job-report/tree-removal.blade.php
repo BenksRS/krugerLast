@@ -190,7 +190,7 @@
                   @endif
                   <div class="col-lg-12"><hr></div>
                </div>
-               <div class="row">
+{{--               <div class="row">
                   <div class="col-md-3">
                      <div class="mt-4">
                         <h5 class="font-size-14 mb-4">Did we use wood chipper?</h5>
@@ -212,7 +212,7 @@
 
                   </div>
                   <div class="col-lg-12"><hr></div>
-               </div>
+               </div>--}}
                <div class="row">
                   <div class="col-md-3">
                      <div class="mt-4">
@@ -225,7 +225,7 @@
                            <input class="form-check-input" type="radio" name="crane" wire:model="crane"
                                   id="formRadios6" value="Y"> <label class="form-check-label" for="formRadios6"> Yes </label>
                         </div>
-                        @error('wood_chipper')
+                        @error('crane')
                         <div class="invalid-feedback show">
                            Please select a valid option.
                         </div>

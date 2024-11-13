@@ -82,7 +82,7 @@ class TreeRemoval extends Component
     ];
     protected $rulesReport = [
         'debris' => 'required',
-        'wood_chipper' => 'required',
+/*        'wood_chipper' => 'required',*/
         'crane' => 'required',
         'bobcat_use' => 'required',
         'mini_use' => 'required',
