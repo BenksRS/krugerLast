@@ -19,56 +19,63 @@
                                 <div class="dropdown-menu dropdown-menu-md">
                                     <ul class="list-group">
                                         <li class="list-group-item">
-                                            <label>
-                                                <input type="radio" wire:model="selectedRows" value="10">
-                                                10</label>
+                                            <label> <input type="radio" wire:model="selectedRows" value="10">10</label>
                                         </li>
                                         <li class="list-group-item">
-                                            <label>
-                                                <input type="radio" wire:model="selectedRows" value="50">
-                                                50</label>
+                                            <label> <input type="radio" wire:model="selectedRows" value="50">50</label>
                                         </li>
                                         <li class="list-group-item">
-                                            <label>
-                                                <input type="radio" wire:model="selectedRows" value="100">
-                                                100</label>
+                                            <label> <input type="radio" wire:model="selectedRows" value="100">100</label>
                                         </li>
-
+                                        <li class="list-group-item">
+                                            <label> <input type="radio" wire:model="selectedRows" value="999999">ALL</label>
+                                        </li>
                                     </ul>
                                 </div>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Selected Columns <i class="mdi mdi-chevron-down"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-md">
-                                        <ul class="list-group">
-                                            @foreach($columns as $column)
-                                                <li class="list-group-item">
-                                                    <label>
-                                                        <input type="checkbox" wire:model="selectedColumns" value="{{$column}}">
-                                                        {{$column}}</label>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Selected Columns <i class="mdi mdi-chevron-down"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-md">
+                                    <ul class="list-group">
+                                        @foreach($columns as $column)
+                                            <li class="list-group-item">
+                                                <label> <input type="checkbox" wire:model="selectedColumns" value="{{$column}}">
+                                                    {{$column}}</label>
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Status <i class="mdi mdi-chevron-down"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-md">
-                                        <ul class="list-group">
-                                            @foreach($statusCollection as $sc)
-                                                <li class="list-group-item">
-                                                    <label>
-                                                        <input type="radio" wire:model="selectedStatus" value="{{$sc->id}}">
-                                                        {{$sc->name}}</label>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Sort BY<i class="mdi mdi-chevron-down"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-md">
+                                    <ul class="list-group">
+                                        @foreach($sortByColumns as $column => $label)
+                                            <li class="list-group-item">
+                                                <label><input type="radio" wire:model="sortBy" value="{{$column}}">{{$label}}</label>
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
-
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Status <i class="mdi mdi-chevron-down"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-md">
+                                    <ul class="list-group">
+                                        @foreach($statusCollection as $sc)
+                                            <li class="list-group-item">
+                                                <label> <input type="radio" wire:model="selectedStatus" value="{{$sc->id}}">
+                                                    {{$sc->name}}</label>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4 float-end " >

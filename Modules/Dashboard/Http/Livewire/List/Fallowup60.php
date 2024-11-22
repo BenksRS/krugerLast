@@ -22,7 +22,6 @@ class Fallowup60 extends Component
     public $selectedColumns = [];
     public $selectedRows = 100;
 
-    public $sortBy;
     public $selectedStatus;
     public $statusCollection;
 
@@ -41,6 +40,15 @@ class Fallowup60 extends Component
         'schema' => [],
         'search' => [],
     ];
+
+    public $sortByColumns   = [
+        'follow_up'         => 'Follow UP',
+        'days_from_billing' => 'Days From Billing',
+        'days_from_service' => 'Days From Service',
+        'state'             => 'State',
+    ];
+
+    public $sortBy = 'follow_up';
 
     public function mount ()
     {
@@ -116,7 +124,7 @@ class Fallowup60 extends Component
         $total_collection=$list->sum('finance.invoices.total');
         $this->total_collection = number_format($total_collection, 2);
 
-        $list=$list->sortBy('follow_up');
+        $list=$list->sortBy($this->sortBy);
 
         $items = $list->forPage($this->page, $this->selectedRows);
 
@@ -128,4 +136,3 @@ class Fallowup60 extends Component
     }
 
 }
-
