@@ -116,7 +116,8 @@ class Fallowup30 extends Component
         $list = AssignmentFinanceRepository::Collection($this->selectedStatus)->whereDate('follow_up', '<=',$today)->search($searchAssignment)->when($this->filters, function ( $query, $search ) {
             $search = array_filter($search);
             foreach ( $search as $key => $value ) {
-                $query->where($key, $value);
+                $value = is_array($value) ? $value : [$value];
+                $query->whereIn($key, $value);
             }
         })->get();
 
