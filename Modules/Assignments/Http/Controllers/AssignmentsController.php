@@ -350,7 +350,7 @@ class AssignmentsController extends Controller {
                 'claim_number' =>  $data->claim_number,
                 'job_type' =>  $job_types,
                 'dol' =>  $data->dol_date,
-                'date_sign' =>  $data->scheduling->schedule_date,
+                'date_sign' =>  $data->scheduling->schedule_date ?? '',
                 'day_sign' => Carbon::parse($data->scheduling->schedule_date)->format('d'),
                 'month_sign' => Carbon::parse($data->scheduling->schedule_date)->format('m'),
                 'year_sign' =>  Carbon::parse($data->scheduling->schedule_date)->format('Y'),
