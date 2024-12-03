@@ -339,6 +339,7 @@ class AssignmentsController extends Controller {
                                           }
 
 
+                                           $data_schd = $data->scheduling->schedule_date ?? '';
             $assignmentview = (object)[
                 'state' => $data->state,
                 'full_name' => "$data->last_name ,$data->first_name",
@@ -350,11 +351,11 @@ class AssignmentsController extends Controller {
                 'claim_number' =>  $data->claim_number,
                 'job_type' =>  $job_types,
                 'dol' =>  $data->dol_date,
-                'date_sign' =>  $data->scheduling->schedule_date ?? '',
-                'day_sign' => Carbon::parse($data->scheduling->schedule_date)->format('d'),
-                'month_sign' => Carbon::parse($data->scheduling->schedule_date)->format('m'),
-                'year_sign' =>  Carbon::parse($data->scheduling->schedule_date)->format('Y'),
-                'single_year_sign' =>  Carbon::parse($data->scheduling->schedule_date)->format('y'),
+                'date_sign' =>  $data_schd,
+                'day_sign' => Carbon::parse($data_schd)->format('d'),
+                'month_sign' => Carbon::parse($data_schd)->format('m'),
+                'year_sign' =>  Carbon::parse($data_schd)->format('Y'),
+                'single_year_sign' =>  Carbon::parse($data_schd)->format('y'),
 
             ];
 //            dd($assignmentview);
