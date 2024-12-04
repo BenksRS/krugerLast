@@ -225,8 +225,10 @@ class ReferralInfo extends Component
 	
 		protected function processCarrierTags ()
 		{
+/*			$carriersTags  = config('referrals.carriers_tags');
+			dd($carriersTags);*/
 			$tagId        = 39;
-			$referralIds  = [674];
+			$referralIds  = [24, 674, 72, 104];
 			$carrierIds   = [217, 496];
 			
 			$referral   = $this->assignment->referral_id ?? 0;
