@@ -70,14 +70,14 @@ trait AssignmentScope {
     }
 
     public function scopeCollection(Builder $query,
-        $status_collection = [2, 3, 4, 5, 6, 9, 11, 19, 21, 22, 23, 24, 25, 26, 27, 28, 29], $status = [5, 9, 10,])
+        $status_collection = [2, 3, 4, 5, 6, 9, 11, 19, 21, 22, 23, 24, 25, 26, 27, 28, 29], $status = [5, 9, 10, 24])
     {
         return $query
             ->whereIn('status_collection_id', collect($status_collection))->whereNotNull('id')
             ->whereIn('status_id', collect($status))->whereNotNull('id');
     }
 
-    public function scopeFollowup60(Builder $query, $status = [5, 9, 10,])
+    public function scopeFollowup60(Builder $query, $status = [5, 9, 10, 24])
     {
         return $query
             ->with('finance')
