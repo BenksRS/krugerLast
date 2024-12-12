@@ -175,6 +175,7 @@
                                 </select>
                             </div>
                         </div>
+                        @if($user->group_id == 1)
                         <div class="col-md-5 col-lg-2">
                             <div class="mb-3" >
                                 <label class="form-label">Marketing</label>
@@ -188,6 +189,7 @@
                                 </select>
                             </div>
                         </div>
+                        @endif
                         <div class="col-md-5 col-lg-2">
                             <div class="mb-3" >
                                 <label class="form-label">Events</label>
@@ -228,7 +230,7 @@
                             </div>
                         </div>
 
-                        @if($this->user->group_id == 1)
+                        @if($user->group_id == 1)
                         <div class="col-md-5 col-lg-2">
                             <div class="mb-3" >
                                 <label class="form-label">Commissions</label>
