@@ -179,7 +179,7 @@ if(count($pics_inside) > 0){
 
     <div class="card-header">
         <h4 class="mt-1 mb-1 text-black" style="font-size: 22px; position: fixed;left:10mm; top:0mm; z-index:  -1000;">
-            <strong> Inside pictures of the damaged area: ({{count($pics_inside)}}) Pics</strong>
+            <strong> Inside pictures of the area: ({{count($pics_inside)}}) Pics</strong>
         </h4>
     </div>
 
@@ -293,7 +293,7 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
 
     <div class="card-header">
         <h4 class="mt-1 mb-1 text-black" style="font-size: 22px; position: fixed;left:10mm; top:0mm; z-index:  -1000;">
-            <strong>Pictures of the Roof damaged area before installed: ({{count($pics_before)}}) Pics</strong>
+            <strong>Pictures of the Roof area before installed: ({{count($pics_before)}}) Pics</strong>
         </h4>
     </div>
 
@@ -325,7 +325,7 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
 
                     <div class="card-header">
                         <h4 class="mt-1 mb-1 text-black" style="font-size: 22px; position: fixed;left:10mm; top:0mm; z-index:  -1000;">
-                            <strong>Pictures of the Roof damaged area before installed: ({{count($pics_before)}}) Pics</strong>
+                            <strong>Pictures of the Roof area before installed: ({{count($pics_before)}}) Pics</strong>
                         </h4>
                     </div>
                     <div style="font-size: 12px; position: fixed;left:20mm; top:283mm; z-index:  -1000;">
