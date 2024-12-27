@@ -222,25 +222,31 @@ class ReferralInfo extends Component
     public function processJobtype($id){
         $this->assignment = Assignment::find($id);
     }
-	
-		protected function processCarrierTags ()
-		{
-/*			$carriersTags  = config('referrals.carriers_tags');
-			dd($carriersTags);*/
-			$tagId        = 39;
-			$referralIds  = [24, 674, 72, 104];
-			$carrierIds   = [217, 496];
-			
-			$referral   = $this->assignment->referral_id ?? 0;
-			$carrier    = $this->assignment->carrier_id ?? 0;
-			$tags       = $this->assignment->tags->pluck('id');
-			
-			if ((in_array($referral, $referralIds) || in_array($carrier, $carrierIds)) && !$tags->contains($tagId)) {
-				$this->assignment->tags()->attach($tagId);
-				$this->emit('tagsUpdate', $this->assignment->id);
-				integration('assignments')->set($this->assignment->id);
-			}
-		}
+
+    protected function processCarrierTags()
+    {
+        /*			$carriersTags  = config('referrals.carriers_tags');
+                    dd($carriersTags);*/
+        $tagId       = NULL;
+        $referralIds = [24, 674, 72, 104];
+        $carrierIds  = [217, 496];
+
+        $referral = $this->assignment->referral_id ?? 0;
+        $carrier  = $this->assignment->carrier_id ?? 0;
+        $tags     = $this->assignment->tags->pluck('id');
+
+        if ($referral == 174 && $carrier == 25) {
+            $tagId = 52;
+        } else if (in_array($referral, $referralIds) || in_array($carrier, $carrierIds)) {
+            $tagId = 39;
+        }
+
+        if ($tagId != NULL && !$tags->contains($tagId)) {
+            $this->assignment->tags()->attach($tagId);
+            $this->emit('tagsUpdate', $this->assignment->id);
+            integration('assignments')->set($this->assignment->id);
+        }
+    }
     public function update($formData){
         $this->validate();
 
