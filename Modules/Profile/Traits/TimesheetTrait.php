@@ -26,7 +26,7 @@ trait TimesheetTrait
         ]);
 
         return [
-            'year' => $startOfWeek->year,
+            'year' => 2025,
             'week' => $startOfWeek->weekOfYear,
             'start' => $startOfWeek->format('l M d'),
             'end' => $endOfWeek->format('l M d'),
