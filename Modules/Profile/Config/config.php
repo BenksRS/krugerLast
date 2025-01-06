@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Profile',
-    'week' => -1,
+    'week' => -0,
     'timesheet' => [
         'morning' => 'Morning',
         'afternoon' => 'Afternoon',
