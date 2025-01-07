@@ -21,7 +21,10 @@
 		{
 			return $this->getPageInfo('Reports Info');
 		}
-		
+        public function mkt()
+        {
+            return $this->getPageInfo('Reports Mkt', 'mkt');
+        }
 		public function tags()
 		{
 			return $this->getPageInfo('Reports Tags', 'tags');

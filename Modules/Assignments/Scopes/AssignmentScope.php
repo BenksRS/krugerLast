@@ -249,6 +249,28 @@ trait AssignmentScope {
                   ->whereDate('start_date', '<=', $date_to);
             });
     }
+    public function scopeDateSchedulledMkt(Builder $query, $date_from, $date_to, $tech_id = NULL, $job_type = NULL)
+{
+    return $query
+        ->with('scheduling')
+        ->with('job_types')
+        ->whereHas('commissions', function(Builder $q) use ($tech_id) {
+            if ($tech_id != NULL) {
+                $tech_id = is_array($tech_id) ? $tech_id : [$tech_id];
+                $q->whereIn('user_id', $tech_id);
+            }
+        })
+        ->whereHas('job_types', function(Builder $q) use ($job_type) {
+            if ($job_type != NULL) {
+                $job_type = is_array($job_type) ? $job_type : [$job_type];
+                $q->whereIn('assignment_job_type_id', $job_type);
+            }
+        })
+        ->whereHas('scheduling', function(Builder $q) use ($date_from, $date_to) {
+            $q->whereDate('start_date', '>=', $date_from)
+                ->whereDate('start_date', '<=', $date_to);
+        });
+}
 
     public function scopeSchedulledSystem(Builder $query, $date, $tech_id = NULL)
     {
