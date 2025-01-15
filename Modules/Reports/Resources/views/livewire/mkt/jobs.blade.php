@@ -145,7 +145,6 @@
 
 
 
-
                      <tbody>
                         @forelse($listData as $key => $list)
                            <tr>
@@ -160,7 +159,7 @@
                               </td>
 
                               <td class="text-end">
-                                 <p class="mb-0">${{ $list['commissions']['total_commission'] ?? 0 }}</p>
+                                 <p class="mb-0">${{ $filters['commission'] == 'percentage' ? $list['commissions']['total_commission'] : $list['commissions']['total'] ?? 0 }}</p>
                               </td>
                            </tr>
                            @if(!empty($list['assignments']))
@@ -171,28 +170,40 @@
                                        <table class="table table-bordered table-nowrap align-middle mb-0">
                                           <thead>
                                              <tr style="background-color:#f9f9f9;">
-                                                <th width="150px" class="text-center">Referral</th>
-                                                <th width="150px" class="text-center">Referral Type</th>
-                                                <th width="150px" class="text-end">Total Jobs</th>
+                                                <th width="150px" class="text-center">Assignment ID</th>
+                                                <th>Address</th>
+                                                <th width="150px" class="text-end">Referral</th>
+                                                <th width="150px" class="text-end">Referral type</th>
+                                                <th>Rulle comission</th>
+                                                <th width="50px" class="text-center">Scheduling date</th>
+
+
                                                 <th width="150px" class="text-end">Total Billed</th>
-                                                <th width="50px" class="text-center">Total Commissions</th>
+                                                <th width="150px" class="text-end">Commission</th>
                                              </tr>
                                           </thead>
                                           <tbody>
-                                             @foreach($list['refs']->sortBy("ref") as $data)
+                                             @foreach($list['assignments']->sortBy('scheduling_date') as $data)
 
                                                 <tr>
-                                                    <td class="text-left">
-                                                        {{$data['ref']}}
-                                                    </td>
+                                                   <td class="text-center">
+                                                      <a target="_blank" href="{{ route('assignments.show', $data['assignment_id']) }}">#{{ $data['assignment_id'] }}</a>
+                                                   </td>
+                                                   <td>
+                                                      {{$data['address'] }}
+                                                   </td>
+                                                   <td class="text-left">
+                                                      {{$data['referral']}}
+                                                   </td>
                                                     <td class="text-left">
                                                         {{$data['referral_type']}}
                                                     </td>
-                                                    <td class="text-left">
-                                                        {{$data['total']}}
-                                                    </td>
-                                                    <td class="text-end">${{ $data['total_bill'  ] ?? 0 }} </td>
-                                                    <td class="text-end">${{ $data['total_commission'] ?? 0 }} </td>
+                                                   <td class="text-uppercase">{!! $data['description'] !!}</td>
+                                                   <td class="text-center">{{ $data['scheduling_date'] }}</td>
+
+                                                   <td class="text-end">${{ $data['job_amount'] ?? 0 }} </td>
+                                                   <td class="text-end">${{ $filters['commission'] == 'percentage' ? $data['commission'] : $data['amount'] ?? 0 }}</td>
+                                                   {{--                              <td class="text-center">{{ $data['due_month'] }}/{{ $data['due_year'] }}</td>--}}
                                                 </tr>
                                              @endforeach
                                           </tbody>
@@ -207,7 +218,11 @@
                            </tr>
                         @endforelse
                      </tbody>
+                      @endif
 
+                      {{-- END IF JOBS   --}}
+                      {{-- START IF REFS   --}}
+                      {{-- END IF REFS   --}}
                   </table>
                </div>
             </div>

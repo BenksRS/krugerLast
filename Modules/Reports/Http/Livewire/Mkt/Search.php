@@ -8,6 +8,9 @@ use Modules\Assignments\Entities\JobReport;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
 use Modules\Employees\Entities\EmployeeCommissions;
 use Modules\Employees\Repositories\CommissionsRepository;
+use Modules\Referrals\Entities\Referral;
+use Modules\Referrals\Entities\ReferralType;
+use Modules\Referrals\Http\Livewire\Show\Tabs\Carriers;
 use Modules\User\Entities\User;
 
 class Search extends Component {
@@ -16,12 +19,17 @@ class Search extends Component {
 
     public    $commissionsTechs;
 
+    public    $referralAll;
+
+    public    $referralType;
+
     public    $jobTypes;
 
-    public    $loading  = FALSE;
+    public    $states = ['FL', 'TX', 'GA', 'LA', 'AL'];
 
+    public    $loading  = FALSE;
     public    $filters  = [
-        'commission' => 'percentage'
+        'commission' => 'refs'
     ];
 
     protected $listData = [];
@@ -30,19 +38,31 @@ class Search extends Component {
     {
         $this->commissionsStatus = ['pending' => 'Pending', 'available' => 'Available', 'paid' => 'Paid'];
         $this->commissionsTechs  = User::where('active', 'Y')->where('group_id', '3')->get();
-        $this->jobTypes          = AssignmentsJobTypes::where('active', 'Y')->get();
+        $this->referralAll = Referral::all();
+        $this->referralType = ReferralType::where('active', 'y')->get();
+
+
+        $this->jobTypes    = AssignmentsJobTypes::where('active', 'Y')->get();
     }
 
     public function submit()
     {
-        $this->listMkt();
+
+            $this->listMktRef();
+
+//            $this->listMktJobs();
+
     }
-    protected function listMkt()
+    protected function listMktRef()
     {
         $filters  = $this->filters;
-        $dates    = $filters['dates'] ?? ['start' => '2024-06-01', 'end' => '2024-12-31'];
-        $id       = $filters['techs'] ?? ['49'];
-        $jobTypes = $filters['job_types'] ?? [];
+//        $dates    = $filters['dates'] ?? ['start' => '2024-06-01', 'end' => '2024-12-31'];
+        $dates    = $filters['dates'] ?? [];
+//        $id       = $filters['techs'] ?? ['49'];
+        $id       = $filters['techs'] ?? [];
+        $referral_id = $filters['referral_id'] ?? [];
+        $referral_type = $filters['referral_type'] ?? [];
+        $state = $filters['state'] ?? [];
 
         $startDate = (new \DateTime($dates['start'] ?? 'first day of this month'))->format('Y-m-d');
         $endDate   = (new \DateTime($dates['end'] ?? 'now'))->format('Y-m-d');
@@ -52,7 +72,7 @@ class Search extends Component {
         $assignmnet = AssignmentFinanceRepository::without([
             'status', 'status_collection', 'event', 'phones', 'user_updated', 'user_created', 'tags', 'workers'
         ])->with(['commissions.rule'])
-            ->DateSchedulledMkt($startDate, $endDate, $id, $jobTypes)
+            ->DateSchedulledMkt($startDate, $endDate, $id, $referral_id, $state, $referral_type)
             ->whereIn('status_id', [5, 6, 10, 24, 9])
             ->get();
 
@@ -88,6 +108,8 @@ class Search extends Component {
 
                 $addr="$job->city - $job->state";
 
+                $referral_type= $job->referral->type->name;
+
                 $comissionsTechs[$rule->id] = [
                     'id'             => $rule->id,
                     'user_id'        => $user->id,
@@ -100,6 +122,7 @@ class Search extends Component {
                     'description'    => $description,
                     'address'        => $addr,
                     'referral'        => $job->referral_carrier_full,
+                    'referral_type'        => $referral_type,
                     'rule_name'      => $rule->rule->name,
                     'scheduling_date'     => $job->scheduling->start_date ?? '???',
                     'commission'     => number_format($comission, 2, '.', ',')
@@ -116,6 +139,44 @@ class Search extends Component {
     }
 
 
+    protected function toCollectionReferral($data){
+        $jobsbyReferral=$data->groupBy('referral');
+
+        if(count($jobsbyReferral) > 0) {
+
+
+
+            foreach ($jobsbyReferral as $ref_name => $jobs) {
+
+                $total = count($jobs);
+
+
+                    $ref_type=$jobs[0]['referral_type'];
+//                $countType = $item->groupBy('comission_type')->map->count();
+                $total_bill = $jobs->sum('job_amount');
+                $total_comission = number_format($jobs->sum('amount'), 2, '.', ',');
+                $total_bill     = number_format($total_bill, 2, '.', ',');
+
+                $coll[rand(1, 10000000)] = [
+                    'total' => $total,
+                    'jobs' => $jobs,
+                    'ref' => $ref_name,
+                    'referral_type' => $ref_type,
+                    'total_commission' => $total_comission,
+                    'total_bill' => $total_bill,
+                ];
+                $ref_type="";
+
+            }
+            $coll = collect($coll);
+        }else{
+            $coll = [];
+
+        }
+        return $coll;
+
+
+    }
     protected function toCollection($data)
     {
 
@@ -129,7 +190,8 @@ class Search extends Component {
             $item    = collect($item);
             $collect = collect();
 
-
+            $refs=$this->toCollectionReferral($item);
+            $refs=collect($refs);
             $total_bill = $item->sum('job_amount');
 
             $countType = $item->groupBy('comission_type')->map->count();
@@ -143,7 +205,8 @@ class Search extends Component {
             $collect['tech']        = $this->commissionsTechs->firstWhere('id', $key);
             $collect['commissions'] = $commissions;
             $collect['assignments'] = $item;
-//dd($collect);
+            $collect['refs'] = $refs;
+
             return $collect;
         });
 
@@ -169,7 +232,7 @@ class Search extends Component {
 
     public function render()
     {
-
+//        dump($this->listData);
         return view('reports::livewire.mkt.search', [
             'listData' => $this->listData,
         ]);
