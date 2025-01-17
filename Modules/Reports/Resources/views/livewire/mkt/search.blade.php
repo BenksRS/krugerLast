@@ -52,10 +52,10 @@
                         </div>
                         <div class="col-sm-3" wire:ignore>
                            <small>Marketing Rep</small>
-                           <select class="form-control select2 select2-multiple select-filters" multiple data-placeholder="Select..." name="filters.techs" wire:model.defer="filters.techs">
-                              <option selected>Technician...</option>
+                           <select {{ $userDisabled === TRUE ? 'disabled ':' '}} class="form-control select2 select2-multiple select-filters" multiple data-placeholder="Select..." name="filters.techs" wire:model.defer="filters.techs">
+                              <option selected>Marketing Rep...</option>
                               @foreach($commissionsTechs as $tech)
-                                 <option value="{{$tech->id}}">{{$tech->name}}</option>
+                                 <option value="{{$tech->id}}" >{{$tech->name}}</option>
                               @endforeach
                            </select>
                         </div>
@@ -138,6 +138,8 @@
                            <th scope="col">Mkt Rep</th>
                            <th scope="col" width="150px" class="text-center">Total Jobs</th>
                            <th scope="col" width="200px" class="text-end">Total Bill</th>
+                           <th scope="col" width="200px" class="text-end">Total Paid</th>
+                           <th scope="col" width="200px" class="text-end">Total Balance</th>
                            <th scope="col" width="200px" class="text-end">Total Commissions</th>
                         </tr>
                      </thead>
@@ -158,7 +160,12 @@
                               <td class="text-end">
                                  <p class="mb-0">${{ $list['commissions']['total_bill'] ?? 0 }}</p>
                               </td>
-
+                               <td class="text-end">
+                                   <p class="mb-0">${{ $list['commissions']['total_paid'] ?? 0 }}</p>
+                               </td>
+                               <td class="text-end">
+                                   <p class="mb-0">${{ $list['commissions']['total_balance'] ?? 0 }}</p>
+                               </td>
                               <td class="text-end">
                                  <p class="mb-0">${{ $list['commissions']['total_commission'] ?? 0 }}</p>
                               </td>
@@ -175,6 +182,8 @@
                                                 <th width="150px" class="text-center">Referral Type</th>
                                                 <th width="150px" class="text-end">Total Jobs</th>
                                                 <th width="150px" class="text-end">Total Billed</th>
+                                                <th width="150px" class="text-end">Total Paid</th>
+                                                <th width="150px" class="text-end">Total Balance</th>
                                                 <th width="50px" class="text-center">Total Commissions</th>
                                              </tr>
                                           </thead>
@@ -192,6 +201,8 @@
                                                         {{$data['total']}}
                                                     </td>
                                                     <td class="text-end">${{ $data['total_bill'  ] ?? 0 }} </td>
+                                                    <td class="text-end">${{ $data['total_paid'  ] ?? 0 }} </td>
+                                                    <td class="text-end">${{ $data['total_balance'  ] ?? 0 }} </td>
                                                     <td class="text-end">${{ $data['total_commission'] ?? 0 }} </td>
                                                 </tr>
                                              @endforeach

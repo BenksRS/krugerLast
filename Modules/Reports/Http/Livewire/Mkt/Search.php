@@ -12,6 +12,7 @@ use Modules\Referrals\Entities\Referral;
 use Modules\Referrals\Entities\ReferralType;
 use Modules\Referrals\Http\Livewire\Show\Tabs\Carriers;
 use Modules\User\Entities\User;
+use Auth;
 
 class Search extends Component {
 
@@ -27,6 +28,9 @@ class Search extends Component {
 
     public    $states = ['FL', 'TX', 'GA', 'LA', 'AL'];
 
+    public    $userSelected;
+    public    $userDisabled = FAlSE;
+
     public    $loading  = FALSE;
     public    $filters  = [
         'commission' => 'refs'
@@ -41,6 +45,25 @@ class Search extends Component {
         $this->referralAll = Referral::all();
         $this->referralType = ReferralType::where('active', 'y')->get();
 
+        $this->user = Auth::user();
+
+
+
+        switch ($this->user->group_id){
+            case 3:
+                $this->filters['techs'] = $this->user->id;
+                $this->userDisabled = TRUE;
+                break;
+            case 1:
+                break;
+            default:
+
+            return redirect('/dashboard/list/open');
+            break;
+
+        }
+
+
 
         $this->jobTypes    = AssignmentsJobTypes::where('active', 'Y')->get();
     }
@@ -50,16 +73,15 @@ class Search extends Component {
 
             $this->listMktRef();
 
-//            $this->listMktJobs();
 
     }
     protected function listMktRef()
     {
         $filters  = $this->filters;
-//        $dates    = $filters['dates'] ?? ['start' => '2024-06-01', 'end' => '2024-12-31'];
-        $dates    = $filters['dates'] ?? [];
-//        $id       = $filters['techs'] ?? ['49'];
-        $id       = $filters['techs'] ?? [];
+        $dates    = $filters['dates'] ?? ['start' => '2024-06-01', 'end' => '2024-12-31'];
+//        $dates    = $filters['dates'] ?? [];
+        $id       = $filters['techs'] ?? ['49'];
+//        $id       = $filters['techs'] ?? [];
         $referral_id = $filters['referral_id'] ?? [];
         $referral_type = $filters['referral_type'] ?? [];
         $state = $filters['state'] ?? [];
@@ -89,6 +111,9 @@ class Search extends Component {
                 $user     = $this->commissionsTechs->find($rule->user_id);
 
                 $total_job  = $job->finance->invoices->total;
+//                dd($job->finance);
+                $total_paid= $job->finance->payments->total;
+                $total_balance=$job->finance->balance->total;
                 $comission = $rule->amount;
 
 
@@ -119,6 +144,8 @@ class Search extends Component {
                     'amount'         => $rule->amount,
                     'amounts'        => $amounts,
                     'job_amount'    => $total_job,
+                    'job_total_paid'    => $total_paid,
+                    'job_balance'    => $total_balance,
                     'description'    => $description,
                     'address'        => $addr,
                     'referral'        => $job->referral_carrier_full,
@@ -154,8 +181,12 @@ class Search extends Component {
                     $ref_type=$jobs[0]['referral_type'];
 //                $countType = $item->groupBy('comission_type')->map->count();
                 $total_bill = $jobs->sum('job_amount');
+                $total_paid = $jobs->sum('job_total_paid');
+                $total_balance = $jobs->sum('job_balance');
                 $total_comission = number_format($jobs->sum('amount'), 2, '.', ',');
                 $total_bill     = number_format($total_bill, 2, '.', ',');
+                $total_paid     = number_format($total_paid, 2, '.', ',');
+                $total_balance     = number_format($total_balance, 2, '.', ',');
 
                 $coll[rand(1, 10000000)] = [
                     'total' => $total,
@@ -164,6 +195,8 @@ class Search extends Component {
                     'referral_type' => $ref_type,
                     'total_commission' => $total_comission,
                     'total_bill' => $total_bill,
+                    'total_paid' => $total_paid,
+                    'total_balance' => $total_balance,
                 ];
                 $ref_type="";
 
@@ -193,6 +226,8 @@ class Search extends Component {
             $refs=$this->toCollectionReferral($item);
             $refs=collect($refs);
             $total_bill = $item->sum('job_amount');
+            $total_paid = $item->sum('job_total_paid');
+            $total_balance = $item->sum('job_balance');
 
             $countType = $item->groupBy('comission_type')->map->count();
 
@@ -200,6 +235,8 @@ class Search extends Component {
             $commissions['total']            = number_format($total_bill, 2, '.', ',');
             $commissions['total_commission'] = number_format($item->sum('amount'), 2, '.', ',');
             $commissions['total_bill']       = number_format($total_bill, 2, '.', ',');
+            $commissions['total_paid']       = number_format($total_paid, 2, '.', ',');
+            $commissions['total_balance']       = number_format($total_balance, 2, '.', ',');
             $commissions['total_count']      = $countType;
 
             $collect['tech']        = $this->commissionsTechs->firstWhere('id', $key);
