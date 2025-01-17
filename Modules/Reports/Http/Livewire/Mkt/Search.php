@@ -78,10 +78,10 @@ class Search extends Component {
     protected function listMktRef()
     {
         $filters  = $this->filters;
-        $dates    = $filters['dates'] ?? ['start' => '2024-06-01', 'end' => '2024-12-31'];
-//        $dates    = $filters['dates'] ?? [];
-        $id       = $filters['techs'] ?? ['49'];
-//        $id       = $filters['techs'] ?? [];
+//        $dates    = $filters['dates'] ?? ['start' => '2024-06-01', 'end' => '2024-12-31'];
+        $dates    = $filters['dates'] ?? [];
+//        $id       = $filters['techs'] ?? ['49'];
+        $id       = $filters['techs'] ?? [];
         $referral_id = $filters['referral_id'] ?? [];
         $referral_type = $filters['referral_type'] ?? [];
         $state = $filters['state'] ?? [];
