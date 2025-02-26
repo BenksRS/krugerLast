@@ -27,8 +27,9 @@ class Search extends Component {
         $today            = Carbon::now();
         $statusCollection = AssignmentsStatusCollection::all(['id']);
 
-        $list = AssignmentFinanceRepository::withOnly([])->Collection($statusCollection)->whereDate('follow_up', '<=', $today)->get();
-
+        $list = AssignmentFinanceRepository::Collection($statusCollection)->whereDate('follow_up', '<=', $today)->get();
+        $list = $list
+            ->where('finance.collection.days_from_billing','>',29);
         $this->jobsFollowup = $list->count() ?? 0;
     }
 
