@@ -48,7 +48,9 @@ class Assignment extends Model {
         'auth_needed',
         'auth_needed_by',
         'auth_needed_at',
-        'inside_info'
+        'inside_info',
+        'projected_lien_date',
+        'projected_lien_active',
     ];
 
     protected $appends  = [

@@ -9,8 +9,13 @@
       <div class="col-12">
          <div class="card">
             <div class="card-body">
-               TOTAL OVERDUE :: <span wire:loading>....</span> <span wire:loading.remove>${{$total_collection}}</span><br>
-
+               <div>
+                  TOTAL COLLECTION :: <span wire:loading>Loading ...</span> <span wire:loading.remove><b>${{$total_collection}}</b></span><br>
+               </div>
+               <div>
+                  TOTAL JOBS :: <span wire:loading>Loading...</span> <span wire:loading.remove><b>{{$list->total()}}</b></span><br>
+               </div>
+               
                <div class="row mb-3">
                   <div class="col-lg-8">
                      <div class="btn-group">
@@ -69,10 +74,10 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-md">
                            <ul class="list-group">
-                              @foreach($statusCollection as $sc)
+                              @foreach($statusCollection as $scId => $scName)
                                  <li class="list-group-item">
-                                    <label> <input type="radio" wire:model="selectedStatus" value="{{$sc->id}}">
-                                       {{$sc->name}}</label>
+                                    <label> <input type="radio" wire:model="selectedStatus" value="{{$scId}}">
+                                       {{$scName}}</label>
                                  </li>
                               @endforeach
                            </ul>
@@ -108,8 +113,8 @@
                         <select class="select2 form-control select2-multiple select_referral select-filter"
                                 wire:model="filters.referral_id">
                            <option selected value>chose...</option>
-                           @foreach($allReferrals as $ref)
-                              <option value="{{$ref->id}}">{{$ref->full_name}}</option>
+                           @foreach($allReferrals as $refId => $refName)
+                              <option value="{{$refId}}">{{$refName}}</option>
                            @endforeach
                         </select>
                      </div>
@@ -120,8 +125,8 @@
                         <select class="select2 form-control select2-multiple select_carrier select-filter"
                                 wire:model="filters.carrier_id">
                            <option selected value>chose...</option>
-                           @foreach($allCarriers as $carrier)
-                              <option value="{{$carrier->id}}">{{$carrier->full_name}}</option>
+                           @foreach($allReferrals as $refId => $refName)
+                              <option value="{{$refId}}">{{$refName}}</option>
                            @endforeach
                         </select>
                      </div>
@@ -155,7 +160,7 @@
                            @if(in_array('Status', $selectedColumns))
                               <th>Status</th>
                            @endif
-                           @if(in_array('days_from_service', $selectedColumns))
+                           @if(in_array('follow_up', $selectedColumns))
                               <th>Follow up</th>
                            @endif
                            @if(in_array('days_from_billing', $selectedColumns))
@@ -171,7 +176,6 @@
                            @if(in_array('Street', $selectedColumns))
                               <th>Street</th>
                            @endif
-
                            @if(in_array('State', $selectedColumns))
                               <th>State</th>
                            @endif
@@ -266,7 +270,7 @@
                                     <span class="badge {{strtolower($row->status->name)}}">{{$row->status->name}}</span>
                                  </td>
                               @endif
-                              @if(in_array('Status', $selectedColumns))
+                              @if(in_array('follow_up', $selectedColumns))
                                  <td><p><b>{{strtolower($row->follow_up_date)}}</b></p></td>
                               @endif
                               @if(in_array('days_from_billing', $selectedColumns))
@@ -291,7 +295,10 @@
                                  <td><p>{{$row->state}}</p></td>
                               @endif
                               @if(in_array('Phone', $selectedColumns))
-                                       <?php $note = \Modules\Notes\Entities\Note::where('notable_id', $row->id)->where('type', 'finance')->orderBy('id', 'DESC')->first(); ?>
+                         
+                                       <?php
+                                          $note = \Modules\Notes\Entities\Note::where('notable_id', $row->id)->where('type', 'finance')->orderBy('id', 'DESC')->first();
+                                          ?>
                                  <td>
                                     @if(isset($note))
 
@@ -366,7 +373,7 @@
                   </div>
                </div>
 
-            </div>
+            </span>
          </div>
       </div> <!-- end col -->
    </div> <!-- end row -->
