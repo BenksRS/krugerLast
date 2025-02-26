@@ -125,7 +125,7 @@ class Fallowup30 extends Component
         })->get();
 
         $list = $list
-				->where('finance.collection.days_from_billing','>',30)
+	/*			->where('finance.collection.days_from_billing','>',30)*/
 				->where('finance.collection.days_from_billing','<',45);
         $total_collection=$list->sum('finance.invoices.total');
         $this->total_collection = number_format($total_collection, 2);
