@@ -885,7 +885,35 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     <div style="font-size: 12px; position: fixed;left:20mm; top:20mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
-        <span><?php echo $pic_after->label ?></span>
+        <span><?php
+                  $label = $pic_before->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
         <br>
     </div>
 
@@ -896,7 +924,35 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     <div style="font-size: 12px; position: fixed;left:105mm; top:20mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
-        <span><?php echo $pic_after->label ?></span>
+        <span><?php
+                  $label = $pic_before->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
         <br>
     </div>
     <?php
@@ -908,8 +964,35 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     <div style="font-size: 12px; position: fixed;left:20mm; top:85mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
-        <span><?php echo $pic_after->label ?></span>
-        <br>
+        <span><?php
+                  $label = $pic_before->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
     </div>
     <?php
 
@@ -919,7 +1002,35 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     <div style="font-size: 12px; position: fixed;left:105mm; top:85mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
-        <span><?php echo $pic_after->label ?></span>
+        <span><?php
+                  $label = $pic_before->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
         <br>
     </div>
     <?php
@@ -930,7 +1041,35 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     <div style="font-size: 12px; position: fixed;left:20mm; top:150mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
-        <span><?php echo $pic_after->label ?></span>
+        <span><?php
+                  $label = $pic_before->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
         <br>
     </div>
     <?php
@@ -941,7 +1080,35 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     <div style="font-size: 12px; position: fixed;left:105mm; top:150mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
-        <span><?php echo $pic_after->label ?></span>
+        <span><?php
+                  $label = $pic_before->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
         <br>
     </div>
     <?php
@@ -952,7 +1119,35 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     <div style="font-size: 12px; position: fixed;left:20mm; top:215mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
-        <span><?php echo $pic_after->label ?></span>
+        <span><?php
+                  $label = $pic_before->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
         <br>
     </div>
     <?php
@@ -963,7 +1158,35 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     <div style="font-size: 12px; position: fixed;left:105mm; top:215mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
-        <span><?php echo $pic_after->label ?></span>
+        <span><?php
+                  $label = $pic_before->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
         <br>
     </div>
     <?php
