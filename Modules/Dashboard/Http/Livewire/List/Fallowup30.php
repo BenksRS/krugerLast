@@ -18,7 +18,7 @@ class Fallowup30 extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $searchAssignment;
-    public $columns = ['Billed Date','Status Collection','Name','Invoices', 'Status','follow_up','days_from_service', 'Referral','City','State', 'Phone'];
+    public $columns = ['Billed Date','Status Collection','Name','Invoices', 'Status','follow_up','days_from_billing','days_from_service', 'Referral','City','State', 'Phone'];
     public $selectedColumns = [];
     public $selectedRows = 100;
 
@@ -53,14 +53,17 @@ class Fallowup30 extends Component
     public function mount ()
     {
         $referrals = Referral::all();
+        $statusCollection = AssignmentsStatusCollection::all();
 
         $this->selectedColumns = $this->columns;
 
-        $this->statusCollection = AssignmentsStatusCollection::all();
-        $this->selectedStatus = $this->statusCollection->pluck('id')->toArray();
+        $this->statusCollection = $statusCollection->pluck('name','id')->all();
+        $this->selectedStatus   = $statusCollection->pluck('id')->all();
 
-        $this->allReferrals = $referrals;
-        $this->allCarriers  = $referrals;
+        /*  dd($this->selectedStatus, $this->statusCollection);*/
+
+        $this->allReferrals = $referrals->pluck('full_name', 'id')->all();
+        $this->allCarriers  = $this->allReferrals;
 
         /*            $this->fill(['formBuilder.schema' => $this->getFormBuilder()]);*/
 
@@ -122,7 +125,7 @@ class Fallowup30 extends Component
         })->get();
 
         $list = $list
-				->where('finance.collection.days_from_billing','>',30)
+				->where('finance.collection.days_from_billing','>',29)
 				->where('finance.collection.days_from_billing','<',45);
         $total_collection=$list->sum('finance.invoices.total');
         $this->total_collection = number_format($total_collection, 2);

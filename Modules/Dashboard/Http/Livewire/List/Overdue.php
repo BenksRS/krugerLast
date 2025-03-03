@@ -56,13 +56,17 @@ class Overdue extends Component {
     public function mount()
     {
         $referrals = Referral::all();
+        $statusCollection = AssignmentsStatusCollection::all();
 
-        $this->selectedColumns  = $this->columns;
-        $this->statusCollection = AssignmentsStatusCollection::all();
-        $this->selectedStatus   = $this->statusCollection->pluck('id')->toArray();
+        $this->selectedColumns = $this->columns;
 
-        $this->allReferrals = $referrals;
-        $this->allCarriers  = $referrals;
+        $this->statusCollection = $statusCollection->pluck('name','id')->all();
+        $this->selectedStatus   = $statusCollection->pluck('id')->all();
+
+        /*  dd($this->selectedStatus, $this->statusCollection);*/
+
+        $this->allReferrals = $referrals->pluck('full_name', 'id')->all();
+        $this->allCarriers  = $this->allReferrals;
 
         /*            $this->fill(['formBuilder.schema' => $this->getFormBuilder()]);*/
         /* $this->formBuilder['schema'] = $this->getFormBuilder();*/

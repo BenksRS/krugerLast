@@ -12,7 +12,7 @@ class AssignmentFinanceRepository extends Assignment {
 
     protected $with    =['scheduling','referral','commissions','carrier','status','status_collection','event','phones','user_updated','user_created','job_types','invoices', 'payments','tags', 'workers', 'commissions'];
 
-    protected $appends = ['finance','follow_up_date', 'lien_date_view'];
+    protected $appends = ['finance','follow_up_date', 'lien_date_view', 'projected_lien_date_view'];
 
     public function __construct ()
     {
@@ -32,6 +32,14 @@ class AssignmentFinanceRepository extends Assignment {
         $return = "-";
         if($this->lien_date){
             $return = Carbon::createFromFormat('Y-m-d H:i:s', $this->lien_date)->format('m/d/Y');
+        }
+        return $return;
+    }
+    public function getProjectedLienDateViewAttribute (){
+
+        $return = "-";
+        if($this->projected_lien_date){
+            $return = Carbon::createFromFormat('Y-m-d H:i:s', $this->projected_lien_date)->format('m/d/Y');
         }
         return $return;
     }
@@ -212,6 +220,5 @@ class AssignmentFinanceRepository extends Assignment {
         return $finance;
 
     }
-
 }
 //->addOrigin('456 NW 35th St, Boca Raton, FL 33431, US')

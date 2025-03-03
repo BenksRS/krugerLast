@@ -77,11 +77,11 @@ $user = Auth::user();
 
     <i class="bx bx-money me-2" ></i>
     <span>
-    <?php
+{{--    <?php
         $today=\Carbon\Carbon::now();
         $list = \Modules\Assignments\Repositories\AssignmentFinanceRepository::Collection()->whereDate('follow_up', '<=',$today)->get();
-    ?>
-        {{count($list)}} <small>Jobs follow up</small>
+    ?>--}}
+        {{$jobsFollowup}} <small>Jobs follow up</small>
     </span>
 </span>
 @endif
