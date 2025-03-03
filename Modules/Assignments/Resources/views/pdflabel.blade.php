@@ -478,31 +478,32 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
 
                           switch ($label){
                               case 'pitch':
-                                  echo "Pitch"
+                                  $msg="Pitch";
                                   break;
                               case 'bf_front_view_right':
-                                  echo "Before Front View Right"
+                                  $msg="Before Front View Right";
                                   break;
                               case 'bf_back_view_right':
-                                  echo "Before Back View Right"
+                                  $msg="Before Back View Right";
                                   break;
                               case 'bf_front_view_left':
-                                  echo "Before Front View Left"
+                                  $msg="Before Front View Left";
                                   break;
                               case 'bf_back_view_left':
-                                  echo "Before Back View Left"
+                                  $msg="Before Back View Left";
                                   break;
                               case 'bf_of_view_left':
-                                  echo "Before View Left"
+                                  $msg="Before View Left";
                                   break;
                               case 'bf_of_view_right':
-                                  echo "Before View Right"
+                                  $msg="Before View Right";
                                   break;
                               default:
-                                  echo "Before"
+                                  $msg="Before";
                                   break;
-
                           }
+
+                          echo $msg;
                           ?></span>
                 <br>
             </div>
@@ -519,31 +520,32 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
 
                           switch ($label){
                               case 'pitch':
-                                  echo "Pitch"
+                                  $msg="Pitch";
                                   break;
                               case 'bf_front_view_right':
-                                  echo "Before Front View Right"
+                                  $msg="Before Front View Right";
                                   break;
                               case 'bf_back_view_right':
-                                  echo "Before Back View Right"
+                                  $msg="Before Back View Right";
                                   break;
                               case 'bf_front_view_left':
-                                  echo "Before Front View Left"
+                                  $msg="Before Front View Left";
                                   break;
                               case 'bf_back_view_left':
-                                  echo "Before Back View Left"
+                                  $msg="Before Back View Left";
                                   break;
                               case 'bf_of_view_left':
-                                  echo "Before View Left"
+                                  $msg="Before View Left";
                                   break;
                               case 'bf_of_view_right':
-                                  echo "Before View Right"
+                                  $msg="Before View Right";
                                   break;
                               default:
-                                  echo "Before"
+                                  $msg="Before";
                                   break;
-
                           }
+
+                          echo $msg;
                           ?></span>
                 <br>
             </div>
@@ -561,31 +563,32 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
 
                           switch ($label){
                               case 'pitch':
-                                  echo "Pitch"
+                                  $msg="Pitch";
                                   break;
                               case 'bf_front_view_right':
-                                  echo "Before Front View Right"
+                                  $msg="Before Front View Right";
                                   break;
                               case 'bf_back_view_right':
-                                  echo "Before Back View Right"
+                                  $msg="Before Back View Right";
                                   break;
                               case 'bf_front_view_left':
-                                  echo "Before Front View Left"
+                                  $msg="Before Front View Left";
                                   break;
                               case 'bf_back_view_left':
-                                  echo "Before Back View Left"
+                                  $msg="Before Back View Left";
                                   break;
                               case 'bf_of_view_left':
-                                  echo "Before View Left"
+                                  $msg="Before View Left";
                                   break;
                               case 'bf_of_view_right':
-                                  echo "Before View Right"
+                                  $msg="Before View Right";
                                   break;
                               default:
-                                  echo "Before"
+                                  $msg="Before";
                                   break;
-
                           }
+
+                          echo $msg;
                           ?></span>
                 <br>
             </div>
@@ -602,31 +605,32 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
 
                           switch ($label){
                               case 'pitch':
-                                  echo "Pitch"
+                                  $msg="Pitch";
                                   break;
                               case 'bf_front_view_right':
-                                  echo "Before Front View Right"
+                                  $msg="Before Front View Right";
                                   break;
                               case 'bf_back_view_right':
-                                  echo "Before Back View Right"
+                                  $msg="Before Back View Right";
                                   break;
                               case 'bf_front_view_left':
-                                  echo "Before Front View Left"
+                                  $msg="Before Front View Left";
                                   break;
                               case 'bf_back_view_left':
-                                  echo "Before Back View Left"
+                                  $msg="Before Back View Left";
                                   break;
                               case 'bf_of_view_left':
-                                  echo "Before View Left"
+                                  $msg="Before View Left";
                                   break;
                               case 'bf_of_view_right':
-                                  echo "Before View Right"
+                                  $msg="Before View Right";
                                   break;
                               default:
-                                  echo "Before"
+                                  $msg="Before";
                                   break;
-
                           }
+
+                          echo $msg;
                           ?></span>
                 <br>
             </div>
@@ -643,31 +647,32 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
 
                           switch ($label){
                               case 'pitch':
-                                  echo "Pitch"
+                                  $msg="Pitch";
                                   break;
                               case 'bf_front_view_right':
-                                  echo "Before Front View Right"
+                                  $msg="Before Front View Right";
                                   break;
                               case 'bf_back_view_right':
-                                  echo "Before Back View Right"
+                                  $msg="Before Back View Right";
                                   break;
                               case 'bf_front_view_left':
-                                  echo "Before Front View Left"
+                                  $msg="Before Front View Left";
                                   break;
                               case 'bf_back_view_left':
-                                  echo "Before Back View Left"
+                                  $msg="Before Back View Left";
                                   break;
                               case 'bf_of_view_left':
-                                  echo "Before View Left"
+                                  $msg="Before View Left";
                                   break;
                               case 'bf_of_view_right':
-                                  echo "Before View Right"
+                                  $msg="Before View Right";
                                   break;
                               default:
-                                  echo "Before"
+                                  $msg="Before";
                                   break;
-
                           }
+
+                          echo $msg;
                           ?></span>
                 <br>
             </div>
@@ -684,31 +689,32 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
 
                           switch ($label){
                               case 'pitch':
-                                  echo "Pitch"
+                                  $msg="Pitch";
                                   break;
                               case 'bf_front_view_right':
-                                  echo "Before Front View Right"
+                                  $msg="Before Front View Right";
                                   break;
                               case 'bf_back_view_right':
-                                  echo "Before Back View Right"
+                                  $msg="Before Back View Right";
                                   break;
                               case 'bf_front_view_left':
-                                  echo "Before Front View Left"
+                                  $msg="Before Front View Left";
                                   break;
                               case 'bf_back_view_left':
-                                  echo "Before Back View Left"
+                                  $msg="Before Back View Left";
                                   break;
                               case 'bf_of_view_left':
-                                  echo "Before View Left"
+                                  $msg="Before View Left";
                                   break;
                               case 'bf_of_view_right':
-                                  echo "Before View Right"
+                                  $msg="Before View Right";
                                   break;
                               default:
-                                  echo "Before"
+                                  $msg="Before";
                                   break;
-
                           }
+
+                          echo $msg;
                           ?></span>
                 <br>
             </div>
@@ -725,31 +731,32 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
 
                           switch ($label){
                               case 'pitch':
-                                  echo "Pitch"
+                                  $msg="Pitch";
                                   break;
                               case 'bf_front_view_right':
-                                  echo "Before Front View Right"
+                                  $msg="Before Front View Right";
                                   break;
                               case 'bf_back_view_right':
-                                  echo "Before Back View Right"
+                                  $msg="Before Back View Right";
                                   break;
                               case 'bf_front_view_left':
-                                  echo "Before Front View Left"
+                                  $msg="Before Front View Left";
                                   break;
                               case 'bf_back_view_left':
-                                  echo "Before Back View Left"
+                                  $msg="Before Back View Left";
                                   break;
                               case 'bf_of_view_left':
-                                  echo "Before View Left"
+                                  $msg="Before View Left";
                                   break;
                               case 'bf_of_view_right':
-                                  echo "Before View Right"
+                                  $msg="Before View Right";
                                   break;
                               default:
-                                  echo "Before"
+                                  $msg="Before";
                                   break;
-
                           }
+
+                          echo $msg;
                           ?></span>
                 <br>
             </div>
@@ -766,31 +773,32 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
 
                           switch ($label){
                               case 'pitch':
-                                  echo "Pitch"
+                                  $msg="Pitch";
                                   break;
                               case 'bf_front_view_right':
-                                  echo "Before Front View Right"
+                                  $msg="Before Front View Right";
                                   break;
                               case 'bf_back_view_right':
-                                  echo "Before Back View Right"
+                                  $msg="Before Back View Right";
                                   break;
                               case 'bf_front_view_left':
-                                  echo "Before Front View Left"
+                                  $msg="Before Front View Left";
                                   break;
                               case 'bf_back_view_left':
-                                  echo "Before Back View Left"
+                                  $msg="Before Back View Left";
                                   break;
                               case 'bf_of_view_left':
-                                  echo "Before View Left"
+                                  $msg="Before View Left";
                                   break;
                               case 'bf_of_view_right':
-                                  echo "Before View Right"
+                                  $msg="Before View Right";
                                   break;
                               default:
-                                  echo "Before"
+                                  $msg="Before";
                                   break;
-
                           }
+
+                          echo $msg;
                           ?></span>
                 <br>
             </div>
