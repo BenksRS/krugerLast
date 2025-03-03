@@ -472,6 +472,9 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             ?>
             <div style="font-size: 12px; position: fixed;left:20mm; top:25mm; z-index:  -1000;">
                 <img style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
+                <br>
+                <span><?php echo $pic_before->label ?></span>
+                <br>
             </div>
 
             <?php
