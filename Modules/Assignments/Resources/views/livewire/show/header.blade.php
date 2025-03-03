@@ -123,9 +123,9 @@
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <div class="mb-3 ">
-                                                                        <label  class="form-label">Fisrt Name</label>
+                                                                        <label  class="form-label">First Name</label>
                                                                         <input type="text" class="form-control "  name="first_name"
-                                                                               placeholder="Fisrt Name" wire:model="first_name"  required>
+                                                                               placeholder="First Name" wire:model="first_name"  required>
 
                                                                         <div class="valid-feedback">
                                                                             Looks good!
