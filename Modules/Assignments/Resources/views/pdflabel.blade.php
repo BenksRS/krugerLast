@@ -473,7 +473,37 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             <div style="font-size: 12px; position: fixed;left:20mm; top:20mm; z-index:  -1000;">
                 <img style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
                 <br>
-                <span><?php echo $pic_before->label ?></span>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  echo "Pitch"
+                                  break;
+                              case 'bf_front_view_right':
+                                  echo "Before Front View Right"
+                                  break;
+                              case 'bf_back_view_right':
+                                  echo "Before Back View Right"
+                                  break;
+                              case 'bf_front_view_left':
+                                  echo "Before Front View Left"
+                                  break;
+                              case 'bf_back_view_left':
+                                  echo "Before Back View Left"
+                                  break;
+                              case 'bf_of_view_left':
+                                  echo "Before View Left"
+                                  break;
+                              case 'bf_of_view_right':
+                                  echo "Before View Right"
+                                  break;
+                              default:
+                                  echo "Before"
+                                  break;
+
+                          }
+                          ?></span>
                 <br>
             </div>
 
@@ -484,7 +514,37 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             <div style="font-size: 12px; position: fixed;left:105mm; top:20mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
                 <br>
-                <span><?php echo $pic_before->label ?></span>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  echo "Pitch"
+                                  break;
+                              case 'bf_front_view_right':
+                                  echo "Before Front View Right"
+                                  break;
+                              case 'bf_back_view_right':
+                                  echo "Before Back View Right"
+                                  break;
+                              case 'bf_front_view_left':
+                                  echo "Before Front View Left"
+                                  break;
+                              case 'bf_back_view_left':
+                                  echo "Before Back View Left"
+                                  break;
+                              case 'bf_of_view_left':
+                                  echo "Before View Left"
+                                  break;
+                              case 'bf_of_view_right':
+                                  echo "Before View Right"
+                                  break;
+                              default:
+                                  echo "Before"
+                                  break;
+
+                          }
+                          ?></span>
                 <br>
             </div>
             <?php
@@ -496,7 +556,37 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             <div style="font-size: 12px; position: fixed;left:20mm; top:85mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
                 <br>
-                <span><?php echo $pic_before->label ?></span>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  echo "Pitch"
+                                  break;
+                              case 'bf_front_view_right':
+                                  echo "Before Front View Right"
+                                  break;
+                              case 'bf_back_view_right':
+                                  echo "Before Back View Right"
+                                  break;
+                              case 'bf_front_view_left':
+                                  echo "Before Front View Left"
+                                  break;
+                              case 'bf_back_view_left':
+                                  echo "Before Back View Left"
+                                  break;
+                              case 'bf_of_view_left':
+                                  echo "Before View Left"
+                                  break;
+                              case 'bf_of_view_right':
+                                  echo "Before View Right"
+                                  break;
+                              default:
+                                  echo "Before"
+                                  break;
+
+                          }
+                          ?></span>
                 <br>
             </div>
             <?php
@@ -507,7 +597,37 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             <div style="font-size: 12px; position: fixed;left:105mm; top:85mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
                 <br>
-                <span><?php echo $pic_before->label ?></span>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  echo "Pitch"
+                                  break;
+                              case 'bf_front_view_right':
+                                  echo "Before Front View Right"
+                                  break;
+                              case 'bf_back_view_right':
+                                  echo "Before Back View Right"
+                                  break;
+                              case 'bf_front_view_left':
+                                  echo "Before Front View Left"
+                                  break;
+                              case 'bf_back_view_left':
+                                  echo "Before Back View Left"
+                                  break;
+                              case 'bf_of_view_left':
+                                  echo "Before View Left"
+                                  break;
+                              case 'bf_of_view_right':
+                                  echo "Before View Right"
+                                  break;
+                              default:
+                                  echo "Before"
+                                  break;
+
+                          }
+                          ?></span>
                 <br>
             </div>
             <?php
@@ -518,7 +638,37 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             <div style="font-size: 12px; position: fixed;left:20mm; top:150mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
                 <br>
-                <span><?php echo $pic_before->label ?></span>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  echo "Pitch"
+                                  break;
+                              case 'bf_front_view_right':
+                                  echo "Before Front View Right"
+                                  break;
+                              case 'bf_back_view_right':
+                                  echo "Before Back View Right"
+                                  break;
+                              case 'bf_front_view_left':
+                                  echo "Before Front View Left"
+                                  break;
+                              case 'bf_back_view_left':
+                                  echo "Before Back View Left"
+                                  break;
+                              case 'bf_of_view_left':
+                                  echo "Before View Left"
+                                  break;
+                              case 'bf_of_view_right':
+                                  echo "Before View Right"
+                                  break;
+                              default:
+                                  echo "Before"
+                                  break;
+
+                          }
+                          ?></span>
                 <br>
             </div>
             <?php
@@ -529,7 +679,37 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             <div style="font-size: 12px; position: fixed;left:105mm; top:150mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
                 <br>
-                <span><?php echo $pic_before->label ?></span>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  echo "Pitch"
+                                  break;
+                              case 'bf_front_view_right':
+                                  echo "Before Front View Right"
+                                  break;
+                              case 'bf_back_view_right':
+                                  echo "Before Back View Right"
+                                  break;
+                              case 'bf_front_view_left':
+                                  echo "Before Front View Left"
+                                  break;
+                              case 'bf_back_view_left':
+                                  echo "Before Back View Left"
+                                  break;
+                              case 'bf_of_view_left':
+                                  echo "Before View Left"
+                                  break;
+                              case 'bf_of_view_right':
+                                  echo "Before View Right"
+                                  break;
+                              default:
+                                  echo "Before"
+                                  break;
+
+                          }
+                          ?></span>
                 <br>
             </div>
             <?php
@@ -540,7 +720,37 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             <div style="font-size: 12px; position: fixed;left:20mm; top:215mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
                 <br>
-                <span><?php echo $pic_before->label ?></span>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  echo "Pitch"
+                                  break;
+                              case 'bf_front_view_right':
+                                  echo "Before Front View Right"
+                                  break;
+                              case 'bf_back_view_right':
+                                  echo "Before Back View Right"
+                                  break;
+                              case 'bf_front_view_left':
+                                  echo "Before Front View Left"
+                                  break;
+                              case 'bf_back_view_left':
+                                  echo "Before Back View Left"
+                                  break;
+                              case 'bf_of_view_left':
+                                  echo "Before View Left"
+                                  break;
+                              case 'bf_of_view_right':
+                                  echo "Before View Right"
+                                  break;
+                              default:
+                                  echo "Before"
+                                  break;
+
+                          }
+                          ?></span>
                 <br>
             </div>
             <?php
@@ -551,7 +761,37 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             <div style="font-size: 12px; position: fixed;left:105mm; top:215mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
                 <br>
-                <span><?php echo $pic_before->label ?></span>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  echo "Pitch"
+                                  break;
+                              case 'bf_front_view_right':
+                                  echo "Before Front View Right"
+                                  break;
+                              case 'bf_back_view_right':
+                                  echo "Before Back View Right"
+                                  break;
+                              case 'bf_front_view_left':
+                                  echo "Before Front View Left"
+                                  break;
+                              case 'bf_back_view_left':
+                                  echo "Before Back View Left"
+                                  break;
+                              case 'bf_of_view_left':
+                                  echo "Before View Left"
+                                  break;
+                              case 'bf_of_view_right':
+                                  echo "Before View Right"
+                                  break;
+                              default:
+                                  echo "Before"
+                                  break;
+
+                          }
+                          ?></span>
                 <br>
             </div>
             <?php
