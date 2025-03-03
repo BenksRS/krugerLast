@@ -493,7 +493,7 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             case 2:
             ?>
 
-            <div style="font-size: 12px; position: fixed;left:20mm; top:90mm; z-index:  -1000;">
+            <div style="font-size: 12px; position: fixed;left:20mm; top:85mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
                 <br>
                 <span><?php echo $pic_before->label ?></span>
@@ -504,7 +504,7 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             break;
             case 3:
             ?>
-            <div style="font-size: 12px; position: fixed;left:105mm; top:90mm; z-index:  -1000;">
+            <div style="font-size: 12px; position: fixed;left:105mm; top:85mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
                 <br>
                 <span><?php echo $pic_before->label ?></span>
@@ -515,7 +515,7 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             break;
             case 4:
             ?>
-            <div style="font-size: 12px; position: fixed;left:20mm; top:155mm; z-index:  -1000;">
+            <div style="font-size: 12px; position: fixed;left:20mm; top:150mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
                 <br>
                 <span><?php echo $pic_before->label ?></span>
@@ -526,7 +526,7 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             break;
             case 5:
             ?>
-            <div style="font-size: 12px; position: fixed;left:105mm; top:155mm; z-index:  -1000;">
+            <div style="font-size: 12px; position: fixed;left:105mm; top:150mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
                 <br>
                 <span><?php echo $pic_before->label ?></span>
@@ -537,7 +537,7 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             break;
             case 6:
             ?>
-            <div style="font-size: 12px; position: fixed;left:20mm; top:220mm; z-index:  -1000;">
+            <div style="font-size: 12px; position: fixed;left:20mm; top:215mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
                 <br>
                 <span><?php echo $pic_before->label ?></span>
@@ -548,7 +548,7 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             break;
             case 7:
             ?>
-            <div style="font-size: 12px; position: fixed;left:105mm; top:220mm; z-index:  -1000;">
+            <div style="font-size: 12px; position: fixed;left:105mm; top:215mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
                 <br>
                 <span><?php echo $pic_before->label ?></span>
@@ -634,7 +634,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     switch ($countAfter){
     case 0:
     ?>
-    <div style="font-size: 12px; position: fixed;left:20mm; top:25mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:20mm; top:20mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php echo $pic_after->label ?></span>
@@ -645,7 +645,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     break;
     case 1:
     ?>
-    <div style="font-size: 12px; position: fixed;left:105mm; top:25mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:105mm; top:20mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php echo $pic_after->label ?></span>
@@ -657,7 +657,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     case 2:
     ?>
 
-    <div style="font-size: 12px; position: fixed;left:20mm; top:90mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:20mm; top:85mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php echo $pic_after->label ?></span>
@@ -668,7 +668,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     break;
     case 3:
     ?>
-    <div style="font-size: 12px; position: fixed;left:105mm; top:90mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:105mm; top:85mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php echo $pic_after->label ?></span>
@@ -679,7 +679,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     break;
     case 4:
     ?>
-    <div style="font-size: 12px; position: fixed;left:20mm; top:155mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:20mm; top:150mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php echo $pic_after->label ?></span>
@@ -690,7 +690,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     break;
     case 5:
     ?>
-    <div style="font-size: 12px; position: fixed;left:105mm; top:155mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:105mm; top:150mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php echo $pic_after->label ?></span>
@@ -701,7 +701,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     break;
     case 6:
     ?>
-    <div style="font-size: 12px; position: fixed;left:20mm; top:220mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:20mm; top:215mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php echo $pic_after->label ?></span>
@@ -712,7 +712,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     break;
     case 7:
     ?>
-    <div style="font-size: 12px; position: fixed;left:105mm; top:220mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:105mm; top:215mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php echo $pic_after->label ?></span>
