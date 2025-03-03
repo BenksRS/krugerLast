@@ -886,7 +886,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php
-                  $label = $pic_before->label;
+                  $label = $pic_after->label;
 
                   switch ($label){
                       case 'af_front_view_right':
@@ -925,7 +925,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php
-                  $label = $pic_before->label;
+                  $label = $pic_after->label;
 
                   switch ($label){
                       case 'af_front_view_right':
@@ -965,7 +965,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php
-                  $label = $pic_before->label;
+                  $label = $pic_after->label;
 
                   switch ($label){
                       case 'af_front_view_right':
@@ -1003,7 +1003,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php
-                  $label = $pic_before->label;
+                  $label = $pic_after->label;
 
                   switch ($label){
                       case 'af_front_view_right':
@@ -1042,7 +1042,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php
-                  $label = $pic_before->label;
+                  $label = $pic_after->label;
 
                   switch ($label){
                       case 'af_front_view_right':
@@ -1081,7 +1081,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php
-                  $label = $pic_before->label;
+                  $label = $pic_after->label;
 
                   switch ($label){
                       case 'af_front_view_right':
@@ -1120,7 +1120,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php
-                  $label = $pic_before->label;
+                  $label = $pic_after->label;
 
                   switch ($label){
                       case 'af_front_view_right':
@@ -1159,7 +1159,7 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
         <br>
         <span><?php
-                  $label = $pic_before->label;
+                  $label = $pic_after->label;
 
                   switch ($label){
                       case 'af_front_view_right':
