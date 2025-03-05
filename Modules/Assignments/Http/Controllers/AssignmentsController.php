@@ -36,9 +36,8 @@ class AssignmentsController extends Controller {
     }
     public function index ()
     {
-
         $page_info = (object)[
-            'title' => 'Assignments List',
+          'title' => 'Assignments List',
             'back' => url('assignments'),
             'back_title' => 'Assignments List'
         ];

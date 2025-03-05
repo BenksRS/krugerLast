@@ -470,16 +470,84 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             case 0:
 
             ?>
-            <div style="font-size: 12px; position: fixed;left:20mm; top:25mm; z-index:  -1000;">
+            <div style="font-size: 12px; position: fixed;left:20mm; top:20mm; z-index:  -1000;">
                 <img style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
+                <br>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  $msg="Pitch";
+                                  break;
+                              case 'bf_front_view_right':
+                                  $msg="Before Front View Right";
+                                  break;
+                              case 'bf_back_view_right':
+                                  $msg="Before Back View Right";
+                                  break;
+                              case 'bf_front_view_left':
+                                  $msg="Before Front View Left";
+                                  break;
+                              case 'bf_back_view_left':
+                                  $msg="Before Back View Left";
+                                  break;
+                              case 'bf_of_view_left':
+                                  $msg="Before View Left";
+                                  break;
+                              case 'bf_of_view_right':
+                                  $msg="Before View Right";
+                                  break;
+                              default:
+                                  $msg="Before";
+                                  break;
+                          }
+
+                          echo $msg;
+                          ?></span>
+                <br>
             </div>
 
             <?php
             break;
             case 1:
             ?>
-            <div style="font-size: 12px; position: fixed;left:105mm; top:25mm; z-index:  -1000;">
+            <div style="font-size: 12px; position: fixed;left:105mm; top:20mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
+                <br>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  $msg="Pitch";
+                                  break;
+                              case 'bf_front_view_right':
+                                  $msg="Before Front View Right";
+                                  break;
+                              case 'bf_back_view_right':
+                                  $msg="Before Back View Right";
+                                  break;
+                              case 'bf_front_view_left':
+                                  $msg="Before Front View Left";
+                                  break;
+                              case 'bf_back_view_left':
+                                  $msg="Before Back View Left";
+                                  break;
+                              case 'bf_of_view_left':
+                                  $msg="Before View Left";
+                                  break;
+                              case 'bf_of_view_right':
+                                  $msg="Before View Right";
+                                  break;
+                              default:
+                                  $msg="Before";
+                                  break;
+                          }
+
+                          echo $msg;
+                          ?></span>
+                <br>
             </div>
             <?php
 
@@ -487,48 +555,252 @@ $pics_before=\Modules\Assignments\Entities\Gallery::where([
             case 2:
             ?>
 
-            <div style="font-size: 12px; position: fixed;left:20mm; top:90mm; z-index:  -1000;">
+            <div style="font-size: 12px; position: fixed;left:20mm; top:85mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
+                <br>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  $msg="Pitch";
+                                  break;
+                              case 'bf_front_view_right':
+                                  $msg="Before Front View Right";
+                                  break;
+                              case 'bf_back_view_right':
+                                  $msg="Before Back View Right";
+                                  break;
+                              case 'bf_front_view_left':
+                                  $msg="Before Front View Left";
+                                  break;
+                              case 'bf_back_view_left':
+                                  $msg="Before Back View Left";
+                                  break;
+                              case 'bf_of_view_left':
+                                  $msg="Before View Left";
+                                  break;
+                              case 'bf_of_view_right':
+                                  $msg="Before View Right";
+                                  break;
+                              default:
+                                  $msg="Before";
+                                  break;
+                          }
+
+                          echo $msg;
+                          ?></span>
+                <br>
             </div>
             <?php
 
             break;
             case 3:
             ?>
-            <div style="font-size: 12px; position: fixed;left:105mm; top:90mm; z-index:  -1000;">
+            <div style="font-size: 12px; position: fixed;left:105mm; top:85mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
+                <br>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  $msg="Pitch";
+                                  break;
+                              case 'bf_front_view_right':
+                                  $msg="Before Front View Right";
+                                  break;
+                              case 'bf_back_view_right':
+                                  $msg="Before Back View Right";
+                                  break;
+                              case 'bf_front_view_left':
+                                  $msg="Before Front View Left";
+                                  break;
+                              case 'bf_back_view_left':
+                                  $msg="Before Back View Left";
+                                  break;
+                              case 'bf_of_view_left':
+                                  $msg="Before View Left";
+                                  break;
+                              case 'bf_of_view_right':
+                                  $msg="Before View Right";
+                                  break;
+                              default:
+                                  $msg="Before";
+                                  break;
+                          }
+
+                          echo $msg;
+                          ?></span>
+                <br>
             </div>
             <?php
 
             break;
             case 4:
             ?>
-            <div style="font-size: 12px; position: fixed;left:20mm; top:155mm; z-index:  -1000;">
+            <div style="font-size: 12px; position: fixed;left:20mm; top:150mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
+                <br>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  $msg="Pitch";
+                                  break;
+                              case 'bf_front_view_right':
+                                  $msg="Before Front View Right";
+                                  break;
+                              case 'bf_back_view_right':
+                                  $msg="Before Back View Right";
+                                  break;
+                              case 'bf_front_view_left':
+                                  $msg="Before Front View Left";
+                                  break;
+                              case 'bf_back_view_left':
+                                  $msg="Before Back View Left";
+                                  break;
+                              case 'bf_of_view_left':
+                                  $msg="Before View Left";
+                                  break;
+                              case 'bf_of_view_right':
+                                  $msg="Before View Right";
+                                  break;
+                              default:
+                                  $msg="Before";
+                                  break;
+                          }
+
+                          echo $msg;
+                          ?></span>
+                <br>
             </div>
             <?php
 
             break;
             case 5:
             ?>
-            <div style="font-size: 12px; position: fixed;left:105mm; top:155mm; z-index:  -1000;">
+            <div style="font-size: 12px; position: fixed;left:105mm; top:150mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
+                <br>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  $msg="Pitch";
+                                  break;
+                              case 'bf_front_view_right':
+                                  $msg="Before Front View Right";
+                                  break;
+                              case 'bf_back_view_right':
+                                  $msg="Before Back View Right";
+                                  break;
+                              case 'bf_front_view_left':
+                                  $msg="Before Front View Left";
+                                  break;
+                              case 'bf_back_view_left':
+                                  $msg="Before Back View Left";
+                                  break;
+                              case 'bf_of_view_left':
+                                  $msg="Before View Left";
+                                  break;
+                              case 'bf_of_view_right':
+                                  $msg="Before View Right";
+                                  break;
+                              default:
+                                  $msg="Before";
+                                  break;
+                          }
+
+                          echo $msg;
+                          ?></span>
+                <br>
             </div>
             <?php
 
             break;
             case 6:
             ?>
-            <div style="font-size: 12px; position: fixed;left:20mm; top:220mm; z-index:  -1000;">
+            <div style="font-size: 12px; position: fixed;left:20mm; top:215mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
+                <br>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  $msg="Pitch";
+                                  break;
+                              case 'bf_front_view_right':
+                                  $msg="Before Front View Right";
+                                  break;
+                              case 'bf_back_view_right':
+                                  $msg="Before Back View Right";
+                                  break;
+                              case 'bf_front_view_left':
+                                  $msg="Before Front View Left";
+                                  break;
+                              case 'bf_back_view_left':
+                                  $msg="Before Back View Left";
+                                  break;
+                              case 'bf_of_view_left':
+                                  $msg="Before View Left";
+                                  break;
+                              case 'bf_of_view_right':
+                                  $msg="Before View Right";
+                                  break;
+                              default:
+                                  $msg="Before";
+                                  break;
+                          }
+
+                          echo $msg;
+                          ?></span>
+                <br>
             </div>
             <?php
 
             break;
             case 7:
             ?>
-            <div style="font-size: 12px; position: fixed;left:105mm; top:220mm; z-index:  -1000;">
+            <div style="font-size: 12px; position: fixed;left:105mm; top:215mm; z-index:  -1000;">
                 <img   style="width: 300px; height: 230px;" src="{{$pic_before->b64}}" />
+                <br>
+                <span><?php
+                          $label = $pic_before->label;
+
+                          switch ($label){
+                              case 'pitch':
+                                  $msg="Pitch";
+                                  break;
+                              case 'bf_front_view_right':
+                                  $msg="Before Front View Right";
+                                  break;
+                              case 'bf_back_view_right':
+                                  $msg="Before Back View Right";
+                                  break;
+                              case 'bf_front_view_left':
+                                  $msg="Before Front View Left";
+                                  break;
+                              case 'bf_back_view_left':
+                                  $msg="Before Back View Left";
+                                  break;
+                              case 'bf_of_view_left':
+                                  $msg="Before View Left";
+                                  break;
+                              case 'bf_of_view_right':
+                                  $msg="Before View Right";
+                                  break;
+                              default:
+                                  $msg="Before";
+                                  break;
+                          }
+
+                          echo $msg;
+                          ?></span>
+                <br>
             </div>
             <?php
 
@@ -610,16 +882,78 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     switch ($countAfter){
     case 0:
     ?>
-    <div style="font-size: 12px; position: fixed;left:20mm; top:25mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:20mm; top:20mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
+        <br>
+        <span><?php
+                  $label = $pic_after->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
+        <br>
     </div>
 
     <?php
     break;
     case 1:
     ?>
-    <div style="font-size: 12px; position: fixed;left:105mm; top:25mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:105mm; top:20mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
+        <br>
+        <span><?php
+                  $label = $pic_after->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
+        <br>
     </div>
     <?php
 
@@ -627,48 +961,233 @@ $pics_after =\Modules\Assignments\Entities\Gallery::where([
     case 2:
     ?>
 
-    <div style="font-size: 12px; position: fixed;left:20mm; top:90mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:20mm; top:85mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
+        <br>
+        <span><?php
+                  $label = $pic_after->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
     </div>
     <?php
 
     break;
     case 3:
     ?>
-    <div style="font-size: 12px; position: fixed;left:105mm; top:90mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:105mm; top:85mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
+        <br>
+        <span><?php
+                  $label = $pic_after->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
+        <br>
     </div>
     <?php
 
     break;
     case 4:
     ?>
-    <div style="font-size: 12px; position: fixed;left:20mm; top:155mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:20mm; top:150mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
+        <br>
+        <span><?php
+                  $label = $pic_after->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
+        <br>
     </div>
     <?php
 
     break;
     case 5:
     ?>
-    <div style="font-size: 12px; position: fixed;left:105mm; top:155mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:105mm; top:150mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
+        <br>
+        <span><?php
+                  $label = $pic_after->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
+        <br>
     </div>
     <?php
 
     break;
     case 6:
     ?>
-    <div style="font-size: 12px; position: fixed;left:20mm; top:220mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:20mm; top:215mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
+        <br>
+        <span><?php
+                  $label = $pic_after->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
+        <br>
     </div>
     <?php
 
     break;
     case 7:
     ?>
-    <div style="font-size: 12px; position: fixed;left:105mm; top:220mm; z-index:  -1000;">
+    <div style="font-size: 12px; position: fixed;left:105mm; top:215mm; z-index:  -1000;">
         <img style="width: 300px; height: 230px;" src="{{$pic_after->b64}}" />
+        <br>
+        <span><?php
+                  $label = $pic_after->label;
+
+                  switch ($label){
+                      case 'af_front_view_right':
+                          $msg="After Front View Right";
+                          break;
+                      case 'af_back_view_right':
+                          $msg="After Back View Right";
+                          break;
+                      case 'af_front_view_left':
+                          $msg="After Front View Left";
+                          break;
+                      case 'af_back_view_left':
+                          $msg="After Back View Left";
+                          break;
+                      case 'af_of_view_left':
+                          $msg="After View Left";
+                          break;
+                      case 'af_of_view_right':
+                          $msg="After View Right";
+                          break;
+                      default:
+                          $msg="After";
+                          break;
+                  }
+
+                  echo $msg;
+                  ?></span>
+        <br>
     </div>
     <?php
 

@@ -560,7 +560,7 @@ $total_commission=0;
             dump($row->id);
         }
     }
-    public function script_comission()
+        public function script_comission()
     {
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', '18512M');
