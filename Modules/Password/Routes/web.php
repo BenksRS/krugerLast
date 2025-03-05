@@ -13,4 +13,5 @@
 
 Route::prefix('password')->group(function() {
     Route::get('/', 'PasswordController@index');
+    Route::get('/admin', 'PasswordController@admin');
 });

@@ -17,6 +17,11 @@
         {
             return view('password::index');
         }
+        public function admin (  )
+        {
+            $admin = true;
+            return view('password::index', compact('admin'));
+        }
 
         /**
          * Show the form for creating a new resource.
