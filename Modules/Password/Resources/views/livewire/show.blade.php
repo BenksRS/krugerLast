@@ -85,6 +85,6 @@
          </div>
       </div>
 
-      @livewire('password::modal.form', key('password-modal-form'))
+      @livewire('password::modal.form', ['is_admin' => $is_admin], key('password-modal-form'))
    </div>
 </div>

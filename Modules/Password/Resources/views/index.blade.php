@@ -14,9 +14,5 @@
          </div>
       </div>
    </div>
-   @if(isset($admin) && $admin == TRUE)
-        @livewire('password::show-admin', key('password-show-admin'))
-   @else
-      @livewire('password::show', key('password-show'))
-   @endif
+   @livewire('password::show', ['is_admin' => $admin ?? false], key('password-show'))
 </x-layouts.app>

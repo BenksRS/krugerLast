@@ -15,11 +15,14 @@ class ShowAdmin extends Component {
     {
         $passwords = Password::with(['user_created', 'user_updated'])
             ->where('is_admin', 'Y')
-            ->when($this->search, function($query, $search) {
-                $query->where('name', 'like', '%'.$search.'%');
-                $query->orWhere('url', 'like', '%'.$search.'%');
-                $query->orWhere('username', 'like', '%'.$search.'%');
-            })->orderBy('name')->get();
+            ->where(function($query) {
+                $query->when($this->search, function($query, $search) {
+                    $query->where('name', 'like', '%'.$search.'%')
+                          ->orWhere('url', 'like', '%'.$search.'%')
+                          ->orWhere('username', 'like', '%'.$search.'%');
+                });
+            })
+            ->orderBy('name')->get();
 
         return view('password::livewire.show-admin', compact('passwords'));
     }

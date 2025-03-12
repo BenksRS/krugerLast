@@ -42,7 +42,7 @@
                 Password::create($this->password);
             }
             $this->emit('hideModal');
-            $this->emitTo('password::show', '$refresh');
+            $this->emitTo('password::show-admin', '$refresh');
             $this->reset();
 
         }
