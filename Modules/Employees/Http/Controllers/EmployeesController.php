@@ -1307,6 +1307,9 @@ $total_commission=0;
         foreach ($job_reports as $jobtype) {
             switch ($jobtype->assignment_job_type_id) {
                 case '1': // ROOF TARP
+                case '14': // DAMAGE ASSESSMENT
+                case '20': // PHOTO REQUEST ROOF TARP
+                case '21': // INSPECTION REPLACE
                     $workers = JobReportWorkers::where('assignment_id', $id)->where('job_type_id', $jobtype->assignment_job_type_id)->pluck('worker_id')->toArray();
 
 
