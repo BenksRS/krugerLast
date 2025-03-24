@@ -10,7 +10,7 @@
 
         use HasFactory;
 
-        protected $fillable = ['name', 'description', 'url', 'username', 'password', 'created_by', 'updated_by'];
+        protected $fillable = ['name', 'description', 'url', 'username', 'password', 'is_admin', 'created_by', 'updated_by'];
 
         public function user_created ()
         {

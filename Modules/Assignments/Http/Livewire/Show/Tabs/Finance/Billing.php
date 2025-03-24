@@ -17,7 +17,8 @@ class Billing extends Component
     protected $listeners = [
         'addInvoice' => 'processNewinvoice',
         'invoiceUpdate' => 'processinvoiceUpdate',
-        'editInvoice' => 'processEditinvoice'
+        'editInvoice' => 'processEditinvoice',
+        'disableInvoice' => 'processDisableInvoice'
         ];
     public $assignment;
     public $invoices;
@@ -96,6 +97,13 @@ class Billing extends Component
         $this->invoiceTotal();
 
         $this->showAdd = true;
+    }
+    public function processDisableInvoice($id){
+        if($id == null) return;
+        FinanceBilling::where('id', $id)->update(['type' => 'disable', 'updated_by' => $this->user->id]);
+        $this->invoices = FinanceBilling::where('assignment_id', $this->assignment->id)->orderBy('invoice_id', 'ASC')->orderBy('id', 'DESC')->get();
+        $this->emit('balanceReload');
+
     }
     public function processinvoiceUpdate(){
         $this->invoices = FinanceBilling::where('assignment_id', $this->assignment->id)->orderBy('invoice_id', 'ASC')->orderBy('id', 'DESC')->get();

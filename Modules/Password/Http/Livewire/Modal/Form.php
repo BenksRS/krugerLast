@@ -1,55 +1,69 @@
 <?php
 
-    namespace Modules\Password\Http\Livewire\Modal;
+namespace Modules\Password\Http\Livewire\Modal;
 
-    use Livewire\Component;
-    use Modules\Password\Entities\Password;
+use Livewire\Component;
+use Modules\Password\Entities\Password;
 
-    class Form extends Component {
+class Form extends Component {
 
-        public $password;
+    public    $is_admin = 'N';
 
-        public $password_id;
+    public    $password;
 
-        protected $rules = [
-            'password.name'     => 'required',
-            'password.url'      => 'required',
-            'password.username' => 'required',
-            'password.password' => 'required',
-        ];
+    public    $password_id;
 
-        protected $listeners = ['passwordForm' => 'show'];
+    protected $rules     = [
+        'password.name'     => 'required',
+        'password.url'      => 'required',
+        'password.username' => 'required',
+        'password.password' => 'required',
+    ];
 
-        public function show ( Password $password )
-        {
-            $this->reset();
+    protected $listeners = ['passwordForm' => 'show'];
 
-            if ( $password->id ) {
-                $this->password_id = $password->id;
-                $this->password    = $password;
-            }
-            $this->emit('openModal');
+    public function mount($is_admin = 'N')
+    {
+        $this->is_admin = $is_admin;
+    }
+
+    public function show(Password $password)
+    {
+        $this->resetProperties();
+
+        if ($password->id) {
+            $this->password_id = $password->id;
+            $this->password    = $password;
         }
+        $this->emit('openModal');
+    }
 
-        public function save ()
-        {
-            $this->validate();
+    public function save()
+    {
+        $this->validate();
 
-            if ( $this->password_id ) {
-                $this->password->save();
-            }
-            else {
-                Password::create($this->password);
-            }
-            $this->emit('hideModal');
-            $this->emitTo('password::show', '$refresh');
-            $this->reset();
-
+        if ($this->password_id) {
+            $this->password->save();
+        } else {
+            $this->password['is_admin'] = $this->is_admin;
+            Password::create($this->password);
         }
-
-        public function render ()
-        {
-            return view('password::livewire.modal.form');
-        }
+        
+        $this->emit('hideModal');
+        $this->resetProperties();
+        
+        $this->emitTo('password::show', '$refresh');
 
     }
+
+    protected function resetProperties($properties = ['password', 'password_id'])
+    {
+        $this->reset($properties);
+    }
+
+    public function render()
+    {
+        return view('password::livewire.modal.form');
+    }
+
+}

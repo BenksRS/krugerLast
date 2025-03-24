@@ -11,6 +11,10 @@
 |
 */
 
-Route::prefix('password')->group(function() {
-    Route::get('/', 'PasswordController@index');
+use Illuminate\Support\Facades\Route;
+use Modules\Password\Http\Controllers\PasswordController;
+
+Route::prefix('password')->name('password.')->group(function() {
+    Route::get('/', [PasswordController::class, 'index'])->name('index');
+    Route::get('/admin',[PasswordController::class, 'admin'])->name('admin');
 });
