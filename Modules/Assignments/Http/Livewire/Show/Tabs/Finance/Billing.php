@@ -131,7 +131,7 @@ class Billing extends Component
         $tree_amount_tr=($this->tree_amount != '') ? preg_replace('/[^0-9.]+/', '', $this->tree_amount) : 0;
         $this->tree_amount_tr = $tree_amount_tr;
 
-        $this->invoice_total =number_format($billed_amount_tr - ($fee_amount_tr+$discount_amount_tr+$settlement_amount_tr),2);
+        $this->invoice_total =number_format($billed_amount_tr - ($fee_amount_tr+$discount_amount_tr+$settlement_amount_tr+$collection_fee_amount_tr),2);
     }
 
     public function disabledInvoices($assignment_id, $invoice_id){
