@@ -175,7 +175,7 @@ class Billing extends Component
 
         FinanceBilling::create($data)->save();
 
-        $this->invoice_id = $this->billed_amount = $this->billed_amount_tr = $this->fee_amount = $this->fee_amount_tr = $this->collection_fee_amount_tr =$this->discount_amount = $this->discount_amount_tr = $this->settlement_amount = $this->settlement_amount_tr = $this->billed_date = null;
+        $this->invoice_id = $this->billed_amount = $this->billed_amount_tr = $this->fee_amount = $this->fee_amount_tr = $this->collection_fee_amount = $this->collection_fee_amount_tr =$this->discount_amount = $this->discount_amount_tr = $this->settlement_amount = $this->settlement_amount_tr = $this->billed_date = null;
 //        $this->invoices = FinanceBilling::where('assignment_id', $this->assignment->id)->orderBy('invoice_id', 'ASC')->orderBy('billed_date', 'ASC')->get();
         $this->invoices = FinanceBilling::where('assignment_id', $this->assignment->id)->orderBy('invoice_id', 'ASC')->orderBy('id', 'DESC')->get();
         $this->showAdd = false;
