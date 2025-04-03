@@ -84,6 +84,20 @@
                            @enderror
 
                         </div>
+                        <div class="col-md-6">
+                           <label class="form-label">Collection Fees Amount</label> <input type="text" class="form-control" name="collection_fee_amount"
+                                                                                       placeholder="-$0.00" wire:model.debounce.1000ms="collection_fee_amount" required>
+
+                           <div class="valid-feedback">
+                              Looks good!
+                           </div>
+                           @error('collection_fee_amount')
+                           <div class="invalid-feedback">
+                              Please type a valid option.
+                           </div>
+                           @enderror
+
+                        </div>
                      </div>
                      <div class="row mt-2">
                         <div class="col-md-6">
@@ -180,6 +194,7 @@
                               <td><h5 class="font-size-11 mb-1">Invoice</h5></td>
                               <td><h5 class="font-size-11 mb-1">Billed A.</h5></td>
                               <td><h5 class="font-size-11 mb-1">B. Fees</h5></td>
+                              <td><h5 class="font-size-11 mb-1">C. Fees</h5></td>
                               <td><h5 class="font-size-11 mb-1">Discount</h5></td>
                               <td><h5 class="font-size-11 mb-1">Discount Settlement</h5></td>
                               <td><h5 class="font-size-11 mb-1">Tree Amount*</h5></td>
@@ -207,6 +222,9 @@
                                     </td>
                                     <td>
                                        <p class="text-muted mb-0 font-size-11 text-danger">{{$invoice->fee_amount_view}}</p>
+                                    </td>
+                                    <td>
+                                       <p class="text-muted mb-0 font-size-11 text-danger">{{$invoice->collection_fee_amount_view}}</p>
                                     </td>
                                     <td>
                                        <p class="text-muted mb-0 font-size-11 text-danger">{{$invoice->discount_amount_view}}</p>
@@ -264,6 +282,7 @@
                               <td><h5 class="font-size-11 mb-1">Invoice</h5></td>
                               <td><h5 class="font-size-11 mb-1">Billed A.</h5></td>
                               <td><h5 class="font-size-11 mb-1">B. Fees</h5></td>
+                              <td><h5 class="font-size-11 mb-1">C. Fees</h5></td>
                               <td><h5 class="font-size-11 mb-1">Discount</h5></td>
                               <td><h5 class="font-size-11 mb-1">Discount Settlement</h5></td>
                               <td><h5 class="font-size-11 mb-1">Tree Amount*</h5></td>
@@ -288,6 +307,9 @@
                                     </td>
                                     <td>
                                        <p class="text-muted mb-0 font-size-11 ">{{$invoice->fee_amount_view}}</p>
+                                    </td>
+                                    <td>
+                                       <p class="text-muted mb-0 font-size-11 ">{{$invoice->collection_fee_amount_view}}</p>
                                     </td>
                                     <td>
                                        <p class="text-muted mb-0 font-size-11 ">{{$invoice->discount_amount_view}}</p>

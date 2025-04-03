@@ -31,6 +31,8 @@ class Billing extends Component
     public $billed_amount_tr;
     public $fee_amount;
     public $fee_amount_tr;
+    public $collection_fee_amount;
+    public $collection_fee_amount_tr;
     public $discount_amount;
     public $discount_amount_tr;
     public $settlement_amount;
@@ -47,6 +49,7 @@ class Billing extends Component
     protected $rules = [
         'invoice_id' => 'required',
         'billed_amount_tr' => 'required',
+        'collection_fee_amount_tr' => 'required',
         'fee_amount_tr' => 'required',
         'discount_amount_tr' => 'required',
         'settlement_amount_tr' => 'required'
@@ -72,7 +75,7 @@ class Billing extends Component
     }
     public function updated($field)
     {
-        $array = array('billed_amount', 'fee_amount', 'discount_amount', 'settlement_amount', 'tree_amount');
+        $array = array('billed_amount', 'fee_amount','collection_fee_amount', 'discount_amount', 'settlement_amount', 'tree_amount');
 
         if (in_array($field, $array))
         {
@@ -89,6 +92,7 @@ class Billing extends Component
         $this->invoice_id = $invoice->invoice_id;
         $this->billed_amount = $invoice->billed_amount;
         $this->fee_amount = $invoice->fee_amount;
+        $this->collection_fee_amount = $invoice->collection_fee_amount;
         $this->discount_amount = $invoice->discount_amount;
         $this->settlement_amount = $invoice->settlement_amount;
         $this->billed_date = $invoice->billed_date;
@@ -116,6 +120,9 @@ class Billing extends Component
         $this->billed_amount_tr = $billed_amount_tr;
         $fee_amount_tr=($this->fee_amount != '') ? preg_replace('/[^0-9.]+/', '', $this->fee_amount) : 0;
         $this->fee_amount_tr = $fee_amount_tr;
+        $collection_fee_amount_tr=($this->collection_fee_amount != '') ? preg_replace('/[^0-9.]+/', '', $this->collection_fee_amount) : 0;
+        $this->collection_fee_amount = $collection_fee_amount_tr;
+
         $discount_amount_tr=($this->discount_amount != '') ? preg_replace('/[^0-9.]+/', '', $this->discount_amount) : 0;
         $this->discount_amount_tr = $discount_amount_tr;
         $settlement_amount_tr=($this->settlement_amount != '') ? preg_replace('/[^0-9.]+/', '', $this->settlement_amount) : 0;
@@ -151,6 +158,7 @@ class Billing extends Component
             'updated_by' => $this->user->id,
             'billed_amount' => $this->billed_amount_tr,
             'fee_amount' =>$this->fee_amount_tr,
+            'collection_fee_amount' =>$this->collection_fee_amount_tr,
             'discount_amount' =>$this->discount_amount_tr,
             'settlement_amount' =>$this->settlement_amount_tr,
             'type' => 'active',
@@ -167,7 +175,7 @@ class Billing extends Component
 
         FinanceBilling::create($data)->save();
 
-        $this->invoice_id = $this->billed_amount = $this->billed_amount_tr = $this->fee_amount = $this->fee_amount_tr =$this->discount_amount = $this->discount_amount_tr = $this->settlement_amount = $this->settlement_amount_tr = $this->billed_date = null;
+        $this->invoice_id = $this->billed_amount = $this->billed_amount_tr = $this->fee_amount = $this->fee_amount_tr = $this->collection_fee_amount_tr =$this->discount_amount = $this->discount_amount_tr = $this->settlement_amount = $this->settlement_amount_tr = $this->billed_date = null;
 //        $this->invoices = FinanceBilling::where('assignment_id', $this->assignment->id)->orderBy('invoice_id', 'ASC')->orderBy('billed_date', 'ASC')->get();
         $this->invoices = FinanceBilling::where('assignment_id', $this->assignment->id)->orderBy('invoice_id', 'ASC')->orderBy('id', 'DESC')->get();
         $this->showAdd = false;

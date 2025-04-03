@@ -47,10 +47,11 @@ class AssignmentFinanceRepository extends Assignment {
 
         $billed_amount=$this->invoices->sum('billed_amount');
         $fee_amount=$this->invoices->sum('fee_amount');
+        $collection_fee_amount=$this->invoices->sum('collection_fee_amount');
         $discount_amount=$this->invoices->sum('discount_amount');
         $tree_amount=$this->invoices->sum('tree_amount');
         $settlement_amount=$this->invoices->sum('settlement_amount');
-        $total_discount=($fee_amount + $discount_amount + $settlement_amount);
+        $total_discount=($fee_amount + $discount_amount + $settlement_amount + $collection_fee_amount);
 
         $total_invoice=($billed_amount-$total_discount);
 
@@ -202,6 +203,7 @@ class AssignmentFinanceRepository extends Assignment {
                 'all_discount' => $total_discount,
                 'billed' => $billed_amount,
                 'fees' => $fee_amount,
+                'collection_fees' => $collection_fee_amount,
                 'settlement' => $total_discount,
                 'tree_amount' => $tree_amount,
                 'discount' => $total_discount

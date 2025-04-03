@@ -20,6 +20,7 @@ class FinanceBilling extends Model
         'fee_amount',
         'discount_amount',
         'settlement_amount',
+        'collection_fee_amount',
         'billed_date',
         'type',
         'status',
@@ -32,6 +33,7 @@ class FinanceBilling extends Model
         'updated_at_view',
         'billed_date_view',
         'fee_amount_view',
+        'collection_fee_amount_view',
         'discount_amount_view',
         'settlement_amount_view',
         'invoice_amount',
@@ -102,15 +104,29 @@ class FinanceBilling extends Model
         }
         return $return;
     }
+    public function getCollectionFeeAmountViewAttribute ()
+    {
+        $result = number_format($this->collection_fee_amount, 2);
+        if($this->collection_fee_amount < 0){
+            $return =  "-$$result";
+        }else{
+            if($this->collection_fee_amount == 0){
+                $return =  "-";
+            }else{
+                $return =  "-$$result";
+            }
+        }
+        return $return;
+    }
     public function getInvoiceAmountAttribute ()
     {
-        $total = ($this->billed_amount - ($this->settlement_amount + $this->discount_amount + $this->fee_amount));
+        $total = ($this->billed_amount - ($this->settlement_amount + $this->discount_amount + $this->fee_amount + $this->collection_fee_amount));
         $result = number_format($total, 2);
         return "$$result";
     }
     public function getInvoiceAmountCalcAttribute ()
     {
-        $total = ($this->billed_amount - ($this->settlement_amount + $this->discount_amount + $this->fee_amount));
+        $total = ($this->billed_amount - ($this->settlement_amount + $this->discount_amount + $this->fee_amount  + $this->collection_fee_amount));
         $result = number_format($total, 2);
         return $result;
     }
