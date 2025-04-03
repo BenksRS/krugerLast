@@ -121,7 +121,7 @@ class Billing extends Component
         $fee_amount_tr=($this->fee_amount != '') ? preg_replace('/[^0-9.]+/', '', $this->fee_amount) : 0;
         $this->fee_amount_tr = $fee_amount_tr;
         $collection_fee_amount_tr=($this->collection_fee_amount != '') ? preg_replace('/[^0-9.]+/', '', $this->collection_fee_amount) : 0;
-        $this->collection_fee_amount = $collection_fee_amount_tr;
+        $this->collection_fee_amount_tr = $collection_fee_amount_tr;
 
         $discount_amount_tr=($this->discount_amount != '') ? preg_replace('/[^0-9.]+/', '', $this->discount_amount) : 0;
         $this->discount_amount_tr = $discount_amount_tr;
