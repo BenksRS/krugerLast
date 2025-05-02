@@ -30,6 +30,7 @@
             'Name',
             'Invoices',
             'Status',
+            'projected_lien',
             'days_from_billing',
             'days_from_service',
             'Referral',
