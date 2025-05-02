@@ -19,9 +19,9 @@ return [
     'credentials' => [
         'username' => env('ALACRITY_USERNAME', 'system@callkruger.com'),
 //        test
-//        'password' => env('ALACRITY_PASSWORD', 'Pinhal@4776'),
+//        'password' => env('ALACRITY_PASSWORD', 'x'),
 //    producao e Test
-        'password' => env('ALACRITY_PASSWORD', '4Kruger@4886'),
+        'password' => env('ALACRITY_PASSWORD', '10Kruger@4886'),
         'appName' => env('ALACRITY_APP_NAME', 'Kruger'),
         'version' => env('ALACRITY_VERSION', '1'),
         'token' => env('ALACRITY_TOKEN', '07315C1C-E7E4-458D-BBD2-5ECE3084C5C2'),

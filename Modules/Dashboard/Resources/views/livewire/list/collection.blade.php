@@ -133,7 +133,9 @@
 									@if(in_array('Status', $selectedColumns))
 										<th>Status</th>
 									@endif
-									
+										@if(in_array('projected_lien', $selectedColumns))
+											<th>P. Lien Date</th>
+										@endif
 									@if(in_array('days_from_billing', $selectedColumns))
 										<th>Days from billing</th>
 									@endif
@@ -244,7 +246,10 @@
 												<span class="badge {{strtolower($row->status->name)}}">{{$row->status->name}}</span>
 											</td>
 										@endif
-										
+											@if(in_array('projected_lien', $selectedColumns))
+												<td><p>{{strtolower($row->finance->projected_lien_date_view)}}</p>
+												</td>
+											@endif
 										@if(in_array('days_from_billing', $selectedColumns))
 											<td><p>{{strtolower($row->finance->collection->days_from_billing)}} days</p>
 											</td>
