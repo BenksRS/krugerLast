@@ -146,7 +146,9 @@
                             @if(in_array('Status', $selectedColumns))
                                 <th>Status</th>
                             @endif
-
+                                @if(in_array('projected_lien', $selectedColumns))
+                                    <th>P. Lien Date</th>
+                                @endif
                             @if(in_array('follow_up', $selectedColumns))
                                     <th>Follow up</th>
                                 @endif
@@ -236,6 +238,11 @@
                                 @if(in_array('Status', $selectedColumns))
                                     <td><span class="badge {{strtolower($row->status->name)}}">{{$row->status->name}}</span></td>
                                 @endif
+                                    @if(in_array('projected_lien', $selectedColumns))
+
+                                        <td><p>{{$row->projected_lien_date_view}}</p>
+                                        </td>
+                                    @endif
                                     @if(in_array('follow_up', $selectedColumns))
                                         <td><p><b>{{strtolower($row->follow_up_date)}}</b></p></td>
                                     @endif
