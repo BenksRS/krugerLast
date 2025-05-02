@@ -248,7 +248,7 @@
 										@endif
 											@if(in_array('projected_lien', $selectedColumns))
 
-												<td><p>{{strtolower($row->id)}}</p>
+												<td><p>{{$row->projected_lien_date_view ? projected_lien_date_view : '-'}}</p>
 												</td>
 											@endif
 										@if(in_array('days_from_billing', $selectedColumns))
