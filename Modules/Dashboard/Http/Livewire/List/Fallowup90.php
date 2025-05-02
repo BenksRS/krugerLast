@@ -20,7 +20,7 @@ class Fallowup90 extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $searchAssignment;
-    public $columns = ['Billed Date','Status Collection','Name','Invoices', 'Status','follow_up','days_from_billing','days_from_service', 'Referral','City','State', 'Phone'];
+    public $columns = ['Billed Date','Status Collection','Name','Invoices', 'Status','projected_lien','follow_up','days_from_billing','days_from_service', 'Referral','City','State', 'Phone'];
     public $selectedColumns = [];
     public $selectedRows = 100;
 
