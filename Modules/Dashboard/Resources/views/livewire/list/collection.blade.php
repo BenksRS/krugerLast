@@ -247,6 +247,7 @@
 											</td>
 										@endif
 											@if(in_array('projected_lien', $selectedColumns))
+												@dump($row->finance)
 												<td><p>{{strtolower($row->finance->projected_lien_date_view)}}</p>
 												</td>
 											@endif
