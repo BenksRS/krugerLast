@@ -125,6 +125,9 @@
 	@case('nadal_problem')
 	  @livewire('dashboard::list.nadal-problem', key('dash_list_nadal_problem'))
 	  @break
+	@case('cynthia_review')
+	  @livewire('dashboard::list.cynthia-review', key('dash_list_cynthia_review'))
+	  @break
 	@case('crane_approved')
 	  @livewire('dashboard::list.crane-approved', key('dash_list_crane_approved'))
 	  @break
