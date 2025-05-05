@@ -10,6 +10,8 @@ use Modules\Referrals\Entities\Referral;
 use Modules\Referrals\Repositories\ReferralsRepository;
 use Modules\User\Entities\Marketing;
 
+use Auth;
+
 class ListAll extends Component
 {
     use WithPagination;
