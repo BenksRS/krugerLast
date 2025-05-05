@@ -566,7 +566,7 @@ $total_commission=0;
 //        ini_set('memory_limit', '258512M');
         ini_set('memory_limit', -1);
 
-        $assignmnet = AssignmentFinanceRepository::DateSchedulled('2021-01-01', Carbon::now())->whereIn('status_id', [5, 6, 10, 24, 9])->get();
+        $assignmnet = AssignmentFinanceRepository::DateSchedulled('2023-01-01', Carbon::now())->whereIn('status_id', [5, 6, 10, 24, 9])->get();
 
         foreach ($assignmnet as $row) {
 
