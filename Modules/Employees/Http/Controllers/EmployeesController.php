@@ -563,7 +563,8 @@ $total_commission=0;
         public function script_comission()
     {
         ini_set('max_execution_time', 0);
-        ini_set('memory_limit', '18512M');
+//        ini_set('memory_limit', '258512M');
+        ini_set('memory_limit', -1);
 
         $assignmnet = AssignmentFinanceRepository::DateSchedulled('2021-01-01', Carbon::now())->whereIn('status_id', [5, 6, 10, 24, 9])->get();
 
