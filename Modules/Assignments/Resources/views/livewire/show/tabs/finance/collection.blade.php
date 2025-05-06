@@ -62,9 +62,9 @@
                         <li>
                            <button class="dropdown-item" wire:click="setCollectionStatus(27)" type="button">LAWYER</button>
                         </li>
-                        <li>
+                        {{--<li>
                            <button class="dropdown-item" wire:click="setCollectionStatus(28)" type="button">COLLECTION AGENCY</button>
-                        </li>
+                        </li>--}}
                         {{--<li><button class="dropdown-item" wire:click="setCollectionStatus(29)" type="button">INCLUDED IN SS</button></li>--}}
                         <li>
                            <button class="dropdown-item" wire:click="setCollectionStatus(24)" type="button">CARRIER PAYMENT PENDING</button>
