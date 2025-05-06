@@ -14,8 +14,9 @@ trait ReferralsScope
             });
     }
     public function scopeSearchtopref (Builder $query, $search, $marketing){
+        $marketing = is_array($marketing) ? $marketing : [$marketing];
         return $query
-            ->whereIn('marketing_id', collect($marketing))->whereNotNull('id')
+            ->whereIn('marketing_id', $marketing)->whereNotNull('id')
             ->when($search, function ($query, $search) {
                 $query
                     ->where('company_entity', 'like', '%' .$search . '%')
