@@ -42,7 +42,7 @@ class ListAll extends Component
     public function render()
     {
         $searchAssignment = $this->searchAssignment;
-        $list = ReferralsRepository::Searchtopref($searchAssignment,[2,4,16,49])->where('status', '!=', 'leed')->get();
+        $list = ReferralsRepository::Searchtopref($searchAssignment,[2,4,16,49,126])->where('status', '!=', 'leed')->get();
 
 
 
