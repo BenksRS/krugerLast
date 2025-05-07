@@ -38,7 +38,7 @@ class ListInactives extends Component
     public function render()
     {
         $searchAssignment = $this->searchAssignment;
-        $list = ReferralsRepository::Searchtopref($searchAssignment,$this->selectedMarketing)->whereIn('status',$this->selectedStatus)->get();
+        $list = ReferralsRepository::without(['authorizathions'])->Searchtopref($searchAssignment,$this->selectedMarketing)->whereIn('status',$this->selectedStatus)->get();
 
         $list = $list->sortByDesc('jobs_sent')->sortByDesc('days_last_job');
 

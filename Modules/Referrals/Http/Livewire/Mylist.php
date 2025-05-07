@@ -33,7 +33,7 @@ class Mylist extends Component
     public function render()
     {
         $searchAssignment = $this->searchAssignment;
-        $list = ReferralsRepository::Searchtopref($searchAssignment,$this->user->id)->where('status','!=','leed')->get();
+        $list = ReferralsRepository::without(['authorizathions'])->Searchtopref($searchAssignment,$this->user->id)->where('status','!=','leed')->get();
 
         $items = $list->forPage($this->page, $this->selectedRows);
 
