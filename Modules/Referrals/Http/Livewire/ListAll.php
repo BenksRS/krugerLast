@@ -10,6 +10,8 @@ use Modules\Referrals\Entities\Referral;
 use Modules\Referrals\Repositories\ReferralsRepository;
 use Modules\User\Entities\Marketing;
 
+use Auth;
+
 class ListAll extends Component
 {
     use WithPagination;
@@ -21,11 +23,13 @@ class ListAll extends Component
     public $marketing;
     public $selectedMarketing;
     public $selectedRows = 100;
+    public $user;
 
     public function mount()
     {
         $this->selectedColumns = $this->columns;
         $this->marketing = Marketing::all();
+        $this->user = Auth::user();
         $this->selectedMarketing = $this->marketing->pluck('id')->toArray();
 //        dump($this->columns);
 //        dump($this->selectedMarketing);
@@ -38,7 +42,7 @@ class ListAll extends Component
     public function render()
     {
         $searchAssignment = $this->searchAssignment;
-        $list = ReferralsRepository::Searchtopref($searchAssignment,$this->selectedMarketing)->where('status', '!=', 'leed')->get();
+        $list = ReferralsRepository::without(['authorizathions'])->Searchtopref($searchAssignment,$this->selectedMarketing)->where('status', '!=', 'leed')->get();
 
 
 
