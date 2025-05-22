@@ -162,7 +162,7 @@
                         <option  value="AL">AL</option>
                         <option  value="FL">FL</option>
                         <option  value="LA">LA</option>
-                        <option  value="LA">GA</option>
+                        <option  value="GA">GA</option>
                         <option  value="MS">MS</option>
                         <option  value="NC">NC</option>
                         <option  value="SC">SC</option>
@@ -212,6 +212,7 @@
                     <option  value="FL">FL</option>
                     <option  value="LA">LA</option>
                     <option  value="MS">MS</option>
+                    <option  value="GA">GA</option>
                     <option  value="NC">NC</option>
                     <option  value="SC">SC</option>
                     <option  value="TX">TX</option>
