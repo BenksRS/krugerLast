@@ -158,6 +158,7 @@
                                         <option  value="SC">SC</option>
                                         <option  value="TX">TX</option>
                                         <option  value="GA">GA</option>
+                                        <option  value="MO">MO</option>
 {{--                                    @endforeach--}}
                                 </select>
                             </div>

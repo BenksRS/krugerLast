@@ -167,6 +167,7 @@
                         <option  value="NC">NC</option>
                         <option  value="SC">SC</option>
                         <option  value="TX">TX</option>
+                        <option  value="MO">MO</option>
                         {{--                                    @endforeach--}}
                     </select>
                 </div>
@@ -216,6 +217,7 @@
                     <option  value="NC">NC</option>
                     <option  value="SC">SC</option>
                     <option  value="TX">TX</option>
+                    <option  value="MO">MO</option>
                     {{--                                    @endforeach--}}
                 </select>
             </div>
