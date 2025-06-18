@@ -43,7 +43,7 @@
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
                                         <h6>{{$note->user->name}}<small class="text-muted mb-0" > <i class="mdi mdi-clock-outline me-1"></i>{{$note->created_datetime}}</small></h6>
-                                        <p class="text-muted"><small>{{$note->text}} </small></p>
+                                        <p class="text-muted"><small>{!! $note->text_html !!}</small></p>
                                     </div>
                                 </div>
                             </li>

@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\User\Entities\User;
 
+class Note extends Model {
 
-class Note extends Model
-{
     use HasFactory;
 
     protected $fillable = [
@@ -21,17 +20,32 @@ class Note extends Model
         'created_at',
         'cc_alacnet'
     ];
-    protected $guarded = ['id'];
-    protected $appends  = ['created_datetime'];
+
+    protected $guarded  = ['id'];
+
+    protected $appends  = ['created_datetime', 'text_html'];
 
     public function notable()
     {
         return $this->morphTo();
     }
 
-    public function getCreatedDatetimeAttribute ()
+    public function getCreatedDatetimeAttribute()
     {
         return date('m/d/Y g:i A', strtotime($this->created_at));
+    }
+
+    public function getTextHtmlAttribute()
+    {
+        $escaped = e($this->text);
+
+        // 2. Transforma URLs em links clicáveis
+        $pattern     = '/(https?:\/\/[^\s]+)/i';
+        $replacement = '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>';
+        $linkified   = preg_replace($pattern, $replacement, $escaped);
+
+        // 3. Preserva quebras de linha (\n → <br>)
+        return nl2br($linkified);
     }
 
     public function user()
@@ -43,4 +57,5 @@ class Note extends Model
     {
         return \Modules\Notes\Database\factories\NoteFactory::new();
     }
+
 }
