@@ -278,6 +278,7 @@
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(45)"  type="button">NADAL PROBLEM</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(46)"  type="button">CRANE APPROVED</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(49)"  type="button">CYNTHIA REVIEW</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(50)"  type="button">LANDFILL</button></li>
                                                 @endif
                                             </ul>
                                         </div>
