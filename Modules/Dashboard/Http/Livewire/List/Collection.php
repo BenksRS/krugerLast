@@ -148,7 +148,7 @@
             $this->totalOverDue = number_format($totalOverDue, 2);
             $this->total_collection = number_format($total_collection, 2);
 
-            $list = $list->sortBy('finance.collection.follow_up');
+            $list = $list->sortBy('follow_up');
 
             $items = $list->forPage($this->page, $this->selectedRows);
 
