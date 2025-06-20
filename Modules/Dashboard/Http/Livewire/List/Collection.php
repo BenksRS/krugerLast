@@ -31,6 +31,7 @@
             'Invoices',
             'Status',
             'projected_lien',
+            'follow_up',
             'days_from_billing',
             'days_from_service',
             'Referral',

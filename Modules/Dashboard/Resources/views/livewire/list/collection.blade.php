@@ -136,6 +136,9 @@
 										@if(in_array('projected_lien', $selectedColumns))
 											<th>P. Lien Date</th>
 										@endif
+										@if(in_array('follow_up', $selectedColumns))
+											<th>Follow up</th>
+										@endif
 									@if(in_array('days_from_billing', $selectedColumns))
 										<th>Days from billing</th>
 									@endif
@@ -250,6 +253,9 @@
 
 												<td><p>{{$row->projected_lien_date_view}}</p>
 												</td>
+											@endif
+											@if(in_array('follow_up', $selectedColumns))
+												<td><p><b>{{strtolower($row->follow_up_date)}}</b></p></td>
 											@endif
 										@if(in_array('days_from_billing', $selectedColumns))
 											<td><p>{{strtolower($row->finance->collection->days_from_billing)}} days</p>
@@ -378,4 +384,3 @@
         }
 	</script>
 @endpush
-
