@@ -102,7 +102,7 @@ class FallowUp extends Component
         $total_collection=$list->sum('finance.invoices.total');
         $this->total_collection = number_format($total_collection, 2);
 
-        $list=$list->sortBy($this->sortBy);
+        $list=$list->sortByDesc($this->sortBy);
 
         $items = $list->forPage($this->page, $this->selectedRows);
 
