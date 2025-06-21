@@ -92,17 +92,23 @@ class AuthEdit extends Component
 
     public function saveCustom()
     {
-        foreach($this->customFields as $key => $item){
-            $field_update=FieldAuthorizations::find($key);
+        foreach ($this->customFields as $key => $item) {
 
-            $update['length']=$item['length'];
-            $update['height']=$item['height'];
+            if (empty($item['length']) || empty($item['height'])) {
+                continue;
+            }
 
-            $field_update->update($update);
+            $field_update = FieldAuthorizations::find($key);
+
+            // Só atualiza se encontrar o registro (evita erro se id inválido)
+            if ($field_update) {
+                $update['length'] = $item['length'];
+                $update['height'] = $item['height'];
+                $field_update->update($update);
+            }
         }
 
         $this->refreshCustomfields();
-
     }
     public function refreshCustomfields(){
         $this->authorization = ReferralAuthorization::find($this->auth_id);
