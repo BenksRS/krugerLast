@@ -111,7 +111,7 @@ class AuthEdit extends Component
             }
         }
 
-        $this->refreshCustomfields();
+   /*     $this->refreshCustomfields();*/
     }
     public function refreshCustomfields(){
         $this->authorization = ReferralAuthorization::find($this->auth_id);
