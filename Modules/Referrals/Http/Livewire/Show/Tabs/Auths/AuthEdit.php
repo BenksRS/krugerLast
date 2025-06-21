@@ -67,12 +67,10 @@ class AuthEdit extends Component
         $this->showEditAuth = !$this->showEditAuth;
 
     }
-    public function updated($field, $value)
+    public function updated($field)
     {
         if (str_contains($field, 'customFields')){
-            if(!empty($value)) {
-                $this->saveCustom();
-            }
+            $this->saveCustom();
         }
     }
     public function addField($field){
