@@ -69,6 +69,7 @@ class AuthEdit extends Component
     }
     public function updated($field, $value)
     {
+        dd($field,$value);
         if (str_contains($field, 'customFields')){
             if ($value === '' || $value === null) {
                 return;
@@ -111,7 +112,7 @@ class AuthEdit extends Component
             }
         }
 
-   /*     $this->refreshCustomfields();*/
+        $this->refreshCustomfields();
     }
     public function refreshCustomfields(){
         $this->authorization = ReferralAuthorization::find($this->auth_id);
