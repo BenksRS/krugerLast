@@ -132,7 +132,7 @@ class AuthEdit extends Component
     }
     public function render()
     {
-        $this->refreshCustomfields();
+ /*       $this->refreshCustomfields();*/
         return view('referrals::livewire.show.tabs.auths.auth-edit');
     }
 }
