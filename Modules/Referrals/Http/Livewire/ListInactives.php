@@ -76,11 +76,11 @@ class ListInactives extends Component {
         $searchAssignment = $this->searchAssignment;
         $list             = ReferralsRepository::without(['authorizathions'])->with(['marketing', 'phones'])->Searchtopref($searchAssignment, $this->selectedMarketing)
             ->whereIn('status', $this->selectedStatus)
-            ->whereIn('referral_type_id', [1, 2, 3])
+            /*->whereIn('referral_type_id', [1, 2, 3])*/
             ->get();
 
         $list = $list->sortByDesc('jobs_sent')->sortByDesc('days_last_job');
-        $this->toCollection($list);
+        /*$this->toCollection($list);*/
         $items = $list->forPage($this->page, $this->selectedRows);
 
         $list = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
