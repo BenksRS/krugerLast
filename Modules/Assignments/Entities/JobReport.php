@@ -40,6 +40,9 @@ class JobReport extends Model {
         'mini_use',
         'mini_type',
         'mini_hour',
+        'travel_bobcat',
+        'travel_crane',
+        'travel_miniskid',
         'created_by',
         'updated_by'
     ];

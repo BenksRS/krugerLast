@@ -65,6 +65,9 @@ class TreeRemoval extends Component
     public $mini_hour;
     public $bobcat_type;
     public $bobcat_hour;
+    public $travel_crane;
+    public $travel_bobcat;
+    public $travel_miniskid;
 
     public $workersSelected = [];
 //    public $reportSelected = [];
@@ -119,6 +122,9 @@ class TreeRemoval extends Component
             $this->loads = $this->jobReport->loads;
             $this->bobcat_hour = $this->jobReport->bobcat_hour;
             $this->mini_hour = $this->jobReport->mini_hour;
+            $this->travel_bobcat = $this->jobReport->travel_bobcat;
+            $this->travel_crane = $this->jobReport->travel_crane;
+            $this->travel_miniskid = $this->jobReport->travel_miniskid;
 
 //            $this->workersDB = $this->jobReport->workers->pluck('id');
 //            $this->workersSelected = $this->workersDB->toArray();
@@ -246,6 +252,9 @@ class TreeRemoval extends Component
             'mini_type' =>$this->mini_type,
             'bobcat_hour' =>$this->bobcat_hour,
             'mini_hour' =>$this->mini_hour,
+            'travel_bobcat' =>$this->travel_bobcat,
+            'travel_crane' =>$this->travel_crane,
+            'travel_miniskid' =>$this->travel_miniskid,
             'job_info' =>$this->job_info,
             'created_by' => $this->user->id,
             'updated_by' => $this->user->id
