@@ -17,6 +17,7 @@
                           class="form-control" data-placeholder="Select..."
                           name="ruleData.job_type_id"
                           wire:model.defer="ruleData.job_type_id">
+                           <option value="" selected>Select Job Type</option>
                            @foreach($jobTypes as $jobType)
                               <option value="{{ $jobType->id }}">{{ $jobType->name }}</option>
                            @endforeach
@@ -29,6 +30,7 @@
                           class="form-control" data-placeholder="Select..."
                           name="ruleData.referral_id"
                           wire:model.defer="ruleData.referral_id">
+                           <option value="" selected>Select Referral</option>
                            @foreach($referrals as $referral)
                               <option value="{{ $referral->id }}">{{ $referral->company_entity }}</option>
                            @endforeach
@@ -41,6 +43,7 @@
                           class="form-control" data-placeholder="Select..."
                           name="ruleData.carrier_id"
                           wire:model.defer="ruleData.carrier_id">
+                           <option value="" selected>Select Carrier</option>
                            @foreach($referrals as $referral)
                               <option value="{{ $referral->id }}">{{ $referral->company_entity }}</option>
                            @endforeach
@@ -53,7 +56,7 @@
                           class="form-control" data-placeholder="Select..."
                           name="ruleData.tag_id"
                           wire:model.defer="ruleData.tag_id">
-                           <option value="">Select</option>
+                           <option value="" selected>Select Tag</option>
                            @foreach($tags as $tag)
                               <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                            @endforeach
@@ -66,7 +69,7 @@
                           class="form-control"
                           name="ruleData.note_text"
                           wire:model.defer="ruleData.note_text"
-                          rows="2"></textarea>
+                          rows="4"></textarea>
                         @error('ruleData.note_text') <span class="text-danger">{{ $message }}</span> @enderror
                      </div>
                      <div class="col-md-12" wire:ignore>
@@ -76,8 +79,8 @@
                           name="ruleData.note_type"
                           wire:model.defer="ruleData.note_type"
                           multiple>
-                           <option value="assignment">assignment</option>
                            <option value="tech" selected>tech</option>
+                           <option value="assignment">assignment</option>
                            <option value="finance">finance</option>
                            <option value="billing">billing</option>
                            <option value="payment">payment</option>
