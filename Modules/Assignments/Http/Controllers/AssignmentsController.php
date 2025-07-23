@@ -83,7 +83,19 @@ class AssignmentsController extends Controller {
     {
         return view('assignments::list');
     }
+    public function rules ()
+    {
+        $page_info = (object)[
+            'title' => 'Assignments Rules',
+            'back' => url('assignments'),
+            'back_title' => 'Assignments Rules'
+        ];
+        \session()->flash('page',$page_info);
+        $page =\session()->get('page');
 
+        return view('assignments::rules', compact('page'));
+
+    }
     /**
      * Show the form for creating a new resource.
      * @return Renderable

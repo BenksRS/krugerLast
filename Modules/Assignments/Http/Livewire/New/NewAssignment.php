@@ -10,9 +10,12 @@ use Modules\Assignments\Entities\AssignmentsPhones;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
 use Modules\Referrals\Entities\Referral;
 use Auth;
+use Modules\Assignments\Traits\HandlesAssignmentRules;
 
 class NewAssignment extends Component
 {
+
+    use HandlesAssignmentRules;
 
     protected $listeners = [
         'contentChange' => 'processContent',
@@ -164,6 +167,9 @@ class NewAssignment extends Component
 
         // add phones
         $this->addPhones($created->id);
+
+        // add rules
+        $this->processAssignmentRules($created->id);
 
         if($type == 'next'){
             return redirect()->to('/assignments/new');

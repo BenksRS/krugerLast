@@ -20,9 +20,11 @@ Route::prefix('/assignments')->name('assignments.')->group(function () {
     Route::get('/docsignfile/{id}', [AssignmentsController::class, 'docsignfile'])->name('docsignfile');
 
 
+
 });
 Route::prefix('/general')->name('general.')->group(function () {
     Route::get('/tags', [AssignmentsController::class, 'tags'])->name('tags');
     Route::get('/events', [AssignmentsController::class, 'events'])->name('events');
     Route::get('/signature', [AssignmentsController::class, 'signature'])->name('signature');
+    Route::get('/rules', [AssignmentsController::class, 'rules'])->name('rules');
 });
