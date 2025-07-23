@@ -240,7 +240,17 @@
                            <label for="formrow-crane_amount-input" class="form-label">Crane Amount</label>
                            <input type="text" class="form-control" id="formrow-crane_amount-input" name="crane_amount" placeholder="$0.00" wire:model.debounce.1000ms="crane_amount">
                         </div>
+                        <div class="mb-3">
+                           <label for="formrow-firstname-input" class="form-label">How many hours Crane Travel?</label>
+                           <input type="number" class="form-control" id="formrow-firstname-input" name="travel_crane" wire:model="travel_crane">
+                        </div>
+                        @error('travel_crane')
+                        <div class="invalid-feedback show">
+                           Please input a number > 0.
+                        </div>
+                        @enderror
                      </div>
+
                   @endif
                   <div class="col-lg-12"><hr></div>
                </div>
@@ -300,6 +310,18 @@
                            Please input a number > 0.
                         </div>
                         @enderror
+                     </div>
+                     <div class="col-md-3">
+                        <div class="mb-3 mt-4">
+                           <label for="formrow-firstname-input" class="form-label">How many hours Bobcat Travel?</label>
+                           <input type="number" class="form-control" id="formrow-firstname-input" name="travel_bobcat" wire:model="travel_bobcat">
+                        </div>
+                        @error('travel_bobcat')
+                        <div class="invalid-feedback show">
+                           Please input a number > 0.
+                        </div>
+                        @enderror
+                        </div>
                      </div>
                   @endif
                </div>
@@ -361,7 +383,18 @@
                            Please input a number > 0.
                         </div>
                         @enderror
-                     </div>
+
+                           <div class="mb-3">
+                              <label for="formrow-firstname-input" class="form-label">How many hours Mini Bobcat Travel?</label>
+                              <input type="number" class="form-control" id="formrow-firstname-input" name="travel_miniskid" wire:model="travel_miniskid">
+                           </div>
+                           @error('travel_miniskid')
+                           <div class="invalid-feedback show">
+                              Please input a number > 0.
+                           </div>
+                           @enderror
+                        </div>
+
                   @endif
                </div>
                <div class="col-lg-12">
@@ -479,6 +512,8 @@
                            @if($this->crane == 'Y')
                               <th scope="row">Crane Amount</th>
                               <td colspan="5">${{ $this->crane_amount ?? '0.00' }}</td>
+                              <th scope="row">Crane Travel hours :</th>
+                              <td>{{$this->travel_crane}} hr</td>
                            @else
                               <td colspan="5">
                            @endif
@@ -491,6 +526,8 @@
                               <td>{{$this->bobcat_type}}</td>
                               <th scope="row">How many hours :</th>
                               <td>{{$this->bobcat_hour}} hr</td>
+                              <th scope="row">Bobcat Travel hours :</th>
+                              <td>{{$this->travel_bobcat}} hr</td>
                            @else
                               <td colspan="5">
                            @endif
@@ -504,6 +541,8 @@
                               <td>{{$this->mini_type}}</td>
                               <th scope="row">How many hours :</th>
                               <td>{{$this->mini_hour}} hr</td>
+                              <th scope="row">Mini Bobcat Travel hours :</th>
+                              <td>{{$this->travel_miniskid}} hr</td>
                            @else
                               <td colspan="5">
                            @endif
