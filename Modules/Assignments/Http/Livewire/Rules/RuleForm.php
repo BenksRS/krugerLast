@@ -32,8 +32,8 @@ class RuleForm extends Component
 
     public function mount()
     {
-        $this->jobTypes = AssignmentsJobTypes::where('active', 'y')->get();
-        $this->tags = AssignmentsTags::all();
+        $this->jobTypes = AssignmentsJobTypes::where('active', 'Y')->get();
+        $this->tags = AssignmentsTags::where('active', 'Y')->get();
         $this->referrals = Referral::where('status', 'ACTIVE')->get();
         $this->carriers = []; // carriers vazio conforme solicitado
     }
