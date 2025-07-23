@@ -40,7 +40,7 @@ trait HandlesAssignmentRules {
     protected function getAssignmentRules($assignment)
     {
         // pega todos os tipos de job vinculados
-        $jobTypeIds = $assignment->job_types()->pluck('id');
+        $jobTypeIds = $this->jbSelected->toArray();
 
         return AssignmentsRules::query()
             ->where('active', 'Y')
