@@ -74,7 +74,7 @@
                                        <i class="bx bx-edit"></i> Edit
                                     </button>
                                     <button class="btn btn-danger btn-sm"
-                                            wire:click="$emitTo('assignments.rules.rule-form', 'confirmDelete', {{ $rule->id }})">
+                                            wire:click="$emit('ruleDelete', {{ $rule->id }})">
                                        <i class="bx bx-trash"></i> Delete
                                     </button>
                                  </td>

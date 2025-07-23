@@ -25,10 +25,10 @@ class RuleForm extends Component
         'ruleData.tag_id'      => 'nullable|integer',
         'ruleData.note_text'   => 'required|string',
         'ruleData.note_type'   => 'required|array',
-        'ruleData.active'      => 'required|in:Y,N'
+        'ruleData.active'      => 'required'
     ];
 
-    protected $listeners = ['ruleForm' => 'show'];
+    protected $listeners = ['ruleForm' => 'show', 'ruleDelete' => 'destroy'];
 
     public function mount()
     {
@@ -49,6 +49,13 @@ class RuleForm extends Component
         $this->emit('openModal');
     }
 
+    public function destroy(AssignmentsRules $rule)
+    {
+        $rule->delete();
+        $this->resetProperties();
+        $this->emitTo('assignments::rules.rules', '$refresh');
+    }
+
     public function save()
     {
         $this->validate();
@@ -64,6 +71,8 @@ class RuleForm extends Component
 
         $this->emitTo('assignments::rules.rules', '$refresh');
     }
+
+
 
     protected function resetProperties($properties = ['ruleData', 'ruleId'])
     {
