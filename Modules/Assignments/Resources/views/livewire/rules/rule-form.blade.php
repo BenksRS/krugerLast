@@ -130,8 +130,10 @@
            @this.set(name, value, true)
            });
 
-          Livewire.hook('message.processed', (message, component) => {
-               $('.select-filters').select2({})
+           Livewire.hook('message.processed', (message, component) => {
+               $('.select-filters').select2({
+                   dropdownParent: $('#modal-rule .modal-content')
+               })
            });
 
            const modal = new bootstrap.Modal('#modal-rule', {})
