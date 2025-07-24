@@ -168,7 +168,7 @@ class NewAssignment extends Component
         // add phones
         $this->addPhones($created->id);
 
-        // add rules
+        // Process Assignment Rules
         $this->processAssignmentRules($created->id);
 
         if($type == 'next'){

@@ -12,9 +12,10 @@
                <div class="modal-body">
                   <div class="row g-3">
                      <div class="col-md-12" wire:ignore>
-                        <label class="form-label">Job Type</label>
+                        <label class="form-label" for="rule_job_type_id">Job Type</label>
                         <select
-                          class="form-control" data-placeholder="Select..."
+                          id="rule_job_type_id"
+                          class="form-control select2 select-filters"
                           name="ruleData.job_type_id"
                           wire:model.defer="ruleData.job_type_id">
                            <option value="" selected>Select Job Type</option>
@@ -25,9 +26,10 @@
                         @error('ruleData.job_type_id') <span class="text-danger">{{ $message }}</span> @enderror
                      </div>
                      <div class="col-md-12" wire:ignore>
-                        <label class="form-label">Referral</label>
+                        <label class="form-label" for="rule_referral_id">Referral</label>
                         <select
-                          class="form-control" data-placeholder="Select..."
+                          id="rule_referral_id"
+                          class="form-control select2 select-filters"
                           name="ruleData.referral_id"
                           wire:model.defer="ruleData.referral_id">
                            <option value="" selected>Select Referral</option>
@@ -38,9 +40,10 @@
                         @error('ruleData.referral_id') <span class="text-danger">{{ $message }}</span> @enderror
                      </div>
                      <div class="col-md-12" wire:ignore>
-                        <label class="form-label">Carrier</label>
+                        <label class="form-label" for="rule_carrier_id">Carrier</label>
                         <select
-                          class="form-control" data-placeholder="Select..."
+                          id="rule_carrier_id"
+                          class="form-control select2 select-filters"
                           name="ruleData.carrier_id"
                           wire:model.defer="ruleData.carrier_id">
                            <option value="" selected>Select Carrier</option>
@@ -51,9 +54,10 @@
                         @error('ruleData.carrier_id') <span class="text-danger">{{ $message }}</span> @enderror
                      </div>
                      <div class="col-md-12" wire:ignore>
-                        <label class="form-label">Tag</label>
+                        <label class="form-label" for="rule_tag_id">Tag</label>
                         <select
-                          class="form-control" data-placeholder="Select..."
+                          id="rule_tag_id"
+                          class="form-control select2 select-filters"
                           name="ruleData.tag_id"
                           wire:model.defer="ruleData.tag_id">
                            <option value="" selected>Select Tag</option>
@@ -63,9 +67,10 @@
                         </select>
                         @error('ruleData.tag_id') <span class="text-danger">{{ $message }}</span> @enderror
                      </div>
-                     <div class="col-12" wire:ignore>
-                        <label class="form-label">Note Text</label>
+                     <div class="col-md-12" wire:ignore>
+                        <label class="form-label" for="rule_note_text">Note Text</label>
                         <textarea
+                          id="rule_note_text"
                           class="form-control"
                           name="ruleData.note_text"
                           wire:model.defer="ruleData.note_text"
@@ -73,9 +78,10 @@
                         @error('ruleData.note_text') <span class="text-danger">{{ $message }}</span> @enderror
                      </div>
                      <div class="col-md-12" wire:ignore>
-                        <label class="form-label">Note Type</label>
+                        <label class="form-label" for="rule_note_type">Note Type</label>
                         <select
-                          class="form-control" multiple data-placeholder="Select..."
+                          id="rule_note_type"
+                          class="form-control select2 select-filters" data-placeholder="Select..."
                           name="ruleData.note_type"
                           wire:model.defer="ruleData.note_type"
                           multiple>
@@ -92,8 +98,9 @@
                         @error('ruleData.note_type') <span class="text-danger">{{ $message }}</span> @enderror
                      </div>
                      <div class="col-md-12">
-                        <label class="form-label">Active?</label>
+                        <label class="form-label" for="rule_active">Active?</label>
                         <select
+                          id="rule_active"
                           class="form-control"
                           name="ruleData.active"
                           wire:model.defer="ruleData.active">
@@ -123,9 +130,9 @@
            @this.set(name, value, true)
            });
 
- /*          Livewire.hook('message.processed', (message, component) => {
+          Livewire.hook('message.processed', (message, component) => {
                $('.select-filters').select2({})
-           });*/
+           });
 
            const modal = new bootstrap.Modal('#modal-rule', {})
            Livewire.on('openModal', data => modal.show())
@@ -136,11 +143,16 @@
 
            })
        })
-       $(document).ready(function() {
-           $('.select2').select2({
-               placeholder: "chose..."
-           });
-
-       });
    </script>
+@endpush
+
+@push('css')
+   <style>
+       .select2-dropdown{
+           z-index: 9999 !important;
+       }
+       .select2-container{
+           width: 100% !important;
+       }
+   </style>
 @endpush

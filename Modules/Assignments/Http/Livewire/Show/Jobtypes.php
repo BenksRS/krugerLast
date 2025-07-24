@@ -5,9 +5,11 @@ namespace Modules\Assignments\Http\Livewire\Show;
 use Livewire\Component;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsJobTypes;
+use Modules\Assignments\Traits\HandlesAssignmentRules;
 
 class Jobtypes extends Component
 {
+    use HandlesAssignmentRules;
     public $assignment;
     public $jbSelected;
     public $jbSelectedSingle;
@@ -39,6 +41,9 @@ class Jobtypes extends Component
         $this->assignment = Assignment::find($this->assignment->id);
         $this->jbSelected = $this->assignment->job_types;
         $this->jbSelectedSingle = $this->assignment->job_types()->where('type', 'S')->get();
+
+        // Process Assignment Rules
+        $this->processAssignmentRules($this->assignment->id);
 
         integration('assignments')->set($this->assignment->id);
 

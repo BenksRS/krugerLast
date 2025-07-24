@@ -14,6 +14,7 @@ use Modules\Assignments\Entities\AssignmentsStatusPivot;
 use Modules\Assignments\Entities\AssignmentsTags;
 use Modules\Assignments\Entities\AssugnmentsMylist;
 use Modules\Assignments\Repositories\AssignmentFinanceRepository;
+use Modules\Assignments\Traits\HandlesAssignmentRules;
 use Modules\Notes\Entities\Note;
 use Modules\Referrals\Entities\Referral;
 
@@ -21,6 +22,7 @@ use Auth;
 
 class Header extends Component
 {
+    use HandlesAssignmentRules;
     protected $listeners = [
         'tagsUpdate' => 'processTags',
         'jobtypeUpdate' => 'processJobtype',
@@ -225,6 +227,11 @@ class Header extends Component
             $this->assignment->update($update_status);
 
             $this->assignment = AssignmentFinanceRepository::find($this->assignment->id);
+
+            // Process Assignment Rules
+            if(in_array($newStatus, [1, 11, 12, 33])){
+                $this->processAssignmentRules($this->assignment->id);
+            }
 
             integration('assignments')->set($this->assignment->id);
             $this->emit('updateScheduling');

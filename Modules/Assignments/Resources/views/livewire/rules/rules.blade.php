@@ -97,7 +97,8 @@
             </div>
          </div>
       </div>
-      @livewire('assignments::rules.rule-form', key('rule-modal-form'))
    </div>
+
+   @livewire('assignments::rules.rule-form', [], key('assignments_rule_form'))
 
 </div>

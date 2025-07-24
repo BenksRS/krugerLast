@@ -6,10 +6,12 @@ use Carbon\Carbon;
 use Livewire\Component;
 use Manny\Manny;
 use Modules\Assignments\Entities\Assignment;
+use Modules\Assignments\Traits\HandlesAssignmentRules;
 use Modules\Referrals\Entities\Referral;
 
 class ReferralInfo extends Component
 {
+    use HandlesAssignmentRules;
     public $show = true;
     protected $listeners = [
         'jobtypeUpdate' => 'processJobtype',
@@ -241,11 +243,16 @@ class ReferralInfo extends Component
             $tagId = 39;
         }
 
+
         if ($tagId != NULL && !$tags->contains($tagId)) {
             $this->assignment->tags()->attach($tagId);
-            $this->emit('tagsUpdate', $this->assignment->id);
-            integration('assignments')->set($this->assignment->id);
         }
+
+        // Process Assignment Rules
+        $this->processAssignmentRules($this->assignment->id);
+        
+        $this->emit('tagsUpdate', $this->assignment->id);
+        integration('assignments')->set($this->assignment->id);
     }
     public function update($formData){
         $this->validate();
