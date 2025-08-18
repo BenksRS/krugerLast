@@ -262,11 +262,11 @@
                         <h5 class="font-size-14 mb-4">Did we use Climber?</h5>
                         <div class="form-check mb-3">
                            <input class="form-check-input" type="radio" name="climber" wire:model="climber"
-                                  id="formRadios5" value="N"> <label class="form-check-label" for="formRadios5"> No </label>
+                                  id="formRadios455" value="N"> <label class="form-check-label" for="formRadios455"> No </label>
                         </div>
                         <div class="form-check">
                            <input class="form-check-input" type="radio" name="climber" wire:model="climber"
-                                  id="formRadios6" value="Y"> <label class="form-check-label" for="formRadios6"> Yes </label>
+                                  id="formRadios456" value="Y"> <label class="form-check-label" for="formRadios456"> Yes </label>
                         </div>
                         @error('climber')
                         <div class="invalid-feedback show">
