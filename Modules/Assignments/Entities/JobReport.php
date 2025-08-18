@@ -28,6 +28,8 @@ class JobReport extends Model {
         'wood_chipper',
         'crane',
         'crane_amount',
+        'climber',
+        'climber_amount',
         'bobcat_use',
         'bobcat_type',
         'bobcat_hour',
@@ -76,6 +78,15 @@ class JobReport extends Model {
             // Remove caracteres indesejados (como vírgulas) e atribui o valor formatado
             $cleanValue = preg_replace('/[^0-9.]+/', '', $value);
             $this->attributes['crane_amount'] = $cleanValue;
+        }
+    }
+
+    public function setClimberAmountAttribute($value)
+    {
+        if ($value != null) {
+            // Remove caracteres indesejados (como vírgulas) e atribui o valor formatado
+            $cleanValue = preg_replace('/[^0-9.]+/', '', $value);
+            $this->attributes['climber_amount'] = $cleanValue;
         }
     }
 

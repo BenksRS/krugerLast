@@ -59,6 +59,8 @@ class TreeRemoval extends Component
     public $wood_chipper;
     public $crane;
     public $crane_amount;
+    public $climber;
+    public $climber_amount;
     public $bobcat_use;
     public $mini_use;
     public $mini_type;
@@ -114,6 +116,8 @@ class TreeRemoval extends Component
             $this->wood_chipper = $this->jobReport->wood_chipper;
             $this->crane = $this->jobReport->crane;
             $this->crane_amount = $this->jobReport->crane_amount;
+            $this->climber = $this->jobReport->climber;
+            $this->climber_amount = $this->jobReport->climber_amount;
             $this->bobcat_use = $this->jobReport->bobcat_use;
             $this->mini_use = $this->jobReport->mini_use;
             $this->bobcat_type = $this->jobReport->bobcat_type;
@@ -142,7 +146,7 @@ class TreeRemoval extends Component
     }
     public function updated($field)
     {
-      $arrayAmount = array('crane_amount');
+      $arrayAmount = array('crane_amount', 'climber_amount');
 
         if (in_array($field, $arrayAmount))
         {
@@ -246,6 +250,8 @@ class TreeRemoval extends Component
             'wood_chipper' =>$this->wood_chipper,
             'crane' =>$this->crane,
             'crane_amount' =>$this->crane_amount,
+            'climber' =>$this->climber,
+            'climber_amount' =>$this->climber_amount,
             'bobcat_use' =>$this->bobcat_use,
             'mini_use' =>$this->mini_use,
             'bobcat_type' =>$this->bobcat_type,

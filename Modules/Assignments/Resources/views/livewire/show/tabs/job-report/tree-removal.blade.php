@@ -234,6 +234,7 @@
                      </div>
 
                   </div>
+
                   @if($crane == 'Y')
                      <div class="col-md-3">
                         <div class="mb-3 mt-4">
@@ -249,6 +250,40 @@
                            Please input a number > 0.
                         </div>
                         @enderror
+                     </div>
+
+                  @endif
+                  <div class="col-lg-12"><hr></div>
+               </div>
+
+               <div class="row">
+                  <div class="col-md-3">
+                     <div class="mt-4">
+                        <h5 class="font-size-14 mb-4">Did we use Climber?</h5>
+                        <div class="form-check mb-3">
+                           <input class="form-check-input" type="radio" name="climber" wire:model="climber"
+                                  id="formRadios5" value="N"> <label class="form-check-label" for="formRadios5"> No </label>
+                        </div>
+                        <div class="form-check">
+                           <input class="form-check-input" type="radio" name="climber" wire:model="climber"
+                                  id="formRadios6" value="Y"> <label class="form-check-label" for="formRadios6"> Yes </label>
+                        </div>
+                        @error('climber')
+                        <div class="invalid-feedback show">
+                           Please select a valid option.
+                        </div>
+                        @enderror
+
+                     </div>
+
+                  </div>
+
+                  @if($climber == 'Y')
+                     <div class="col-md-3">
+                        <div class="mb-3 mt-4">
+                           <label for="formrow-climber_amount-input" class="form-label">Climber Amount</label>
+                           <input type="text" class="form-control" id="formrow-climber_amount-input" name="climber_amount" placeholder="$0.00" wire:model.debounce.1000ms="climber_amount">
+                        </div>
                      </div>
 
                   @endif
@@ -515,7 +550,18 @@
                               <th scope="row">Crane Travel hours :</th>
                               <td>{{$this->travel_crane}} hr</td>
                            @else
-                              <td colspan="5">
+                              <td colspan="3"></td>
+                           @endif
+                        </tr>
+                        <tr>
+                           <th scope="row">Did we use Climber? :</th>
+                           <td>{{($this->climber  == 'Y') ? 'Yes' : 'No'}}</td>
+
+                           @if($this->climber == 'Y')
+                              <th scope="row">Climber Amount</th>
+                              <td colspan="5">${{ $this->climber_amount ?? '0.00' }}</td>
+                           @else
+                              <td colspan="5"></td>
                            @endif
                         </tr>
                         <tr>
