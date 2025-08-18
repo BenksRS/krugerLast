@@ -26,6 +26,8 @@ class Account extends Component {
             $this->user->password = $this->password;
             $this->user->save();
 
+            integration('users')->set($this->user->id);
+
             $this->password = NULL;
         }
     }

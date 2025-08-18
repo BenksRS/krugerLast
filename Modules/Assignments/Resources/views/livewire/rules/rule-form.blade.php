@@ -1,5 +1,5 @@
 <div>
-   <div class="modal fade" id="modal-rule"   tabindex="-1" data-focus="false" role="dialog" aria-hidden="true" wire:ignore.self>
+   <div class="modal fade" id="modal-rule" tabindex="-1" aria-labelledby="modal-rule-label" aria-hidden="true" wire:ignore.self>
       <div class="modal-dialog">
          <div class="modal-content">
             <form wire:submit.prevent="save">
@@ -130,9 +130,7 @@
            @this.set(name, value, true)
            });
 
-
-
-          Livewire.hook('message.processed', (message, component) => {
+           Livewire.hook('message.processed', (message, component) => {
                $('.select-filters').select2({
                    dropdownParent: $('#modal-rule .modal-content')
                })

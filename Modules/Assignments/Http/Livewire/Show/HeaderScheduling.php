@@ -10,12 +10,14 @@ use Modules\Assignments\Entities\AssignmentsJobTypes;
 use Modules\Assignments\Entities\AssignmentsScheduling;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
 use Modules\Assignments\Entities\JobReportTarpSizes;
+use Modules\Assignments\Traits\HandlesAssignmentRules;
 use Modules\User\Entities\Techs;
 use Auth;
 use function Ramsey\Uuid\v1;
 
 class HeaderScheduling extends Component
 {
+    use HandlesAssignmentRules;
     protected $listeners = [
         'showButtons' => 'toggleButtons',
         'showDuplicate' => 'toggleDuplicate',
@@ -173,7 +175,8 @@ class HeaderScheduling extends Component
             'notable_type'=>  Assignment::class,
         ]);
 
-
+        // Process Assignment Rules
+        $this->processAssignmentRules($clone->id);
 
         return $this->redirect("/assignments/show/$clone->id");
 
