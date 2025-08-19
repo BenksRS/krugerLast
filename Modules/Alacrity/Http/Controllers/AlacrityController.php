@@ -83,10 +83,10 @@ class AlacrityController extends Controller
     public function getAll()
     {
 			
-       $deleteSession = AlacritySession::first();
-       if($deleteSession){
-           $deleteSession->delete();
-       }
+//       $deleteSession = AlacritySession::first();
+//       if($deleteSession){
+//           $deleteSession->delete();
+//       }
 	    
         $alacrity=alacrity_service()->post('GetAssignmentSummaryList');
 
@@ -190,7 +190,14 @@ class AlacrityController extends Controller
     public function search(){
         $alacrity=alacrity_service()->post('SearchAssignment', [],['SearchString'=> 3300340571]);
 
-        dump($alacrity['AssignmentSummaryList'][0]['AssignmentId']);
+        Log::channel('alacrity')->info('post', [
+            'date' => \Illuminate\Support\Carbon::now()->toDateTimeString(),
+            'user_id' => $this->user->id ?? 73,
+            'user_name' => $this->user->name ?? '---',
+            'arguments' => 'SearchAssignment',
+            'response_status' => $alacrity->status(),
+            'response_message' => $alacrity->json('message'),
+        ]);
     }
 
     public function createJob($AssignmentId)
