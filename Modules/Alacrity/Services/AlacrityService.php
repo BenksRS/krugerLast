@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Modules\Alacrity\Entities\AlacritySession;
+use Auth;
 
 class AlacrityService
 {
 
+    public $user;
     /** 
      * @var mixed
      */
@@ -48,7 +50,7 @@ class AlacrityService
     public function __construct()
     {
         $this->config = Config::get('alacrity');
-
+        $this->user = Auth::user();
 
         $this->baseUrl = $this->config['base_url'];
         $this->credentials = $this->config['credentials'];
@@ -160,8 +162,8 @@ class AlacrityService
 
             Log::channel('alacrity')->info('Authentication completed.', [
                 'date' => Carbon::now()->toDateTimeString(),
-                'user_id' => user()->id ?? 73,
-                'user_name' => user()->name ?? '---'
+                'user_id' => $this->user->id ?? 73,
+                'user_name' => $this->user->name ?? '---'
             ]);
         }
     }
