@@ -6,6 +6,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use Modules\Alacrity\Entities\AlacritySession;
 
 class AlacrityService
@@ -135,6 +136,7 @@ class AlacrityService
     public function authenticate()
     {
 
+
         $this->authData = AlacritySession::query()->first();
 
         if (!$this->authData || strtotime($this->authData['expires_at']) < time()) {
@@ -155,6 +157,12 @@ class AlacrityService
             // Cache the authentication data for 30 minutes
             AlacritySession::query()->delete();
             AlacritySession::create($this->authData);
+
+            Log::channel('alacrity')->info('Authentication completed.', [
+                'date' => Carbon::now()->toDateTimeString(),
+                'user_id' => user()->id ?? 73,
+                'user_name' => user()->name ?? '---'
+            ]);
         }
     }
 

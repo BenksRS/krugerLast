@@ -104,6 +104,11 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+        'alacrity' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/alacrity.log'),
+            'level' => 'info',
+        ],
     ],
 
 ];
