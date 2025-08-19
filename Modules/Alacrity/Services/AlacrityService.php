@@ -73,6 +73,15 @@ class AlacrityService
 
         $response = $this->request($method, $arguments[0], isset($arguments[1]) ? $arguments[1] : [], isset($arguments[2]) ? $arguments[2] : []);
 
+        Log::channel('alacrity')->info($method, [
+            'date' => Carbon::now()->toDateTimeString(),
+            'user_id' => $this->user->id ?? 73,
+            'user_name' => $this->user->name ?? '---',
+            'arguments' => $arguments,
+            'response_status' => $response->status(),
+            'response_message' => $response->json('message'),
+        ]);
+
         if ($response->failed()) {
             throw new \Exception("Alacrity API error: {$response->status()} - {$response->json('message')}");
         }
@@ -160,7 +169,7 @@ class AlacrityService
             AlacritySession::query()->delete();
             AlacritySession::create($this->authData);
 
-            Log::channel('alacrity')->info('Authentication completed.', [
+            Log::channel('alacrity')->info('SignIn | Authentication completed.', [
                 'date' => Carbon::now()->toDateTimeString(),
                 'user_id' => $this->user->id ?? 73,
                 'user_name' => $this->user->name ?? '---'
