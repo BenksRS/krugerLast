@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
 use Manny\Manny;
 use Modules\Alacrity\Entities\AlacrityJobs;
 use Modules\Alacrity\Entities\AlacritySession;
@@ -142,8 +143,20 @@ class AlacrityController extends Controller
 
     public function acceptJob($jobId){
 
+
+
         try {
             $alacrity=alacrity_service()->post('UpdateVendorAcknowledge',['AssignmentId'=> $jobId], ['VendorAccepted'=> True]);
+
+            Log::channel('alacrity')->info('post', [
+                'date' => \Illuminate\Support\Carbon::now()->toDateTimeString(),
+                'user_id' => $this->user->id ?? 73,
+                'user_name' => $this->user->name ?? '---',
+                'arguments' => 'UpdateVendorAcknowledge',
+                'response_status' => $alacrity->status(),
+                'response_message' => $alacrity->json('message'),
+            ]);
+
 
             $now=Carbon::now();
             $QueueDir = AlacrityJobs::where('alacrity_id', $jobId)->first();
