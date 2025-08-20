@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Log;
 use Modules\Alacrity\Entities\AlacritySession;
 use Auth;
 
-class AlacrityService
-{
+class AlacrityService {
 
     public $user;
-    /** 
+
+    /**
      * @var mixed
      */
     protected $config;
@@ -40,8 +40,8 @@ class AlacrityService
      */
     public $authData;
 
-
     public $api;
+
     /**
      * Create a new instance of the AlacrityApiService.
      *
@@ -50,21 +50,22 @@ class AlacrityService
     public function __construct()
     {
         $this->config = Config::get('alacrity');
-        $this->user = Auth::user();
+        $this->user   = Auth::user();
 
-        $this->baseUrl = $this->config['base_url'];
+        $this->baseUrl     = $this->config['base_url'];
         $this->credentials = $this->config['credentials'];
 
         $this->api = Http::withoutVerifying()->withHeaders([
             'Token' => $this->credentials['token'],
-        ])->withOptions(["verify" => false])->baseUrl($this->baseUrl);
+        ])->withOptions(["verify" => FALSE])->baseUrl($this->baseUrl);
     }
 
     /**
      * Handle dynamic method calls to the class.
      *
-     * @param string $method The name of the method being called.
-     * @param array $arguments The arguments being passed to the method.
+     * @param string $method    The name of the method being called.
+     * @param array  $arguments The arguments being passed to the method.
+     *
      * @return mixed The response data.
      * @throws \Exception If the HTTP status code indicates an error.
      */
@@ -74,11 +75,11 @@ class AlacrityService
         $response = $this->request($method, $arguments[0], isset($arguments[1]) ? $arguments[1] : [], isset($arguments[2]) ? $arguments[2] : []);
 
         Log::channel('alacrity')->info($method, [
-            'date' => Carbon::now()->toDateTimeString(),
-            'user_id' => $this->user->id ?? 73,
-            'user_name' => $this->user->name ?? '---',
-            'arguments' => $arguments,
-            'response_status' => $response->status(),
+            'date'             => Carbon::now()->toDateTimeString(),
+            'user_id'          => $this->user->id ?? 73,
+            'user_name'        => $this->user->name ?? '---',
+            'arguments'        => $arguments,
+            'response_status'  => $response->status(),
             'response_message' => $response->json('message'),
         ]);
 
@@ -92,8 +93,9 @@ class AlacrityService
     /**
      * Handle dynamic static method calls to the class.
      *
-     * @param string $method The name of the method being called.
-     * @param array $arguments The arguments being passed to the method.
+     * @param string $method    The name of the method being called.
+     * @param array  $arguments The arguments being passed to the method.
+     *
      * @return mixed The response data.
      * @throws \Exception If the HTTP status code indicates an error.
      */
@@ -107,10 +109,11 @@ class AlacrityService
     /**
      * Send a request to the specified endpoint.
      *
-     * @param string $method The HTTP method to use.
-     * @param string $endpoint The endpoint to send the request to.
-     * @param array|null $data The data to send with the request.
+     * @param string     $method         The HTTP method to use.
+     * @param string     $endpoint       The endpoint to send the request to.
+     * @param array|null $data           The data to send with the request.
      * @param array|null $additionalData Any additional data to send with the request.
+     *
      * @return mixed The response data.
      */
     public function request($method, $endpoint, $data = [], $additionalData = [])
@@ -122,7 +125,7 @@ class AlacrityService
         ];
 
         $baseData = [
-            'UserId' => $this->authData['user_id'] ?? '',
+            'UserId'  => $this->authData['user_id'] ?? '',
             'appName' => $this->credentials['appName'],
             'version' => $this->credentials['version'],
         ];
@@ -135,7 +138,6 @@ class AlacrityService
 
         $response = $this->api->withHeaders($headers)->{$method}($endpoint, $request);
 
-
         return $response;
     }
 
@@ -147,40 +149,48 @@ class AlacrityService
     public function authenticate()
     {
 
-
         $this->authData = AlacritySession::query()->first();
 
-        if (!$this->authData || strtotime($this->authData['expires_at']) < time()) {
+        $now      = Carbon::now();
+        $lifetime = $this->config['session_lifetime'] ?? 5;
 
-            // No authentication data or expired, make a new request to authenticate
-            $response = $this->api->post('SignIn', $this->credentials);
-
-            $userId         = $response->json('UserId');
-            $userSessionId  = $response->header('UserSessionId');
-            $expiresAt      = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . ' + 5 minutes'));
-
-            $this->authData = [
-                'user_id' => $userId,
-                'user_session_id' => $userSessionId,
-                'expires_at' => $expiresAt,
-            ];
-
-            // Cache the authentication data for 30 minutes
-            AlacritySession::query()->delete();
-            AlacritySession::create($this->authData);
-
-            Log::channel('alacrity')->info('SignIn | Authentication completed.', [
-                'date' => Carbon::now()->toDateTimeString(),
-                'user_id' => $this->user->id ?? 73,
-                'user_name' => $this->user->name ?? '---'
-            ]);
+        // Verifica se ainda está dentro do período de 5 dias
+        if ($this->authData && isset($this->authData['expires_at'])) {
+            $expiresAt = Carbon::parse($this->authData['expires_at']);
+            if ($now->lessThan($expiresAt)) {
+                // Ainda não passou 5 dias, não faz nova autenticação
+                return;
+            }
         }
-    }
 
+        // Se não existe authData ou já expirou o prazo de 5 dias, faz nova autenticação
+        $response = $this->api->post('SignIn', $this->credentials);
+
+        $userId        = $response->json('UserId');
+        $userSessionId = $response->header('UserSessionId');
+        // Define expires_at para 5 dias a partir de agora
+        $expiresAt = $now->addDays($lifetime)->toDateTimeString();
+
+        $this->authData = [
+            'user_id'         => $userId,
+            'user_session_id' => $userSessionId,
+            'expires_at'      => $expiresAt,
+        ];
+
+        AlacritySession::query()->delete();
+        AlacritySession::create($this->authData);
+
+        Log::channel('alacrity')->info('SignIn | Authentication completed.', [
+            'date'      => Carbon::now()->toDateTimeString(),
+            'user_id'   => $this->user->id ?? 73,
+            'user_name' => $this->user->name ?? '---'
+        ]);
+    }
 
     private function isSessionExpired($session)
     {
         $expirationDate = Carbon::parse($session->expires_at);
+
         return $expirationDate->isPast();
     }
 
@@ -194,9 +204,9 @@ class AlacrityService
         $lifetime = $this->config['session_lifetime'];
 
         $this->authData = [
-            'user_id' => $response->json('UserId'),
+            'user_id'         => $response->json('UserId'),
             'user_session_id' => $response->header('UserSessionId'),
-            'expires_at' => Carbon::now()->addMinutes($lifetime),
+            'expires_at'      => Carbon::now()->addMinutes($lifetime),
         ];
 
         AlacritySession::query()->delete();
@@ -205,6 +215,7 @@ class AlacrityService
 
     protected function getCacheKeyAuthData()
     {
-        return 'alacrity-auth-data-' . md5($this->credentials['appName']);
+        return 'alacrity-auth-data-'.md5($this->credentials['appName']);
     }
+
 }
