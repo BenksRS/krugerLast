@@ -163,15 +163,17 @@ class AlacrityController extends Controller
             $message="<b>Job Acepted in allacrity:</b> $now";
             $message="$QueueDir->history<br>$message";
 
-            $update=[
-                'history' => $message,
-                'acepted' => 'Y'
-            ];
-            $QueueDir->update($update);
+
 
         } catch (Exception $e) {
             $this->errorHistoryDir($jobId, 'error trying accept alacrity job:', $e->getMessage());
         }
+
+        $update=[
+            'history' => $message,
+            'acepted' => 'Y'
+        ];
+        $QueueDir->update($update);
 
     }
 
