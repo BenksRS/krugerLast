@@ -144,8 +144,6 @@ class AlacrityController extends Controller
     public function acceptJob($jobId){
 
 
-
-        try {
             $alacrity=alacrity_service()->post('UpdateVendorAcknowledge',['AssignmentId'=> $jobId], ['VendorAccepted'=> True]);
 
             Log::channel('alacrity')->info('post', [
@@ -169,16 +167,7 @@ class AlacrityController extends Controller
             ];
             $QueueDir->update($update);
 
-        } catch (Exception $e) {
-            $this->errorHistoryDir($jobId, 'error trying accept alacrity job:', $e->getMessage());
 
-            $QueueDir = AlacrityJobs::where('alacrity_id', $jobId)->first();
-
-            $update=[
-                'acepted' => 'Y'
-            ];
-            $QueueDir->update($update);
-        }
 
     }
 
