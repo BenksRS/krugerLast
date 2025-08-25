@@ -142,7 +142,14 @@ class AlacrityController extends Controller
     }
 
     public function acceptJob($jobId){
-
+        $now=Carbon::now();
+        $QueueDir = AlacrityJobs::where('alacrity_id', $jobId)->first();
+        $message="<b>Job Acepted in allacrity:</b> $now";
+        $update=[
+            'history' => $message,
+            'acepted' => 'Y'
+        ];
+        $QueueDir->update($update);
 
             $alacrity=alacrity_service()->post('UpdateVendorAcknowledge',['AssignmentId'=> $jobId], ['VendorAccepted'=> True]);
 
@@ -154,19 +161,6 @@ class AlacrityController extends Controller
                 'response_status' => $alacrity->status(),
                 'response_message' => $alacrity->json('message'),
             ]);
-
-
-            $now=Carbon::now();
-            $QueueDir = AlacrityJobs::where('alacrity_id', $jobId)->first();
-            debug($QueueDir);
-            $message="<b>Job Acepted in allacrity:</b> $now";
-            $message="$QueueDir->history<br>$message";
-
-            $update=[
-                'history' => $message,
-                'acepted' => 'Y'
-            ];
-            $QueueDir->update($update);
 
 
 
