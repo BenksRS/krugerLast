@@ -158,6 +158,7 @@ class AlacrityController extends Controller
 
             $now=Carbon::now();
             $QueueDir = AlacrityJobs::where('alacrity_id', $jobId)->first();
+            debug($QueueDir);
             $message="<b>Job Acepted in allacrity:</b> $now";
             $message="$QueueDir->history<br>$message";
 
