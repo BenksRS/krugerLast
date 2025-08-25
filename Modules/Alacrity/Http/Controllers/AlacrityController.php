@@ -175,7 +175,6 @@ class AlacrityController extends Controller
             $QueueDir = AlacrityJobs::where('alacrity_id', $jobId)->first();
 
             $update=[
-                'history' => $message,
                 'acepted' => 'Y'
             ];
             $QueueDir->update($update);
