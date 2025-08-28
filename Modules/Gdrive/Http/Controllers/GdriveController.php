@@ -115,10 +115,23 @@ class GdriveController extends Controller
 
 //if(in_array($item->job_types->toArray)
 
-            if($item->job_types->contains(11)){
+
+
+            if($item->job_types->contains(11) ){
                 $status_id= 21;
             }else{
-                $status_id= 4;
+
+                $referralIds = [24];
+                $carrierIds  = [171, 496, 217];
+                if ( in_array($item->carrier_id, $carrierIds)) {
+                    $status_id= 21;
+                }else{
+                    $status_id= 4;
+                }
+
+
+
+
             }
 
 
