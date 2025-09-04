@@ -122,8 +122,22 @@ class AlacrityController extends Controller
         $queue=AlacrityJobs::whereIn('status',['pending', 'processing'])->orderBy('order')->first();
         if(isset($queue)){
             if($queue->status == 'pending'){
+
+                $now=Carbon::now();
+                $message="<b>Job Acepted in allacrity:</b> $now";
+                $update=[
+                    'history' => $message,
+                    'acepted' => 'Y'
+                ];
+                $queue->update($update);
+
+
+
                 // start creating dir
                 $this->createJob($queue->alacrity_id);
+
+
+
             }
         }
 
@@ -144,8 +158,6 @@ class AlacrityController extends Controller
     public function acceptJob($jobId){
 
 
-
-        try {
             $alacrity=alacrity_service()->post('UpdateVendorAcknowledge',['AssignmentId'=> $jobId], ['VendorAccepted'=> True]);
 
             Log::channel('alacrity')->info('post', [
@@ -158,22 +170,6 @@ class AlacrityController extends Controller
             ]);
 
 
-            $now=Carbon::now();
-            $QueueDir = AlacrityJobs::where('alacrity_id', $jobId)->first();
-            $message="<b>Job Acepted in allacrity:</b> $now";
-            $message="$QueueDir->history<br>$message";
-
-
-
-        } catch (Exception $e) {
-            $this->errorHistoryDir($jobId, 'error trying accept alacrity job:', $e->getMessage());
-        }
-
-        $update=[
-            'history' => $message,
-            'acepted' => 'Y'
-        ];
-        $QueueDir->update($update);
 
     }
 
