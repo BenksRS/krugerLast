@@ -20,5 +20,6 @@
     "Charts": true,
     "Car": true,
     "Alacrity": true,
-    "Profile": true
+    "Profile": true,
+    "Activity": true
 }
