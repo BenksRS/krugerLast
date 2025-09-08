@@ -4,8 +4,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-nowrap align-middle table-hover mb-0">
-                    aaa
-                    
+
                     <tbody>
                     @if($listSigns->isNotEmpty())
                         @foreach($listSigns as $sign)
@@ -15,7 +14,7 @@
 
                                 </td>
                                 <td>
-                                    <p>{{$sign->date_signed}}</p>
+                                    <h2>ddd{{$sign->date_signed}}</h2>
                                 </td>
                                 <td>
                                     @if($sign->preferred == 'Y')
