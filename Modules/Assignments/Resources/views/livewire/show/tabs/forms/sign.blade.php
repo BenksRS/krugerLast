@@ -10,6 +10,9 @@
                             <tr>
                                 <td>
                                     <img class="img-thumbnail-sign" alt="200x200"  src="{{$sign->b64}}" data-holder-rendered="true">
+
+                                </td>
+                                <td>
                                     <p>{{$sign->date_signed}}</p>
                                 </td>
                                 <td>
