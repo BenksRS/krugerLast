@@ -14,7 +14,7 @@
 
                                 </td>
                                 <td>
-                                    <h2>{{$sign->date_signed}}</h2>
+                                    <p>{{$sign->date_signed}}</p>
                                 </td>
                                 <td>
                                     @if($sign->preferred == 'Y')
