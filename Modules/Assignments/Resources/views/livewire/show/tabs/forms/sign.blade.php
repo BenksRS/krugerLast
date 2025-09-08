@@ -10,7 +10,7 @@
                             <tr>
                                 <td>
                                     <img class="img-thumbnail-sign" alt="200x200"  src="{{$sign->b64}}" data-holder-rendered="true">
-{{--                                    <p>{{$sign->date_signed}}</p>--}}
+                                    <p>{{$sign->date_signed}}</p>
                                 </td>
                                 <td>
                                     @if($sign->preferred == 'Y')
