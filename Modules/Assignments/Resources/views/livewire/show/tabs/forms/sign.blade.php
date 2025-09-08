@@ -4,6 +4,8 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-nowrap align-middle table-hover mb-0">
+                    aaa
+                    
                     <tbody>
                     @if($listSigns->isNotEmpty())
                         @foreach($listSigns as $sign)
