@@ -300,11 +300,17 @@ trait AssignmentScope {
             });
     }
 
-    public function scopeDateBilled(Builder $query, $date_from, $date_to, $tech_id = NULL, $user_id = NULL)
+    public function scopeDateBilled(Builder $query, $date_from, $date_to, $tech_id = NULL, $user_id = NULL, $job_type = NULL)
     {
         return $query
             ->with('invoices')
             ->with('commissions')
+            ->with('job_types')
+            ->whereHas('job_types', function(Builder $q) use ($job_type) {
+                if ($job_type != NULL) {
+                    $q->whereIn('assignment_job_type_id', [$job_type]);
+                }
+            })
             ->whereHas('commissions', function(Builder $q) use ($user_id) {
                 if ($user_id != NULL) {
                     $q->where('user_id', '=', $user_id);
