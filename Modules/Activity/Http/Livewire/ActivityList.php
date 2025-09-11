@@ -14,7 +14,7 @@ class ActivityList extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $perPage = 10;
+    public $perPage = 100;
     public $date;
 
     public function mount()
