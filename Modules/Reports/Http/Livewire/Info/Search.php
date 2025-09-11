@@ -101,7 +101,7 @@ class Search extends Component
                         $this->list=AssignmentFinanceRepository::DateSchedulled($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                         break;
                     case 'billed':
-                        $this->list=AssignmentFinanceRepository::DateBilled($date_from,$date_to,$this->techSelected,$this->commissionsSelected)->get();
+                        $this->list=AssignmentFinanceRepository::DateBilled($date_from,$date_to,$this->techSelected,$this->commissionsSelected,$this->jtSelected)->get();
                         $this->list = $this->list->where('status_id', 5);
                         if($this->techSelected){
                             $this->list=$this->list->where('scheduling.tech_id', $this->techSelected);
@@ -112,12 +112,12 @@ class Search extends Component
                         break;
                 }
                 if($this->eventSelected){
-//                    dd('eventSelected');
+//
                     $this->list=$this->list->where('event_id', $this->eventSelected);
                 }
 //            if($this->jtSelected){
-//
-//                $this->list=$this->list->whereIn('', $this->jtSelected);
+////                dd($this->jtSelected);
+//                $this->list=$this->list->whereIn('job_types', $this->jtSelected);
 //
 //            }
                 if($this->referralSelected){

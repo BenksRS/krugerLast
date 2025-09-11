@@ -4,13 +4,17 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-nowrap align-middle table-hover mb-0">
+
                     <tbody>
                     @if($listSigns->isNotEmpty())
                         @foreach($listSigns as $sign)
                             <tr>
                                 <td>
                                     <img class="img-thumbnail-sign" alt="200x200"  src="{{$sign->b64}}" data-holder-rendered="true">
-{{--                                    <p>{{$sign->date_signed}}</p>--}}
+
+                                </td>
+                                <td>
+                                    <p>{{$sign->date_signed}}</p>
                                 </td>
                                 <td>
                                     @if($sign->preferred == 'Y')
