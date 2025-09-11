@@ -8,14 +8,15 @@ use Modules\Activity\Entities\ActivityLog;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-class ActivityList extends Component
-{
+class ActivityList extends Component {
+
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
 
-    public $perPage = 100;
-    public $date;
+    public    $perPage         = 100;
+
+    public    $date;
 
     public function mount()
     {
@@ -37,7 +38,8 @@ class ActivityList extends Component
 
     public function render()
     {
-        $logs = ActivityLog::query()
+        $users = [10, 25, 4, 56, 54, 118, 120, 104, 148, 145, 105, 13, 43, 102, 151];
+        $logs  = ActivityLog::query()
             ->select([
                 'user_id',
                 DB::raw('COUNT(*) as total'),
@@ -45,6 +47,7 @@ class ActivityList extends Component
                 DB::raw('MAX(created_at) as last_log'),
                 DB::raw('MAX(ip) as ip')
             ])
+            ->whereIn('user_id', $users)
             ->whereDate('created_at', $this->date)
             ->groupBy('user_id')
             ->with('user')
@@ -55,4 +58,5 @@ class ActivityList extends Component
             'logs' => $logs,
         ]);
     }
+
 }

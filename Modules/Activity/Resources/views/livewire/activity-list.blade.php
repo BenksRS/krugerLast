@@ -50,16 +50,20 @@
                         @forelse($logs as $log)
                            <tr>
                               <td>
-                                 {{ optional($log->user)->name ?? 'N/A' }}
+                                 <a href="javascript:void(0);"
+                                    class="text-primary fw-bold"
+                                    wire:click="$emit('openUserLogs', {{ $log->user_id }}, '{{ $log->user->name }}', '{{ $date }}')">
+                                    {{ optional($log->user)->name ?? 'N/A' }}
+                                 </a>
                               </td>
                               <td class="text-center">
                                  {{ $log->total }}
                               </td>
                               <td class="text-center">
-                                 {{ $log->first_log }}
+                                 {{ \Carbon\Carbon::parse($log->first_log)->format('m/d/Y H:i:s') }}
                               </td>
                               <td class="text-center">
-                                 {{ $log->last_log }}
+                                 {{ \Carbon\Carbon::parse($log->last_log)->format('m/d/Y H:i:s') }}
                               </td>
                               <td class="text-center">
                                  {{ $log->ip }}
@@ -84,4 +88,5 @@
          </div>
       </div>
    </div>
+   @livewire('activity::activity-user', key('activity_user'))
 </div>
