@@ -6,7 +6,7 @@
 
                <div class="row mb-4">
                   <div class="col-12">
-                     <div class="d-flex flex-wrap text-center text-sm-start align-items-center p-4">
+                     <div class="d-flex flex-wrap text-center text-sm-start align-items-center p-2">
 
                         <!-- Botões de navegação -->
                         <div class="d-sm-flex flex-wrap gap-2">
@@ -25,9 +25,7 @@
                         <!-- Data formatada -->
                         <h5 class="m-0 ms-3 fw-bold">
                            {{ \Carbon\Carbon::parse($date)->format('F d, Y') }}
-                           <span class="ms-1 text-secondary opacity-50 fw-normal">
-               {{ \Carbon\Carbon::parse($date)->format('l') }}
-            </span>
+                           <span class="ms-1 text-secondary opacity-50 fw-normal">{{ \Carbon\Carbon::parse($date)->format('l') }}</span>
                         </h5>
 
                      </div>
@@ -36,8 +34,8 @@
 
 
                <div class="table-responsive">
-                  <table class="table align-middle table-nowrap table-hover mb-0">
-                     <thead class="table-light">
+                  <table class="table table-striped table-bordered table-nowrap align-middle table-hover mb-0">
+                     <thead>
                         <tr>
                            <th>User</th>
                            <th class="text-center" style="width: 120px;">Logs</th>

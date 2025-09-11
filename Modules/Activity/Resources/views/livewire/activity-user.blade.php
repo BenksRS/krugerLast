@@ -11,22 +11,22 @@
                </div>
                <div class="modal-body">
                   <div class="table-responsive">
-                     <table class="table table-striped">
+                     <table class="table table-striped table-bordered table-nowrap align-middle">
                         <thead>
                            <tr>
-                              <th>Event</th>
+                              <th width="100px" class="text-center">Event</th>
                               <th>URL</th>
-                              <th>IP</th>
-                              <th>Date</th>
+                              <th width="120px">IP</th>
+                              <th width="170px">Date</th>
                            </tr>
                         </thead>
                         <tbody>
                            @forelse($logs as $log)
                               <tr>
-                                 <td>{{ $log->event }}</td>
+                                 <td class="text-center">{{ $log->event }}</td>
                                  <td>{{ $log->url }}</td>
-                                 <td>{{ $log->ip }}</td>
-                                 <td>{{ \Carbon\Carbon::parse($log->created_at)->format('m/d/Y H:i:s') }}</td>
+                                 <td class="text-center">{{ $log->ip }}</td>
+                                 <td class="text-center">{{ \Carbon\Carbon::parse($log->created_at)->format('m/d/Y H:i:s') }}</td>
                               </tr>
                            @empty
                               <tr>
