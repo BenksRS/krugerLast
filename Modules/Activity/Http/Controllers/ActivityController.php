@@ -8,13 +8,25 @@ use Illuminate\Routing\Controller;
 
 class ActivityController extends Controller
 {
+    public function __construct ()
+    {
+        $this->middleware('auth:user');
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        return view('activity::index');
+        $page_info = (object)[
+            'title' => 'Activity Logs',
+            'back' => url('activity'),
+            'back_title' => 'Activity Logs'
+        ];
+        \session()->flash('page',$page_info);
+        $page =\session()->get('page');
+
+        return view('activity::index', compact('page'));
     }
 
     /**

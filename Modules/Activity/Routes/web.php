@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('activity')->group(function() {
-    Route::get('/', 'ActivityController@index');
+Route::prefix('activity')->name('activity.')->group(function() {
+    Route::get('/', 'ActivityController@index')->name('index');
 });
