@@ -36,6 +36,26 @@ class ActivityList extends Component {
         $this->resetPage();
     }
 
+    public function changeDate($direction)
+    {
+        $date = Carbon::parse($this->date);
+
+        $newDate = match ($direction) {
+            'prev' => $date->subDay(),
+            'next' => $date->addDay(),
+            default => $date,
+        };
+
+        $this->date = $newDate->toDateString();
+
+        $this->resetPage();
+    }
+
+    public function getIsTodayProperty()
+    {
+        return $this->date === now()->toDateString();
+    }
+
     public function render()
     {
         $users = [10, 25, 4, 56, 54, 118, 120, 104, 148, 145, 105, 13, 43, 102, 151];
@@ -51,8 +71,8 @@ class ActivityList extends Component {
             ->whereDate('created_at', $this->date)
             ->groupBy('user_id')
             ->with('user')
-            ->orderBy('last_log', 'desc')
-            ->paginate($this->perPage);
+            ->orderBy('last_log', 'desc')->get();
+/*            ->paginate($this->perPage);*/
 
         return view('activity::livewire.activity-list', [
             'logs' => $logs,

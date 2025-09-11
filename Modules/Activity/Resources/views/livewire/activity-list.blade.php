@@ -12,11 +12,14 @@
                         <div class="d-sm-flex flex-wrap gap-2">
                            <div class="btn-group" role="group" aria-label="Basic example">
                               <button type="button" class="btn btn-primary btn-rounded"
-                                      wire:click.prevent="previousDay">
+                                      wire:click.prevent="changeDate('prev')"
+                                      wire:loading.attr="disabled" wire:target="changeDate">
                                  <i class="calendar-icon ic-arrow-line-left mdi mdi-chevron-left"></i>
                               </button>
                               <button type="button" class="btn btn-primary btn-rounded"
-                                      wire:click.prevent="nextDay">
+                                      wire:click.prevent="changeDate('next')"
+                                      wire:loading.attr="disabled" wire:target="changeDate"
+                                    {{ $this->isToday ? 'disabled' : '' }}>
                                  <i class="calendar-icon ic-arrow-line-right mdi mdi-chevron-right"></i>
                               </button>
                            </div>
@@ -31,9 +34,13 @@
                      </div>
                   </div>
                </div>
+               <div wire:loading.flex class="align-items-center justify-content-center">
+                  <div class="spinner-border text-primary " role="status">
+                     <span class="sr-only">Loading...</span>
+                  </div>
+               </div>
 
-
-               <div class="table-responsive">
+               <div class="table-responsive" wire:loading.remove wire:target="changeDate">
                   <table class="table table-striped table-bordered table-nowrap align-middle table-hover mb-0">
                      <thead>
                         <tr>
@@ -79,7 +86,7 @@
                </div>
 
                <div class="mt-3">
-                  {{ $logs->links() }}
+             {{--     {{ $logs->links() }}--}}
                </div>
 
             </div>
