@@ -279,6 +279,9 @@
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(46)"  type="button">CRANE APPROVED</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(49)"  type="button">CYNTHIA REVIEW</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(53)"  type="button">BAD LEAD</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(54)"  type="button">WAITING ESTIMATE</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(55)"  type="button">ESTIMATE SENT</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(56)"  type="button">LEAD REFUND</button></li>
                                                 @endif
                                             </ul>
                                         </div>

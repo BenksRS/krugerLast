@@ -143,6 +143,15 @@
       @case('bad_lead')
          @livewire('dashboard::list.bad-lead', key('dash_list_bad_lead'))
          @break
+      @case('waiting_estimate')
+         @livewire('dashboard::list.waiting-estimate', key('dash_list_waiting_estimate'))
+         @break
+      @case('estimate_sent')
+         @livewire('dashboard::list.estimate-sent', key('dash_list_estimate_sent'))
+         @break
+      @case('lead_refund')
+         @livewire('dashboard::list.lead-refund', key('dash_list_lead_refund'))
+         @break
       @case('magic_message_sent')
       @case('magic_docusign_sent')
       @case('magic_ready_to_install')
