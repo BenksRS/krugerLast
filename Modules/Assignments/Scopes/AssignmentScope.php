@@ -12,7 +12,7 @@ trait AssignmentScope {
     }
 
     public function scopeOpen(Builder $query,
-        $status = [1, 2, 3, 4, 8, 11, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 28, 14, 29, 27, 33, 34, 35, 37,38,39])
+        $status = [1, 2, 3, 4, 8, 11, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 28, 14, 29, 27, 33, 34, 35, 37,38,39,54,55,56])
     {
 
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
