@@ -140,6 +140,9 @@
       @case('fence')
          @livewire('dashboard::list.fence', key('dash_list_fence'))
          @break
+      @case('bad_lead')
+         @livewire('dashboard::list.bad-lead', key('dash_list_bad_lead'))
+         @break
       @case('magic_message_sent')
       @case('magic_docusign_sent')
       @case('magic_ready_to_install')
