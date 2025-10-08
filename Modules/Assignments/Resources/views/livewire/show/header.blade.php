@@ -240,7 +240,7 @@
                                                     @if(in_array($assignment->status->id,[1, 27, 28]))
                                                         <li><button class="dropdown-item" wire:click="changeStatus(31)" type="button">THIG</button></li>
                                                     @endif
-                                                    <li><button class="dropdown-item" wire:click="changeStatus(32)" type="button">UNIV</button></li>
+                                                    {{--<li><button class="dropdown-item" wire:click="changeStatus(32)" type="button">UNIV</button></li>--}}
 
                                                     @if($assignment->status->id == 4)
                                                         <li><button class="dropdown-item" wire:click="changeStatus(3)" type="button">IN PROGRESS</button></li>
@@ -254,25 +254,25 @@
                                                     @if(in_array(Auth::user()->id,[1, 2, 10]))
                                                         <li><button class="dropdown-item" wire:click="changeStatusCleanUp(34, 16)"  type="button">CLEAN UP CURBSIDE</button></li>
                                                         <li><button class="dropdown-item" wire:click="changeStatusCleanUp(35, 17)"  type="button">CLEAN UP HAUL AWAY</button></li>
-                                                        <li><button class="dropdown-item" wire:click="changeStatusScheduling(47)"  type="button">TREE 3RD</button></li>
+                                                        {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(47)"  type="button">TREE 3RD</button></li>--}}
                                                     @endif
 
                                                     @if($assignment->scheduling || in_array($assignment->status->id,[28, 17]))
-                                                        <li><button class="dropdown-item" wire:click="changeStatusScheduling(27)"  type="button">LATE</button></li>
+                                                        {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(27)"  type="button">LATE</button></li>--}}
                                                     @endif
                                                     <li><button class="dropdown-item" wire:click="changeStatus(20)" type="button">UPLOADING PICS</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatus(4)"  @if(!isset($assignment->scheduling)) disabled @endif type="button">READY TO BILL @if(!isset($assignment->scheduling))  <i class="bx bx-time-five"></i> (MISSING SCHEDULED DATE) @endif   </button></li>
                                                     <li><button class="dropdown-item" wire:click="setPreStatus(7)"  type="button">CLOSED</button></li>
                                                     <li><button class="dropdown-item" wire:click="setPreStatus(26)" type="button">NO CHARGE</button></li>
                                                     <li><button class="dropdown-item" wire:click="setPreStatus(8)"  type="button">NO JOB</button></li>
-                                                    <li><button class="dropdown-item" wire:click="changeStatus(30)"  type="button">LANDLINE</button></li>
-                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(36)"  type="button">EXTREME</button></li>
+                                                    {{--<li><button class="dropdown-item" wire:click="changeStatus(30)"  type="button">LANDLINE</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(36)"  type="button">EXTREME</button></li>--}}
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(37)"  type="button">NOBODY WAS HOME</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(38)"  type="button">CRANE NEEDED</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(39)"  type="button">NOT ENOUGH TIME</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(40)"  type="button">TREE DONE NEED TARP</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(41)"  type="button">TREE EASY</button></li>
-                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(42)"  type="button">NOT CONFIRMED</button></li>
+                                                    {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(42)"  type="button">NOT CONFIRMED</button></li>--}}
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(43)"  type="button">TREE SIGNED</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusMissingAssignment(44)"  type="button">MISSING ASSIGNMENT</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(45)"  type="button">NADAL PROBLEM</button></li>
