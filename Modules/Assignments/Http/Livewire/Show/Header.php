@@ -268,6 +268,22 @@ class Header extends Component
 
             $this->assignment = AssignmentFinanceRepository::find($this->assignment->id);
 
+            if($newStatus == 55) {
+
+                $hoje=Carbon::now();
+                $statutext = "{$hoje} by {$this->user->id}";
+
+                $status= AssignmentsStatus::find($newStatus);
+                $this->assignment->notes()->create([
+                    'text'=> "### CHANGE STATUS TO: $status->name ### $statutext",
+                    'notable_id'=> $this->assignment->id,
+                    'created_by'=> $this->user->id,
+                    'type'=> 'assignment',
+                    'notable_type'=>  Modules\Assignments\Entities\Assignment::class,
+                ]);
+                $this->emit('updateNotes');
+            }
+
             integration('assignments')->set($this->assignment->id);
             $this->emit('updateScheduling');
         }
