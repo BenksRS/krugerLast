@@ -272,7 +272,7 @@ class Header extends Component
 
                 $hoje=Carbon::now();
                 $formatado = $hoje->format('m/d/Y H:i:s');
-                $statutext = "{$formatado} by {$this->user->id}";
+                $statutext = "{$formatado} by {$this->user->name}";
 
                 $status= AssignmentsStatus::find($newStatus);
                 $this->assignment->notes()->create([
