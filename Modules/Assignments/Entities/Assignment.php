@@ -121,6 +121,10 @@ class Assignment extends Model {
     {
         return $this->hasOne(AssignmentsScheduling::class,'assignment_id','id');
     }
+    public function reports()
+    {
+        return $this->hasMany(JobReport::class,'assignment_id','id');
+    }
     public function authorizations ()
     {
         return $this->belongsToMany(ReferralAuthorization::class, 'assignments_authorization_pivot', 'assignment_id', 'authorization_id', 'id');

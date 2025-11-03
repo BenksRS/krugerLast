@@ -71,6 +71,8 @@ class EmployeeRules extends Model
                 break;
             case 'A':
                 $info = "Technician TREE REMOVAL";
+            case 'K':
+                $info = "Technician CRANE";
                 break;
             case 'N':
                 $info = "Technician NO TREE";
@@ -112,6 +114,17 @@ class EmployeeRules extends Model
 
               }
               $info = "Technician TREE REMOVAL- %$p $tech";
+              break;
+          case 'K':
+              $p=$this->porcentagem*100;
+              $explode=explode(',',$this->tech_ids);
+              $tech="";
+              foreach ($explode as $o){
+                  $info=\Modules\User\Entities\User::find($o);
+                  $tech="$tech / $info->name";
+
+              }
+              $info = "Technician CRANE- %$p $tech";
               break;
           case 'N':
               $p=$this->porcentagem*100;

@@ -1,5 +1,5 @@
 <div>
-{{--@dump($assignment->finance)--}}
+
     @if($assignment->referral->status == 'BLOCKED')
 
         <div  class="alert alert-danger" x-init="setTimeout(() => show = false, 3000)">
