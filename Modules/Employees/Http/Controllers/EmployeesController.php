@@ -652,7 +652,7 @@ $total_commission=0;
         $workers = JobReportWorkers::where('assignment_id', $id)->where('job_type_id', 11)->pluck('worker_id')->toArray();
 
         $rulles = EmployeeRules::whereIn('user_id', $workers)
-            ->where('type', 'C')
+            ->where('type', 'K')
             ->get();
 
         $technicians = array();
@@ -665,7 +665,7 @@ $total_commission=0;
         }
         $technicians = array_unique($technicians);
         $full_rulles = EmployeeRules::whereIn('user_id', $technicians)
-            ->where('type', 'C')
+            ->where('type', 'K')
             ->get();
 
         foreach ($full_rulles as $f_rulle) {
