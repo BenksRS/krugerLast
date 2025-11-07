@@ -34,6 +34,10 @@
 		{
 			return $this->getPageInfo('Reports Nadal', 'nadal');
 		}
+        public function estimator()
+        {
+            return $this->getPageInfo('Estimator', 'estimator');
+        }
 		
 		protected function getPageInfo($title, $view = 'info', $back = 'reports', $back_title = 'Reports') {
 		

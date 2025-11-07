@@ -16,4 +16,5 @@ Route::prefix('reports')->name('reports.')->group(function() {
 		Route::get('/tags', 'ReportsController@tags')->name('tags');
         Route::get('/mkt', 'ReportsController@mkt')->name('mkt');
 		Route::get('/nadal', 'ReportsController@nadal')->name('nadal');
+		Route::get('/estimator', 'ReportsController@estimator')->name('estimator');
 });
