@@ -10,7 +10,7 @@ class AssignmentFinanceRepository extends Assignment {
 
     use AssignmentScope;
 
-    protected $with    =['scheduling','referral','commissions','carrier','status','status_collection','event','phones','user_updated','user_created','job_types','invoices', 'payments','tags', 'workers', 'commissions'];
+    protected $with    =['scheduling','referral','commissions','carrier','status','status_collection','event','phones','user_updated','user_created','job_types','invoices', 'payments','tags', 'workers', 'commissions','reports'];
 
     protected $appends = ['finance','follow_up_date', 'lien_date_view', 'projected_lien_date_view'];
 
@@ -18,6 +18,7 @@ class AssignmentFinanceRepository extends Assignment {
     {
         parent::__construct();
     }
+
 
     public function getFollowUpDateAttribute (){
 
@@ -43,6 +44,15 @@ class AssignmentFinanceRepository extends Assignment {
         }
         return $return;
     }
+    public function getCraneValueAttribute (){
+
+        $return = "-";
+        if($this->projected_lien_date){
+            $return = Carbon::createFromFormat('Y-m-d H:i:s', $this->projected_lien_date)->format('m/d/Y');
+        }
+        return $return;
+    }
+
     public function getFinanceAttribute (){
 
         $billed_amount=$this->invoices->sum('billed_amount');
@@ -50,6 +60,7 @@ class AssignmentFinanceRepository extends Assignment {
         $collection_fee_amount=$this->invoices->sum('collection_fee_amount');
         $discount_amount=$this->invoices->sum('discount_amount');
         $tree_amount=$this->invoices->sum('tree_amount');
+        $crane_amount=$this->reports->sum('crane_amount');
         $settlement_amount=$this->invoices->sum('settlement_amount');
         $total_discount=($fee_amount + $discount_amount + $settlement_amount + $collection_fee_amount);
 
@@ -206,6 +217,7 @@ class AssignmentFinanceRepository extends Assignment {
                 'collection_fees' => $collection_fee_amount,
                 'settlement' => $total_discount,
                 'tree_amount' => $tree_amount,
+                'crane_amount' => $crane_amount,
                 'discount' => $total_discount
             ],
             'payments' => (object)[
