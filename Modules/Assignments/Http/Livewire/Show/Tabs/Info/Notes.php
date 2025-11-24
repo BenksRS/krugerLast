@@ -40,7 +40,7 @@ class Notes extends Component
                 $ContactDate=Carbon::createFromFormat('Y-m-d H:i:s', $note->created_at)->subHours(1)->format('Y-m-d H:i:s');
             break;
             default:
-                $ContactDate=Carbon::createFromFormat('Y-m-d H:i:s', $note->created_at)->format('Y-m-d H:i:s');
+                $ContactDate=Carbon::createFromFormat('Y-m-d H:i:s', $note->created_at)->subHours(1)->format('Y-m-d H:i:s');
             break;
         }
 
