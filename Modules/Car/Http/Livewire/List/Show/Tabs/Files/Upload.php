@@ -22,14 +22,18 @@ class Upload extends Component
 
     public function saveFiles()
     {
-
         $carFiles = [];
 
         foreach ($this->files as $file) {
 
-            $imagedata = file_get_contents($file->path());
-            $base64 = base64_encode($imagedata);
-            $b64 = 'data:image/jpeg;base64,' . $base64;
+            $fileData = file_get_contents($file->path());
+
+            // Isto vai retornar 'application/pdf', 'image/png', etc.
+            $mimeType = $file->getMimeType();
+
+            $base64 = base64_encode($fileData);
+
+            $b64 = 'data:' . $mimeType . ';base64,' . $base64;
 
             $carFiles[] = [
                 'car_id' => $this->car,
