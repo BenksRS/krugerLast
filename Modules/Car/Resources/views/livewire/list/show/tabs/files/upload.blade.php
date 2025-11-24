@@ -44,7 +44,7 @@
                                  id="file-path-{{ $file->id }}"
                                  data-path="{{ $file->path }}">
                                 <i class="fa fa-file-pdf-o fa-3x text-danger mb-2"></i>
-                                <span class="text-muted fw-bold" style="font-size: 0.8em;">PDF</span>
+                                <span class="text-muted fw-bold" style="font-size: 3.8em;">PDF</span>
                             </div>
                         @else
                             {{-- Se for Imagem: Mostra Foto --}}
