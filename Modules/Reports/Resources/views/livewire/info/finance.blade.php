@@ -8,7 +8,8 @@
                                                         Total jobs: {{$this->retorno['total']}} (Pending:{{$this->retorno['open']}} - Completed: {{$this->retorno['completed']}} - Closed: {{$this->retorno['closed']}})<br>
                                                         Jobs billed:{{$this->retorno['billing']}} Total Invoices amount: {{$this->retorno['total_billing']}} Average amount: {{$this->retorno['media_billing']}}<br>
                                                         Jobs billed Tree Removal:{{$this->retorno['total_tree_billing']}} <br>
-                                                        Jobs paid: {{$this->retorno['paid']}} Total amount: {{$this->retorno['total_paid']}} Average amount: {{$this->retorno['media_paid']}}
+                                                        Jobs paid: {{$this->retorno['paid']}} Total amount: {{$this->retorno['total_paid']}} Average amount: {{$this->retorno['media_paid']}}<br>
+                                                        Jobs Direct Bill: {{$this->retorno['direct_bill'] ?? 0}}
                                                 @endif
                                         </div>
                                 </div>

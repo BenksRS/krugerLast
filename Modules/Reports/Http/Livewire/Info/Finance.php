@@ -66,6 +66,8 @@ class Finance extends Component
                 $media_jobs_paid=$total_paid/$total_jobs_paid;
             }
 
+            // jobs Direct Bill
+            $total_jobs_direct_bill = count($this->result->where('carrier_id',66));
 
 
 
@@ -80,7 +82,8 @@ class Finance extends Component
                 'media_billing' =>$this->numberFormat($media_jobs_billed),
                 'paid' =>$total_jobs_paid,
                 'total_paid' =>$this->numberFormat($total_paid),
-                'media_paid' =>$this->numberFormat($media_jobs_paid)
+                'media_paid' =>$this->numberFormat($media_jobs_paid),
+                'direct_bill' =>$total_jobs_direct_bill
             ];
         }else{
             $this->retorno=[];
