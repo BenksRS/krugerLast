@@ -48,9 +48,9 @@
                         <li>
                            <button class="dropdown-item" wire:click="setCollectionStatus(9)" type="button">LIEN PLACED</button>
                         </li>
-                        <li>
+             {{--           <li>
                            <button class="dropdown-item" wire:click="setCollectionStatus(19)" type="button">PENDING SOLUTION</button>
-                        </li>
+                        </li>--}}
                         {{--                            <li><button class="dropdown-item" wire:click="setCollectionStatus(21)"  type="button">CALLED</button></li>--}}
                         <li>
                            <button class="dropdown-item" wire:click="setCollectionStatus(22)" type="button">PAYMENT AGREEMENT</button>
@@ -84,6 +84,9 @@
                         </li>
                         <li>
                            <button class="dropdown-item" wire:click="setCollectionStatus(33)" type="button">PAID TO THE INSURED</button>
+                        </li>
+                        <li>
+                           <button class="dropdown-item" wire:click="setCollectionStatus(46)" type="button">JUDGMENT</button>
                         </li>
                      </ul>
                   </div>
