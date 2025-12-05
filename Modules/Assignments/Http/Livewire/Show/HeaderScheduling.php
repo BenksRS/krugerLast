@@ -209,11 +209,14 @@ class HeaderScheduling extends Component
                     break;
             }
 
-            alacrity_service()->post('UpdateDates', ['AssignmentId' => $this->assignment->allacrity_id],
-                ["AssignmentDates" => [
-                    'ScheduledVisitDate' => $ContactDate
-                ]]);
-
+            if(isset($this->assignment->allacrity_id)) {
+                alacrity_service()->post('UpdateDates', ['AssignmentId' => $this->assignment->allacrity_id],
+                    [
+                        "AssignmentDates" => [
+                            'ScheduledVisitDate' => $ContactDate
+                        ]
+                    ]);
+            }
             $this->emit('contentCC');
         }
 

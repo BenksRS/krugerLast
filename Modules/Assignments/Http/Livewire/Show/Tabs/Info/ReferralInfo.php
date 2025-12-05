@@ -86,9 +86,9 @@ class ReferralInfo extends Component
         $this->processCarrier($this->referral_id);
 
     }
-	
+
 	public function alacrityVisitSite($date){
-		
+
 		if($this->assignment->referral->id == 24) {
 			// alacrity time zone
 			switch ($this->assignment->state) {
@@ -100,33 +100,37 @@ class ReferralInfo extends Component
 					$ContactDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('Y-m-d H:i:s');
 					break;
 			}
-			
-			alacrity_service()->post('UpdateDates', ['AssignmentId' => $this->assignment->allacrity_id],
-				["AssignmentDates" => [
-					'VisitDate' => $ContactDate
-				]]);
+
+            if(isset($this->assignment->allacrity_id)) {
+                alacrity_service()->post('UpdateDates', ['AssignmentId' => $this->assignment->allacrity_id],
+                    [
+                        "AssignmentDates" => [
+                            'VisitDate' => $ContactDate
+                        ]
+                    ]);
+            }
 			$this->getCCalacrity();
 			$this->emit('contentCC');
 		}
-		
+
 	}
-	
+
 	public function getVisitDate(){
 		$firstImage = $this->assignment->gallery->first();
 		$firstImageDate = $firstImage->created_at ?? null;
-		
+
 		if($firstImageDate && $this->SI_alacrity == 'No action') {
 			$this->alacrityVisitSite($firstImageDate);
 		}
-		
+
 	}
 
 
     public function getCCalacrity(){
-			
+
         if(isset($this->assignment->allacrity_id)){
-					
-	
+
+
 
             $alacrity=alacrity_service()->post('GetAssignmentDetail', ['AssignmentId'=> $this->assignment->allacrity_id]);
 
@@ -165,7 +169,11 @@ class ReferralInfo extends Component
         }
     }
     public function updateAlacrityId(){
-        $alacrity=alacrity_service()->post('SearchAssignment', [],['SearchString'=> $this->assignment->claim_number]);
+        $claim_number = trim($this->assignment->claim_number);
+        if(!$claim_number){
+              return;
+        }
+        $alacrity=alacrity_service()->post('SearchAssignment', [],['SearchString'=> $claim_number]);
 
         if(isset($alacrity['AssignmentSummaryList'][0])) {
             $formData['allacrity_id'] = $alacrity['AssignmentSummaryList'][0]['AssignmentId'];
@@ -250,7 +258,7 @@ class ReferralInfo extends Component
 
         // Process Assignment Rules
         $this->processAssignmentRules($this->assignment->id);
-        
+
         $this->emit('tagsUpdate', $this->assignment->id);
         integration('assignments')->set($this->assignment->id);
     }
@@ -276,7 +284,7 @@ class ReferralInfo extends Component
         $this->carrier_info = $this->assignment->carrier_info;
         $this->claim_number = $this->assignment->claim_number;
         $this->client_id = $this->assignment->client_id;
-				
+
 				$this->processCarrierTags();
 
         $this->show = true;
