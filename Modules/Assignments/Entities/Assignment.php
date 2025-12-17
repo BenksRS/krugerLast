@@ -81,6 +81,11 @@ class Assignment extends Model {
         return $this->hasMany(AssignmentsPhones::class, 'assignment_id', 'id')->orderBy('preferred', 'asc');
     }
 
+    public function links ()
+    {
+        return $this->hasMany(AssignmentsLinks::class, 'assignment_id', 'id');
+    }
+
     public function job_types ()
     {
         return $this->belongsToMany(AssignmentsJobTypes::class, 'assignments_job_types_pivot', 'assignment_id', 'assignment_job_type_id', 'id');
@@ -296,6 +301,10 @@ class Assignment extends Model {
             return null;
         }
 
+    }
+    public function setStateAttribute ($value)
+    {
+        $this->attributes['state'] = mb_strtoupper($value);
     }
 
     protected static function newFactory ()
