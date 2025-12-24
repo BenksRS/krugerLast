@@ -19,6 +19,7 @@ class General extends Component
     public   $vin;
     public   $year;
     public   $epass;
+    public   $model;
 
     public   $tag_expires;
 
@@ -32,6 +33,7 @@ class General extends Component
         $this->vin = $this->car->vin;
         $this->year = $this->car->year;
         $this->epass = $this->car->epass;
+        $this->model = $this->car->model;
 
         $this->tag_expires = $this->car->tag_expires;
     }
@@ -52,6 +54,7 @@ class General extends Component
         $this->vin = $this->car->vin;
         $this->year = $this->car->year;
         $this->epass = $this->car->epass;
+        $this->model = $this->car->model;
 
         $this->show = true;
     }

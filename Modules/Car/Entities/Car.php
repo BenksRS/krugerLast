@@ -18,6 +18,7 @@ class Car extends Model
         'plate',
         'epass',
         'vin',
+        'model',
         'loan_number',
         'loan_monthly_amount',
         'loan_times',

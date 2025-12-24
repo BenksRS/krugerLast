@@ -22,28 +22,31 @@
                     <table class="table table-nowrap mb-0">
                         <tbody>
                         <tr>
-                            <th scope="row">Make :</th>
+                            <th scope="row">Make:</th>
                             <td>{{$car->make}}</td>
                         </tr>
                         <tr>
-                            <th scope="row">Plate</th>
-                            <td>{{$car->plate}}</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Vin number:</th>
-                            <td>{{$car->vin}}</td>
+                            <th scope="row">Model:</th>
+                            <td>{{$car->model}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Year:</th>
                             <td>{{$car->year}}</td>
                         </tr>
                         <tr>
+                            <th scope="row">Plate:</th>
+                            <td>{{$car->plate}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Vin number:</th>
+                            <td>{{$car->vin}}</td>
+                        </tr>
+                        <tr>
                             <th scope="row">E-pass:</th>
                             <td>{{$car->epass}}</td>
                         </tr>
                         <tr>
-                            <th scope="row">Tag Expires :</th>
+                            <th scope="row">Tag Expires:</th>
                             <td>{{$car->tag_expires}}</td>
                         </tr>
                         <tr>
@@ -80,6 +83,36 @@
 
                         </div>
                         <div class="col-md-12">
+                            <label  class="form-label mt-2">Model:</label>
+                            <input type="text" class="form-control "  name="model"
+                                   placeholder="Model..." wire:model="model"  >
+
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            @error('model')
+                            <div class="invalid-feedback">
+                                Please type Model.
+                            </div>
+                            @enderror
+
+                        </div>
+                        <div class="col-md-12">
+                            <label  class="form-label mt-2">Year:</label>
+                            <input type="text" class="form-control "  name="year"
+                                   placeholder="Year..." wire:model="year"  >
+
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            @error('year')
+                            <div class="invalid-feedback">
+                                Please type Year.
+                            </div>
+                            @enderror
+
+                        </div>
+                        <div class="col-md-12">
                             <label  class="form-label mt-2">Plate:</label>
                             <input type="text" class="form-control "  name="plate"
                                    placeholder="Plate..." wire:model="plate"  >
@@ -105,21 +138,6 @@
                             @error('vin')
                             <div class="invalid-feedback">
                                 Please type Vin number.
-                            </div>
-                            @enderror
-
-                        </div>
-                        <div class="col-md-12">
-                            <label  class="form-label mt-2">Year:</label>
-                            <input type="text" class="form-control "  name="year"
-                                   placeholder="Year..." wire:model="year"  >
-
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            @error('year')
-                            <div class="invalid-feedback">
-                                Please type Year.
                             </div>
                             @enderror
 
