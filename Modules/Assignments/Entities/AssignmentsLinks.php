@@ -14,7 +14,8 @@ class AssignmentsLinks extends Model {
     protected $fillable = [
         'assignment_id',
         'name',
-        'link'
+        'link',
+        'created_by'
     ];
 
     protected $appends  = ['link_view'];
@@ -54,9 +55,16 @@ class AssignmentsLinks extends Model {
         ];
     }
 
-    protected static function newFactory()
+    protected static function boot ()
     {
-        return \Modules\Assignments\Database\factories\AssignmentsPhonesFactory::new();
+        parent::boot();
+
+        $user    = auth()->user();
+        $userId = $user->id ?? 73;
+
+        static::creating(function ( $model ) use ( $userId ) {
+            $model->created_by = $userId;
+        });
     }
 
 }
