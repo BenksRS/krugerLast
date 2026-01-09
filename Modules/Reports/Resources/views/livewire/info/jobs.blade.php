@@ -94,6 +94,9 @@
                                 @if(in_array('Total Invoice Amount', $selectedColumns))
                                     <th>Invoice Amount</th>
                                 @endif
+                                   @if(in_array('State', $selectedColumns))
+                                      <th>Feee Amount</th>
+                                   @endif
                                     @if(in_array('State', $selectedColumns))
                                         <th>Tree Amount</th>
                                     @endif
@@ -237,6 +240,13 @@
                                             @endif
                                         </td>
                                     @endif
+                                       @if(in_array('State', $selectedColumns))
+                                          <td>
+                                             @if(isset($row->finance->invoices->fee_amount))
+                                                <p>${{$row->finance->invoices->fee_amount}}</p>
+                                             @endif
+                                          </td>
+                                       @endif
                                         @if(in_array('State', $selectedColumns))
                                             <td>
                                                 @if(isset($row->finance->invoices->tree_amount))
