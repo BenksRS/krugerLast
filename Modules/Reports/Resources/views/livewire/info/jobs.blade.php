@@ -95,7 +95,7 @@
                                     <th>Invoice Amount</th>
                                 @endif
                                    @if(in_array('State', $selectedColumns))
-                                      <th>Feee Amount</th>
+                                      <th>Fee Amount</th>
                                    @endif
                                     @if(in_array('State', $selectedColumns))
                                         <th>Tree Amount</th>
