@@ -242,8 +242,8 @@
                                     @endif
                                        @if(in_array('State', $selectedColumns))
                                           <td>
-                                             @if(isset($row->finance->invoices->fee_amount))
-                                                <p>${{$row->finance->invoices->fee_amount}}</p>
+                                             @if(isset($row->finance->invoices->fees))
+                                                <p>${{$row->finance->invoices->fees}}</p>
                                              @endif
                                           </td>
                                        @endif
