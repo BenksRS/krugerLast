@@ -80,27 +80,9 @@
                         <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100 listtable">
                             <thead>
                             <tr>
-                                @if(in_array('Auto', $selectedColumns))
-                                    <th>Auto</th>
-                                @endif
-                                @if(in_array('Auto', $selectedColumns))
-                                    <th>Driver</th>
-                                @endif
-                                @if(in_array('Auto', $selectedColumns))
-                                    <th>E-pass</th>
-                                @endif
-                                @if(in_array('Auto', $selectedColumns))
-                                    <th>Plate</th>
-                                @endif
-                                @if(in_array('Auto', $selectedColumns))
-                                    <th>Tag Expires</th>
-                                @endif
-                                @if(in_array('Auto', $selectedColumns))
-                                    <th>Insurance Expires</th>
-                                @endif
-                                @if(in_array('Auto', $selectedColumns))
-                                    <th>VIN</th>
-                                @endif
+                                @foreach($selectedColumns as $column)
+                                    <th>{{ $column }}</th>
+                                @endforeach
                             </tr>
 
                             </thead>
@@ -123,22 +105,22 @@
                                     @if(in_array('Auto', $selectedColumns))
                                         <td><p><a href="{{url('cars/show/'.$row->id)}}">{{$row->auto}}</a></p></td>
                                     @endif
-                                    @if(in_array('Auto', $selectedColumns))
+                                    @if(in_array('Driver', $selectedColumns))
                                         <td><p>{{$row->driver}}</p></td>
                                     @endif
-                                    @if(in_array('Auto', $selectedColumns))
+                                    @if(in_array('E-pass', $selectedColumns))
                                         <td><p>{{$row->epass}}</p></td>
                                     @endif
-                                    @if(in_array('Auto', $selectedColumns))
+                                    @if(in_array('Plate', $selectedColumns))
                                         <td><p>{{$row->plate}}</p></td>
                                     @endif
-                                    @if(in_array('Auto', $selectedColumns))
+                                    @if(in_array('Tag Expires', $selectedColumns))
                                         <td><p>{{$row->tag_expires}}</p></td>
                                     @endif
-                                    @if(in_array('Auto', $selectedColumns))
+                                    @if(in_array('Insurance Expires', $selectedColumns))
                                         <td><p>{{$row->insurance_expires}}</p></td>
                                     @endif
-                                    @if(in_array('Auto', $selectedColumns))
+                                    @if(in_array('VIN', $selectedColumns))
                                         <td><p>{{$row->vin}}</p></td>
                                     @endif
                                 </tr>
