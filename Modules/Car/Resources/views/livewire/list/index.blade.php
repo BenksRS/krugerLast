@@ -80,9 +80,27 @@
                         <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100 listtable">
                             <thead>
                             <tr>
-                                @foreach($selectedColumns as $column)
-                                    <th>{{ $column }}</th>
-                                @endforeach
+                                @if(in_array('Auto', $selectedColumns))
+                                    <th>Auto</th>
+                                @endif
+                                @if(in_array('Driver', $selectedColumns))
+                                    <th>Driver</th>
+                                @endif
+                                @if(in_array('E-pass', $selectedColumns))
+                                    <th>E-pass</th>
+                                @endif
+                                @if(in_array('Plate', $selectedColumns))
+                                    <th>Plate</th>
+                                @endif
+                                @if(in_array('Tag Expires', $selectedColumns))
+                                    <th>Tag Expires</th>
+                                @endif
+                                @if(in_array('Insurance Expires', $selectedColumns))
+                                    <th>Insurance Expires</th>
+                                @endif
+                                @if(in_array('VIN', $selectedColumns))
+                                    <th>VIN</th>
+                                @endif
                             </tr>
 
                             </thead>
