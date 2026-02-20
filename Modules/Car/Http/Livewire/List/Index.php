@@ -23,7 +23,7 @@ class Index extends Component
 
 
 
-    public $columns = ['Auto','Driver','E-pass','Plate','Tag Expires','VIN'];
+    public $columns = ['Auto','Driver','E-pass','Plate','Tag Expires','Insurance Expires','VIN'];
     public $selectedColumns = [];
     public $selectedRows = 100;
 

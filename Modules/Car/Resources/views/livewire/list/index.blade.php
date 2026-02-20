@@ -60,6 +60,9 @@
                                         <li class="list-group-item">
                                             <label> <input type="radio" wire:model="sortBy" value="tag_expires">TAG EXPIRES</label>
                                         </li>
+                                        <li class="list-group-item">
+                                            <label> <input type="radio" wire:model="sortBy" value="insurance_expires">INSURANCE EXPIRES</label>
+                                        </li>
                                     </ul>
                                 </div>
                                 </div>
