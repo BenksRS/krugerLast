@@ -93,6 +93,9 @@
                                     <th>Tag Expires</th>
                                 @endif
                                 @if(in_array('Auto', $selectedColumns))
+                                    <th>Insurance Expires</th>
+                                @endif
+                                @if(in_array('Auto', $selectedColumns))
                                     <th>VIN</th>
                                 @endif
                             </tr>
@@ -128,6 +131,9 @@
                                     @endif
                                     @if(in_array('Auto', $selectedColumns))
                                         <td><p>{{$row->tag_expires}}</p></td>
+                                    @endif
+                                    @if(in_array('Auto', $selectedColumns))
+                                        <td><p>{{$row->insurance_expires}}</p></td>
                                     @endif
                                     @if(in_array('Auto', $selectedColumns))
                                         <td><p>{{$row->vin}}</p></td>

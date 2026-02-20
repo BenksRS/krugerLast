@@ -22,16 +22,16 @@
                     <table class="table table-nowrap mb-0">
                         <tbody>
                         <tr>
-                            <th scope="row">Insurance policy :</th>
+                            <th scope="row">Insurance policy:</th>
                             <td>{{$car->insurance_policy}}</td>
                         </tr>
                         <tr>
-                            <th scope="row">Insurance Amount Monthly</th>
+                            <th scope="row">Insurance Amount Monthly:</th>
                             <td>${{$car->insurance_amount_monthly}}</td>
                         </tr>
 
                         <tr>
-                            <th scope="row">Insurance Expires :</th>
+                            <th scope="row">Insurance Expires:</th>
                             <td>{{$car->insurance_expires}}</td>
                         </tr>
 
