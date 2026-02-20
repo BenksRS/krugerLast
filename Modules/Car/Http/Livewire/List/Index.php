@@ -51,7 +51,9 @@ class Index extends Component
         $searchAssignment = $this->searchAssignment;
         $list = CarRepository::Searchtop($searchAssignment)->get();
 
-        $list=$list->sortByDesc($this->sortBy);
+        if($this->sortBy) {
+            $list = $list->sortByDesc($this->sortBy);
+        }
 
         $items = $list->forPage($this->page, $this->selectedRows);
 
