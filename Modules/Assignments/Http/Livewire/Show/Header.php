@@ -274,14 +274,14 @@ class Header extends Component
                 $formatado = $hoje->format('m/d/Y H:i:s');
                 $statutext = "{$formatado} by {$this->user->name}";
 
-                $status= AssignmentsStatus::find($newStatus);
+/*                $status= AssignmentsStatus::find($newStatus);
                 $this->assignment->notes()->create([
                     'text'=> "### CHANGE STATUS TO: $status->name ### $statutext",
                     'notable_id'=> $this->assignment->id,
                     'created_by'=> $this->user->id,
                     'type'=> 'assignment',
                     'notable_type'=>  Modules\Assignments\Entities\Assignment::class,
-                ]);
+                ]);*/
                 $this->emit('updateNotes');
             }
 
