@@ -52,7 +52,7 @@ return [
                     'status.new' => ['nojob_review', 'in_progress', 'uploading', 'uploading_pics'],
                 ],
                 'remote.delete' => [
-                    'status.new' => ['nojob_review', 'delete', 'uploading_pics'],
+                    'status.new' => ['nojob_review', 'delete', 'uploading_pics', 'estimate_sent'],
                 ],
             ],
         ],
