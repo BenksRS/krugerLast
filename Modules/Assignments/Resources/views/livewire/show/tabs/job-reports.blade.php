@@ -53,6 +53,18 @@
                                 @endif
 
                                 @foreach($assignment->job_types as $job_types)
+                                    @if($job_types->id == 26 && !$assignment->job_types->contains('id', 25))
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="report-heading-25">
+                                                <button class="accordion-button fw-medium {{($count+1==0) ? ' ' : 'collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#report-collapse-25" aria-expanded="{{($count+1==0) ? 'true' : 'false' }}" aria-controls="report-collapse-25">
+                                                    TREE ESTIMATE
+                                                </button>
+                                            </h2>
+                                            <div id="report-collapse-25" class="accordion-collapse collapse {{($count+1==0) ? ' show' : ' ' }}" aria-labelledby="report-heading-25" data-bs-parent="#accordionJobReports">
+                                                @livewire('assignments::show.tabs.job-report.tree-estimate', ['assignment' => $assignment->id, 'job_type' => 25], key("jobreport_TREE ESTIMATE"))
+                                            </div>
+                                        </div>
+                                    @endif
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="report-heading-{{$job_types->id}}">
                                             <button class="accordion-button fw-medium {{($count==0) ? ' ' : 'collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#report-collapse-{{$job_types->id}}" aria-expanded="{{($count==0) ? 'true' : 'false' }}" aria-controls="report-collapse-{{$job_types->id}}">
