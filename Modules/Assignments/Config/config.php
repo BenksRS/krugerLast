@@ -24,5 +24,8 @@
 				'af_of_view_left'     => 'View Left',
 				'af_of_view_right'    => 'View Right',
 			]
-		]
+		],
+        'sign' => [
+            'blank' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAANQTFRF////p8QbyAAAAApJREFUeJxjYAAAAAIAAUivpHEAAAAASUVORK5CYII=',
+        ]
 	];

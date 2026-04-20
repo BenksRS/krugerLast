@@ -18,6 +18,8 @@ class Lists extends Component
 
     public $authorizations;
     public $quee_forms;
+    
+    protected $listeners = ['$refresh'];
 
 
     public function mount(Assignment $assignment)
