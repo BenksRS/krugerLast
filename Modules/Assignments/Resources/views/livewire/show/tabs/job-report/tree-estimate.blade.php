@@ -38,9 +38,9 @@
                               <div class="col-auto float-start">
                                  <div class="form-check form-checkbox-outline form-check-primary mb-3">
                                     @if($workersDB)
-                                       <input class="form-check-input" type="radio" id="checkWorker{{$wk->user->id}}" name="marketing" wire:click="syncWorkers({{$wk->user->id}})" value="{{$wk->user->id}}"  {{ $workersDB->contains($wk->user->id) ? 'checked=""' : '' }}">
+                                       <input class="form-check-input" type="checkbox" id="checkWorker{{$wk->user->id}}" wire:click="syncWorkers({{$wk->user->id}})" value="{{$wk->user->id}}"  {{ $workersDB->contains($wk->user->id) ? 'checked=""' : '' }}">
                                     @else
-                                       <input class="form-check-input" type="radio" id="checkWorker{{$wk->user->id}}" name="marketing" wire:click="syncWorkers({{$wk->user->id}})" value="{{$wk->user->id}}">
+                                       <input class="form-check-input" type="checkbox" id="checkWorker{{$wk->user->id}}" wire:click="syncWorkers({{$wk->user->id}})" value="{{$wk->user->id}}"  >
                                     @endif
                                     <label class="form-check-label" for="checkWorker{{$wk->user->id}}">
                                        {{$wk->user->name}}

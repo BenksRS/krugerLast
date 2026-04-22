@@ -98,13 +98,21 @@ class TreeEstimate extends Component {
         }
     }
 
-    public function getCheckboxInfo()
+    public function getCheckboxInfo2()
     {
         // O pluck() já garante que $workersDB será uma Collection (com itens ou vazia)
         $this->workersDB = JobReportWorkers::where('assignment_id', $this->assignment->id)->where('job_type_id', $this->jobType_id)->pluck('worker_id');
 
         // A sua checagem de isNotEmpty() é perfeita aqui para evitar consultas desnecessárias!
         $this->workersSelected = $this->workersDB->isNotEmpty() ? User::whereIn('id', $this->workersDB)->get() : collect();
+    }
+
+    public function getCheckboxInfo(){
+
+        $this->workersDB = JobReportWorkers::where('assignment_id',$this->assignment->id)->where('job_type_id', $this->jobType_id)->pluck('worker_id');
+
+        $this->workersSelected = User::whereIn('id', $this->workersDB)->get();
+
     }
 
     public function processEditreport($jobType_id)
@@ -145,7 +153,7 @@ class TreeEstimate extends Component {
         $this->getCheckboxInfo();
     }
 
-    public function syncWorkers($id)
+    public function syncWorkers2($id)
     {
 
         if ($this->workersDB->contains($id)) {
@@ -178,6 +186,25 @@ class TreeEstimate extends Component {
         }
 
         $this->workersDB = JobReportWorkers::where('assignment_id', $this->assignment->id)->where('job_type_id', $this->jobType_id)->pluck('worker_id');*/
+    }
+
+    public function syncWorkers($id){
+
+        $checkWorker = JobReportWorkers::where('assignment_id',$this->assignment->id)->where('job_type_id', $this->jobType_id)->where('worker_id', $id)->get();
+
+        if(count($checkWorker) > 0){
+            foreach ($checkWorker as $row){
+                $row->delete();
+            }
+        }else{
+            JobReportWorkers::create([
+                'worker_id' => $id,
+                'job_type_id' => $this->jobType_id,
+                'assignment_id' => $this->assignment->id,
+            ])->save();
+        }
+
+        $this->workersDB = JobReportWorkers::where('assignment_id',$this->assignment->id)->where('job_type_id', $this->jobType_id)->pluck('worker_id');
     }
 
     public function processSelect2() {}
