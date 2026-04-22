@@ -117,8 +117,10 @@ class GdriveController extends Controller
 
 
 
-            if($item->job_types->contains(11) ){
-                $status_id= 21;
+            if($item->job_types->contains(11) ) {
+                $status_id = 21;
+            }elseif($item->job_types->contains(25) ) {
+                $status_id = 55;
             }else{
 
                 $referralIds = [24];
