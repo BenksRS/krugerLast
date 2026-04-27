@@ -55,10 +55,10 @@ class TreeEstimate extends Component {
     public    $workersSelected = [];
 
     protected $rulesReport     = [
-        'plywoods'     => 'required',
+/*        'plywoods'     => 'required',
         's2x4x8'       => 'required',
         's2x4x12'      => 'required',
-        's2x4x16'      => 'required',
+        's2x4x16'      => 'required',*/
         'service_date' => 'required',
     ];
 
