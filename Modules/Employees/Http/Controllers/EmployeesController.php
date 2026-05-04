@@ -1199,8 +1199,8 @@ $total_commission=0;
                     EmployeeCommissions::create($date)->save();
                 }
                 break;
-            case 'A': //Technician TREE
-
+            case 'D': //Technician TREE direct
+//dsdssd
 //                dump($assignment->finance);
 
                 if (is_null($assignment->finance->collection->paid_date)) {
@@ -1268,7 +1268,7 @@ $total_commission=0;
                     EmployeeCommissions::create($date)->save();
                 }
                 break;
-            case 'D': //Technician TREE direct
+            case 'A': //Technician TREE
 
 //                dump($assignment->finance);
 
