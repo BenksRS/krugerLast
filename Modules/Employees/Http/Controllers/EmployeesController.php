@@ -729,8 +729,10 @@ $total_commission=0;
     public function comission_technician_tree_rules($id)
     {
 
+        $jobs_list=array(11,26);
+
         $assignment = AssignmentFinanceRepository::find($id);
-        $workers = JobReportWorkers::where('assignment_id', $id)->where('job_type_id', 11)->pluck('worker_id')->toArray();
+        $workers = JobReportWorkers::where('assignment_id', $id)->whereIn('job_type_id',$jobs_list)->pluck('worker_id')->toArray();
 
         $rulles = EmployeeRules::whereIn('user_id', $workers)
             ->where('type', 'A')
