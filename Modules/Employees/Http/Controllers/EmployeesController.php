@@ -586,6 +586,7 @@ $total_commission=0;
 
         $this->comission_technician_rules($id);
         $this->comission_technician_crane_rules($id);
+        $this->comission_sell_tree_estimate_rules($id);
         $this->comission_technician_tree_rules($id);
         $this->comission_technician_no_tree_rules($id);
 
@@ -666,6 +667,46 @@ $total_commission=0;
         $technicians = array_unique($technicians);
         $full_rulles = EmployeeRules::whereIn('user_id', $technicians)
             ->where('type', 'K')
+            ->get();
+
+        foreach ($full_rulles as $f_rulle) {
+
+            $check_start_date = (!empty($assignment->scheduling->start_date) && ($assignment->scheduling->start_date > $f_rulle->start_date)) ? TRUE : FALSE;
+
+
+            if (is_null($f_rulle->end_date)) {
+                $check_end_date = TRUE;
+            } else {
+                $check_end_date = (!empty($assignment->scheduling->start_date) && ($f_rulle->end_date >= $assignment->scheduling->start_date)) ? TRUE : FALSE;
+            }
+
+            if ($check_start_date === TRUE && $check_end_date === TRUE) {
+
+                $this->apply_comission_rule($f_rulle->id, $id, "JOB");
+            }
+        }
+    }
+    public function comission_sell_tree_estimate_rules($id)
+    {
+
+        $assignment = AssignmentFinanceRepository::find($id);
+        $workers = JobReportWorkers::where('assignment_id', $id)->where('job_type_id', 25)->pluck('worker_id')->toArray();
+
+        $rulles = EmployeeRules::whereIn('user_id', $workers)
+            ->where('type', 'B')
+            ->get();
+
+        $technicians = array();
+        foreach ($rulles as $rulle) {
+
+            $tech = explode(',', $rulle->tech_ids);
+            foreach ($tech as $t) {
+                $technicians[] = $t;
+            }
+        }
+        $technicians = array_unique($technicians);
+        $full_rulles = EmployeeRules::whereIn('user_id', $technicians)
+            ->where('type', 'B')
             ->get();
 
         foreach ($full_rulles as $f_rulle) {
@@ -1018,6 +1059,72 @@ $total_commission=0;
 
                 if ($exist_comission == true) {
                     // insert
+
+                    // check if might be updated
+                    if (in_array($comission->status, $status_comission_changed)) {
+                        $date['user_id'] = $rule->user_id;
+                        $date['assignment_id'] = $assignment->id;
+                        if ($job_type_id != 'JOB') {
+                            $date['job_type'] = $job_type_id;
+                        }
+                        $date['amount'] = $valor;
+                        $date['status'] = $status;
+                        $date['rule_id'] = $rule->id;
+                        $date['due_month'] = $due_month;
+                        $date['due_year'] = $due_year;
+                        $comission->update($date);
+                    }
+                } else {
+                    $date['user_id'] = $rule->user_id;
+                    $date['assignment_id'] = $assignment->id;
+                    if ($job_type_id != 'JOB') {
+                        $date['job_type'] = $job_type_id;
+                    }
+                    $date['amount'] = $valor;
+                    $date['status'] = $status;
+                    $date['rule_id'] = $rule->id;
+                    $date['due_month'] = $due_month;
+                    $date['due_year'] = $due_year;
+
+                    EmployeeCommissions::create($date)->save();
+                }
+                break;
+            case 'B': //Technician TREE
+
+                if (is_null($assignment->finance->collection->paid_date)) {
+                    $due_date = $assignment->finance->collection->billed_date;
+                    $due_month = null;
+                    $due_year = null;
+                    $status = 'pending';
+                    $amount_total = $assignment->finance->invoices->total;
+                    $valor=0;
+                    if($amount_total <= 499){ $valor= 0; }
+                    if($amount_total >= 500 || $amount_total <= 999){ $valor= 20; }
+                    if($amount_total >= 1000 || $amount_total <= 1999){ $valor= 50; }
+                    if($amount_total >= 2000 || $amount_total <= 2999){ $valor= 75; }
+                    if($amount_total >= 3000){ $valor = (($amount_total * 0.03)); }
+
+
+                    $valor=abs($valor);
+                } else {
+                    $due_date = $assignment->finance->collection->paid_date;
+                    $due_month = date("m", strtotime($due_date));
+                    $due_year = date("Y", strtotime($due_date));
+                    $status = 'available';
+
+
+                    $amount_total = $assignment->finance->payments->total;
+                    $valor=0;
+                    if($amount_total <= 499){ $valor= 0; }
+                    if($amount_total >= 500 && $amount_total <= 999){ $valor= 20; }
+                    if($amount_total >= 1000 && $amount_total <= 1999){ $valor= 50; }
+                    if($amount_total >= 2000 && $amount_total <= 2999){ $valor= 75; }
+                    if($amount_total >= 3000){ $valor = (($amount_total * 0.03)); }
+                    $valor=abs($valor);
+                }
+
+                if ($exist_comission == true) {
+                    // insert teste
 
                     // check if might be updated
                     if (in_array($comission->status, $status_comission_changed)) {
