@@ -20,6 +20,7 @@
 {{--                            <option value="T">Technician</option>--}}
                             <option value="A">Technician NO TREE</option>
                             <option value="N">Technician TREE REMOVAL</option>
+                            <option value="D">Technician TREE DIRECT</option>
                             <option value="R">Marketing Referral Full</option>
                             <option value="X">Marketing Referral Full by State</option>
                             <option value="C">Marketing Carrier From Referral</option>
