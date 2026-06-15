@@ -3,14 +3,14 @@
 
     @foreach($jobTypes as $js)
 
-            @if(in_array($js->id, [18]) && !in_array(Auth::user()->id, [1, 2, 10]))
+            @if(in_array($js->id, [18]) && !in_array(Auth::user()->id, [1, 2, 10, 25]))
               @continue
             @endif
             @switch($js->id)
                 @case(16)
                 @case(17)
 
-                @if(Auth::user()->id == 2  || Auth::user()->id == 10 || Auth::user()->id == 1)
+                @if(Auth::user()->id == 2  || Auth::user()->id == 10 || Auth::user()->id == 1 || Auth::user()->id == 25)
                     @if($jbSelectedSingle->isNotEmpty())
                         <div class="col-lg-5">
                             <div class="form-check form-check-left mb-3">
