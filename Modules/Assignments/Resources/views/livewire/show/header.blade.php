@@ -283,6 +283,7 @@
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(54)"  type="button">WAITING ESTIMATE</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(55)"  type="button">ESTIMATE SENT</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(56)"  type="button">LEAD REFUND</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(57)"  type="button">SLIDE APPROVAL</button></li>
                                                 @endif
                                             </ul>
                                         </div>

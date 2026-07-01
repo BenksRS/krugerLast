@@ -158,6 +158,9 @@
       @case('magic_thig')
          @livewire('dashboard::list.magic', ['type' => $type], key('dash_list_magic'))
          @break
+      @case('slide_approval')
+         @livewire('dashboard::list.slide-approval', key('dash_list_slide_approval'))
+         @break
       @default
          <h3>OPPSSSS!!!! No list found!! </h3>
    @endswitch
