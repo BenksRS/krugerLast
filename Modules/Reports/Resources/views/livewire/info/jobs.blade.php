@@ -259,7 +259,7 @@
                                         @endif
                                        @if(in_array('Crane Amount', $selectedColumns))
                                           <td>
-                                             @if($row->finance->invoices->crane_amount)
+                                             @if(isset($row->finance->invoices->crane_amount))
                                                 <p>${{$row->finance->invoices->crane_amount}}</p>
                                              @endif
                                           </td>

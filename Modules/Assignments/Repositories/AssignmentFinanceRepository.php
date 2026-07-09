@@ -217,7 +217,7 @@ class AssignmentFinanceRepository extends Assignment {
                 'collection_fees' => $collection_fee_amount,
                 'settlement' => $total_discount,
                 'tree_amount' => $tree_amount,
-                'crane_amount' => $crane_amount,
+                'crane_amount' => $crane_amount ?? 0,
                 'discount' => $total_discount
             ],
             'payments' => (object)[
