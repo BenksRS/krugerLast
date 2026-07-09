@@ -10,7 +10,7 @@
                      <span><b>Jobs Billed:</b> {{$this->retorno['billing']}} Total Invoices amount: {{$this->retorno['total_billing']}} - Average amount: {{$this->retorno['media_billing']}}</span><br>
                      <span><b>Jobs Billed Tree Removal:</b> {{$this->retorno['total_tree_billing']}}</span><br>
                      <span><b>Jobs Paid:</b> {{$this->retorno['paid']}} Total amount: {{$this->retorno['total_paid']}} - Average amount: {{$this->retorno['media_paid']}}</span><br>
-                     <span><b>Jobs Crane:</b> {{$this->retorno['crane']['total_crane']}} (Pending: {{$this->retorno['crane']['open']}} - Completed: {{$this->retorno['crane']['completed']}} - Closed: {{$this->retorno['crane']['closed']}})</span><br>
+                     <span><b>Jobs Crane:</b> {{$this->retorno['crane']['total']}} Total amount: {{$this->retorno['crane']['total_crane']}} (Pending: {{$this->retorno['crane']['open']}} - Completed: {{$this->retorno['crane']['completed']}} - Closed: {{$this->retorno['crane']['closed']}})</span><br>
 
                   @endif
                </div>
