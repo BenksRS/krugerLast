@@ -375,14 +375,20 @@ trait AssignmentScope {
         return $query
             ->with('job_types')
             ->with('reports')
+            ->with('workers')
             ->whereHas('job_types', function(Builder $q) use ($job_type) {
                 if ($job_type != NULL) {
                     $q->whereIn('assignment_job_type_id', [$job_type]);
                 }
             })
+            ->whereHas('workers', function(Builder $q) use ($tech_id) {
+                if ($tech_id != NULL) {
+                    $tech_id = is_array($tech_id) ? $tech_id : [$tech_id];
+                    $q->whereIn('worker_id', $tech_id);
+                }
+            })
             ->whereHas('reports', function(Builder $q) {
-                $q->where('crane', 'Y')
-                    ->where('crane_amount', '>', 0);
+                $q->where('crane', 'Y')->where('crane_amount', '>', 0);
             })
             ->when($date_from, function(Builder $q, $date_from) {
                 $q->whereDate('created_at', '>=', $date_from);

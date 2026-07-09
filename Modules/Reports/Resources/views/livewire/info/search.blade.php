@@ -172,10 +172,10 @@
                             </div>
                         </div>
                         <div class="col-md-5 col-lg-2">
-                            <div class="mb-3" >
+                            <div class="mb-3" wire:ignore>
                                 <label class="form-label">Technician</label>
-                                <a href="#" wire:click="clear('techSelected')"  class="float-end">clear</a>
-                                <select class=" form-control select2-multiple "
+                                <a href="#" wire:click="clear('techSelected')" onclick="clearTech()" class="float-end">clear</a>
+                                <select class="select2 form-control select2-multiple select_tech" multiple
                                         name="techSelected" wire:model="techSelected" data-placeholder="Select ...">
                                     <option selected>chose...</option>
                                     @foreach($techs as $tech)
@@ -316,6 +316,10 @@
                 let data = $(this).val();
                 @this.set('carrierSelected', data);
             });
+            $('.select_tech').on('change', function (e){
+                let data = $(this).val();
+                @this.set('techSelected', data);
+            });
 
         });
         function clearReferral(){
@@ -323,6 +327,9 @@
         }
         function clearCarrier(){
             $('.select_carrier').empty().trigger('change');
+        }
+        function clearTech(){
+            $('.select_tech').empty().trigger('change');
         }
     </script>
 @endpush
