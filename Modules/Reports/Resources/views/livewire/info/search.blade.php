@@ -69,6 +69,13 @@
                                         Jobs Paid
                                     </label>
                                 </div>
+                                <div class="form-check-inline mt-1">
+                                    <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
+                                           id="filter_date_crane" value="crane">
+                                    <label class="form-check-label" for="filter_date_crane">
+                                        Jobs Crane
+                                    </label>
+                                </div>
                                 @error('tarp_situation')
                                 <div class="invalid-feedback show">
                                     Please select a valid option.
