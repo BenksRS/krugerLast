@@ -33,6 +33,8 @@ class Finance extends Component {
 
     public function balanceInfo()
     {
+        $open_status      = [1, 2, 3, 11, 12, 14, 17, 18, 22];
+        $completed_status = [4, 5, 6, 8, 9, 10, 13, 15, 19, 20, 21, 23, 24];
 
         //        dd($this->list);
         if ($this->list) {
@@ -76,6 +78,16 @@ class Finance extends Component {
             $total_jobs_direct_bill_completed = count($jobs_direct_bill->whereIn('status_id', [4, 5, 6, 8, 9, 10, 13, 15, 19, 20, 21, 23, 24]));
             $total_jobs_direct_bill_closed    = count($jobs_direct_bill->where('status_id', 7));
 
+            // jobs Crane
+            $jobs_crane = $this->result->where('finance.invoices.crane_amount', '>', 0);
+
+            $total_jobs_crane           = $jobs_crane->count();
+            $total_jobs_crane_open      = $jobs_crane->whereIn('status_id', $open_status)->count();
+            $total_jobs_crane_completed = $jobs_crane->whereIn('status_id', $completed_status)->count();
+            $total_jobs_crane_closed    = $jobs_crane->where('status_id', 7)->count();
+            $total_crane                = $jobs_crane->sum('finance.invoices.crane_amount');
+            
+            /*   dump($this->result->sum('finance.invoices.crane_amount'));*/
             $this->retorno = [
                 'total'              => $total_jobs,
                 'open'               => $total_jobs_open,
@@ -93,6 +105,13 @@ class Finance extends Component {
                     'open'      => $total_jobs_direct_bill_open,
                     'completed' => $total_jobs_direct_bill_completed,
                     'closed'    => $total_jobs_direct_bill_closed
+                ],
+                'crane' => [
+                    'total'     => $total_jobs_crane,
+                    'open'      => $total_jobs_crane_open,
+                    'completed' => $total_jobs_crane_completed,
+                    'closed'    => $total_jobs_crane_closed,
+                    'total_crane' => $this->numberFormat($total_crane)
                 ]
             ];
         } else {
