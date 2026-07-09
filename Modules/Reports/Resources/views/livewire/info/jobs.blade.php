@@ -100,6 +100,9 @@
                                     @if(in_array('State', $selectedColumns))
                                         <th>Tree Amount</th>
                                     @endif
+                                   @if(in_array('Crane Amount', $selectedColumns))
+                                      <th>Crane Amount</th>
+                                   @endif
                                 @if(in_array('Paid Date', $selectedColumns))
                                     <th>Paid Date</th>
                                 @endif
@@ -109,9 +112,6 @@
                                 @if(in_array('Balance Amount', $selectedColumns))
                                     <th>Balance Amount</th>
                                 @endif
-                                   @if(in_array('Crane Amount', $selectedColumns))
-                                      <th>Crane Amount</th>
-                                   @endif
                                 @if(in_array('Claim Number', $selectedColumns))
                                     <th width="80">Claim<br> Number</th>
                                 @endif
@@ -257,6 +257,13 @@
                                                 @endif
                                             </td>
                                         @endif
+                                       @if(in_array('Crane Amount', $selectedColumns))
+                                          <td>
+                                             @if($row->finance->invoices->crane_amount)
+                                                <p>${{$row->finance->invoices->crane_amount}}</p>
+                                             @endif
+                                          </td>
+                                       @endif
                                     @if(in_array('Paid Date', $selectedColumns))
 
                                         <td>
@@ -279,13 +286,6 @@
                                             @endif
                                         </td>
                                     @endif
-                                       @if(in_array('Crane Amount', $selectedColumns))
-                                          <td>
-                                             @if($row->finance->invoices->crane_amount)
-                                                <p>${{$row->finance->invoices->crane_amount}}</p>
-                                             @endif
-                                          </td>
-                                       @endif
                                     @if(in_array('Claim Number', $selectedColumns))
                                         <td><p>{{$row->claim_number}}</p></td>
                                     @endif

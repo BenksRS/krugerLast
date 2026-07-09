@@ -110,6 +110,9 @@ class Search extends Component
                     case 'paid':
                         $this->list=AssignmentFinanceRepository::DatePaid($date_from,$date_to,$this->commissionsSelected)->get();
                         break;
+                    case 'crane':
+                        $this->list=AssignmentFinanceRepository::DateCrane($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                    break;
                 }
                 if($this->eventSelected){
 //
