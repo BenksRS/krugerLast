@@ -161,6 +161,9 @@
       @case('slide_approval')
          @livewire('dashboard::list.slide-approval', key('dash_list_slide_approval'))
          @break
+      @case('estimate_to_be_sent')
+         @livewire('dashboard::list.estimate-to-be-sent', key('dash_list_estimate_to_be_sent'))
+         @break
       @default
          <h3>OPPSSSS!!!! No list found!! </h3>
    @endswitch
