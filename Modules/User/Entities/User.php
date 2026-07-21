@@ -77,5 +77,9 @@ class User extends Authenticatable {
     {
         return $this->belongsTo(EmployeeInfo::class, 'id','user_id');
     }
+    public function sickLeaves ()
+    {
+        return $this->hasMany(SickLeave::class, 'user_id', 'id');
+    }
 
 }
