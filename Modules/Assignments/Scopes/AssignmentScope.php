@@ -47,7 +47,7 @@ trait AssignmentScope {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
 
-    public function scopeReadytobill(Builder $query, $status = [4])
+    public function scopeReadytobill(Builder $query, $status = [4,58])
     {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
