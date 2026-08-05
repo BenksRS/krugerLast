@@ -58,7 +58,7 @@ class ActivityList extends Component {
 
     public function render()
     {
-        $users = [10, 25, 4, 56, 54, 118, 120, 104, 148, 145, 105, 13, 43, 102, 151];
+        $users = [10, 25, 4, 56, 54, 118, 120, 104, 148, 145, 105, 13, 43, 102, 151, 171];
         $logs  = ActivityLog::query()
             ->select([
                 'user_id',
