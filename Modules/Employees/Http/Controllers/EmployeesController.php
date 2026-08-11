@@ -702,8 +702,8 @@ $total_commission=0;
             ->where('type', 'L')
             ->get();
 
-        $technicians = array();
-        dump($technicians);
+        $technicians = array(157);
+
         foreach ($rulles as $rulle) {
 
             $tech = explode(',', $rulle->tech_ids);
@@ -711,6 +711,7 @@ $total_commission=0;
                 $technicians[] = $t;
             }
         }
+        dump($rulles);
         $technicians = array_unique($technicians);
         $full_rulles = EmployeeRules::whereIn('user_id', $technicians)
             ->where('type', 'L')
