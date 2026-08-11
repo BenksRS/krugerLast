@@ -1111,7 +1111,9 @@ $total_commission=0;
 
                         $date['user_id'] = $rule->user_id;
                         $date['assignment_id'] = $assignment->id;
-                        $date['job_type'] ='CRANE';
+                        if ($job_type_id != 'JOB') {
+                            $date['job_type'] = $job_type_id;
+                        }
                         $date['amount'] = $rule->valor;
                         $date['status'] = "available";
                         $date['rule_id'] = $rule->id;
@@ -1128,7 +1130,9 @@ $total_commission=0;
 
                     $date['user_id'] = $rule->user_id;
                     $date['assignment_id'] = $assignment->id;
-                    $date['job_type'] ='CRANE';
+                    if ($job_type_id != 'JOB') {
+                        $date['job_type'] = $job_type_id;
+                    }
                     $date['amount'] = $rule->valor;
                     $date['status'] = "available";
                     $date['rule_id'] = $rule->id;
