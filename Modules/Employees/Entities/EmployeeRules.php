@@ -166,7 +166,7 @@ class EmployeeRules extends Model
                   $tech="$tech / $info->name";
 
               }
-              $info = "Arborist CRANE- %$p $tech";
+              $info = "Arborist CRANE-  $tech $$valors";
               break;
           case 'N':
               $p=$this->porcentagem*100;
