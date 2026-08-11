@@ -1155,9 +1155,7 @@ $total_commission=0;
                         $due_month = Carbon::createFromFormat('m/d/Y', $billed_date)->format('m');
                         $due_year = Carbon::createFromFormat('m/d/Y', $billed_date)->format('Y');
 
-
-                        if($crane_amount > 0) {
-
+                        if($crane_amount > 0){
                             $date['user_id'] = $rule->user_id;
                             $date['assignment_id'] = $assignment->id;
                             if ($job_type_id != 'JOB') {
@@ -1170,6 +1168,8 @@ $total_commission=0;
                             $date['due_year'] = $due_year;
                             $comission->update($date);
                         }
+
+
                     }
                 } else {
                     // insert
@@ -1178,14 +1178,13 @@ $total_commission=0;
                     $due_month = Carbon::createFromFormat('m/d/Y', $billed_date)->format('m');
                     $due_year = Carbon::createFromFormat('m/d/Y', $billed_date)->format('Y');
 
-
-                    if($crane_amount > 0){
+                    if($crane_amount > 0) {
                         $date['user_id'] = $rule->user_id;
                         $date['assignment_id'] = $assignment->id;
                         if ($job_type_id != 'JOB') {
                             $date['job_type'] = $job_type_id;
                         }
-                        $date['amount'] = $rule->a;
+                        $date['amount'] = $rule->valor;
                         $date['status'] = "available";
                         $date['rule_id'] = $rule->id;
                         $date['due_month'] = $due_month;
@@ -1193,8 +1192,6 @@ $total_commission=0;
 
                         EmployeeCommissions::create($date)->save();
                     }
-
-
                 }
 
                 break;
