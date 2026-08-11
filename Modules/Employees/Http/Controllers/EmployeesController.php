@@ -1101,6 +1101,52 @@ $total_commission=0;
                 break;
 
             case 'L': //Job type
+                if (is_null($assignment->finance->collection->paid_date)) {
+                    $due_date = $assignment->finance->collection->billed_date;
+                    $due_month = null;
+                    $due_year = null;
+                    $status = 'pending';
+
+                    if(isset($assignment->finance->invoices->crane_amount)){
+                        $crane_amount = $assignment->finance->invoices->crane_amount;
+                    }else{
+                        $crane_amount = 0;
+                    }
+
+
+
+                    $amount = $crane_amount ;
+
+
+
+                    $valor = (($amount * $rule->porcentagem) / $rule->dividir);
+                    $valor=abs($valor);
+                } else {
+                    $due_date = $assignment->finance->collection->paid_date;
+                    $due_month = date("m", strtotime($due_date));
+                    $due_year = date("Y", strtotime($due_date));
+                    $status = 'available';
+
+                    if(isset($assignment->finance->invoices->tree_amount)){
+                        $crane_amount = $assignment->finance->invoices->crane_amount;
+                    }else{
+                        $crane_amount = 0;
+                    }
+
+
+
+                    $amount = $crane_amount ;
+
+
+                    if ($assignment->referral_id == 72) {
+                        $amount = ($crane_amount * 0.92);
+                    } else {
+                        $amount = $crane_amount;
+                    }
+
+                    $valor = (($amount * $rule->porcentagem) / $rule->dividir);
+                    $valor=abs($valor);
+                }
                 // check if exist comission added
                 if ($exist_comission == true) {
                     // check if might be updated
@@ -1109,12 +1155,15 @@ $total_commission=0;
                         $due_month = Carbon::createFromFormat('m/d/Y', $billed_date)->format('m');
                         $due_year = Carbon::createFromFormat('m/d/Y', $billed_date)->format('Y');
 
+
+                        $valor_arborist = $crane_amount > 0 ? $rule->valor:0;
+
                         $date['user_id'] = $rule->user_id;
                         $date['assignment_id'] = $assignment->id;
                         if ($job_type_id != 'JOB') {
                             $date['job_type'] = $job_type_id;
                         }
-                        $date['amount'] = $rule->valor;
+                        $date['amount'] = $valor_arborist;
                         $date['status'] = "available";
                         $date['rule_id'] = $rule->id;
                         $date['due_month'] = $due_month;
@@ -1128,12 +1177,14 @@ $total_commission=0;
                     $due_month = Carbon::createFromFormat('m/d/Y', $billed_date)->format('m');
                     $due_year = Carbon::createFromFormat('m/d/Y', $billed_date)->format('Y');
 
+                    $valor_arborist = $crane_amount > 0 ? $rule->valor:0;
+
                     $date['user_id'] = $rule->user_id;
                     $date['assignment_id'] = $assignment->id;
                     if ($job_type_id != 'JOB') {
                         $date['job_type'] = $job_type_id;
                     }
-                    $date['amount'] = $rule->valor;
+                    $date['amount'] = $valor_arborist;
                     $date['status'] = "available";
                     $date['rule_id'] = $rule->id;
                     $date['due_month'] = $due_month;
