@@ -1094,6 +1094,50 @@ $total_commission=0;
 
                 break;
 
+            case 'L': //Job type
+                // check if exist comission added
+                if ($exist_comission == true) {
+                    // check if might be updated
+                    if (in_array($comission->status, $status_comission_changed)) {
+                        $billed_date = $assignment->finance->collection->billed_date_view;
+                        $due_month = Carbon::createFromFormat('m/d/Y', $billed_date)->format('m');
+                        $due_year = Carbon::createFromFormat('m/d/Y', $billed_date)->format('Y');
+
+                        $date['user_id'] = $rule->user_id;
+                        $date['assignment_id'] = $assignment->id;
+                        if ($job_type_id != 'JOB') {
+                            $date['job_type'] = $job_type_id;
+                        }
+                        $date['amount'] = $rule->valor;
+                        $date['status'] = "available";
+                        $date['rule_id'] = $rule->id;
+                        $date['due_month'] = $due_month;
+                        $date['due_year'] = $due_year;
+                        $comission->update($date);
+                    }
+                } else {
+                    // insert
+                    //dd($assignment->finance);
+                    $billed_date = $assignment->finance->collection->billed_date_view;
+                    $due_month = Carbon::createFromFormat('m/d/Y', $billed_date)->format('m');
+                    $due_year = Carbon::createFromFormat('m/d/Y', $billed_date)->format('Y');
+
+                    $date['user_id'] = $rule->user_id;
+                    $date['assignment_id'] = $assignment->id;
+                    if ($job_type_id != 'JOB') {
+                        $date['job_type'] = $job_type_id;
+                    }
+                    $date['amount'] = $rule->valor;
+                    $date['status'] = "available";
+                    $date['rule_id'] = $rule->id;
+                    $date['due_month'] = $due_month;
+                    $date['due_year'] = $due_year;
+
+                    EmployeeCommissions::create($date)->save();
+                }
+
+                break;
+
             case 'K': //Technician TREE
                 if (is_null($assignment->finance->collection->paid_date)) {
                     $due_date = $assignment->finance->collection->billed_date;
@@ -1578,81 +1622,6 @@ $total_commission=0;
                 }
 
 
-                break;
-            case 'L': //All Jobs
-                if (is_null($assignment->finance->collection->paid_date)) {
-
-                    if ($assignment->status_id == 6) {
-                        $due_date = $assignment->finance->collection->paid_date;
-                        $due_month = date("m", strtotime($due_date));
-                        $due_year = date("Y", strtotime($due_date));
-                        $status = 'available';
-
-                        if ($assignment->referral_id == 72) {
-                            $amount = ($assignment->finance->payments->total * 0.92);
-                        } else {
-                            $amount = $assignment->finance->payments->total;
-                        }
-                        //
-                        //                        $amount = $assignment->paid_amount;
-                        $valor = (($amount * $rule->porcentagem));
-                    } else {
-                        $due_date = $assignment->finance->collection->billed_date;
-                        $due_month = null;
-                        $due_year = null;
-                        $status = 'pending';
-                        $amount = $assignment->finance->invoices->total;
-                    }
-
-
-                    $valor = (($amount * $rule->porcentagem));
-                } else {
-                    $due_date = $assignment->finance->collection->paid_date;
-                    $due_month = date("m", strtotime($due_date));
-                    $due_year = date("Y", strtotime($due_date));
-                    $status = 'available';
-
-                    if ($assignment->referral_id == 72) {
-                        $amount = ($assignment->finance->payments->total * 0.92);
-                    } else {
-                        $amount = $assignment->finance->payments->total;
-                    }
-
-                    $valor = (($amount * $rule->porcentagem));
-                }
-
-
-                if ($exist_comission == true) {
-                    // insert
-
-                    // check if might be updated
-                    if (in_array($comission->status, $status_comission_changed)) {
-                        $date['user_id'] = $rule->user_id;
-                        $date['assignment_id'] = $assignment->id;
-                        if ($job_type_id != 'JOB') {
-                            $date['job_type'] = $job_type_id;
-                        }
-                        $date['amount'] = $valor;
-                        $date['status'] = $status;
-                        $date['rule_id'] = $rule->id;
-                        $date['due_month'] = $due_month;
-                        $date['due_year'] = $due_year;
-                        $comission->update($date);
-                    }
-                } else {
-                    $date['user_id'] = $rule->user_id;
-                    $date['assignment_id'] = $assignment->id;
-                    if ($job_type_id != 'JOB') {
-                        $date['job_type'] = $job_type_id;
-                    }
-                    $date['amount'] = $valor;
-                    $date['status'] = $status;
-                    $date['rule_id'] = $rule->id;
-                    $date['due_month'] = $due_month;
-                    $date['due_year'] = $due_year;
-
-                    EmployeeCommissions::create($date)->save();
-                }
                 break;
             case 'P': //All Jobs
                 if (is_null($assignment->finance->collection->paid_date)) {
