@@ -702,8 +702,8 @@ $total_commission=0;
             ->where('type', 'L')
             ->get();
 
-        $technicians = array(157);
-
+        $technicians = array();
+//        dump($technicians);
         foreach ($rulles as $rulle) {
 
             $tech = explode(',', $rulle->tech_ids);
@@ -711,16 +711,15 @@ $total_commission=0;
                 $technicians[] = $t;
             }
         }
-//        dump($rulles);
         $technicians = array_unique($technicians);
         $full_rulles = EmployeeRules::whereIn('user_id', $technicians)
             ->where('type', 'L')
             ->get();
 
-//        ($full_rulles);
+//        dump($full_rulles);
 
         foreach ($full_rulles as $f_rulle) {
-//            dump("L".$f_rulle);
+            dump("L".$f_rulle);
             $check_start_date = (!empty($assignment->scheduling->start_date) && ($assignment->scheduling->start_date > $f_rulle->start_date)) ? TRUE : FALSE;
 
 
@@ -1112,9 +1111,7 @@ $total_commission=0;
 
                         $date['user_id'] = $rule->user_id;
                         $date['assignment_id'] = $assignment->id;
-                        if ($job_type_id != 'JOB') {
-                            $date['job_type'] = $job_type_id;
-                        }
+                        $date['job_type'] ='CRANE';
                         $date['amount'] = $rule->valor;
                         $date['status'] = "available";
                         $date['rule_id'] = $rule->id;
@@ -1131,9 +1128,7 @@ $total_commission=0;
 
                     $date['user_id'] = $rule->user_id;
                     $date['assignment_id'] = $assignment->id;
-                    if ($job_type_id != 'JOB') {
-                        $date['job_type'] = $job_type_id;
-                    }
+                    $date['job_type'] ='CRANE';
                     $date['amount'] = $rule->valor;
                     $date['status'] = "available";
                     $date['rule_id'] = $rule->id;
