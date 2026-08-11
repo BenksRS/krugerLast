@@ -159,7 +159,7 @@ class EmployeeRules extends Model
               break;
           case 'L':
 
-              $info = "Arborist CRANE-  $50";
+              $info = "Arborist CRANE-  $50.00";
               break;
           case 'N':
               $p=$this->porcentagem*100;
