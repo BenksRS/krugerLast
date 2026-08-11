@@ -1156,7 +1156,7 @@ $total_commission=0;
                         $due_year = Carbon::createFromFormat('m/d/Y', $billed_date)->format('Y');
 
 
-                        $valor_arborist = $crane_amount > 0 ? $rule->valor:0;
+                        $valor_arborist = ($crane_amount > 0 ) ? $rule->valor : 0;
 
                         $date['user_id'] = $rule->user_id;
                         $date['assignment_id'] = $assignment->id;
@@ -1177,7 +1177,7 @@ $total_commission=0;
                     $due_month = Carbon::createFromFormat('m/d/Y', $billed_date)->format('m');
                     $due_year = Carbon::createFromFormat('m/d/Y', $billed_date)->format('Y');
 
-                    $valor_arborist = $crane_amount > 0 ? $rule->valor:0;
+                    $valor_arborist = ($crane_amount > 0 ) ? $rule->valor : 0;
 
                     $date['user_id'] = $rule->user_id;
                     $date['assignment_id'] = $assignment->id;
