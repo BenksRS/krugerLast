@@ -712,6 +712,8 @@ $total_commission=0;
             ->where('type', 'L')
             ->get();
 
+        dd($full_rulles);
+        
         foreach ($full_rulles as $f_rulle) {
 
             $check_start_date = (!empty($assignment->scheduling->start_date) && ($assignment->scheduling->start_date > $f_rulle->start_date)) ? TRUE : FALSE;
