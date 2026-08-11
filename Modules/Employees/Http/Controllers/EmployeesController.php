@@ -711,7 +711,7 @@ $total_commission=0;
                 $technicians[] = $t;
             }
         }
-        dump($rulles);
+//        dump($rulles);
         $technicians = array_unique($technicians);
         $full_rulles = EmployeeRules::whereIn('user_id', $technicians)
             ->where('type', 'L')
@@ -720,7 +720,7 @@ $total_commission=0;
 //        ($full_rulles);
 
         foreach ($full_rulles as $f_rulle) {
-            dump("L".$f_rulle);
+//            dump("L".$f_rulle);
             $check_start_date = (!empty($assignment->scheduling->start_date) && ($assignment->scheduling->start_date > $f_rulle->start_date)) ? TRUE : FALSE;
 
 
