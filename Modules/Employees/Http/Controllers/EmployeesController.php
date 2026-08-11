@@ -712,7 +712,7 @@ $total_commission=0;
             ->where('type', 'L')
             ->get();
 
-        dd($full_rulles);
+//        ($full_rulles);
         
         foreach ($full_rulles as $f_rulle) {
 
