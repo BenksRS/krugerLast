@@ -697,7 +697,7 @@ $total_commission=0;
         $jobs_list=array(11,26);
         $assignment = AssignmentFinanceRepository::find($id);
         $workers = JobReportWorkers::where('assignment_id', $id)->whereIn('job_type_id',$jobs_list)->pluck('worker_id')->toArray();
-        dump($workers);
+//        dump($workers);
         $rulles = EmployeeRules::whereIn('user_id', $workers)
             ->where('type', 'L')
             ->get();
