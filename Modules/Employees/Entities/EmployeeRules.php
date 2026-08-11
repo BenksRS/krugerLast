@@ -157,6 +157,17 @@ class EmployeeRules extends Model
               }
               $info = "Technician CRANE- %$p $tech";
               break;
+          case 'L':
+              $p=$this->porcentagem*100;
+              $explode=explode(',',$this->tech_ids);
+              $tech="";
+              foreach ($explode as $o){
+                  $info=\Modules\User\Entities\User::find($o);
+                  $tech="$tech / $info->name";
+
+              }
+              $info = "Arborist CRANE- %$p $tech";
+              break;
           case 'N':
               $p=$this->porcentagem*100;
               $explode=explode(',',$this->tech_ids);
