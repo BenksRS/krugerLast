@@ -81,6 +81,9 @@ class EmployeeRules extends Model
             case 'K':
                 $info = "Technician CRANE";
                 break;
+            case 'L':
+                $info = "Arborist CRANE";
+                break;
             case 'N':
                 $info = "Technician NO TREE";
                 break;
