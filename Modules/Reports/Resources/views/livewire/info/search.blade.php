@@ -167,6 +167,8 @@
                                         <option  value="GA">GA</option>
                                         <option  value="MO">MO</option>
                                         <option  value="OH">OH</option>
+                                    <option  value="IL">IL</option>
+                                    <option  value="IN">IN</option>
 {{--                                    @endforeach--}}
                                 </select>
                             </div>
