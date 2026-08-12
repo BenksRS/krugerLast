@@ -81,6 +81,9 @@ class EmployeeRules extends Model
             case 'K':
                 $info = "Technician CRANE";
                 break;
+            case 'L':
+                $info = "Arborist CRANE";
+                break;
             case 'N':
                 $info = "Technician NO TREE";
                 break;
@@ -153,6 +156,10 @@ class EmployeeRules extends Model
 
               }
               $info = "Technician CRANE- %$p $tech";
+              break;
+          case 'L':
+
+              $info = "Arborist CRANE-  $50.00";
               break;
           case 'N':
               $p=$this->porcentagem*100;
