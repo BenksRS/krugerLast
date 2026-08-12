@@ -157,10 +157,10 @@
                             </div>
                         </div>
                         <div class="col-md-5 col-lg-2">
-                            <div class="mb-3" >
+                            <div class="mb-3" wire:ignore>
                                 <label class="form-label">State</label>
                                 <a href="#" wire:click="clear('byState')"  class="float-end">clear</a>
-                                <select class=" form-control select2-multiple "
+                                <select class="select2 form-control select2-multiple select_state"
                                         name="byState" wire:model="byState" data-placeholder="Select ...">
                                     <option selected>chose...</option>
 {{--                                    @foreach($techs as $tech)--}}
@@ -328,6 +328,10 @@
             $('.select_tech').on('change', function (e){
                 let data = $(this).val();
                 @this.set('techSelected', data);
+            });
+            $('.select_state').on('change', function (e){
+                let data = $(this).val();
+                @this.set('byState', data);
             });
 
         });

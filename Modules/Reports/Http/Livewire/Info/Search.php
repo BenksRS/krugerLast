@@ -136,7 +136,8 @@ class Search extends Component
             }
             if($this->byState){
 //                    dd('referralSelected');
-                $this->list=$this->list->where('state', $this->byState);
+                $this->list=$this->list->whereIn('state', $this->byState);
+                
             }
 
                 if($this->carrierSelected){
