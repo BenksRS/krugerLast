@@ -160,7 +160,7 @@
                             <div class="mb-3" wire:ignore>
                                 <label class="form-label">State</label>
                                 <a href="#" wire:click="clear('byState')"  class="float-end">clear</a>
-                                <select class="select2 form-control select2-multiple select_state"
+                                <select class="select2 form-control select2-multiple select_state" multiple
                                         name="byState" wire:model="byState" data-placeholder="Select ...">
                                     <option selected>chose...</option>
 {{--                                    @foreach($techs as $tech)--}}
