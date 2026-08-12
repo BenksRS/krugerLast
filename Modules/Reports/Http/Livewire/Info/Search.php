@@ -113,6 +113,9 @@ class Search extends Component
                     case 'crane':
                         $this->list=AssignmentFinanceRepository::DateCrane($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
+                    case 'open-reschedule':
+                        $this->list=AssignmentFinanceRepository::DateOpenReschedule($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                    break;
                 }
                 if($this->eventSelected){
 //

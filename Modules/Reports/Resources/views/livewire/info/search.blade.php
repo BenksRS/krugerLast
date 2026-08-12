@@ -55,6 +55,13 @@
                                         Jobs Scheduled
                                     </label>
                                 </div>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
+                                           id="filter_date_or" value="open-reschedule">
+                                    <label class="form-check-label" for="filter_date_or">
+                                        Jobs Open/Reschedule
+                                    </label>
+                                </div>
                                 <div class="form-check-inline mt-1">
                                     <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
                                            id="filter_date_b" value="billed">
