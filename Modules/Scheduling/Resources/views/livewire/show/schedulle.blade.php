@@ -214,7 +214,7 @@
 								
 								@foreach($insideJobs->sortBy('order') as $item)
 									
-									<div class="open_job alert {{$item->job->status->class}}" wire:key="open__{{$item->job->id}}" wire:sortable-group.item="{{$item->job->id}}" title="{{$item->job->destination}}">
+									<div class="open_job alert {{$item->job->status->class}}" wire:key="open__{{$item->job->id}}" wire:sortable-group.item="{{$item->job->id}}" title="">
 										<div class="row">
                                                 <?php
                                                 $fontsize = 10;
@@ -259,6 +259,8 @@
 												<span class="float-start">{{strtoupper($item->job->city)}} - {{$item->job->state}}</span>
 												<span class="float-end">   ({{$item->milhas}})</span>
 											</div>
+
+											<span class="visually-hidden">Address: {{$item->job->destination}}</span>
 										
 										
 										</div>
