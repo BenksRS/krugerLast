@@ -214,7 +214,7 @@
 								
 								@foreach($insideJobs->sortBy('order') as $item)
 									
-									<div class="open_job alert {{$item->job->status->class}}" wire:key="open__{{$item->job->id}}" wire:sortable-group.item="{{$item->job->id}}">
+									<div class="open_job alert {{$item->job->status->class}}" wire:key="open__{{$item->job->id}}" wire:sortable-group.item="{{$item->job->id}}" title="{{$item->job->destination}}">
 										<div class="row">
                                                 <?php
                                                 $fontsize = 10;
