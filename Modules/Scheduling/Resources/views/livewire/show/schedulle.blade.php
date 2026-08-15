@@ -120,7 +120,7 @@
 											@foreach($jobs_grid as $job_grid)
 												
 												@if(!in_array($job_grid->assignment->status_id, [7,8,23]))
-													<div class="scheduled_job alert {{$job_grid->assignment->status->class}} {{($this->jobRoute == $job_grid->assignment->id)? ' job_route': ''}}" wire:key="techid_{{$tech->user->id}}_grid_{{$grid}}_{{$job_grid->assignment->id}}" wire:sortable-group.item="{{$job_grid->assignment->id}}" style="padding: 6px" title="{{$job_grid->assignment->destination}}">
+													<div class="scheduled_job alert {{$job_grid->assignment->status->class}} {{($this->jobRoute == $job_grid->assignment->id)? ' job_route': ''}}" wire:key="techid_{{$tech->user->id}}_grid_{{$grid}}_{{$job_grid->assignment->id}}" wire:sortable-group.item="{{$job_grid->assignment->id}}" style="padding: 6px">
 														
 														<div class="row">
 															<div class="col-lg-12 blackfont" style="font-size: 10px; font-weight: 600">
@@ -155,7 +155,7 @@
 															</div>
 														
 														</div>
-													
+														<span class="visually-hidden">Address: {{$job_grid->assignment->destination}}</span>
 													</div>
 												@endif
 											@endforeach
