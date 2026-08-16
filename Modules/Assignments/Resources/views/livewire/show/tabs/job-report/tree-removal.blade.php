@@ -439,20 +439,43 @@
                <div class="row">
                   <div class="col-xl-6 col-sm-6">
                      <label class="form-label">Workers</label>
-                     <div class="row" wire:ignore>
-                        @foreach($workers as $wk)
-                           <div class="col-auto float-start">
-                              <div class="form-check form-checkbox-outline form-check-primary mb-3">
-                                 @if($workersDB)
-                                    <input class="form-check-input" type="checkbox" id="checkWorker{{$wk->user->id}}" wire:click="syncWorkers({{$wk->user->id}})" value="{{$wk->user->id}}"  {{ $workersDB->contains($wk->user->id) ? 'checked=""' : '' }}">
-                                 @else
-                                    <input class="form-check-input" type="checkbox" id="checkWorker{{$wk->user->id}}" wire:click="syncWorkers({{$wk->user->id}})" value="{{$wk->user->id}}">
-                                 @endif
-                                 <label class="form-check-label" for="checkWorker{{$wk->user->id}}">
-                                    {{$wk->user->name}}
-                                 </label>
+                     <div wire:ignore>
+                        @php
+                           $grouped = $workers->groupBy(function($wk) {
+                               return $wk->team ?? 'no_team';
+                           })->sortBy(function($teamWorkers, $teamKey) {
+                               return $teamKey === 'no_team' ? PHP_INT_MAX : $teamKey;
+                           });
+                        @endphp
+
+                        @foreach($grouped as $teamKey => $teamWorkers)
+                           <div class="row">
+                              <div class="col-12 mb-2">
+                                 <h5 class="mb-2">
+                                    {{ $teamKey === 'no_team' ? 'Sem Time' : 'Time '.$teamKey }}
+                                 </h5>
                               </div>
                            </div>
+
+                           @foreach($teamWorkers as $wk)
+                              <div class="row">
+                                 <div class="col-12">
+                                    <div class="form-check form-checkbox-outline form-check-primary mb-3">
+                                       <input
+                                         class="form-check-input"
+                                         type="checkbox"
+                                         id="checkWorker{{ $wk->user->id }}"
+                                         wire:click="syncWorkers({{ $wk->user->id }})"
+                                         value="{{ $wk->user->id }}"
+                                         {{ ($workersDB && $workersDB->contains($wk->user->id)) ? 'checked' : '' }}
+                                       >
+                                       <label class="form-check-label" for="checkWorker{{ $wk->user->id }}">
+                                          {{ $wk->user->name }}
+                                       </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           @endforeach
                         @endforeach
                      </div>
 
