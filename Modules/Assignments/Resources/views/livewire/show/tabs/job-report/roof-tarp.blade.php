@@ -310,35 +310,42 @@
                                 });
                             @endphp
 
-                            @foreach($grouped as $teamKey => $teamWorkers)
-                                <div class="row">
-                                    <div class="col-12 mb-2">
-                                        <h5 class="mb-2">
-                                            {{ $teamKey === 'no_team' ? 'Sem Time' : 'Time '.$teamKey }}
-                                        </h5>
-                                    </div>
-                                </div>
-
-                                @foreach($teamWorkers as $wk)
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-check form-checkbox-outline form-check-primary mb-3">
-                                                <input
-                                                  class="form-check-input"
-                                                  type="checkbox"
-                                                  id="checkWorker{{ $wk->user->id }}"
-                                                  wire:click="syncWorkers({{ $wk->user->id }})"
-                                                  value="{{ $wk->user->id }}"
-                                                  {{ ($workersDB && $workersDB->contains($wk->user->id)) ? 'checked' : '' }}
-                                                >
-                                                <label class="form-check-label" for="checkWorker{{ $wk->user->id }}">
-                                                    {{ $wk->user->name }}
-                                                </label>
+                            <div class="row">
+                                @foreach($grouped as $teamKey => $teamWorkers)
+                                    <div class="col-xl-4 col-md-6 mb-4">
+                                        <div class="card h-100 shadow-sm">
+                                            <div class="card-header bg-dark text-white d-flex align-items-center justify-content-between">
+                        <span class="fw-bold">
+                            <i class="bx bx-time-five me-1"></i>
+                            {{ $teamKey === 'no_team' ? 'Sem Time' : 'Time '.$teamKey }}
+                        </span>
+                                                <i class="bx bx-group"></i>
+                                            </div>
+                                            <div class="card-body p-0">
+                                                <ul class="list-group list-group-flush">
+                                                    @foreach($teamWorkers as $wk)
+                                                        <li class="list-group-item">
+                                                            <div class="form-check form-checkbox-outline form-check-primary">
+                                                                <input
+                                                                  class="form-check-input"
+                                                                  type="checkbox"
+                                                                  id="checkWorker{{ $wk->user->id }}"
+                                                                  wire:click="syncWorkers({{ $wk->user->id }})"
+                                                                  value="{{ $wk->user->id }}"
+                                                                  {{ ($workersDB && $workersDB->contains($wk->user->id)) ? 'checked' : '' }}
+                                                                >
+                                                                <label class="form-check-label" for="checkWorker{{ $wk->user->id }}">
+                                                                    {{ $wk->user->name }}
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
-                            @endforeach
+                            </div>
                         </div>
 
                         @if(count($workersDB) == 0)
