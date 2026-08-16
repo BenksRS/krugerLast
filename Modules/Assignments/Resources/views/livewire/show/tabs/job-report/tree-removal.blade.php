@@ -438,7 +438,7 @@
 
                <div class="row">
                   <div class="col-xl-6 col-sm-6">
-                     <label class="form-label">Workers</label>
+                     <label class="form-label">Workers</label>  
                      <div wire:ignore>
                         @php
                            $grouped = $workers->groupBy(function($wk) {
