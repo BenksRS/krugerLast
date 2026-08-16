@@ -305,7 +305,9 @@
                             @php
                                 $grouped = $workers->groupBy(function($wk) {
                                     return $wk->team ?? 'no_team';
-                                })->sortKeys();
+                                })->sortBy(function($teamWorkers, $teamKey) {
+                                    return $teamKey === 'no_team' ? PHP_INT_MAX : $teamKey;
+                                });
                             @endphp
 
                             @foreach($grouped as $teamKey => $teamWorkers)
