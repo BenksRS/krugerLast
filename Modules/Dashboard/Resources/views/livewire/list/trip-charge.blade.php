@@ -3,7 +3,7 @@
         nav svg{
             max-height: 20px;
         }
-    </style>
+    </style>     
     <div class="row">
         <div class="col-12">
             <div class="card">
