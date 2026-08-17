@@ -333,9 +333,10 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-xl-6 col-sm-6">
+                        <div class="col-xl-12 col-sm-12">
                             <label class="form-label">Workers</label>
-                            <div class="row" wire:ignore>
+                            @include('assignments::livewire.show.tabs.job-report.partials.workers')
+{{--                            <div class="row" wire:ignore>
                                 @foreach($workers as $wk)
                                     <div class="col-auto float-start">
                                         <div class="form-check form-checkbox-outline form-check-primary mb-3">
@@ -350,7 +351,7 @@
                                         </div>
                                     </div>
                                 @endforeach
-                            </div>
+                            </div>--}}
 
                             @if(count($workersDB) == 0)
                                 <div class="invalid-feedback show">

@@ -308,24 +308,9 @@
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-xl-6 col-sm-6">
+                            <div class="col-xl-12 col-sm-12">
                                 <label class="form-label">Workers</label>
-                                <div class="row" wire:ignore>
-                                    @foreach($workers as $wk)
-                                        <div class="col-auto float-start">
-                                            <div class="form-check form-checkbox-outline form-check-primary mb-3">
-                                                @if($workersDB)
-                                                    <input class="form-check-input" type="checkbox" id="checkWorker{{$wk->user->id}}" wire:click="syncWorkers({{$wk->user->id}})" value="{{$wk->user->id}}"  {{ $workersDB->contains($wk->user->id) ? 'checked=""' : '' }}">
-                                                @else
-                                                    <input class="form-check-input" type="checkbox" id="checkWorker{{$wk->user->id}}" wire:click="syncWorkers({{$wk->user->id}})" value="{{$wk->user->id}}"  >
-                                                @endif
-                                                <label class="form-check-label" for="checkWorker{{$wk->user->id}}">
-                                                    {{$wk->user->name}}
-                                                </label>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
+                                @include('assignments::livewire.show.tabs.job-report.partials.workers')
 
                                 @if(count($workersDB) == 0)
                                     <div class="invalid-feedback show">
@@ -529,5 +514,3 @@
 
     </div>
 </div>
-
-
