@@ -8,7 +8,7 @@ use Livewire\WithPagination;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Repositories\AssignmentRepository;
 
-	class TripChange extends Component
+	class TripCharge extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -38,7 +38,7 @@ use Modules\Assignments\Repositories\AssignmentRepository;
 
         $list = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
 
-        return view('dashboard::livewire.list.trip-change', [
+        return view('dashboard::livewire.list.trip-charge', [
             'list' =>$list
         ]);
 
