@@ -165,7 +165,7 @@
          @livewire('dashboard::list.estimate-to-be-sent', key('dash_list_estimate_to_be_sent'))
          @break
       @case('trip_charge')
-         @livewire('dashboard::list.trip-change', key('dash_list_trip_charge'))
+         @livewire('dashboard::list.trip-charge', key('dash_list_trip_charge'))
          @break
       @default
          <h3>OPPSSSS!!!! No list found!! </h3>
