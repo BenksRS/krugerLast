@@ -167,6 +167,9 @@
       @case('trip_charge')
          @livewire('dashboard::list.trip-charge', key('dash_list_trip_charge'))
          @break
+      @case('readytobill_fl')
+         @livewire('dashboard::list.readytobill-fl', key('dash_list_readytobill_fl'))
+         @break
       @default
          <h3>OPPSSSS!!!! No list found!! </h3>
    @endswitch
