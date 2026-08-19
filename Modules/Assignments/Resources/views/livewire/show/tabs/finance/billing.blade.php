@@ -10,9 +10,13 @@
          No Scheduled Date Found, Scheduled one before add an invoice!!!
       </div>
    @endif
-   <h4 class="card-title mb-4">Billed Invoices @if(!$showAdd && $checkJobreport > 0 && isset($assignment->scheduling))
+{{--   <h4 class="card-title mb-4">Billed Invoices @if(!$showAdd && $checkJobreport > 0 && isset($assignment->scheduling))
          <button type="button" class="btn btn-primary btn-sm float-end" wire:click="$emit('addInvoice')"><i class="fas fa-plus"></i> <i class="fas fa-file-invoice"></i></button>
-      @endif</h4>
+      @endif</h4>--}}
+
+      <h4 class="card-title mb-4">Billed Invoices
+            <button type="button" class="btn btn-primary btn-sm float-end" wire:click="$emit('addInvoice')"><i class="fas fa-plus"></i> <i class="fas fa-file-invoice"></i></button>
+         </h4>
 
    @if($showAdd)
       {{--  ADD INVOICES --}}
