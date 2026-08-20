@@ -64,7 +64,7 @@
 		
 		public    $statusList;
 		
-		public    $checklist    = [1  => FALSE, 11 => FALSE, 12 => FALSE, 17 => TRUE, 28 => FALSE, 34 => FALSE, 35 => FALSE, 37 => FALSE, 38 => FALSE, 39 => FALSE, 40 => TRUE, 41 => FALSE, 43 => FALSE, 45 => FALSE, 46 => FALSE, 47 => FALSE, 48 => FALSE, 50 => FALSE];
+		public    $checklist    = [1  => FALSE, 11 => FALSE, 12 => FALSE, 17 => TRUE, 28 => FALSE, 34 => FALSE, 35 => FALSE, 37 => FALSE, 38 => FALSE, 39 => FALSE, 40 => TRUE, 41 => TRUE, 43 => FALSE, 45 => FALSE, 46 => FALSE, 47 => FALSE, 48 => FALSE, 50 => FALSE];
 		
 		public function mount ()
 		{
