@@ -170,6 +170,9 @@
       @case('readytobill_fl')
          @livewire('dashboard::list.readytobill-fl', key('dash_list_readytobill_fl'))
          @break
+      @case('super_pending')
+         @livewire('dashboard::list.super-pending', key('dash_list_super_pending'))
+         @break
       @default
          <h3>OPPSSSS!!!! No list found!! </h3>
    @endswitch
