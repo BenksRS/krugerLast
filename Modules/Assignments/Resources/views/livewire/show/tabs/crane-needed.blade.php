@@ -40,14 +40,14 @@
             <div class="row mb-3">
                <label class="col-md-1 col-form-label">Crane Notes</label>
                <div class="col-md-6">
-                  <textarea wire:model.defer="crane_notes" class="form-control" rows="3" placeholder="Add Crane Notes..."></textarea>
+                  <textarea wire:model.defer="crane_notes" class="form-control" rows="15" placeholder="Crane Notes..."></textarea>
                   @error('crane_notes') <span class="text-danger">{{ $message }}</span> @enderror
                </div>
             </div>
 
             <div class="row">
-               <div class="col-md-4 offset-md-3">
-                  <button type="submit" class="btn btn-success">Save</button>
+               <div class="col-md-7">
+                  <button type="submit" class="btn btn-success float-end">Save</button>
                </div>
             </div>
          </div>

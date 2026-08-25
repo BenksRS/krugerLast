@@ -66,7 +66,7 @@ class TabsPanel extends Component
             'category' => 1,
         ],
         [
-            'title' => 'Crane Needed',
+            'title' => 'Tree Estimate',
             'status' => '',
             'href' => 'crane-needed',
             'key' => 'assignments_tab_crane_needed',
