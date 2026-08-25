@@ -76,7 +76,7 @@
                                             @endif
 
                                             {{--  if    billing  by info --}}
-                                            @if(in_array($assignment->status->id,[4]))
+                                            @if(in_array($assignment->status->id,[4, 59]))
                                                 <p>Billing by :
                                                     @if(is_null($assignment->billed_created))
                                                         None |

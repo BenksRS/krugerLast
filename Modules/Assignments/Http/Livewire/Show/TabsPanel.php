@@ -65,6 +65,14 @@ class TabsPanel extends Component
             'tab' => 'assignments::show.tabs.comissions',
             'category' => 1,
         ],
+        [
+            'title' => 'Crane Needed',
+            'status' => '',
+            'href' => 'crane-needed',
+            'key' => 'assignments_tab_crane_needed',
+            'tab' => 'assignments::show.tabs.crane-needed',
+            'category' => 'all',
+        ],
 //        [
 //            'title' => 'Coasts',
 //            'status' => '',

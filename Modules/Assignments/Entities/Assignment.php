@@ -51,6 +51,10 @@ class Assignment extends Model {
         'inside_info',
         'projected_lien_date',
         'projected_lien_active',
+        'crane_needed',
+        'crane_nadal',
+        'crane_request',
+        'crane_notes',
     ];
 
     protected $appends  = [
