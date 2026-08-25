@@ -309,7 +309,7 @@ class GdriveController extends Controller
             $pdf_file = $pdf->download()->getOriginalContent();
 
             // send pdf
-            $filename ="$gdrive->kruger_pictures_path/Before & After - $base_filename.pdf";
+            $filename ="$gdrive->kruger_pictures_path/Before AND After - $base_filename.pdf";
             @list($type, $file_data) = explode(';', $pdf_file);
             @list(, $file_data) = explode(',', $file_data);
             $storage->put($filename,$pdf_file);
@@ -326,7 +326,7 @@ class GdriveController extends Controller
         $pdf_file = $pdf->download()->getOriginalContent();
 
         // send pdf
-        $filename ="$gdrive->kruger_pictures_path/Pictures Before & After labeled - $base_filename.pdf";
+        $filename ="$gdrive->kruger_pictures_path/Pictures Before AND After labeled - $base_filename.pdf";
         @list($type, $file_data) = explode(';', $pdf_file);
         @list(, $file_data) = explode(',', $file_data);
         $storage->put($filename,$pdf_file);
