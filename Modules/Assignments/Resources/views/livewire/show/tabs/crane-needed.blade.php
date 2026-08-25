@@ -6,14 +6,12 @@
             <h5 class="card-title mb-4">Estimate</h5>
             <div class="row mb-3">
                <label class="col-md-1 col-form-label">Crane Needed</label>
-               <div class="col-md-6">
+               <div class="col-md-6 align-items-center d-flex">
                   <div class="form-check form-check-inline">
-                     <input type="radio" wire:model="crane_needed" value="Y" class="form-check-input" id="crane_needed_y">
-                     <label class="form-check-label" for="crane_needed_y">Yes</label>
+                     <input type="radio" wire:model="crane_needed" value="Y" class="form-check-input" id="crane_needed_y"> <label class="form-check-label" for="crane_needed_y">Yes</label>
                   </div>
                   <div class="form-check form-check-inline">
-                     <input type="radio" wire:model="crane_needed" value="N" class="form-check-input" id="crane_needed_n">
-                     <label class="form-check-label" for="crane_needed_n">No</label>
+                     <input type="radio" wire:model="crane_needed" value="N" class="form-check-input" id="crane_needed_n"> <label class="form-check-label" for="crane_needed_n">No</label>
                   </div>
                   @error('crane_needed') <span class="text-danger d-block">{{ $message }}</span> @enderror
                </div>
