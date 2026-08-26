@@ -7,7 +7,7 @@
               @continue
             @endif
             @switch($js->id)
-                @case(16)
+{{--                @case(16)
                 @case(17)
 
                 @if(Auth::user()->id == 2  || Auth::user()->id == 10 || Auth::user()->id == 1 || Auth::user()->id == 25)
@@ -37,7 +37,7 @@
 
 
                 @endif
-                @break
+                @break--}}
                 @default
                     @if($jbSelectedSingle->isNotEmpty())
                         <div class="col-lg-5">
