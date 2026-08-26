@@ -5,7 +5,7 @@
          <div class="card-body">
             <h5 class="card-title mb-4">Estimate</h5>
             <div class="row mb-3">
-               <label class="col-md-1 col-form-label">Crane Needed</label>
+               <label class="col-md-1 col-form-label">Tree Estimate</label>
                <div class="col-md-6 align-items-center d-flex">
                   <div class="form-check form-check-inline">
                      <input type="radio" wire:model="crane_needed" value="Y" class="form-check-input" id="crane_needed_y"> <label class="form-check-label" for="crane_needed_y">Yes</label>
@@ -43,11 +43,13 @@
                </div>
             </div>
 
+            @if($crane_notes == "")
             <div class="row">
                <div class="col-md-7">
                   <button type="submit" class="btn btn-success float-end">Save</button>
                </div>
             </div>
+            @endif
          </div>
       </div>
    </form>
