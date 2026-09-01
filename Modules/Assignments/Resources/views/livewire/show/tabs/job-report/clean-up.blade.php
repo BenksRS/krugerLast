@@ -79,6 +79,7 @@
                </div>
             </div>
 
+            @if($jobType_id == 17)
             <div class="row">
                <div class="col-md-3">
                   <div class="mb-3 mt-4">
@@ -93,6 +94,7 @@
                </div>
                <div class="col-lg-12"><hr></div>
             </div>
+            @endif
 
             <div class="row">
                <div class="col-md-3">
