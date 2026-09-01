@@ -43,6 +43,7 @@ class CleanUp extends Component
 
     public $workersDB;
 
+    public $loads;
     public $bobcat_use;
     public $mini_use;
     public $mini_type;
@@ -82,6 +83,7 @@ class CleanUp extends Component
             $this->show =true;
 
             $this->job_info = $this->jobReport->job_info;
+            $this->loads = $this->jobReport->loads;
             $this->bobcat_use = $this->jobReport->bobcat_use;
             $this->mini_use = $this->jobReport->mini_use;
             $this->bobcat_type = $this->jobReport->bobcat_type;
@@ -176,6 +178,7 @@ class CleanUp extends Component
             'assignment_id' => $this->assignment->id,
             'assignment_job_type_id' => $this->jobType_id,
             'service_date' =>Carbon::now(),
+            'loads' =>$this->loads,
             'bobcat_use' =>$this->bobcat_use,
             'mini_use' =>$this->mini_use,
             'bobcat_type' =>$this->bobcat_type,

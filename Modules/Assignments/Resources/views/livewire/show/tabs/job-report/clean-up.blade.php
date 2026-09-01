@@ -41,8 +41,8 @@
                   </div>
                   <div class="col-lg-3 float-start mt-2">
                      <div class="mb-3">
-                        <label for="formrow-firstname-input" class="form-label">How many workers?</label>
-                        <input type="number" class="form-control" id="formrow-firstname-input" name="many_workers" wire:model="many_workers">
+                        <label for="formrow-many_workers-input" class="form-label">How many workers?</label>
+                        <input type="number" class="form-control" id="formrow-many_workers-input" name="many_workers" wire:model="many_workers">
                         @error('many_workers')
                         <div class="invalid-feedback show">
                            Please input a number > 0.
@@ -77,6 +77,21 @@
 
                   <hr>
                </div>
+            </div>
+
+            <div class="row">
+               <div class="col-md-3">
+                  <div class="mb-3 mt-4">
+                     <label for="formrow-loads-input" class="form-label">How many loads?</label>
+                     <input type="number" class="form-control" id="formrow-loads-input" name="loads" wire:model="loads">
+                     @error('loads')
+                     <div class="invalid-feedback show">
+                        Please input a number > 0.
+                     </div>
+                     @enderror
+                  </div>
+               </div>
+               <div class="col-lg-12"><hr></div>
             </div>
 
             <div class="row">
@@ -261,6 +276,10 @@
                <div class="table-responsive">
                   <table class="table  mb-0">
                      <tbody>
+                        <tr>
+                           <th scope="row">How many loads?</th>
+                           <td colspan="5">{{ $this->loads}} loads</td>
+                        </tr>
                         <tr>
                            <th scope="row">Did we use Bobcat?</th>
                            <td>{{($this->bobcat_use  == 'Y') ? 'Yes' : 'No'}}</td>
