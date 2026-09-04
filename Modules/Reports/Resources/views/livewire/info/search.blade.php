@@ -37,7 +37,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-5">
 
                             <div class="mt-0">
                                 <h5 class="font-size-14 mb-3">Date Filter By:</h5>
@@ -45,42 +45,57 @@
                                     <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
                                            id="filter_date_c" value="created">
                                     <label class="form-check-label" for="filter_date_c">
-                                        Jobs Created
+                                        Created
                                     </label>
                                 </div>
+
                                 <div class="form-check-inline mt-1">
                                     <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
                                            id="filter_date_s" value="schedulled" checked>
                                     <label class="form-check-label" for="filter_date_s">
-                                        Jobs Scheduled
+                                        Scheduled
                                     </label>
                                 </div>
                                 <div class="form-check-inline">
                                     <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
                                            id="filter_date_or" value="open-reschedule">
                                     <label class="form-check-label" for="filter_date_or">
-                                        Jobs Open/Reschedule
+                                        Open/Reschedule
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
+                                           id="filter_date_rtb" value="readytobill">
+                                    <label class="form-check-label" for="filter_date_rtb">
+                                        Ready To Bill
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
+                                           id="filter_date_tc" value="trip_charge">
+                                    <label class="form-check-label" for="filter_date_tc">
+                                        Trip Charge
                                     </label>
                                 </div>
                                 <div class="form-check-inline mt-1">
                                     <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
                                            id="filter_date_b" value="billed">
                                     <label class="form-check-label" for="filter_date_b">
-                                        Jobs Billed
+                                        Billed
                                     </label>
                                 </div>
                                 <div class="form-check-inline mt-1">
                                     <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
                                            id="filter_date_p" value="paid">
                                     <label class="form-check-label" for="filter_date_p">
-                                        Jobs Paid
+                                        Paid
                                     </label>
                                 </div>
                                 <div class="form-check-inline mt-1">
                                     <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
                                            id="filter_date_crane" value="crane">
                                     <label class="form-check-label" for="filter_date_crane">
-                                        Jobs Crane
+                                        Crane
                                     </label>
                                 </div>
                                 @error('tarp_situation')
@@ -115,7 +130,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-2 ">
+                        <div class="col-md-1 ">
                             <button class="btn btn-lg btn-info m-2 " wire:click="$emit('search')"
                                     type="submit"><i class="bx bx-search"></i> Search  </button>
                         </div>

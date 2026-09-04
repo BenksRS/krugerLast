@@ -116,6 +116,12 @@ class Search extends Component
                     case 'open-reschedule':
                         $this->list=AssignmentFinanceRepository::DateOpenReschedule($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
+                    case 'readytobill':
+                        $this->list=AssignmentFinanceRepository::DateReadytobill($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                    break;
+                    case 'trip_charge':
+                        $this->list=AssignmentFinanceRepository::DateTripCharge($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                    break;
                 }
                 if($this->eventSelected){
 //

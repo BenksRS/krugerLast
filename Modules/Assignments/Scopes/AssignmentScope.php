@@ -414,6 +414,40 @@ trait AssignmentScope {
                 $q->whereDate('created_at', '<=', $date_to);
             });
     }
+    public function scopeDateReadytobill(Builder $query, $date_from, $date_to, $tech_id = NULL, $job_type = NULL)
+    {
+        return $query
+            ->with('job_types')
+            ->whereIn('status_id', [4])
+            ->whereHas('job_types', function(Builder $q) use ($job_type) {
+                if ($job_type != NULL) {
+                    $q->whereIn('assignment_job_type_id', [$job_type]);
+                }
+            })
+            ->when($date_from, function(Builder $q, $date_from) {
+                $q->whereDate('created_at', '>=', $date_from);
+            })
+            ->when($date_to, function(Builder $q, $date_to) {
+                $q->whereDate('created_at', '<=', $date_to);
+            });
+    }
+    public function scopeDateTripCharge(Builder $query, $date_from, $date_to, $tech_id = NULL, $job_type = NULL)
+    {
+        return $query
+            ->with('job_types')
+            ->whereIn('status_id', [59])
+            ->whereHas('job_types', function(Builder $q) use ($job_type) {
+                if ($job_type != NULL) {
+                    $q->whereIn('assignment_job_type_id', [$job_type]);
+                }
+            })
+            ->when($date_from, function(Builder $q, $date_from) {
+                $q->whereDate('created_at', '>=', $date_from);
+            })
+            ->when($date_to, function(Builder $q, $date_to) {
+                $q->whereDate('created_at', '<=', $date_to);
+            });
+    }
 
     public function scopeSearchTags(Builder $query, $tags = NULL)
     {
