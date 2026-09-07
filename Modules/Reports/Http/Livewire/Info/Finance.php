@@ -56,7 +56,7 @@ class Finance extends Component {
             if ($total_billing == 0) {
                 $media_jobs_billed = 0;
             } else {
-                $media_jobs_billed = $total_billing / $total_jobs_billed;
+                $media_jobs_billed = $total_billing ?? 0 / $total_jobs_billed ?? 0;
             }
 
             // paid
