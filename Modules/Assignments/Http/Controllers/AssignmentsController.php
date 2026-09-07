@@ -157,7 +157,7 @@ class AssignmentsController extends Controller {
 
 
 //        $gallery = Gallery::where('assignment_id', $assignment->id)->get();
-        dump($job_info);
+//        dump($job_info);
 
     }
 
