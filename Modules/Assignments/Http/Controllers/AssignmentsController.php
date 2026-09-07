@@ -145,7 +145,7 @@ class AssignmentsController extends Controller {
             'job_id' => $assignment->id,
             'first_name' => $assignment->first_name,
             'last_name' => $assignment->last_name,
-            'pictures' =>[$gallery_imags]
+            'pictures' =>$gallery_imags
         ];
 
 
