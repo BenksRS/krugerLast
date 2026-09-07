@@ -11,6 +11,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\Docsign;
+use Modules\Assignments\Entities\Gallery;
 use Modules\Assignments\Entities\Signdata;
 use Modules\Core\Http\Controllers\AdminController;
 use Modules\Referrals\Entities\FieldAuthorizations;
@@ -124,7 +125,43 @@ class AssignmentsController extends Controller {
      *
      * @return Renderable
      */
-    public function show ($id)
+    public function gallery ($id)
+    {
+        $assignment = Assignment::findOrFail($id);
+        $gallery = (object)Gallery::where('assignment_id', $assignment->id)->get();
+        $item=0;
+        foreach ($gallery as $img){
+            $gallery_imags[]=(object)[
+                'image' => $img->b64,
+                'type' => $img->type
+            ];
+        }
+        $gallery_imags=collect((object)$gallery_imags)->toArray();
+
+//        dump($gallery_imags);
+
+
+        $job_info = (object)[
+            'job_id' => $assignment->id,
+            'first_name' => $assignment->first_name,
+            'last_name' => $assignment->last_name,
+            'pictures' =>$gallery_imags
+        ];
+
+
+        $ch = curl_init("https://benks.app.n8n.cloud/webhook-test/uploading-picture-job");
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($job_info));
+        curl_exec($ch);
+
+
+//        $gallery = Gallery::where('assignment_id', $assignment->id)->get();
+//        dump($job_info);
+
+    }
+
+        public function show ($id)
     {
 
         $assignment = Assignment::findOrFail($id);
