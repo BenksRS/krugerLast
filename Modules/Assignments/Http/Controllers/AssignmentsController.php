@@ -128,8 +128,23 @@ class AssignmentsController extends Controller {
     public function gallery ($id)
     {
         $assignment = Assignment::findOrFail($id);
-        $gallery = Gallery::where('assignment_id', $assignment->id)->get();
-        dump($gallery);
+
+        $job_info = (object)[
+            'job_id' => $assignment->id,
+            'first_name' => $assignment->first_name,
+            'last_name' => $assignment->last_name,
+        ];
+
+
+        $ch = curl_init("https://benks.app.n8n.cloud/webhook/uploading-picture-job");
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($job_info));
+        curl_exec($ch);
+
+
+//        $gallery = Gallery::where('assignment_id', $assignment->id)->get();
+//        dump($gallery);
 
     }
 
