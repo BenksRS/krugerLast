@@ -136,7 +136,7 @@ class AssignmentsController extends Controller {
                 'type' => $img->type
             ];
         }
-        $gallery_imags=collect($gallery_imags);
+        $gallery_imags=collect((object)$gallery_imags);
         $job_info = (object)[
             'job_id' => $assignment->id,
             'first_name' => $assignment->first_name,
