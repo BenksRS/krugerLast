@@ -136,7 +136,7 @@ class AssignmentsController extends Controller {
                 'type' => $img->type
             ];
         }
-        $gallery_imags=collect((object)$gallery_imags);
+        $gallery_imags=collect((object)$gallery_imags)->toArray();
 
         dump($gallery_imags);
 
