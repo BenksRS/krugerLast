@@ -11,6 +11,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\Docsign;
+use Modules\Assignments\Entities\Gallery;
 use Modules\Assignments\Entities\Signdata;
 use Modules\Core\Http\Controllers\AdminController;
 use Modules\Referrals\Entities\FieldAuthorizations;
@@ -124,7 +125,15 @@ class AssignmentsController extends Controller {
      *
      * @return Renderable
      */
-    public function show ($id)
+    public function gallery ($id)
+    {
+        $assignment = Assignment::findOrFail($id);
+        $gallery = Gallery::where('assignment_id', $assignment->id)->get();
+        dump($gallery);
+
+    }
+
+        public function show ($id)
     {
 
         $assignment = Assignment::findOrFail($id);

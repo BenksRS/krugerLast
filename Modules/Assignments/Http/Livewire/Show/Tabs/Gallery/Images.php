@@ -32,7 +32,10 @@ class Images extends Component
         $this->gallery = Gallery::where('assignment_id', $this->assignment->id)->get();
 
     }
-		
+    public function sendN8n(){
+
+        $this->gallery = Gallery::where('assignment_id', $this->assignment->id)->get();
+    }
 		public function changeTypeLabel($type, $label, $image_id){
 			$type = $label == 'the_ladder' ? 'pics_the_ladder' : $type;
 			
