@@ -130,11 +130,13 @@ class AssignmentsController extends Controller {
         $assignment = Assignment::findOrFail($id);
         $gallery = (object)Gallery::where('assignment_id', $assignment->id)->get();
         $gallery_imags=(object)array();
+        $item=0;
         foreach ($gallery as $img){
-            $gallery_imags[]=(object)[
+            $gallery_imags[$item]=(object)[
                 'image' => $img->b64,
                 'type' => $img->type
             ];
+            $item++;
         }
 
         $job_info = (object)[
