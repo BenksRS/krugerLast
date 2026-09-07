@@ -137,11 +137,15 @@ class AssignmentsController extends Controller {
             ];
         }
         $gallery_imags=collect((object)$gallery_imags);
+
+        dump($gallery_imags);
+
+
         $job_info = (object)[
             'job_id' => $assignment->id,
             'first_name' => $assignment->first_name,
             'last_name' => $assignment->last_name,
-            'pictures' =>(object)[$gallery_imags['items']]
+            'pictures' =>(object)[$gallery_imags]
         ];
 
 
