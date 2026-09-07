@@ -128,11 +128,12 @@ class AssignmentsController extends Controller {
     public function gallery ($id)
     {
         $assignment = Assignment::findOrFail($id);
-
+        $gallery = (object)Gallery::where('assignment_id', $assignment->id)->get();
         $job_info = (object)[
             'job_id' => $assignment->id,
             'first_name' => $assignment->first_name,
             'last_name' => $assignment->last_name,
+            'pictures' =>[$gallery]
         ];
 
 
