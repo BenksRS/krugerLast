@@ -131,7 +131,7 @@ class AssignmentsController extends Controller {
         $gallery = (object)Gallery::where('assignment_id', $assignment->id)->get();
         $gallery_imags=(object)array();
         foreach ($gallery as $img){
-            $gallery_imags=(object)[
+            $gallery_imags[]=(object)[
                 'image' => $img->b64,
                 'type' => $img->type
             ];
