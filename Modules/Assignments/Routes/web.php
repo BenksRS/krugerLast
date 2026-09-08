@@ -12,6 +12,7 @@ Route::prefix('/assignments')->name('assignments.')->group(function () {
 	Route::get('/new', [AssignmentsController::class, 'new'])->name('new');
 	Route::get('/show/{id}', [AssignmentsController::class, 'show'])->name('show');
     Route::get('/gallery/{id}', [AssignmentsController::class, 'gallery'])->name('gallery');
+    Route::get('/labelled/{id}', [AssignmentsController::class, 'labelled'])->name('labelled');
 	Route::get('/list', [AssignmentsController::class, 'list'])->name('list');
     Route::get('/pdfauth/{id}/{page}', [AssignmentsController::class, 'pdfauth'])->name('pdfauth');
     Route::get('/pdfgallerylabel/{id}', [AssignmentsController::class, 'pdfgallerylabel'])->name('pdfgallerylabel');

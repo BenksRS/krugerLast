@@ -125,6 +125,29 @@ class AssignmentsController extends Controller {
      *
      * @return Renderable
      */
+    public function labelled ($id)
+    {
+        $assignment = Assignment::findOrFail($id);
+
+
+        $job_info = (object)[
+            'job_id' => $assignment->id,
+            'first_name' => $assignment->first_name,
+            'last_name' => $assignment->last_name
+        ];
+
+
+        $ch = curl_init("https://benks.app.n8n.cloud/webhook/label-job");
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($job_info));
+        curl_exec($ch);
+
+
+//        $gallery = Gallery::where('assignment_id', $assignment->id)->get();
+//        dump($job_info);
+
+    }
     public function gallery ($id)
     {
         $assignment = Assignment::findOrFail($id);
@@ -149,7 +172,7 @@ class AssignmentsController extends Controller {
         ];
 
 
-        $ch = curl_init("https://benks.app.n8n.cloud/webhook-test/uploading-picture-job");
+        $ch = curl_init("https://benks.app.n8n.cloud/webhook/uploading-picture-job");
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($job_info));
