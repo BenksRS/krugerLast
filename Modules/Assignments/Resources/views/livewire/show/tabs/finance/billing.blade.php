@@ -149,7 +149,7 @@
                         @if($job_types > 0)
                            <div class="col-md-6">
                               <label class="form-label">Third Party</label> <input type="text" class="form-control" name="third_party"
-                                                                                   placeholder="-$0.00" wire:model.debounce.1000ms="tree_amount" required>
+                                                                                   placeholder="-$0.00" wire:model.debounce.1000ms="third_party" required>
 
                               <div class="valid-feedback">
                                  Looks good!
