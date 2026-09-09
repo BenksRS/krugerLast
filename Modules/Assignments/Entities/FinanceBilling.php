@@ -26,10 +26,12 @@ class FinanceBilling extends Model
         'status',
         'lien',
         'tree_amount',
+        'third_party',
     ];
     protected $appends  = [
         'billed_amount_view',
         'tree_amount_view',
+        'third_party_view',
         'updated_at_view',
         'billed_date_view',
         'fee_amount_view',
@@ -59,6 +61,11 @@ class FinanceBilling extends Model
     public function getTreeAmountViewAttribute ()
     {
         $result = number_format($this->tree_amount, 2);
+        return "$$result";
+    }
+    public function getThirdPartyViewAttribute ()
+    {
+        $result = number_format($this->third_party, 2);
         return "$$result";
     }
     public function getFeeAmountViewAttribute ()
