@@ -62,7 +62,7 @@ class AssignmentFinanceRepository extends Assignment {
         $third_party=$this->invoices->sum('third_party');
         $tree_amount_total=$this->invoices->sum('tree_amount');
         $tree_amount=$tree_amount_total-$third_party;
-        $crane_amount=$this->reports->sum('crane_amount');
+        $crane_amount=$this->reports->whereIn('assignment_job_id', [11, 26])->sum('crane_amount');
         $settlement_amount=$this->invoices->sum('settlement_amount');
         $total_discount=($fee_amount + $discount_amount + $settlement_amount + $collection_fee_amount);
 
