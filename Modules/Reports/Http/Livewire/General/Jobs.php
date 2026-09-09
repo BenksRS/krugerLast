@@ -70,7 +70,7 @@ class Jobs extends Component
         $breakdown = [];
 
         foreach ($list as $row) {
-            $ids = $row->workers->pluck('worker_id');
+            $ids = $row->workers->pluck('worker_id')->unique();
             if (!empty($this->workersSelected)) {
                 $ids = $ids->intersect($this->workersSelected);
             }
@@ -113,7 +113,9 @@ class Jobs extends Component
 
     public function render()
     {
-        $list = collect($this->list)->sortBy('created_at')->values();
+        $list = collect($this->list)
+            ->sortBy(fn ($row) => optional($row->scheduling)->start_date ?? $row->created_at)
+            ->values();
 
         $totals = [
             'jobs'        => $list->count(),
