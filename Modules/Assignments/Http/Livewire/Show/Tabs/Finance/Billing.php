@@ -77,7 +77,7 @@ class Billing extends Component
     }
     public function updated($field)
     {
-        $array = array('billed_amount', 'fee_amount','collection_fee_amount', 'discount_amount', 'settlement_amount', 'tree_amount');
+        $array = array('billed_amount', 'fee_amount','collection_fee_amount', 'discount_amount', 'settlement_amount', 'tree_amount', 'third_party');
 
         if (in_array($field, $array))
         {
