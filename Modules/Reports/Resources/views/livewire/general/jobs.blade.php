@@ -2,6 +2,15 @@
     <style>
         .table th { vertical-align: middle; }
         .table td { vertical-align: middle; }
+
+        /* Header fixo ao rolar a tabela de jobs */
+        .jobs-table-wrapper { max-height: 70vh; overflow: auto; }
+        .jobs-table-wrapper thead th {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: #fff;
+        }
     </style>
 
     <div class="row">
@@ -55,7 +64,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="table-responsive mb-0">
+                    <div class="table-responsive jobs-table-wrapper mb-0">
                         <table class="table table-bordered nowrap w-100">
                             <thead>
                             <tr>
