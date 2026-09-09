@@ -97,6 +97,7 @@ class Billing extends Component
         $this->settlement_amount = $invoice->settlement_amount;
         $this->billed_date = $invoice->billed_date;
         $this->billed_date_edited = $invoice->billed_date;
+        $this->tree_amount = $invoice->tree_amount;
 
         $this->invoiceTotal();
 
