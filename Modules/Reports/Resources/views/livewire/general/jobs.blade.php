@@ -73,6 +73,7 @@
                                 <th class="text-end">Paid</th>
                                 <th class="text-end">Balance</th>
                                 <th class="text-end">Crane</th>
+                                <th class="text-end">Discounts</th>
                                 <th>Billed Date</th>
                                 <th>Paid Date</th>
                             </tr>
@@ -93,6 +94,7 @@
                                     $paid   = (float) optional(optional($row->finance)->payments)->total;
                                     $balance = (float) optional(optional($row->finance)->balance)->total;
                                     $crane  = (float) optional(optional($row->finance)->invoices)->crane_amount;
+                                    $discount = (float) $invoicesObj->discount;
                                 @endphp
                                 <tr>
                                     <td>
@@ -133,6 +135,7 @@
                                     <td class="text-end">${{ number_format($paid, 2, '.', ',') }}</td>
                                     <td class="text-end">${{ number_format($balance, 2, '.', ',') }}</td>
                                     <td class="text-end">${{ number_format($crane, 2, '.', ',') }}</td>
+                                    <td class="text-end">${{ number_format($discount, 2, '.', ',') }}</td>
                                     <td>{{ optional(optional($row->finance)->collection)->billed_date_view ?? '-' }}</td>
                                     <td>{{ optional(optional($row->finance)->collection)->payment_date_view ?? '-' }}</td>
                                 </tr>
@@ -167,6 +170,7 @@
                                     <th class="text-end">Paid</th>
                                     <th class="text-end">Balance</th>
                                     <th class="text-end">Crane</th>
+                                    <th class="text-end">Discounts</th>
                                     <th class="text-end">Tree Removal 2%</th>
                                     <th class="text-end">Roof Tarp 1%</th>
                                 </tr>
@@ -184,6 +188,7 @@
                                         <td class="text-end">${{ number_format($wk['paid'], 2, '.', ',') }}</td>
                                         <td class="text-end">${{ number_format($wk['balance'], 2, '.', ',') }}</td>
                                         <td class="text-end">${{ number_format($wk['crane'], 2, '.', ',') }}</td>
+                                        <td class="text-end">${{ number_format($wk['discount'], 2, '.', ',') }}</td>
                                         <td class="text-end">${{ number_format($wk['tree_net'] * 0.02, 2, '.', ',') }}</td>
                                         <td class="text-end">${{ number_format($wk['tarp'] * 0.01, 2, '.', ',') }}</td>
                                     </tr>

@@ -65,6 +65,17 @@ class Jobs extends Component
         return (float) optional(optional($row->finance)->invoices)->crane_amount;
     }
 
+    protected function jobDiscount($row)
+    {
+        return (float) optional(optional($row->finance)->invoices)->discount;
+    }
+
+    /** job_type_id de "ROOF TARP" */
+    const JOB_TYPE_ROOF_TARP = 1;
+
+    /** job_type_id de "TREE REMOVAL" */
+    const JOB_TYPE_TREE_REMOVAL = 11;
+
     public function getWorkerBreakdown($list)
     {
         $breakdown = [];
@@ -74,6 +85,14 @@ class Jobs extends Component
             if (!empty($this->workersSelected)) {
                 $ids = $ids->intersect($this->workersSelected);
             }
+
+            // workers que estao no job report de cada job type de comissao
+            $tarpWorkers = $row->workers
+                ->where('job_type_id', self::JOB_TYPE_ROOF_TARP)
+                ->pluck('worker_id')->unique();
+            $treeWorkers = $row->workers
+                ->where('job_type_id', self::JOB_TYPE_TREE_REMOVAL)
+                ->pluck('worker_id')->unique();
 
             foreach ($ids as $workerId) {
                 if (!isset($breakdown[$workerId])) {
@@ -85,9 +104,10 @@ class Jobs extends Component
                         'third_party' => 0,
                         'tree_net'    => 0,
                         'tarp'        => 0,
-                        'paid'    => 0,
-                        'balance' => 0,
-                        'crane'   => 0,
+                        'paid'     => 0,
+                        'balance'  => 0,
+                        'crane'    => 0,
+                        'discount' => 0,
                     ];
                 }
 
@@ -100,11 +120,21 @@ class Jobs extends Component
                 $breakdown[$workerId]['billed']      += $billed;
                 $breakdown[$workerId]['tree']        += $tree;
                 $breakdown[$workerId]['third_party'] += $thirdParty;
-                $breakdown[$workerId]['tree_net']    += $treeNet;
-                $breakdown[$workerId]['tarp']        += ($billed - $treeNet);
+
+                // Tree removal so conta se o worker esta no job report de TREE REMOVAL
+                if ($treeWorkers->contains($workerId)) {
+                    $breakdown[$workerId]['tree_net'] += $treeNet;
+                }
+
+                // Tarp so conta se o worker esta no job report de ROOF TARP
+                if ($tarpWorkers->contains($workerId)) {
+                    $breakdown[$workerId]['tarp'] += ($billed - $treeNet);
+                }
+
                 $breakdown[$workerId]['paid']    += $this->jobPaid($row);
                 $breakdown[$workerId]['balance'] += $this->jobBalance($row);
-                $breakdown[$workerId]['crane']   += $this->jobCrane($row);
+                $breakdown[$workerId]['crane']    += $this->jobCrane($row);
+                $breakdown[$workerId]['discount'] += $this->jobDiscount($row);
             }
         }
 
@@ -125,6 +155,7 @@ class Jobs extends Component
             'paid'        => $list->sum(fn ($row) => $this->jobPaid($row)),
             'balance'     => $list->sum(fn ($row) => $this->jobBalance($row)),
             'crane'       => $list->sum(fn ($row) => $this->jobCrane($row)),
+            'discount'    => $list->sum(fn ($row) => $this->jobDiscount($row)),
         ];
         $totals['tree_net'] = $totals['tree'] - $totals['third_party'];
         $totals['tarp']     = $totals['billed'] - $totals['tree_net'];
