@@ -151,7 +151,7 @@
                                     <td class="text-end">${{ number_format($tree, 2, '.', ',') }}</td>
                                     <td class="text-end">${{ number_format($thirdParty, 2, '.', ',') }}</td>
                                     <td class="text-end">${{ number_format($treeNet, 2, '.', ',') }}</td>
-                                    <td class="text-end">${{ number_format($billed - $treeNet, 2, '.', ',') }}</td>
+                                    <td class="text-end">${{ number_format($billed - $tree, 2, '.', ',') }}</td>
                                     <td class="text-end">${{ number_format($paid, 2, '.', ',') }}</td>
                                     <td class="text-end">${{ number_format($balance, 2, '.', ',') }}</td>
                                     <td class="text-end">${{ number_format($crane, 2, '.', ',') }}</td>

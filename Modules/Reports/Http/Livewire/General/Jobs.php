@@ -156,7 +156,7 @@ class Jobs extends Component
 
                 // Tarp so conta se o worker esta no job report de ROOF TARP
                 if ($tarpWorkers->contains($workerId)) {
-                    $breakdown[$workerId]['tarp'] += ($billed - $treeNet);
+                    $breakdown[$workerId]['tarp'] += ($billed - $tree);
                 }
 
                 $breakdown[$workerId]['paid']    += $this->jobPaid($row);
@@ -192,7 +192,7 @@ class Jobs extends Component
             'tree'        => fn ($r) => $this->jobTree($r),
             'third_party' => fn ($r) => $this->jobThirdParty($r),
             'tree_net'    => fn ($r) => $this->jobTree($r) - $this->jobThirdParty($r),
-            'tarp'        => fn ($r) => $this->jobBilled($r) - ($this->jobTree($r) - $this->jobThirdParty($r)),
+            'tarp'        => fn ($r) => $this->jobBilled($r) - $this->jobTree($r),
             'paid'        => fn ($r) => $this->jobPaid($r),
             'balance'     => fn ($r) => $this->jobBalance($r),
             'crane'       => fn ($r) => $this->jobCrane($r),
@@ -217,7 +217,7 @@ class Jobs extends Component
             'discount'    => $list->sum(fn ($row) => $this->jobDiscount($row)),
         ];
         $totals['tree_net'] = $totals['tree'] - $totals['third_party'];
-        $totals['tarp']     = $totals['billed'] - $totals['tree_net'];
+        $totals['tarp']     = $totals['billed'] - $totals['tree'];
 
         $items     = $list->forPage($this->page, $this->selectedRows);
         $paginated = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
