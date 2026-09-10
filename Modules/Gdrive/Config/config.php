@@ -70,10 +70,9 @@ return [
         // e enviado para a raiz do job no Drive (job_path).
         'photo_report' => [
             'enabled'         => env('LABELING_PHOTO_REPORT', true),
-            'photos_per_page' => (int) env('LABELING_REPORT_PPP', 4),
-            'img_max_dim'     => 1000,   // px — downscale antes de embutir no PDF
+            'photos_per_page' => (int) env('LABELING_REPORT_PPP', 2),
             'img_quality'     => 80,
-            'company'         => 'Kruger Disaster Recovery Team',
+            'company'         => 'KRUGER DISASTER RECOVERY',
             'default_service' => 'Storm Damage Restoration',
         ],
     ],

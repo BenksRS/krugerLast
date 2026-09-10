@@ -77,21 +77,16 @@ class PhotoReportBuilder
         }
         $presentSections = array_values(array_intersect($this->kb->sectionOrder(), array_keys($presentSections)));
 
-        $letterhead = 'data:image/png;base64,'
-            . base64_encode((string) @file_get_contents($this->kb->assetPath('letterhead.png')));
-
         if (empty($job['summary'])) {
             $job['summary'] = $this->defaultSummary($presentSections);
         }
-        $job['company'] = $cfg['company'] ?? 'Kruger Disaster Recovery Team';
+        $job['company'] = $cfg['company'] ?? 'KRUGER DISASTER RECOVERY';
         $job['photo_count'] = count($photos);
-        $job['sections_line'] = implode(' · ', $presentSections);
 
         // 4. render
         $pdf = Pdf::loadView('gdrive::labeling.photo-report', [
             'job' => $job,
             'pages' => $pages,
-            'letterhead' => $letterhead,
         ]);
         $pdf->setPaper('A4', 'portrait')->setWarnings(false);
 
@@ -138,12 +133,12 @@ class PhotoReportBuilder
     {
         try {
             $photo = Image::make($bin);
-            $photo->resize(1000, 750, function ($c) {
+            $photo->resize(1200, 800, function ($c) {
                 $c->aspectRatio();
                 $c->upsize();
             });
 
-            $canvas = Image::canvas(1000, 750, '#ededed');
+            $canvas = Image::canvas(1200, 800, '#ededed');
             $canvas->insert($photo, 'center');
 
             return (string) $canvas->encode('jpg', $quality);

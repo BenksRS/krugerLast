@@ -13,83 +13,90 @@
             font-size: 11px;
         }
 
-        /* letterhead Kruger (logo + mapa da Flórida + rodapé) atrás de tudo */
-        #letterhead {
+        /* faixa preta fixa no topo de toda página + filete vermelho */
+        #brandbar {
             position: fixed;
             top: 0; left: 0;
             width: 210mm;
-            z-index: -1000;
+            height: 12mm;
+            background: #111;
+            color: #fff;
+            text-align: center;
+        }
+        #brandbar span {
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            line-height: 12mm;
+        }
+        #brandrule {
+            position: fixed;
+            top: 12mm; left: 0;
+            width: 210mm;
+            height: 1.6mm;
+            background: #c8102e;
         }
 
-        /* rodapé fixo — repetido em toda página, sem float */
-        #foot-l { position: fixed; left: 16mm;  bottom: 13mm; font-size: 8px; color: #8a8a8a; }
-        #foot-r { position: fixed; right: 16mm; bottom: 13mm; font-size: 8px; color: #8a8a8a; }
+        /* rodapé fixo — sem float */
+        #foot-l { position: fixed; left: 14mm;  bottom: 8mm; font-size: 8px; color: #8a8a8a; }
+        #foot-r { position: fixed; right: 14mm; bottom: 8mm; font-size: 8px; color: #8a8a8a; }
         #foot-r:after { content: counter(page); }
+        #footline { position: fixed; left: 14mm; right: 14mm; bottom: 12mm; border-top: 1px solid #e2e2e2; }
 
-        .page { padding: 92mm 16mm 26mm 16mm; page-break-after: always; }
+        .page { padding: 20mm 14mm 18mm 14mm; page-break-after: always; }
         .page.last { page-break-after: auto; }
 
         /* ---- capa ---- */
-        h1 { font-size: 23px; letter-spacing: .5px; margin: 0 0 3px 0; text-transform: uppercase; }
-        h2 { font-size: 13px; color: #9b1c1c; text-transform: uppercase; margin: 0 0 22px 0; }
-        .info td { padding: 4px 0; vertical-align: top; font-size: 12px; }
-        .info td.k {
-            width: 130px; color: #8a8a8a; text-transform: uppercase;
-            font-size: 9px; letter-spacing: .8px; padding-top: 6px;
+        .cover { text-align: center; padding-top: 78mm; }
+        .cover .title { font-size: 27px; font-weight: bold; letter-spacing: 1px; line-height: 1.25; text-transform: uppercase; }
+        .cover .rule { width: 55mm; height: 2px; background: #c8102e; margin: 12px auto 26px auto; }
+        .cover .cust { font-size: 16px; font-weight: bold; margin-bottom: 10px; }
+        .cover .meta { font-size: 12px; color: #555; line-height: 1.7; }
+        .cover .svc { font-size: 11px; color: #c8102e; text-transform: uppercase; letter-spacing: .5px; margin-top: 6px; }
+        .cover .count { font-size: 9.5px; color: #8a8a8a; margin-top: 26px; }
+        .cover .summary {
+            text-align: left; background: #f4f4f4; padding: 12px 15px; font-size: 9.5px;
+            line-height: 1.55; color: #444; margin: 30mm auto 0 auto; width: 150mm;
         }
-        .summary { background: #f2f2f2; padding: 13px 15px; font-size: 10px; line-height: 1.5; margin-top: 20px; }
-        .summary b {
-            display: block; margin-bottom: 4px; text-transform: uppercase;
-            letter-spacing: .6px; font-size: 9px; color: #444;
-        }
-        .tagline { margin-top: 22px; font-size: 8.5px; color: #8a8a8a; text-transform: uppercase; letter-spacing: .6px; }
 
         /* ---- páginas de fotos ---- */
-        .sechead { width: 100%; border-bottom: 2px solid #9b1c1c; margin-bottom: 8px; }
+        .sechead { width: 100%; border-bottom: 2px solid #c8102e; margin-bottom: 9px; }
         .sechead td { padding-bottom: 4px; }
         .sechead .name { font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: .5px; }
         .sechead .who { text-align: right; font-size: 8px; color: #8a8a8a; text-transform: uppercase; }
 
-        .grid { width: 100%; }
-        .grid td { width: 50%; padding: 0 4px 8px 4px; }
-        .frame { background: #ededed; padding: 3px; }
-        .frame img { width: 82mm; height: 61.5mm; }
-        .cap {
-            background: #111; color: #fff; font-weight: bold; font-size: 8.5px;
-            text-align: center; padding: 5px 3px; line-height: 1.2;
-        }
+        .item { margin-bottom: 7mm; }
+        .frame { background: #ededed; padding: 3px; text-align: center; }
+        .frame img { width: 168mm; height: 112mm; }
     </style>
 </head>
 <body>
 
-<img id="letterhead" src="{{ $letterhead }}" alt="">
-<div id="foot-l">{{ $job['address'] }}</div>
+<div id="brandbar"><span>{{ $job['company'] }}</span></div>
+<div id="brandrule"></div>
+<div id="footline"></div>
+<div id="foot-l">{{ $job['customer_name'] }} &nbsp;|&nbsp; Job #{{ $job['job_number'] }}</div>
 <div id="foot-r">Page&nbsp;</div>
 
 {{-- ---------------- CAPA ---------------- --}}
-<div class="page">
-    <h1>Professional Labeled Photo Report</h1>
-    <h2>{{ $job['service_type'] ?: $job['company'] }}</h2>
+<div class="page cover">
+    <div class="title">Professional<br>Labeled Photo Report</div>
+    <div class="rule"></div>
 
-    <table class="info">
-        <tr><td class="k">Customer</td><td>{{ $job['customer_name'] }}</td></tr>
-        <tr><td class="k">Job Number</td><td>{{ $job['job_number'] }}</td></tr>
-        <tr><td class="k">Service Date</td><td>{{ $job['service_date'] ?: '—' }}</td></tr>
-        <tr><td class="k">Property</td><td>{{ $job['address'] }}</td></tr>
-        <tr><td class="k">Photo Count</td><td>{{ $job['photo_count'] }} labeled photographs</td></tr>
-        @if(!empty($job['sections_line']))
-            <tr><td class="k">Sections</td><td>{{ $job['sections_line'] }}</td></tr>
-        @endif
-    </table>
-
-    <div class="summary">
-        <b>Documentation Summary</b>
-        {{ $job['summary'] }}
+    <div class="cust">{{ $job['customer_name'] }}</div>
+    <div class="meta">
+        Job #{{ $job['job_number'] }}<br>
+        @if(!empty($job['street'])){{ $job['street'] }}<br>@endif
+        {{ $job['city_line'] }}
+        @if(!empty($job['service_date']))<br>{{ $job['service_date'] }}@endif
     </div>
+    @if(!empty($job['service_type']))
+        <div class="svc">{{ $job['service_type'] }}</div>
+    @endif
 
-    <div class="tagline">
-        {{ $job['company'] }} &nbsp;|&nbsp; Job {{ $job['job_number'] }} &nbsp;|&nbsp; Professional Photo Documentation
-    </div>
+    <div class="count">{{ $job['photo_count'] }} labeled photographs</div>
+
+    <div class="summary">{{ $job['summary'] }}</div>
 </div>
 
 {{-- ---------------- PÁGINAS DE FOTOS ---------------- --}}
@@ -98,23 +105,15 @@
         <table class="sechead">
             <tr>
                 <td class="name">{{ $page['section'] }}</td>
-                <td class="who">{{ $job['customer_name'] }} &nbsp;|&nbsp; Job {{ $job['job_number'] }}</td>
+                <td class="who">{{ $job['customer_name'] }} &nbsp;|&nbsp; Job #{{ $job['job_number'] }}</td>
             </tr>
         </table>
 
-        <table class="grid">
-            @foreach(array_chunk($page['photos'], 2) as $pair)
-                <tr>
-                    @foreach($pair as $photo)
-                        <td>
-                            <div class="frame"><img src="{{ $photo['src'] }}" alt=""></div>
-                            <div class="cap">{{ $photo['caption'] }}</div>
-                        </td>
-                    @endforeach
-                    @if(count($pair) === 1)<td>&nbsp;</td>@endif
-                </tr>
-            @endforeach
-        </table>
+        @foreach($page['photos'] as $photo)
+            <div class="item">
+                <div class="frame"><img src="{{ $photo['src'] }}" alt=""></div>
+            </div>
+        @endforeach
     </div>
 @endforeach
 

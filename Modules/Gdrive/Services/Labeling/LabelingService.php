@@ -504,13 +504,9 @@ class LabelingService
             }
         }
 
-        $address = trim(sprintf(
-            '%s, %s, %s %s',
-            $assignment->street,
-            $assignment->city,
-            $assignment->state,
-            $assignment->zipcode
-        ), " ,");
+        $street = trim((string) $assignment->street);
+        $cityLine = trim(trim(sprintf('%s, %s %s', $assignment->city, $assignment->state, $assignment->zipcode), " ,"));
+        $address = trim($street . ($street !== '' && $cityLine !== '' ? ', ' : '') . $cityLine, " ,");
 
         $serviceType = '';
         try {
@@ -529,6 +525,8 @@ class LabelingService
             'service_type' => $serviceType,
             'service_date' => $serviceDate,
             'address' => $address,
+            'street' => $street,
+            'city_line' => $cityLine,
             'summary' => '',
         ];
 
