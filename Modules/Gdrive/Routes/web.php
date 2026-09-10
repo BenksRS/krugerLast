@@ -28,6 +28,11 @@ Route::prefix('/gdrive')->name('gdrive.')->group(function () {
     Route::get('/pdfs/{id}', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'pdfs'])->name('pdfbefore');
     Route::get('/pdfs_auth/{id}', [\Modules\Gdrive\Http\Controllers\GdriveController::class, 'pdfs_auth'])->name('pdfs_auth');
 
+    // Auto-labeling (status `labeling`) — cron externo
+    Route::get('/add_queue_labeling/', [\Modules\Gdrive\Http\Controllers\LabelingController::class, 'add_queue_labeling'])->name('add_queue_labeling');
+    Route::get('/queue_labeling/', [\Modules\Gdrive\Http\Controllers\LabelingController::class, 'queue_labeling'])->name('queue_labeling');
+    Route::get('/poll_labeling/', [\Modules\Gdrive\Http\Controllers\LabelingController::class, 'poll_labeling'])->name('poll_labeling');
+
 
 });
 

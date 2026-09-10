@@ -1,5 +1,64 @@
 <?php
 
 return [
-    'name' => 'Gdrive'
+    'name' => 'Gdrive',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Auto-labeling (status `labeling`)
+    |--------------------------------------------------------------------------
+    | Pipeline: copia fotos de `Kruger Pictures/` do Drive do job -> deduplica
+    | -> IA descreve cada foto -> carimba a label na imagem -> sobe em `Labeling/`.
+    */
+    'labeling' => [
+        // driver de IA: anthropic | (futuro: openai | local)
+        'driver' => env('LABELING_AI_DRIVER', 'anthropic'),
+        'model'  => env('LABELING_AI_MODEL', 'claude-sonnet-5'),
+
+        'anthropic' => [
+            'api_key'  => env('ANTHROPIC_API_KEY'),
+            'base_url' => env('ANTHROPIC_BASE_URL', 'https://api.anthropic.com'),
+            'version'  => '2023-06-01',
+        ],
+
+        // campo da tabela `gdrive` usado como raiz das fotos de origem
+        'source_folder_key' => 'kruger_pictures_path',
+
+        // pastas de saída (relativas ao `job_path` do Drive)
+        'output_folder'    => 'Labeling',
+        'discarded_folder' => 'Labeling/_discarded',
+
+        // mínimo de fotos que devem sobrar após dedup (afrouxa o limiar até chegar perto)
+        'min_photos' => 50,
+
+        // downscale enviado pra IA (não afeta a foto final carimbada)
+        'ai_max_dimension' => 1024,
+        'ai_jpeg_quality'  => 82,
+
+        'dedupe' => [
+            'hamming_threshold' => 10,   // distância dHash <= isto  => "muito parecida"
+            'relax_step'        => 4,
+            'relax_max'         => 30,
+        ],
+
+        // status pra onde o job vai depois de rotular (resolvido por `class`)
+        'next_status_class' => 'preparing_billing',
+
+        'work_dir' => storage_path('app/labeling'),
+
+        'label' => [
+            'bar_opacity'    => 0.78,   // 0..1
+            'bar_min_height' => 46,     // px
+            'bar_height_pct' => 0.09,   // fração da altura da imagem
+            'font_width_pct' => 0.028,  // fração da largura da imagem
+            'font_min_size'  => 15,     // px
+            'font_file'      => null,   // null => DejaVuSans-Bold do módulo
+        ],
+
+        // batch expira / é considerado travado após X horas em awaiting_ai
+        'batch_timeout_hours' => 26,
+
+        // quantos jobs a rota poll_labeling processa por chamada
+        'poll_batch_size' => 3,
+    ],
 ];
