@@ -44,8 +44,9 @@ class AnthropicLabeler implements ImageLabeler
 
     protected function client()
     {
-        return Http::baseUrl($this->base())
-            ->withHeaders($this->headers())
+        // sem baseUrl de propósito: o results_url do batch é uma URL absoluta
+        // e o Http do Laravel concatena com o baseUrl gerando 404.
+        return Http::withHeaders($this->headers())
             ->timeout(120)
             ->retry(2, 2000);
     }
@@ -167,7 +168,7 @@ class AnthropicLabeler implements ImageLabeler
             ];
         }
 
-        $response = $this->client()->post('/v1/messages/batches', ['requests' => $requests]);
+        $response = $this->client()->post($this->base() . '/v1/messages/batches', ['requests' => $requests]);
 
         if (!$response->successful()) {
             throw new \RuntimeException('Anthropic batch create falhou: ' . $response->status() . ' ' . $response->body());
@@ -183,7 +184,7 @@ class AnthropicLabeler implements ImageLabeler
 
     public function fetch(string $batchId): array
     {
-        $response = $this->client()->get('/v1/messages/batches/' . $batchId);
+        $response = $this->client()->get($this->base() . '/v1/messages/batches/' . $batchId);
 
         if (!$response->successful()) {
             return ['status' => 'error', 'error' => 'batch retrieve ' . $response->status() . ' ' . $response->body()];
@@ -195,12 +196,17 @@ class AnthropicLabeler implements ImageLabeler
 
         $resultsUrl = $response->json('results_url');
         if (!$resultsUrl) {
-            return ['status' => 'error', 'error' => 'batch ended sem results_url'];
+            return ['status' => 'in_progress']; // ended mas results_url ainda não publicado
         }
 
-        $raw = $this->client()->get($resultsUrl);
+        // sem throw: logo após "ended" o endpoint de results pode devolver 404/5xx
+        // por alguns minutos enquanto materializa — nesse caso tratamos como "ainda esperando".
+        $raw = Http::withHeaders($this->headers())->timeout(120)->get($resultsUrl);
+        if ($raw->status() === 404 || $raw->serverError()) {
+            return ['status' => 'in_progress'];
+        }
         if (!$raw->successful()) {
-            return ['status' => 'error', 'error' => 'results download ' . $raw->status()];
+            return ['status' => 'error', 'error' => 'results download ' . $raw->status() . ' ' . mb_substr($raw->body(), 0, 160)];
         }
 
         $results = [];
