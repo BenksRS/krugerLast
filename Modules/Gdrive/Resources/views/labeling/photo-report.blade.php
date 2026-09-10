@@ -65,9 +65,10 @@
         .sechead .name { font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: .5px; }
         .sechead .who { text-align: right; font-size: 8px; color: #8a8a8a; text-transform: uppercase; }
 
-        .item { margin-bottom: 7mm; }
-        .frame { background: #ededed; padding: 3px; text-align: center; }
-        .frame img { width: 168mm; height: 112mm; }
+        .item { margin-bottom: 6mm; text-align: center; }
+        .frame { margin: 0 auto; }
+        .frame td { background: #ededed; padding: 4px; }
+        .frame img { display: block; }
     </style>
 </head>
 <body>
@@ -111,7 +112,9 @@
 
         @foreach($page['photos'] as $photo)
             <div class="item">
-                <div class="frame"><img src="{{ $photo['src'] }}" alt=""></div>
+                <table class="frame"><tr><td>
+                    <img src="{{ $photo['src'] }}" width="{{ $photo['w'] }}" height="{{ $photo['h'] }}" alt="">
+                </td></tr></table>
             </div>
         @endforeach
     </div>

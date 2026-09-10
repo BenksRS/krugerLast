@@ -539,6 +539,30 @@ class LabelingService
         )) . '.pdf';
 
         $pdfPath = rtrim($jobPath, '/') . '/' . $filename;
+
+        // se já existe um PDF com esse nome na raiz do job, apaga antes de recriar
+        // (o Drive aceita nomes duplicados — não dá pra confiar só no overwrite)
+        $baseName = pathinfo($filename, PATHINFO_FILENAME);
+        $deleted = 0;
+        foreach ($this->storage->listContents(rtrim($jobPath, '/'), false) as $item) {
+            if (($item['type'] ?? null) !== 'file') {
+                continue;
+            }
+            $itemName = $item['filename'] ?? pathinfo($item['path'] ?? $item['basename'] ?? '', PATHINFO_FILENAME);
+            if (strcasecmp((string) $itemName, $baseName) !== 0) {
+                continue;
+            }
+            try {
+                $this->storage->delete($item['path'] ?? $item['basename']);
+                $deleted++;
+            } catch (\Throwable $e) {
+                // segue — tenta o put mesmo assim
+            }
+        }
+        if ($deleted > 0) {
+            $this->log($queue, "PDF anterior removido ({$deleted}) antes de recriar.");
+        }
+
         $this->storage->put($pdfPath, $result['pdf']);
 
         foreach ($result['warnings'] as $warn) {

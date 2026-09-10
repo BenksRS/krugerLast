@@ -43,15 +43,23 @@ class PhotoReportBuilder
         }
         $sections = $this->smoothSections($sections);
 
-        // 2. downscale + data URI
+        // 2. downscale mantendo a proporção real + dimensões de exibição no PDF
+        //    (dompdf legado ignora max-width/height em <img>; então mandamos
+        //     width/height explícitos em px calculados p/ caber na "caixa")
+        $boxW = (int) ($cfg['box_w'] ?? 640);   // ~169mm
+        $boxH = (int) ($cfg['box_h'] ?? 430);   // ~114mm
         $photos = [];
         foreach ($rows as $i => $r) {
             $desc = trim((string) $r['description']) !== '' ? trim((string) $r['description']) : 'Job Site View';
+            list($jpeg, $w, $h) = $this->fit($r['jpeg'], $quality);
+            $scale = min($boxW / max($w, 1), $boxH / max($h, 1));
             $photos[] = [
                 'seq' => $r['seq'],
                 'caption' => $r['seq'] . ' - ' . $desc,
                 'section' => $sections[$i],
-                'src' => 'data:image/jpeg;base64,' . base64_encode($this->thumbnail($r['jpeg'], $quality)),
+                'src' => 'data:image/jpeg;base64,' . base64_encode($jpeg),
+                'w' => max(1, (int) round($w * $scale)),
+                'h' => max(1, (int) round($h * $scale)),
             ];
         }
 
@@ -129,21 +137,33 @@ class PhotoReportBuilder
      * preservadas — nada é esticado nem cortado. Tamanho uniforme deixa o grid
      * do PDF previsível (dompdf não lida bem com `max-height` em <img>).
      */
-    protected function thumbnail(string $bin, int $quality): string
+    /**
+     * Reduz a foto p/ no máx. 1400px no maior lado, mantendo proporção e
+     * orientação. Devolve [binário jpeg, largura, altura].
+     *
+     * @return array{0:string,1:int,2:int}
+     */
+    protected function fit(string $bin, int $quality): array
     {
         try {
-            $photo = Image::make($bin);
-            $photo->resize(1200, 800, function ($c) {
+            $img = Image::make($bin);
+            if (function_exists('exif_read_data')) {
+                try {
+                    $img->orientate();
+                } catch (\Throwable $e) {
+                    // sem exif — segue
+                }
+            }
+            $img->resize(1400, 1400, function ($c) {
                 $c->aspectRatio();
                 $c->upsize();
             });
 
-            $canvas = Image::canvas(1200, 800, '#ededed');
-            $canvas->insert($photo, 'center');
-
-            return (string) $canvas->encode('jpg', $quality);
+            return [(string) $img->encode('jpg', $quality), $img->width(), $img->height()];
         } catch (\Throwable $e) {
-            return $bin;
+            $size = @getimagesizefromstring($bin);
+
+            return [$bin, $size[0] ?? 800, $size[1] ?? 600];
         }
     }
 

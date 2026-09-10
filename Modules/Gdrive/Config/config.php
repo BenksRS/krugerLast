@@ -72,6 +72,8 @@ return [
             'enabled'         => env('LABELING_PHOTO_REPORT', true),
             'photos_per_page' => (int) env('LABELING_REPORT_PPP', 2),
             'img_quality'     => 80,
+            'box_w'           => 640,   // px — caixa máx. de cada foto no PDF (~169mm)
+            'box_h'           => 430,   // px (~114mm) — 2 fotos/página cabem em A4
             'company'         => 'KRUGER DISASTER RECOVERY',
             'default_service' => 'Storm Damage Restoration',
         ],
