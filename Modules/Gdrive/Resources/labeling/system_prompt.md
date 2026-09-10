@@ -29,6 +29,10 @@ job-site photographs so an adjuster can understand each picture at a glance.
 - Use a different, specific description when none of the examples accurately
   describes what is visible.
 - Never invent equipment, damage, work, or conditions that cannot be seen.
+- Never call a photo a "Tarp ..." (or put it in the Tarp Installation section)
+  unless you can actually see installed tarp material — a poly/felt sheet with
+  edges, seams and wood battens or sandbags. A plain shingled roof, or a
+  lighter/worn/patched patch of shingles, is "Roof" or "Roof Damage".
 - Never use any wording listed in `banned.md`.
 - Follow every rule in `rules.md`.
 

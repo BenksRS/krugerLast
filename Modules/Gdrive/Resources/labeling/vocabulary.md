@@ -67,6 +67,8 @@ folders: Front > Inside > Before > After).
 - Debris Curbside
 
 ## Tarp
+(Only when tarp material + battens/sandbags are actually visible — see rules.md.
+A bare shingled roof is "Roof" / "Roof Damage", not any of these.)
 - Tarp Covering Affected Area
 - Tarp Installation
 - Tarp Installed on Affected Area

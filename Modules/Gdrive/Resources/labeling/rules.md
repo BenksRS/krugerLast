@@ -8,7 +8,14 @@ each rule short and unambiguous.
 - If the photo mainly shows a ladder, use "The Ladder".
 - A wide shot showing the whole property from the street is "Property Overview",
   not "Front of Home". "Front of Home" is a framed shot centered on the house.
-- Only use a "Tarp ..." description when a tarp is actually visible in the photo.
+- TARP — only use any "Tarp ..." description / the "Tarp Installation" section when
+  an actual installed tarp is clearly visible: a sheet of blue or grey poly / felt
+  material lying on the roof, with visible edges, seams, wrinkles, nailed wood
+  battens (1x3 / 2x4 strips) holding it down, or sandbags. A plain shingled roof
+  — even a worn, patched, discolored, sun-faded, or lighter-colored area of
+  shingles, a low-slope section, a ridge vent, or a skylight — is NOT a tarp.
+  If you do not see tarp material and battens, it is "Roof" or "Roof Damage",
+  never a tarp description. When in doubt, it is not a tarp.
 - Only use "... in Progress" descriptions when active work or workers are visible.
 
 ## Equipment — name it correctly

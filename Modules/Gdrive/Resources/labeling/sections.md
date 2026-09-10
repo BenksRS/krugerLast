@@ -13,8 +13,10 @@ Use the section name **verbatim** (exact spelling and casing).
 - **Damage Before Work** — storm damage as found on arrival: fallen/leaning trees
   on the structure, fence or yard, damaged trunks, tree resting on a screen
   enclosure, roof/structure damage, before any removal work has started.
-- **Tarp Installation** — a roof tarp being installed or an installed roof tarp.
-  Only when a tarp is actually visible.
+- **Tarp Installation** — a roof tarp being installed or an already-installed roof
+  tarp. Requires visible tarp material (poly/felt sheet) with edges/seams and wood
+  battens or sandbags. A bare shingled roof, or a worn/lighter patch of shingles,
+  does NOT go here — use Damage Before Work or Completed Work.
 - **Tree Removal Operations** — active emergency tree work: crew cutting with a
   chainsaw, sectioning a fallen tree, rigging, lifting or hauling limbs, chipper
   or truck in use.
