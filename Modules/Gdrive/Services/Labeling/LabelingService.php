@@ -104,6 +104,7 @@ class LabelingService
             $items[$i] = [
                 'index' => $i,
                 'name' => $file['name'],
+                'folder' => $file['folder'],
                 'hash' => $this->deduper->hash($bin),
                 'sharpness' => $this->deduper->sharpness($bin),
             ];
@@ -149,6 +150,7 @@ class LabelingService
             $manifestItems[$customId] = [
                 'index' => $items[$idx]['index'],
                 'name' => $items[$idx]['name'],
+                'folder' => $items[$idx]['folder'] ?? '',
                 'source_order' => $order,
             ];
         }
@@ -224,7 +226,8 @@ class LabelingService
         $workDir = $payload['work_dir'];
         $labelingPath = $payload['labeling_path'];
 
-        // ordena: categoria (ordem do vocabulary.md) -> ordem original
+        // ordem = ordem da história do job (subpastas Front > Inside > Before > After),
+        // já calculada em prepare() como source_order. NÃO reordenar por categoria.
         $rows = [];
         foreach ($payload['items'] as $customId => $meta) {
             $r = $results[$customId] ?? ['error' => 'sem resultado da IA'];
@@ -234,16 +237,12 @@ class LabelingService
                 'index' => $meta['index'],
                 'name' => $meta['name'],
                 'source_order' => $meta['source_order'],
-                'category' => $r['category'] ?? 'Other',
                 'description' => $description,
             ];
         }
 
         usort($rows, function ($a, $b) {
-            $ca = $this->kb->categoryRank($a['category']);
-            $cb = $this->kb->categoryRank($b['category']);
-
-            return $ca === $cb ? ($a['source_order'] <=> $b['source_order']) : ($ca <=> $cb);
+            return $a['source_order'] <=> $b['source_order'];
         });
 
         // carimba + sobe
@@ -281,12 +280,52 @@ class LabelingService
     /* ===================================================================== */
 
     /**
-     * @return array<int,array{read:string,name:string}>
+     * Lista as imagens de Kruger Pictures NA ORDEM DA HISTÓRIA do job:
+     * subpastas em ordem natural (1- Front > 2- Inside > 3- Before > 4- After)
+     * e, dentro de cada uma, por nome de arquivo natural. Fotos soltas na raiz
+     * vão por último.
+     *
+     * @return array<int,array{read:string,name:string,folder:string,folder_rank:int}>
      */
     protected function listImages(string $root): array
     {
         $out = [];
-        foreach ($this->storage->listContents($root, true) as $item) {
+
+        $subdirs = collect($this->storage->listContents($root, false))
+            ->where('type', 'dir')
+            ->sortBy('filename', SORT_NATURAL | SORT_FLAG_CASE)
+            ->values();
+
+        $rank = 0;
+        foreach ($subdirs as $dir) {
+            $rank++;
+            $this->collectImages(
+                $dir['basename'] ?? $dir['path'],
+                $dir['filename'] ?? ('folder-' . $rank),
+                $rank,
+                true,
+                $out
+            );
+        }
+
+        // imagens soltas direto em Kruger Pictures -> depois de todas as subpastas
+        $this->collectImages($root, '(root)', 99, false, $out);
+
+        usort($out, function ($a, $b) {
+            return $a['folder_rank'] === $b['folder_rank']
+                ? strnatcasecmp($a['name'], $b['name'])
+                : ($a['folder_rank'] <=> $b['folder_rank']);
+        });
+
+        return $out;
+    }
+
+    /**
+     * @param array<int,array<string,mixed>> $out  (por referência)
+     */
+    protected function collectImages(string $dirId, string $folder, int $rank, bool $recursive, array &$out): void
+    {
+        foreach ($this->storage->listContents($dirId, $recursive) as $item) {
             if (($item['type'] ?? null) !== 'file') {
                 continue;
             }
@@ -301,10 +340,10 @@ class LabelingService
             $out[] = [
                 'read' => $item['path'] ?? $item['basename'],
                 'name' => $name . ($ext ? '.' . $ext : '.jpg'),
+                'folder' => $folder,
+                'folder_rank' => $rank,
             ];
         }
-
-        return $out;
     }
 
     protected function ensureDir(string $parentPath, string $name): string

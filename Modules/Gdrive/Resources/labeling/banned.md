@@ -10,6 +10,12 @@ one per line, matched case-insensitively as a whole-word substring.
 - Untitled
 - Miscellaneous
 - N/A
+- trimmed
+- trimming
+- trim
+- pruned
+- pruning
+- Cut Tree Sections in Yard
 
 Note: bare "Before" / "After" must not be used on their own (the system prompt
 covers this), but they are allowed inside a longer phrase such as

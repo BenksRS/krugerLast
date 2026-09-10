@@ -1,8 +1,9 @@
 # Preferred descriptions
 
-The section order below is also the order photos are numbered in the final
-`Labeling/` folder. Each `-` item is a preferred description; use it verbatim
-when it accurately describes the photo.
+Each `-` item is a preferred description; use it verbatim when it accurately
+describes the photo. The `##` sections are only a grouping aid — they do NOT
+control the order of the photos (the photos keep the order of the source
+folders: Front > Inside > Before > After).
 
 ## Property Exterior
 - Front of Home
@@ -39,24 +40,29 @@ when it accurately describes the photo.
 ## Crew and Equipment
 - Crew Cutting Tree
 - Tree Cutting
+- Crew Hauling Debris
 - Rigging Tree for Controlled Removal
 - Crane at Job Site
 - Crane Removing Tree
 - Crane Lifting Tree
 - Spider Lift at Job Site
 - Mini Skid Working
+- Equipment on Site
 
 ## Work in Progress
 - Tree Removal in Progress
 - Moving Debris
+- Loading Debris
+- Mini Skid Loading Debris
 - Loading Tree Debris
-- Cut Tree Sections in Yard
 
 ## Debris and Cleanup
+- Tree Debris on the Yard
 - Debris Removal
 - Yard Cleanup
 - Yard Clean After Tree Removal
 - Yard Clean of Debris
+- Driveway Cleared of Debris
 - Debris Curbside
 
 ## Tarp
