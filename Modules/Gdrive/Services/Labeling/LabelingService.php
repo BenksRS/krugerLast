@@ -312,7 +312,13 @@ class LabelingService
     protected function downscale(string $bin): string
     {
         $img = \Intervention\Image\Facades\Image::make($bin);
-        $img->orientate();
+        if (function_exists('exif_read_data')) {
+            try {
+                $img->orientate();
+            } catch (\Throwable $e) {
+                // exif ausente — segue sem auto-rotacionar
+            }
+        }
         $max = (int) $this->cfg['ai_max_dimension'];
         if (max($img->width(), $img->height()) > $max) {
             $img->resize($max, $max, function ($c) {

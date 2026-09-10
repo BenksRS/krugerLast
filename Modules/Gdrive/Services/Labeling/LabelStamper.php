@@ -28,7 +28,13 @@ class LabelStamper
     public function stamp(string $binary, string $text): string
     {
         $img = Image::make($binary);
-        $img->orientate();
+        if (function_exists('exif_read_data')) {
+            try {
+                $img->orientate();
+            } catch (\Throwable $e) {
+                // exif ausente/ilegível — segue sem auto-rotacionar
+            }
+        }
 
         $w = $img->width();
         $h = $img->height();
