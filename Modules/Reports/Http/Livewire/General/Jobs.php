@@ -18,6 +18,34 @@ class Jobs extends Component
     public $selectedRows = 100;
     public $workerMap = [];
 
+    public $sortField = 'schedule';
+    public $sortDir   = 'asc';
+
+    public $bdSortField = 'billed';
+    public $bdSortDir   = 'desc';
+
+    public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortDir = $this->sortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDir   = 'asc';
+        }
+
+        $this->resetPage();
+    }
+
+    public function sortBreakdownBy($field)
+    {
+        if ($this->bdSortField === $field) {
+            $this->bdSortDir = $this->bdSortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->bdSortField = $field;
+            $this->bdSortDir   = 'desc';
+        }
+    }
+
     public function mount($test, $workersSelected = [])
     {
         $this->list            = $test;
@@ -138,14 +166,41 @@ class Jobs extends Component
             }
         }
 
-        return collect($breakdown)->sortByDesc('billed');
+        $breakdown = collect($breakdown);
+        $field     = $this->bdSortField ?: 'billed';
+
+        return $this->bdSortDir === 'asc'
+            ? $breakdown->sortBy($field)->values()
+            : $breakdown->sortByDesc($field)->values();
     }
 
     public function render()
     {
-        $list = collect($this->list)
-            ->sortBy(fn ($row) => optional($row->scheduling)->start_date ?? $row->created_at)
-            ->values();
+        $list = collect($this->list)->values();
+
+        $sorters = [
+            'name'        => fn ($r) => strtolower($r->last_name . ' ' . $r->first_name),
+            'job_type'    => fn ($r) => strtolower((string) optional($r->job_types->first())->name),
+            'schedule'    => fn ($r) => optional($r->scheduling)->start_date ?? $r->created_at,
+            'status'      => fn ($r) => strtolower((string) optional($r->status)->name),
+            'referral'    => fn ($r) => strtolower((string) $r->referral_carrier_full),
+            'billed'      => fn ($r) => $this->jobBilled($r),
+            'tree'        => fn ($r) => $this->jobTree($r),
+            'third_party' => fn ($r) => $this->jobThirdParty($r),
+            'tree_net'    => fn ($r) => $this->jobTree($r) - $this->jobThirdParty($r),
+            'tarp'        => fn ($r) => $this->jobBilled($r) - ($this->jobTree($r) - $this->jobThirdParty($r)),
+            'paid'        => fn ($r) => $this->jobPaid($r),
+            'balance'     => fn ($r) => $this->jobBalance($r),
+            'crane'       => fn ($r) => $this->jobCrane($r),
+            'discount'    => fn ($r) => $this->jobDiscount($r),
+            'billed_date' => fn ($r) => optional(optional($r->finance)->collection)->billed_date,
+            'paid_date'   => fn ($r) => optional(optional($r->finance)->collection)->paid_date,
+        ];
+
+        $sorter = $sorters[$this->sortField] ?? $sorters['schedule'];
+        $list   = ($this->sortDir === 'desc'
+            ? $list->sortByDesc($sorter)
+            : $list->sortBy($sorter))->values();
 
         $totals = [
             'jobs'        => $list->count(),

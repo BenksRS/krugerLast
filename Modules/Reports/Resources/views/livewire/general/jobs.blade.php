@@ -1,7 +1,18 @@
 <div>
+    @php
+        $sh = function ($field, $label, $class = '') use ($sortField, $sortDir) {
+            $arrow = $sortField === $field ? ($sortDir === 'asc' ? ' ▲' : ' ▼') : '';
+            return '<th class="sortable ' . $class . '" wire:click="sortBy(\'' . $field . '\')">' . e($label) . $arrow . '</th>';
+        };
+        $bh = function ($field, $label, $class = '') use ($bdSortField, $bdSortDir) {
+            $arrow = $bdSortField === $field ? ($bdSortDir === 'asc' ? ' ▲' : ' ▼') : '';
+            return '<th class="sortable ' . $class . '" wire:click="sortBreakdownBy(\'' . $field . '\')">' . e($label) . $arrow . '</th>';
+        };
+    @endphp
     <style>
         .table th { vertical-align: middle; }
         .table td { vertical-align: middle; }
+        th.sortable { cursor: pointer; white-space: nowrap; user-select: none; }
 
         /* Header fixo ao rolar a tabela de jobs */
         .jobs-table-wrapper { max-height: 70vh; overflow: auto; }
@@ -68,23 +79,23 @@
                         <table class="table table-bordered nowrap w-100">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Job Type</th>
-                                <th>Schedule</th>
-                                <th>Status</th>
-                                <th>Referral</th>
+                                {!! $sh('name', 'Name') !!}
+                                {!! $sh('job_type', 'Job Type') !!}
+                                {!! $sh('schedule', 'Schedule') !!}
+                                {!! $sh('status', 'Status') !!}
+                                {!! $sh('referral', 'Referral') !!}
                                 <th>Workers</th>
-                                <th class="text-end">Billed</th>
-                                <th class="text-end">Tree</th>
-                                <th class="text-end">3d Party</th>
-                                <th class="text-end">Tree - 3d Party</th>
-                                <th class="text-end">Tarp</th>
-                                <th class="text-end">Paid</th>
-                                <th class="text-end">Balance</th>
-                                <th class="text-end">Crane</th>
-                                <th class="text-end">Discounts</th>
-                                <th>Billed Date</th>
-                                <th>Paid Date</th>
+                                {!! $sh('billed', 'Billed', 'text-end') !!}
+                                {!! $sh('tree', 'Tree', 'text-end') !!}
+                                {!! $sh('third_party', '3d Party', 'text-end') !!}
+                                {!! $sh('tree_net', 'Tree - 3d Party', 'text-end') !!}
+                                {!! $sh('tarp', 'Tarp', 'text-end') !!}
+                                {!! $sh('paid', 'Paid', 'text-end') !!}
+                                {!! $sh('balance', 'Balance', 'text-end') !!}
+                                {!! $sh('crane', 'Crane', 'text-end') !!}
+                                {!! $sh('discount', 'Discounts', 'text-end') !!}
+                                {!! $sh('billed_date', 'Billed Date') !!}
+                                {!! $sh('paid_date', 'Paid Date') !!}
                             </tr>
                             </thead>
                             <tbody>
@@ -169,19 +180,19 @@
                             <table class="table table-bordered mb-0">
                                 <thead>
                                 <tr>
-                                    <th>Worker</th>
-                                    <th class="text-end">Jobs</th>
-                                    <th class="text-end">Billed</th>
-                                    <th class="text-end">Tree</th>
-                                    <th class="text-end">3d Party</th>
-                                    <th class="text-end">Tree - 3d Party</th>
-                                    <th class="text-end">Tarp</th>
-                                    <th class="text-end">Paid</th>
-                                    <th class="text-end">Balance</th>
-                                    <th class="text-end">Crane</th>
-                                    <th class="text-end">Discounts</th>
-                                    <th class="text-end">Tree Removal 2%</th>
-                                    <th class="text-end">Roof Tarp 1%</th>
+                                    {!! $bh('name', 'Worker') !!}
+                                    {!! $bh('jobs', 'Jobs', 'text-end') !!}
+                                    {!! $bh('billed', 'Billed', 'text-end') !!}
+                                    {!! $bh('tree', 'Tree', 'text-end') !!}
+                                    {!! $bh('third_party', '3d Party', 'text-end') !!}
+                                    {!! $bh('tree_net', 'Tree - 3d Party', 'text-end') !!}
+                                    {!! $bh('tarp', 'Tarp', 'text-end') !!}
+                                    {!! $bh('paid', 'Paid', 'text-end') !!}
+                                    {!! $bh('balance', 'Balance', 'text-end') !!}
+                                    {!! $bh('crane', 'Crane', 'text-end') !!}
+                                    {!! $bh('discount', 'Discounts', 'text-end') !!}
+                                    {!! $bh('tree_net', 'Tree Removal 2%', 'text-end') !!}
+                                    {!! $bh('tarp', 'Roof Tarp 1%', 'text-end') !!}
                                 </tr>
                                 </thead>
                                 <tbody>
