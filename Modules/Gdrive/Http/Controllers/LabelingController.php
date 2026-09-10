@@ -52,9 +52,14 @@ class LabelingController extends Controller
      */
     public function queue_labeling()
     {
+        @ini_set('max_execution_time', '0');
+        @ini_set('memory_limit', '1024M');
+        @set_time_limit(0);
+        ignore_user_abort(true); // no modo sync o job continua mesmo se o curl do cron cair
+
         // libera runs travados
         QueeLabeling::where('status', 'processing')
-            ->where('updated_at', '<', Carbon::now()->subMinutes(45))
+            ->where('updated_at', '<', Carbon::now()->subMinutes(60))
             ->update(['status' => 'error', 'history' => 'run travado em processing — liberado']);
 
         if (QueeLabeling::where('status', 'processing')->exists()) {

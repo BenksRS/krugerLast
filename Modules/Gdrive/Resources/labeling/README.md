@@ -35,7 +35,13 @@ php artisan config:clear
 ANTHROPIC_API_KEY=sk-ant-...
 LABELING_AI_DRIVER=anthropic
 LABELING_AI_MODEL=claude-sonnet-5
+LABELING_AI_MODE=sync          # sync = termina em minutos (~2x custo) | batch = ~50% mais barato, SLA até 24h
+LABELING_SYNC_CONCURRENCY=5    # chamadas paralelas no modo sync
 ```
+
+**`sync`** resolve tudo dentro do `queue_labeling` (não usa `poll_labeling`).
+**`batch`** envia o lote e o `poll_labeling` coleta depois. Use `batch` só em
+storm surge, quando o custo importa mais que a pressa.
 
 ## Cron (servidor online)
 

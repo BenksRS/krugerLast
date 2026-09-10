@@ -13,6 +13,14 @@ interface ImageLabeler
     public function submit(array $images): string;
 
     /**
+     * Analisa um lote de imagens de forma síncrona (em paralelo).
+     *
+     * @param array<int,array{custom_id:string,jpeg:string}> $images
+     * @return array<string,array{description?:string,category?:string,from_vocabulary?:bool,confidence?:float,error?:string}>  indexado por custom_id
+     */
+    public function labelSync(array $images, int $concurrency): array;
+
+    /**
      * Consulta um batch.
      *
      * @return array{

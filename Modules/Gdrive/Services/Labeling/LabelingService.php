@@ -153,20 +153,33 @@ class LabelingService
             ];
         }
 
+        $payload = [
+            'gdrive_id' => $gdrive->id,
+            'job_path' => $gdrive->job_path,
+            'labeling_path' => $labelingPath,
+            'work_dir' => $workDir,
+            'items' => $manifestItems,
+            'submitted_at' => Carbon::now()->toIso8601String(),
+        ];
+
+        // modo síncrono: resolve tudo agora (billing não pode esperar a fila do batch)
+        if (($this->cfg['mode'] ?? 'sync') === 'sync') {
+            $queue->update(['payload' => $payload]);
+            $this->log($queue, 'Analisando ' . count($batchImages) . ' fotos (síncrono)...');
+            $results = $this->labeler()->labelSync($batchImages, (int) $this->cfg['sync_concurrency']);
+            $this->applyResults($queue, $payload, $results);
+
+            return;
+        }
+
+        // modo batch: envia e deixa o poll_labeling coletar depois
         $batchId = $this->labeler()->submit($batchImages);
         $this->log($queue, 'Batch enviado: ' . $batchId . ' (' . count($batchImages) . ' fotos)');
 
         $queue->update([
             'status' => 'awaiting_ai',
             'batch_id' => $batchId,
-            'payload' => [
-                'gdrive_id' => $gdrive->id,
-                'job_path' => $gdrive->job_path,
-                'labeling_path' => $labelingPath,
-                'work_dir' => $workDir,
-                'items' => $manifestItems,
-                'submitted_at' => Carbon::now()->toIso8601String(),
-            ],
+            'payload' => $payload,
         ]);
     }
 
@@ -197,14 +210,24 @@ class LabelingService
             throw new \RuntimeException('Batch com erro: ' . ($res['error'] ?? 'desconhecido'));
         }
 
-        $results = $res['results'] ?? [];
+        $this->applyResults($queue, $payload, $res['results'] ?? []);
+    }
+
+    /**
+     * Ordena, carimba, sobe no Drive e move o job de status.
+     *
+     * @param array<string,mixed> $payload
+     * @param array<string,array<string,mixed>> $results  indexado por custom_id
+     */
+    protected function applyResults(QueeLabeling $queue, array $payload, array $results): void
+    {
         $workDir = $payload['work_dir'];
         $labelingPath = $payload['labeling_path'];
 
         // ordena: categoria (ordem do vocabulary.md) -> ordem original
         $rows = [];
         foreach ($payload['items'] as $customId => $meta) {
-            $r = $results[$customId] ?? ['error' => 'sem resultado no batch'];
+            $r = $results[$customId] ?? ['error' => 'sem resultado da IA'];
             $description = $this->sanitizeDescription($r['description'] ?? '', $r['category'] ?? 'Other');
             $rows[] = [
                 'custom_id' => $customId,

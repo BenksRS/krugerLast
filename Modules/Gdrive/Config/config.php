@@ -15,6 +15,11 @@ return [
         'driver' => env('LABELING_AI_DRIVER', 'anthropic'),
         'model'  => env('LABELING_AI_MODEL', 'claude-sonnet-5'),
 
+        // sync  = POST /v1/messages em paralelo, termina em minutos (~2x custo)
+        // batch = Messages Batch API, assíncrono e ~50% mais barato (SLA até 24h)
+        'mode' => env('LABELING_AI_MODE', 'sync'),
+        'sync_concurrency' => (int) env('LABELING_SYNC_CONCURRENCY', 5),
+
         'anthropic' => [
             'api_key'  => env('ANTHROPIC_API_KEY'),
             'base_url' => env('ANTHROPIC_BASE_URL', 'https://api.anthropic.com'),
