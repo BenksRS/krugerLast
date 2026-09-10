@@ -58,27 +58,30 @@ class AnthropicLabeler implements ImageLabeler
      */
     protected function messageParams(array $image, array $system): array
     {
+        $messages = $this->kb->fewShotMessages();
+        $messages[] = [
+            'role' => 'user',
+            'content' => [
+                [
+                    'type' => 'image',
+                    'source' => [
+                        'type' => 'base64',
+                        'media_type' => 'image/jpeg',
+                        'data' => base64_encode($image['jpeg']),
+                    ],
+                ],
+                [
+                    'type' => 'text',
+                    'text' => 'Label this single photograph. Respond with only the JSON line.',
+                ],
+            ],
+        ];
+
         return [
             'model' => $this->cfg['model'],
             'max_tokens' => 300,
             'system' => $system,
-            'messages' => [[
-                'role' => 'user',
-                'content' => [
-                    [
-                        'type' => 'image',
-                        'source' => [
-                            'type' => 'base64',
-                            'media_type' => 'image/jpeg',
-                            'data' => base64_encode($image['jpeg']),
-                        ],
-                    ],
-                    [
-                        'type' => 'text',
-                        'text' => 'Label this single photograph. Respond with only the JSON line.',
-                    ],
-                ],
-            ]],
+            'messages' => $messages,
         ];
     }
 

@@ -21,8 +21,14 @@ each rule short and unambiguous.
     person basket.
 - If you cannot tell which machine it is, use a generic term ("Equipment on Site")
   instead of naming a specific one.
-- "Crane Lifting Tree" / "Crane Removing Tree" only when a crane is clearly the
-  machine doing it.
+- "Crane Lifting Tree" / "Crane Removing Tree" ONLY when you can actually see a
+  tall boom/mast with a cable and hook coming down from high above. No visible
+  boom + cable from above = it is NOT a crane.
+- A first-person / POV view looking out over TWO parallel arms with hydraulic
+  hoses and a flat quick-attach plate (bucket/grapple/forks) at ground level is a
+  MINI SKID. Label it "Mini Skid Working" (or "Mini Skid Loading Debris" if it is
+  loading a truck/trailer). This is by far the most common machine on our jobs —
+  when unsure between crane and mini skid, it is almost always the mini skid.
 
 ## Work vs. cleanup
 

@@ -76,6 +76,77 @@ class KnowledgeBase
         return $cats ?: ['Other'];
     }
 
+    /**
+     * Exemplos few-shot (imagem + label esperado) pra reforçar casos difíceis.
+     * Lê examples/examples.json:
+     *   [{ "image": "arq.jpg", "description": "...", "category": "...", "from_vocabulary": true }]
+     * As imagens ficam em examples/. Retorna turnos user/assistant prontos pra
+     * Messages API; o último turno de imagem recebe cache_control.
+     *
+     * @return array<int,array<string,mixed>>
+     */
+    public function fewShotMessages(): array
+    {
+        $manifest = $this->dir . '/examples/examples.json';
+        if (!is_file($manifest)) {
+            return [];
+        }
+
+        $entries = json_decode((string) file_get_contents($manifest), true);
+        if (!is_array($entries)) {
+            return [];
+        }
+
+        $pairs = [];
+        foreach (array_slice($entries, 0, 8) as $entry) {
+            $img = $entry['image'] ?? '';
+            $path = $this->dir . '/examples/' . $img;
+            if ($img === '' || !is_file($path)) {
+                continue;
+            }
+
+            $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+            $pairs[] = [
+                'user' => [
+                    [
+                        'type' => 'image',
+                        'source' => [
+                            'type' => 'base64',
+                            'media_type' => $ext === 'png' ? 'image/png' : 'image/jpeg',
+                            'data' => base64_encode((string) file_get_contents($path)),
+                        ],
+                    ],
+                    [
+                        'type' => 'text',
+                        'text' => 'Label this single photograph. Respond with only the JSON line.',
+                    ],
+                ],
+                'assistant' => json_encode([
+                    'description' => $entry['description'] ?? '',
+                    'category' => $entry['category'] ?? 'Other',
+                    'from_vocabulary' => (bool) ($entry['from_vocabulary'] ?? false),
+                    'confidence' => 0.95,
+                ]),
+            ];
+        }
+
+        if (empty($pairs)) {
+            return [];
+        }
+
+        // cache_control no último bloco de texto de exemplo -> cacheia system + few-shot
+        $lastKey = array_key_last($pairs);
+        $pairs[$lastKey]['user'][1]['cache_control'] = ['type' => 'ephemeral'];
+
+        $messages = [];
+        foreach ($pairs as $pair) {
+            $messages[] = ['role' => 'user', 'content' => $pair['user']];
+            $messages[] = ['role' => 'assistant', 'content' => $pair['assistant']];
+        }
+
+        return $messages;
+    }
+
     public function categoryRank(?string $category): int
     {
         $order = $this->categoryOrder();
