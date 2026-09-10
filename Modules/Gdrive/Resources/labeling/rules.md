@@ -26,9 +26,15 @@ each rule short and unambiguous.
   boom + cable from above = it is NOT a crane.
 - A first-person / POV view looking out over TWO parallel arms with hydraulic
   hoses and a flat quick-attach plate (bucket/grapple/forks) at ground level is a
-  MINI SKID. Label it "Mini Skid Working" (or "Mini Skid Loading Debris" if it is
-  loading a truck/trailer). This is by far the most common machine on our jobs —
-  when unsure between crane and mini skid, it is almost always the mini skid.
+  MINI SKID. This is by far the most common machine on our jobs — when unsure
+  between crane and mini skid, it is almost always the mini skid.
+- "Mini Skid Working" / "Mini Skid Loading Debris" ONLY when the machine is
+  actively operating (moving, lifting, carrying, an operator on it). A mini skid
+  parked / idle in the background is NOT the subject — describe what the photo is
+  actually about (e.g. "Tree Debris on Driveway", "Tree Debris on the Yard").
+- Debris (branches, tree parts) sitting ON a driveway / paver area, not yet
+  removed → "Tree Debris on Driveway". Debris cleared OFF the driveway →
+  "Driveway Cleared of Debris".
 
 ## Work vs. cleanup
 

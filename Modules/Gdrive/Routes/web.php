@@ -33,6 +33,10 @@ Route::prefix('/gdrive')->name('gdrive.')->group(function () {
     Route::get('/queue_labeling/', [\Modules\Gdrive\Http\Controllers\LabelingController::class, 'queue_labeling'])->name('queue_labeling');
     Route::get('/poll_labeling/', [\Modules\Gdrive\Http\Controllers\LabelingController::class, 'poll_labeling'])->name('poll_labeling');
 
+    // Labeling — base de conhecimento da IA (usuários grupo 1 e 4)
+    Route::get('/labeling', [\Modules\Gdrive\Http\Controllers\LabelingKbController::class, 'index'])->name('labeling');
+    Route::get('/labeling/example/{id}', [\Modules\Gdrive\Http\Controllers\LabelingKbController::class, 'exampleImage'])->name('labeling_example_image');
+
 
 });
 

@@ -2,16 +2,26 @@
 
 namespace Modules\Gdrive\Services\Labeling;
 
+use Illuminate\Support\Facades\Schema;
+use Modules\Gdrive\Entities\LabelingBanned;
+use Modules\Gdrive\Entities\LabelingExample;
+use Modules\Gdrive\Entities\LabelingRule;
+use Modules\Gdrive\Entities\LabelingVocabulary;
+
 /**
- * Carrega a base de conhecimento versionada em Resources/labeling/ e monta
- * o prompt de sistema + utilidades de ordenação/validação.
+ * Base de conhecimento do labeling.
+ *
+ * - `system_prompt.md`  -> sempre do arquivo (instrução de engenharia).
+ * - regras / vocabulário / palavras proibidas / exemplos -> do BANCO, editáveis
+ *   pela página /gdrive/labeling. Enquanto as tabelas estiverem vazias, cai de
+ *   volta pros arquivos `.md` versionados (seed inicial).
  */
 class KnowledgeBase
 {
     /** @var string */
     protected $dir;
 
-    /** @var array<string,string> cache de arquivos lidos */
+    /** @var array<string,string> */
     protected $files = [];
 
     public function __construct(?string $dir = null)
@@ -29,63 +39,174 @@ class KnowledgeBase
         return $this->files[$name];
     }
 
+    protected function hasTable(string $table): bool
+    {
+        try {
+            return Schema::hasTable($table);
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
+
     public function fontFile(): string
     {
         return $this->dir . '/fonts/DejaVuSans-Bold.ttf';
     }
 
+    /* ------------------------------------------------------------ system */
+
     /**
-     * Blocos `system` para a Messages API. O último recebe cache_control para
-     * reaproveitar o prompt entre todas as fotos do mesmo job.
-     *
      * @return array<int,array<string,mixed>>
      */
     public function systemBlocks(): array
     {
         $body = implode("\n\n", array_filter([
             $this->file('system_prompt.md'),
-            "# vocabulary.md\n\n" . $this->file('vocabulary.md'),
-            "# rules.md\n\n" . $this->file('rules.md'),
-            "# banned.md\n\n" . $this->file('banned.md'),
+            "# vocabulary.md\n\n" . $this->vocabularyText(),
+            "# rules.md\n\n" . $this->rulesText(),
+            "# banned.md\n\nNever output any of these words, as a whole word, inside a description:\n\n"
+                . implode("\n", array_map(function ($t) { return '- ' . $t; }, $this->bannedTerms())),
         ]));
 
-        return [
-            [
-                'type' => 'text',
-                'text' => $body,
-                'cache_control' => ['type' => 'ephemeral'],
-            ],
-        ];
+        return [[
+            'type' => 'text',
+            'text' => $body,
+            'cache_control' => ['type' => 'ephemeral'],
+        ]];
     }
 
-    /**
-     * Nomes das seções (## ...) de vocabulary.md, na ordem — é a ordem de
-     * numeração das fotos na pasta final.
-     *
-     * @return array<int,string>
-     */
-    public function categoryOrder(): array
+    public function vocabularyText(): string
     {
-        $cats = [];
-        foreach (preg_split('/\R/', $this->file('vocabulary.md')) as $line) {
-            if (preg_match('/^##\s+(.+?)\s*$/', $line, $m)) {
-                $cats[] = trim($m[1]);
+        if ($this->hasTable('labeling_vocabulary') && LabelingVocabulary::where('active', true)->exists()) {
+            $out = "Each `-` item is a preferred description; use it verbatim when it "
+                . "accurately fits. The `##` sections are only a grouping aid — the photos "
+                . "keep the order of the source folders (Front > Inside > Before > After).\n";
+
+            $rows = LabelingVocabulary::where('active', true)
+                ->orderBy('sort')->orderBy('id')->get()
+                ->groupBy('category');
+
+            foreach ($rows as $category => $terms) {
+                $out .= "\n## " . $category . "\n";
+                foreach ($terms as $t) {
+                    $out .= '- ' . $t->term . "\n";
+                }
+            }
+
+            return trim($out);
+        }
+
+        return $this->file('vocabulary.md');
+    }
+
+    public function rulesText(): string
+    {
+        if ($this->hasTable('labeling_rules') && LabelingRule::where('active', true)->exists()) {
+            $out = '';
+            $rows = LabelingRule::where('active', true)
+                ->orderBy('sort')->orderBy('id')->get()
+                ->groupBy('section');
+
+            foreach ($rows as $section => $items) {
+                $out .= "\n## " . $section . "\n";
+                foreach ($items as $rule) {
+                    $out .= '- ' . trim(preg_replace('/\s+/', ' ', $rule->body)) . "\n";
+                }
+            }
+
+            return trim($out);
+        }
+
+        return $this->file('rules.md');
+    }
+
+    /* ------------------------------------------------------------ banned */
+
+    /** @return array<int,string> */
+    public function bannedTerms(): array
+    {
+        if ($this->hasTable('labeling_banned') && LabelingBanned::where('active', true)->exists()) {
+            return LabelingBanned::where('active', true)->orderBy('term')->pluck('term')->all();
+        }
+
+        $terms = [];
+        foreach (preg_split('/\R/', $this->file('banned.md')) as $line) {
+            if (preg_match('/^\-\s+(.+?)\s*$/', $line, $m)) {
+                $terms[] = trim($m[1]);
             }
         }
 
-        return $cats ?: ['Other'];
+        return $terms;
     }
 
+    public function isBanned(string $description): bool
+    {
+        $haystack = mb_strtolower($description);
+        foreach ($this->bannedTerms() as $term) {
+            $term = mb_strtolower(trim($term));
+            if ($term !== '' && preg_match('/\b' . preg_quote($term, '/') . '\b/u', $haystack)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /* ------------------------------------------------------------ few-shot */
+
     /**
-     * Exemplos few-shot (imagem + label esperado) pra reforçar casos difíceis.
-     * Lê examples/examples.json:
-     *   [{ "image": "arq.jpg", "description": "...", "category": "...", "from_vocabulary": true }]
-     * As imagens ficam em examples/. Retorna turnos user/assistant prontos pra
-     * Messages API; o último turno de imagem recebe cache_control.
-     *
      * @return array<int,array<string,mixed>>
      */
     public function fewShotMessages(): array
+    {
+        $pairs = $this->hasTable('labeling_examples')
+            ? $this->examplePairsFromDb()
+            : [];
+
+        if (empty($pairs)) {
+            $pairs = $this->examplePairsFromFile();
+        }
+
+        if (empty($pairs)) {
+            return [];
+        }
+
+        $lastKey = array_key_last($pairs);
+        $pairs[$lastKey]['user'][1]['cache_control'] = ['type' => 'ephemeral'];
+
+        $messages = [];
+        foreach ($pairs as $pair) {
+            $messages[] = ['role' => 'user', 'content' => $pair['user']];
+            $messages[] = ['role' => 'assistant', 'content' => $pair['assistant']];
+        }
+
+        return $messages;
+    }
+
+    /** @return array<int,array<string,mixed>> */
+    protected function examplePairsFromDb(): array
+    {
+        $pairs = [];
+        $rows = LabelingExample::where('active', true)->orderByDesc('id')->limit(8)->get();
+
+        foreach ($rows as $ex) {
+            $path = $ex->absolutePath();
+            if (!is_file($path)) {
+                continue;
+            }
+            $pairs[] = $this->buildPair(
+                file_get_contents($path),
+                strtolower(pathinfo($path, PATHINFO_EXTENSION)),
+                $ex->description,
+                $ex->category
+            );
+        }
+
+        return $pairs;
+    }
+
+    /** @return array<int,array<string,mixed>> */
+    protected function examplePairsFromFile(): array
     {
         $manifest = $this->dir . '/examples/examples.json';
         if (!is_file($manifest)) {
@@ -104,47 +225,63 @@ class KnowledgeBase
             if ($img === '' || !is_file($path)) {
                 continue;
             }
+            $pairs[] = $this->buildPair(
+                file_get_contents($path),
+                strtolower(pathinfo($path, PATHINFO_EXTENSION)),
+                $entry['description'] ?? '',
+                $entry['category'] ?? 'Other'
+            );
+        }
 
-            $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-            $pairs[] = [
-                'user' => [
-                    [
-                        'type' => 'image',
-                        'source' => [
-                            'type' => 'base64',
-                            'media_type' => $ext === 'png' ? 'image/png' : 'image/jpeg',
-                            'data' => base64_encode((string) file_get_contents($path)),
-                        ],
-                    ],
-                    [
-                        'type' => 'text',
-                        'text' => 'Label this single photograph. Respond with only the JSON line.',
+        return $pairs;
+    }
+
+    /** @return array<string,mixed> */
+    protected function buildPair(string $bin, string $ext, string $description, string $category): array
+    {
+        return [
+            'user' => [
+                [
+                    'type' => 'image',
+                    'source' => [
+                        'type' => 'base64',
+                        'media_type' => $ext === 'png' ? 'image/png' : 'image/jpeg',
+                        'data' => base64_encode($bin),
                     ],
                 ],
-                'assistant' => json_encode([
-                    'description' => $entry['description'] ?? '',
-                    'category' => $entry['category'] ?? 'Other',
-                    'from_vocabulary' => (bool) ($entry['from_vocabulary'] ?? false),
-                    'confidence' => 0.95,
-                ]),
-            ];
+                [
+                    'type' => 'text',
+                    'text' => 'Label this single photograph. Respond with only the JSON line.',
+                ],
+            ],
+            'assistant' => json_encode([
+                'description' => $description,
+                'category' => $category ?: 'Other',
+                'from_vocabulary' => true,
+                'confidence' => 0.95,
+            ]),
+        ];
+    }
+
+    /* ------------------------------------------------------------ categorias */
+
+    /** @return array<int,string> */
+    public function categoryOrder(): array
+    {
+        if ($this->hasTable('labeling_vocabulary') && LabelingVocabulary::where('active', true)->exists()) {
+            return LabelingVocabulary::where('active', true)
+                ->orderBy('sort')->orderBy('id')
+                ->pluck('category')->unique()->values()->all();
         }
 
-        if (empty($pairs)) {
-            return [];
+        $cats = [];
+        foreach (preg_split('/\R/', $this->file('vocabulary.md')) as $line) {
+            if (preg_match('/^##\s+(.+?)\s*$/', $line, $m)) {
+                $cats[] = trim($m[1]);
+            }
         }
 
-        // cache_control no último bloco de texto de exemplo -> cacheia system + few-shot
-        $lastKey = array_key_last($pairs);
-        $pairs[$lastKey]['user'][1]['cache_control'] = ['type' => 'ephemeral'];
-
-        $messages = [];
-        foreach ($pairs as $pair) {
-            $messages[] = ['role' => 'user', 'content' => $pair['user']];
-            $messages[] = ['role' => 'assistant', 'content' => $pair['assistant']];
-        }
-
-        return $messages;
+        return $cats ?: ['Other'];
     }
 
     public function categoryRank(?string $category): int
@@ -153,30 +290,5 @@ class KnowledgeBase
         $idx = array_search((string) $category, $order, true);
 
         return $idx === false ? count($order) + 10 : (int) $idx;
-    }
-
-    /** @return array<int,string> termos proibidos (lowercase) */
-    public function bannedTerms(): array
-    {
-        $terms = [];
-        foreach (preg_split('/\R/', $this->file('banned.md')) as $line) {
-            if (preg_match('/^\-\s+(.+?)\s*$/', $line, $m)) {
-                $terms[] = mb_strtolower(trim($m[1]));
-            }
-        }
-
-        return $terms;
-    }
-
-    public function isBanned(string $description): bool
-    {
-        $haystack = mb_strtolower($description);
-        foreach ($this->bannedTerms() as $term) {
-            if ($term !== '' && preg_match('/\b' . preg_quote($term, '/') . '\b/u', $haystack)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
