@@ -84,7 +84,7 @@
                                 {!! $sh('schedule', 'Schedule') !!}
                                 {!! $sh('status', 'Status') !!}
                                 {!! $sh('referral', 'Referral') !!}
-                                <th>Workers</th>
+                                {!! $sh('workers', 'Workers') !!}
                                 {!! $sh('billed', 'Billed', 'text-end') !!}
                                 {!! $sh('tree', 'Tree', 'text-end') !!}
                                 {!! $sh('third_party', '3d Party', 'text-end') !!}

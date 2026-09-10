@@ -184,6 +184,10 @@ class Jobs extends Component
             'schedule'    => fn ($r) => optional($r->scheduling)->start_date ?? $r->created_at,
             'status'      => fn ($r) => strtolower((string) optional($r->status)->name),
             'referral'    => fn ($r) => strtolower((string) $r->referral_carrier_full),
+            'workers'     => fn ($r) => strtolower((string) $r->workers
+                ->pluck('worker_id')->unique()
+                ->map(fn ($id) => $this->workerMap[$id] ?? ('#' . $id))
+                ->sort()->implode(', ')),
             'billed'      => fn ($r) => $this->jobBilled($r),
             'tree'        => fn ($r) => $this->jobTree($r),
             'third_party' => fn ($r) => $this->jobThirdParty($r),
