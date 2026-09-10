@@ -349,6 +349,7 @@ class HeaderScheduling extends Component
                 break;
             case 'uploading':
             case 'uploading_pics':
+            case 'labeling':
             case 'preparing_billing':
             case 'review':
             case 'ready_to_bill':
