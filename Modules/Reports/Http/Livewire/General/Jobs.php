@@ -61,21 +61,46 @@ class Jobs extends Component
         return number_format((float) $value, 2, '.', ',');
     }
 
+    /** job_type_id de "ROOF TARP" */
+    const JOB_TYPE_ROOF_TARP = 1;
+
+    /** job_type_id de "TREE REMOVAL" */
+    const JOB_TYPE_TREE_REMOVAL = 11;
+
     protected function jobBilled($row)
     {
         return (float) optional(optional($row->finance)->invoices)->total;
     }
 
-    protected function jobTree($row)
+    /** Valor bruto de tree do job (independente de quem fez). */
+    protected function jobTreeGross($row)
     {
         $invoices = optional(optional($row->finance)->invoices);
 
         return (float) ($invoices->tree_amount_total ?? $invoices->tree_amount);
     }
 
-    protected function jobThirdParty($row)
+    protected function rawThirdParty($row)
     {
         return (float) optional(optional($row->finance)->invoices)->third_party;
+    }
+
+    /**
+     * Sem worker filtrado -> conta para todos.
+     * Com worker(s) filtrado(s) -> so conta se algum deles estiver no
+     * job report do job type informado.
+     */
+    protected function selectedInReport($row, $jobTypeId)
+    {
+        if (empty($this->workersSelected)) {
+            return true;
+        }
+
+        return $row->workers
+            ->where('job_type_id', $jobTypeId)
+            ->pluck('worker_id')
+            ->intersect($this->workersSelected)
+            ->isNotEmpty();
     }
 
     protected function jobPaid($row)
@@ -98,11 +123,36 @@ class Jobs extends Component
         return (float) optional(optional($row->finance)->invoices)->discount;
     }
 
-    /** job_type_id de "ROOF TARP" */
-    const JOB_TYPE_ROOF_TARP = 1;
+    /**
+     * Monta os valores exibidos de cada linha ja aplicando a regra:
+     * Tree/3d Party so contam se o worker filtrado esta no report de
+     * Tree Removal; Tarp so conta se esta no report de Roof Tarp.
+     */
+    protected function buildRow($row)
+    {
+        $billed     = $this->jobBilled($row);
+        $treeGross  = $this->jobTreeGross($row);
 
-    /** job_type_id de "TREE REMOVAL" */
-    const JOB_TYPE_TREE_REMOVAL = 11;
+        $inTree = $this->selectedInReport($row, self::JOB_TYPE_TREE_REMOVAL);
+        $inTarp = $this->selectedInReport($row, self::JOB_TYPE_ROOF_TARP);
+
+        $tree       = $inTree ? $treeGross : 0.0;
+        $thirdParty = $inTree ? $this->rawThirdParty($row) : 0.0;
+        $tarp       = $inTarp ? ($billed - $treeGross) : 0.0;
+
+        return (object) [
+            'model'       => $row,
+            'billed'      => $billed,
+            'tree'        => $tree,
+            'third_party' => $thirdParty,
+            'tree_net'    => $tree - $thirdParty,
+            'tarp'        => $tarp,
+            'paid'        => $this->jobPaid($row),
+            'balance'     => $this->jobBalance($row),
+            'crane'       => $this->jobCrane($row),
+            'discount'    => $this->jobDiscount($row),
+        ];
+    }
 
     public function getWorkerBreakdown($list)
     {
@@ -140,8 +190,8 @@ class Jobs extends Component
                 }
 
                 $billed     = $this->jobBilled($row);
-                $tree       = $this->jobTree($row);
-                $thirdParty = $this->jobThirdParty($row);
+                $tree       = $this->jobTreeGross($row);
+                $thirdParty = $this->rawThirdParty($row);
                 $treeNet    = $tree - $thirdParty;
 
                 $breakdown[$workerId]['jobs']++;
@@ -177,56 +227,56 @@ class Jobs extends Component
 
     public function render()
     {
-        $list = collect($this->list)->values();
+        $rows = collect($this->list)->map(fn ($row) => $this->buildRow($row))->values();
 
         $sorters = [
-            'name'        => fn ($r) => strtolower($r->last_name . ' ' . $r->first_name),
-            'job_type'    => fn ($r) => strtolower((string) optional($r->job_types->first())->name),
-            'schedule'    => fn ($r) => optional($r->scheduling)->start_date ?? $r->created_at,
-            'status'      => fn ($r) => strtolower((string) optional($r->status)->name),
-            'referral'    => fn ($r) => strtolower((string) $r->referral_carrier_full),
-            'workers'     => fn ($r) => strtolower((string) $r->workers
+            'name'        => fn ($r) => strtolower($r->model->last_name . ' ' . $r->model->first_name),
+            'job_type'    => fn ($r) => strtolower((string) optional($r->model->job_types->first())->name),
+            'schedule'    => fn ($r) => optional($r->model->scheduling)->start_date ?? $r->model->created_at,
+            'status'      => fn ($r) => strtolower((string) optional($r->model->status)->name),
+            'referral'    => fn ($r) => strtolower((string) $r->model->referral_carrier_full),
+            'workers'     => fn ($r) => strtolower((string) $r->model->workers
                 ->pluck('worker_id')->unique()
                 ->map(fn ($id) => $this->workerMap[$id] ?? ('#' . $id))
                 ->sort()->implode(', ')),
-            'billed'      => fn ($r) => $this->jobBilled($r),
-            'tree'        => fn ($r) => $this->jobTree($r),
-            'third_party' => fn ($r) => $this->jobThirdParty($r),
-            'tree_net'    => fn ($r) => $this->jobTree($r) - $this->jobThirdParty($r),
-            'tarp'        => fn ($r) => $this->jobBilled($r) - $this->jobTree($r),
-            'paid'        => fn ($r) => $this->jobPaid($r),
-            'balance'     => fn ($r) => $this->jobBalance($r),
-            'crane'       => fn ($r) => $this->jobCrane($r),
-            'discount'    => fn ($r) => $this->jobDiscount($r),
-            'billed_date' => fn ($r) => optional(optional($r->finance)->collection)->billed_date,
-            'paid_date'   => fn ($r) => optional(optional($r->finance)->collection)->paid_date,
+            'billed'      => fn ($r) => $r->billed,
+            'tree'        => fn ($r) => $r->tree,
+            'third_party' => fn ($r) => $r->third_party,
+            'tree_net'    => fn ($r) => $r->tree_net,
+            'tarp'        => fn ($r) => $r->tarp,
+            'paid'        => fn ($r) => $r->paid,
+            'balance'     => fn ($r) => $r->balance,
+            'crane'       => fn ($r) => $r->crane,
+            'discount'    => fn ($r) => $r->discount,
+            'billed_date' => fn ($r) => optional(optional($r->model->finance)->collection)->billed_date,
+            'paid_date'   => fn ($r) => optional(optional($r->model->finance)->collection)->paid_date,
         ];
 
         $sorter = $sorters[$this->sortField] ?? $sorters['schedule'];
-        $list   = ($this->sortDir === 'desc'
-            ? $list->sortByDesc($sorter)
-            : $list->sortBy($sorter))->values();
+        $rows   = ($this->sortDir === 'desc'
+            ? $rows->sortByDesc($sorter)
+            : $rows->sortBy($sorter))->values();
 
         $totals = [
-            'jobs'        => $list->count(),
-            'billed'      => $list->sum(fn ($row) => $this->jobBilled($row)),
-            'tree'        => $list->sum(fn ($row) => $this->jobTree($row)),
-            'third_party' => $list->sum(fn ($row) => $this->jobThirdParty($row)),
-            'paid'        => $list->sum(fn ($row) => $this->jobPaid($row)),
-            'balance'     => $list->sum(fn ($row) => $this->jobBalance($row)),
-            'crane'       => $list->sum(fn ($row) => $this->jobCrane($row)),
-            'discount'    => $list->sum(fn ($row) => $this->jobDiscount($row)),
+            'jobs'        => $rows->count(),
+            'billed'      => $rows->sum('billed'),
+            'tree'        => $rows->sum('tree'),
+            'third_party' => $rows->sum('third_party'),
+            'paid'        => $rows->sum('paid'),
+            'balance'     => $rows->sum('balance'),
+            'crane'       => $rows->sum('crane'),
+            'discount'    => $rows->sum('discount'),
         ];
         $totals['tree_net'] = $totals['tree'] - $totals['third_party'];
-        $totals['tarp']     = $totals['billed'] - $totals['tree'];
+        $totals['tarp']     = $rows->sum('tarp');
 
-        $items     = $list->forPage($this->page, $this->selectedRows);
-        $paginated = new LengthAwarePaginator($items, $list->count(), $this->selectedRows, $this->page);
+        $items     = $rows->forPage($this->page, $this->selectedRows);
+        $paginated = new LengthAwarePaginator($items, $rows->count(), $this->selectedRows, $this->page);
 
         return view('reports::livewire.general.jobs', [
             'listAll'   => $paginated,
             'totals'    => $totals,
-            'breakdown' => $this->getWorkerBreakdown($list),
+            'breakdown' => $this->getWorkerBreakdown(collect($this->list)),
         ]);
     }
 }

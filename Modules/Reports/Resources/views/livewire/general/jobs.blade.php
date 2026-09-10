@@ -104,17 +104,18 @@
                                     <div class="spinner-border text-primary m-auto d-block"></div>
                                 </td>
                             </tr>
-                            @foreach($listAll as $row)
+                            @foreach($listAll as $r)
                                 @php
-                                    $billed      = (float) optional(optional($row->finance)->invoices)->total;
-                                    $invoicesObj = optional(optional($row->finance)->invoices);
-                                    $tree        = (float) ($invoicesObj->tree_amount_total ?? $invoicesObj->tree_amount);
-                                    $thirdParty  = (float) $invoicesObj->third_party;
-                                    $treeNet     = $tree - $thirdParty;
-                                    $paid   = (float) optional(optional($row->finance)->payments)->total;
-                                    $balance = (float) optional(optional($row->finance)->balance)->total;
-                                    $crane  = (float) optional(optional($row->finance)->invoices)->crane_amount;
-                                    $discount = (float) $invoicesObj->discount;
+                                    $row      = $r->model;
+                                    $billed   = $r->billed;
+                                    $tree     = $r->tree;
+                                    $thirdParty = $r->third_party;
+                                    $treeNet  = $r->tree_net;
+                                    $tarp     = $r->tarp;
+                                    $paid     = $r->paid;
+                                    $balance  = $r->balance;
+                                    $crane    = $r->crane;
+                                    $discount = $r->discount;
                                 @endphp
                                 <tr>
                                     <td>
@@ -151,7 +152,7 @@
                                     <td class="text-end">${{ number_format($tree, 2, '.', ',') }}</td>
                                     <td class="text-end">${{ number_format($thirdParty, 2, '.', ',') }}</td>
                                     <td class="text-end">${{ number_format($treeNet, 2, '.', ',') }}</td>
-                                    <td class="text-end">${{ number_format($billed - $tree, 2, '.', ',') }}</td>
+                                    <td class="text-end">${{ number_format($tarp, 2, '.', ',') }}</td>
                                     <td class="text-end">${{ number_format($paid, 2, '.', ',') }}</td>
                                     <td class="text-end">${{ number_format($balance, 2, '.', ',') }}</td>
                                     <td class="text-end">${{ number_format($crane, 2, '.', ',') }}</td>
