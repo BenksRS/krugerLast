@@ -238,6 +238,7 @@ class LabelingService
                 'name' => $meta['name'],
                 'source_order' => $meta['source_order'],
                 'description' => $description,
+                'section' => $this->kb->normalizeSection($r['section'] ?? ''),
             ];
         }
 
@@ -248,6 +249,7 @@ class LabelingService
         // carimba + sobe
         $n = 0;
         $uploaded = 0;
+        $reportRows = [];
         foreach ($rows as $row) {
             $n++;
             $seq = sprintf('%03d', $n);
@@ -261,12 +263,26 @@ class LabelingService
                 $stamped = $this->stamper->stamp(file_get_contents($orig), $caption);
                 $this->storage->put($labelingPath . '/' . $this->safeName($caption) . '.jpg', $stamped);
                 $uploaded++;
+                $reportRows[] = [
+                    'seq' => $seq,
+                    'description' => $row['description'],
+                    'section' => $row['section'],
+                    'jpeg' => $stamped,
+                ];
             } catch (\Throwable $e) {
                 $this->log($queue, 'Falha ao carimbar ' . $row['name'] . ': ' . $e->getMessage());
             }
         }
 
         $this->log($queue, "Carimbadas e enviadas: {$uploaded}/" . count($rows));
+
+        if (!empty($this->cfg['photo_report']['enabled'])) {
+            try {
+                $this->buildAndUploadReport($queue, $payload, $reportRows);
+            } catch (\Throwable $e) {
+                $this->log($queue, 'PDF do relatório falhou (job segue mesmo assim): ' . $e->getMessage());
+            }
+        }
 
         $this->moveToNextStatus((int) $queue->assignment_id, $queue);
 
@@ -411,6 +427,114 @@ class LabelingService
         $s = trim(preg_replace('/\s+/', ' ', $s));
 
         return $s === '' ? 'photo' : mb_substr($s, 0, 120);
+    }
+
+    /**
+     * Gera o PDF "Professional Labeled Photo Report" e sobe na RAIZ do job
+     * (job_path) — não em Labeling/. Não toca no PDF de fotos já existente.
+     *
+     * @param array<string,mixed> $payload
+     * @param array<int,array<string,mixed>> $reportRows
+     */
+    protected function buildAndUploadReport(QueeLabeling $queue, array $payload, array $reportRows): void
+    {
+        if (empty($reportRows)) {
+            $this->log($queue, 'Relatório: nenhuma foto carimbada — PDF não gerado.');
+
+            return;
+        }
+
+        $assignment = Assignment::find((int) $queue->assignment_id);
+        if (!$assignment) {
+            throw new \RuntimeException('Assignment não encontrado para o relatório.');
+        }
+
+        $jobPath = $payload['job_path'] ?? null;
+        $labelingPath = $payload['labeling_path'] ?? null;
+        if (!$jobPath) {
+            throw new \RuntimeException('payload sem job_path.');
+        }
+
+        $customer = trim($assignment->first_name . ' ' . $assignment->last_name);
+        $jobNumber = (string) $assignment->id;
+
+        $serviceDate = '';
+        $rawDate = $assignment->start_date ?: ($assignment->scheduling->start_date ?? null);
+        if ($rawDate) {
+            try {
+                $serviceDate = Carbon::parse($rawDate)->format('F j, Y');
+            } catch (\Throwable $e) {
+                $serviceDate = (string) $rawDate;
+            }
+        }
+
+        $address = trim(sprintf(
+            '%s, %s, %s %s',
+            $assignment->street,
+            $assignment->city,
+            $assignment->state,
+            $assignment->zipcode
+        ), " ,");
+
+        $serviceType = '';
+        try {
+            $types = $assignment->job_types()->pluck('name')->filter()->all();
+            $serviceType = implode(' + ', $types);
+        } catch (\Throwable $e) {
+            // sem tipos — usa default abaixo
+        }
+        if ($serviceType === '') {
+            $serviceType = $this->cfg['photo_report']['default_service'] ?? 'Storm Damage Restoration';
+        }
+
+        $job = [
+            'customer_name' => $customer !== '' ? $customer : ('Job ' . $jobNumber),
+            'job_number' => $jobNumber,
+            'service_type' => $serviceType,
+            'service_date' => $serviceDate,
+            'address' => $address,
+            'summary' => '',
+        ];
+
+        $result = app(PhotoReportBuilder::class)->build($reportRows, $job, $this->cfg['photo_report']);
+
+        $filename = $this->safeName(sprintf(
+            '%s (%s) - Professional Labeled Photo Report',
+            $job['customer_name'],
+            $jobNumber
+        )) . '.pdf';
+
+        $pdfPath = rtrim($jobPath, '/') . '/' . $filename;
+        $this->storage->put($pdfPath, $result['pdf']);
+
+        foreach ($result['warnings'] as $warn) {
+            $this->log($queue, 'Relatório WARN: ' . $warn);
+        }
+
+        $labeledCount = $result['photo_count'];
+        $folderLink = $labelingPath ? $this->safeUrl($labelingPath) : '';
+        $pdfLink = $this->safeUrl($pdfPath);
+
+        $this->log($queue, implode('<br>', [
+            '<b>== Relatório profissional gerado ==</b>',
+            'Customer: ' . e($job['customer_name']),
+            'Job number: ' . $jobNumber,
+            'Fotos em Labeling/: ' . $labeledCount,
+            'Páginas do PDF: ' . $result['pages'],
+            'Seções: ' . (implode(' · ', $result['sections']) ?: '—'),
+            'Todas as fotos incluídas: ' . ($result['warnings'] ? 'VERIFICAR (ver WARN acima)' : 'sim'),
+            'Pasta Labeling: ' . ($folderLink ? '<a href="' . e($folderLink) . '">' . e($folderLink) . '</a>' : '—'),
+            'PDF: ' . ($pdfLink ? '<a href="' . e($pdfLink) . '">' . e($pdfLink) . '</a>' : '—'),
+        ]));
+    }
+
+    protected function safeUrl(string $path): string
+    {
+        try {
+            return (string) $this->storage->url($path);
+        } catch (\Throwable $e) {
+            return '';
+        }
     }
 
     protected function moveToNextStatus(int $assignmentId, QueeLabeling $queue): void

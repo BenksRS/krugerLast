@@ -65,5 +65,16 @@ return [
 
         // quantos jobs a rota poll_labeling processa por chamada
         'poll_batch_size' => 3,
+
+        // PDF "Professional Labeled Photo Report" gerado ao fim do pipeline
+        // e enviado para a raiz do job no Drive (job_path).
+        'photo_report' => [
+            'enabled'         => env('LABELING_PHOTO_REPORT', true),
+            'photos_per_page' => (int) env('LABELING_REPORT_PPP', 4),
+            'img_max_dim'     => 1000,   // px — downscale antes de embutir no PDF
+            'img_quality'     => 80,
+            'company'         => 'Kruger Disaster Recovery Team',
+            'default_service' => 'Storm Damage Restoration',
+        ],
     ],
 ];

@@ -53,6 +53,12 @@ class KnowledgeBase
         return $this->dir . '/fonts/DejaVuSans-Bold.ttf';
     }
 
+    /** Caminho absoluto de um asset versionado do labeling (ex.: letterhead.png). */
+    public function assetPath(string $name): string
+    {
+        return $this->dir . '/' . ltrim($name, '/');
+    }
+
     /* ------------------------------------------------------------ system */
 
     /**
@@ -62,6 +68,7 @@ class KnowledgeBase
     {
         $body = implode("\n\n", array_filter([
             $this->file('system_prompt.md'),
+            "# sections.md\n\n" . $this->file('sections.md'),
             "# vocabulary.md\n\n" . $this->vocabularyText(),
             "# rules.md\n\n" . $this->rulesText(),
             "# banned.md\n\nNever output any of these words, as a whole word, inside a description:\n\n"
@@ -290,5 +297,51 @@ class KnowledgeBase
         $idx = array_search((string) $category, $order, true);
 
         return $idx === false ? count($order) + 10 : (int) $idx;
+    }
+
+    /* ------------------------------------------------------------ seções (relatório) */
+
+    /**
+     * Lista canônica de seções do relatório profissional, lida de sections.md
+     * ("## Canonical order"). Fallback fixo se o arquivo sumir.
+     *
+     * @return array<int,string>
+     */
+    public function sectionOrder(): array
+    {
+        $text = $this->file('sections.md');
+        if (preg_match('/##\s*Canonical order.*$/is', $text, $m)) {
+            $names = [];
+            foreach (preg_split('/\R/', $m[0]) as $line) {
+                if (preg_match('/^\-\s+(.+?)\.?\s*$/', $line, $mm)) {
+                    $names[] = trim($mm[1]);
+                }
+            }
+            if (!empty($names)) {
+                return $names;
+            }
+        }
+
+        return [
+            'Property Overview', 'Damage Before Work', 'Tarp Installation',
+            'Tree Removal Operations', 'Debris Removal', 'Yard Clean',
+            'Completed Work', 'Debris Curbside', 'Measurements', 'Other',
+        ];
+    }
+
+    /**
+     * Casa o texto livre da IA com um nome de seção canônico (case-insensitive).
+     * Sem match => "Other".
+     */
+    public function normalizeSection(?string $section): string
+    {
+        $section = trim((string) $section);
+        foreach ($this->sectionOrder() as $canonical) {
+            if (strcasecmp($section, $canonical) === 0) {
+                return $canonical;
+            }
+        }
+
+        return 'Other';
     }
 }

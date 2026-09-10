@@ -271,6 +271,7 @@ class AnthropicLabeler implements ImageLabeler
         return [
             'description' => trim((string) ($json['description'] ?? '')),
             'category' => trim((string) ($json['category'] ?? 'Other')),
+            'section' => trim((string) ($json['section'] ?? '')),
             'from_vocabulary' => (bool) ($json['from_vocabulary'] ?? false),
             'confidence' => (float) ($json['confidence'] ?? 0),
         ];

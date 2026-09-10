@@ -36,10 +36,14 @@ job-site photographs so an adjuster can understand each picture at a glance.
 
 Respond with a single line of minified JSON and nothing else:
 
-{"description":"<short Title Case caption, max ~6 words>","category":"<one category name from vocabulary.md>","from_vocabulary":<true|false>,"confidence":<0.0-1.0>}
+{"description":"<short Title Case caption, max ~6 words>","category":"<one category name from vocabulary.md>","section":"<one section name from sections.md>","from_vocabulary":<true|false>,"confidence":<0.0-1.0>}
 
 - `description`: what a reader should see written under the photo.
 - `category`: the closest matching section heading from `vocabulary.md`
   (grouping/reference only); if nothing fits, use "Other".
+- `section`: the report section this photo belongs in, chosen from the closed
+  list in `sections.md`, decided ONLY from what is visible in the photo.
+  Emergency tree jobs never use a roof/tarp section unless a roof tarp is
+  actually visible. If unsure, use "Other".
 - `from_vocabulary`: true if `description` is taken verbatim from `vocabulary.md`.
 - `confidence`: how sure you are, 0 to 1.
