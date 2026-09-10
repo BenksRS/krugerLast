@@ -46,8 +46,20 @@ return [
             'relax_max'         => 30,
         ],
 
-        // status pra onde o job vai depois de rotular (resolvido por `class`)
-        'next_status_class' => 'preparing_billing',
+        // destino do job depois do labeling — regras restauradas (2026-09-10).
+        // 1ª regra que casar vence, nesta ordem:
+        //   job_types contém 11        -> 21 (preparing_billing)
+        //   job_types contém 25        -> 55
+        //   carrier_id em [171,496,217] -> 21
+        //   qualquer outro caso         -> 4
+        'next_status_rules' => [
+            'job_type'       => [11 => 21, 25 => 55],
+            'carrier'        => [171, 496, 217],
+            'carrier_status' => 21,
+            'default'        => 4,
+        ],
+        // fallback só se as regras acima não resolverem um id de status válido
+        'next_status_fallback' => 21,
 
         'work_dir' => storage_path('app/labeling'),
 

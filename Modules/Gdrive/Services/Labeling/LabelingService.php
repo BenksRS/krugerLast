@@ -597,16 +597,24 @@ class LabelingService
 
     protected function moveToNextStatus(int $assignmentId, QueeLabeling $queue): void
     {
-        $statusId = AssignmentsStatus::where('class', $this->cfg['next_status_class'])->value('id');
-        if (!$statusId) {
-            $this->log($queue, 'Status "' . $this->cfg['next_status_class'] . '" não encontrado — status do job não alterado.');
-
-            return;
-        }
-
         $assignment = Assignment::find($assignmentId);
         if (!$assignment) {
             return;
+        }
+
+        $statusId = $this->resolveNextStatusId($assignment);
+        $statusName = AssignmentsStatus::where('id', $statusId)->value('name');
+        if (!$statusName) {
+            $fallback = (int) ($this->cfg['next_status_fallback'] ?? 21);
+            if ($statusId !== $fallback && AssignmentsStatus::where('id', $fallback)->exists()) {
+                $this->log($queue, "Status {$statusId} inexistente — usando fallback {$fallback}.");
+                $statusId = $fallback;
+                $statusName = AssignmentsStatus::where('id', $fallback)->value('name');
+            } else {
+                $this->log($queue, "Status {$statusId} inexistente e sem fallback válido — status do job não alterado.");
+
+                return;
+            }
         }
 
         AssignmentsStatusPivot::create([
@@ -616,6 +624,7 @@ class LabelingService
             'description' => 'Auto: labeling concluído',
         ]);
         $assignment->update(['status_id' => $statusId, 'updated_by' => 73]);
+        $this->log($queue, "Job movido para status {$statusId} ({$statusName}).");
 
         if (function_exists('integration')) {
             try {
@@ -624,6 +633,40 @@ class LabelingService
                 // best effort
             }
         }
+    }
+
+    /**
+     * Destino do job após o labeling, conforme as regras restauradas
+     * (config `gdrive.labeling.next_status_rules`). 1ª regra que casar vence:
+     *   job_types contém 11 -> 21 | job_types contém 25 -> 55
+     *   carrier_id em [171,496,217] -> 21 | senão -> 4
+     */
+    protected function resolveNextStatusId(Assignment $assignment): int
+    {
+        $rules = $this->cfg['next_status_rules'] ?? [];
+
+        $jobTypeIds = [];
+        try {
+            $jobTypeIds = $assignment->job_types()->get()
+                ->pluck('id')
+                ->map(function ($v) { return (int) $v; })
+                ->all();
+        } catch (\Throwable $e) {
+            // job sem tipos — cai nas regras seguintes
+        }
+
+        foreach (($rules['job_type'] ?? []) as $typeId => $statusId) {
+            if (in_array((int) $typeId, $jobTypeIds, true)) {
+                return (int) $statusId;
+            }
+        }
+
+        $carriers = array_map('intval', $rules['carrier'] ?? []);
+        if (in_array((int) $assignment->carrier_id, $carriers, true)) {
+            return (int) ($rules['carrier_status'] ?? 21);
+        }
+
+        return (int) ($rules['default'] ?? 4);
     }
 
     protected function rmDir(string $dir): void
