@@ -145,13 +145,14 @@ class Jobs extends Component
                 $treeNet    = $tree - $thirdParty;
 
                 $breakdown[$workerId]['jobs']++;
-                $breakdown[$workerId]['billed']      += $billed;
-                $breakdown[$workerId]['tree']        += $tree;
-                $breakdown[$workerId]['third_party'] += $thirdParty;
+                $breakdown[$workerId]['billed'] += $billed;
 
-                // Tree removal so conta se o worker esta no job report de TREE REMOVAL
+                // Tree / 3d Party / Tree - 3d Party so contam se o worker
+                // esta no job report de TREE REMOVAL daquele job
                 if ($treeWorkers->contains($workerId)) {
-                    $breakdown[$workerId]['tree_net'] += $treeNet;
+                    $breakdown[$workerId]['tree']        += $tree;
+                    $breakdown[$workerId]['third_party'] += $thirdParty;
+                    $breakdown[$workerId]['tree_net']    += $treeNet;
                 }
 
                 // Tarp so conta se o worker esta no job report de ROOF TARP

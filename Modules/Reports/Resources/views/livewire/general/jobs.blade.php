@@ -175,7 +175,9 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">By Worker <small class="text-muted">(full job value counted for each worker)</small></h5>
+                        <h5 class="card-title">By Worker
+                            <small class="text-muted">(Tree/3d Party só de jobs onde o worker está no report de Tree Removal; Tarp só de jobs onde está no report de Roof Tarp)</small>
+                        </h5>
                         <div class="table-responsive mb-0">
                             <table class="table table-bordered mb-0">
                                 <thead>
