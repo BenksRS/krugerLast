@@ -125,8 +125,13 @@ class LabelingService
         );
         $this->log($queue, sprintf('Após dedup: %d mantidas, %d descartadas', count($selection['keep']), count($selection['drop'])));
 
-        // 4. pastas de saída
+        // 4. pastas de saída — se `Labeling/` já existe, zera o conteúdo antes
+        //    (re-run = regeração limpa; a pasta em si é mantida p/ preservar o link)
         $labelingPath = $this->ensureDir($gdrive->job_path, $this->cfg['output_folder']);
+        $removed = $this->purgeDirContents($labelingPath);
+        if ($removed > 0) {
+            $this->log($queue, "Labeling/ já existia — {$removed} item(ns) antigos removidos.");
+        }
         $discardedPath = $this->ensureDir($labelingPath, basename($this->cfg['discarded_folder']));
 
         // 5. sobe as descartadas (originais)
@@ -385,6 +390,37 @@ class LabelingService
         }
 
         return $created['basename'] ?? $created['path'];
+    }
+
+    /**
+     * Apaga TUDO que está dentro de $dirPath no Drive (arquivos e subpastas),
+     * mantendo a pasta $dirPath. Best-effort — falha em um item não interrompe.
+     *
+     * @return int quantos itens de 1º nível foram removidos
+     */
+    protected function purgeDirContents(string $dirPath): int
+    {
+        $removed = 0;
+
+        foreach ($this->storage->listContents($dirPath, false) as $item) {
+            $path = $item['path'] ?? ($item['basename'] ?? null);
+            if (!$path) {
+                continue;
+            }
+
+            try {
+                if (($item['type'] ?? null) === 'dir') {
+                    $this->storage->deleteDirectory($path);
+                } else {
+                    $this->storage->delete($path);
+                }
+                $removed++;
+            } catch (\Throwable $e) {
+                // segue — item que não deu pra apagar é raro e não deve travar o run
+            }
+        }
+
+        return $removed;
     }
 
     protected function downscale(string $bin): string
