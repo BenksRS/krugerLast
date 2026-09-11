@@ -10,7 +10,7 @@ class AssignmentFinanceRepository extends Assignment {
 
     use AssignmentScope;
 
-    protected $with    =['scheduling','referral','commissions','carrier','status','status_collection','event','phones','user_updated','user_created','job_types','invoices', 'payments','tags', 'workers', 'commissions','reports'];
+    protected $with    =['scheduling','referral.type','commissions','carrier','status','status_collection','event','phones','user_updated','user_created','job_types','invoices', 'payments','tags', 'workers', 'commissions','reports'];
 
     protected $appends = ['finance','follow_up_date', 'lien_date_view', 'projected_lien_date_view'];
 
@@ -59,8 +59,10 @@ class AssignmentFinanceRepository extends Assignment {
         $fee_amount=$this->invoices->sum('fee_amount');
         $collection_fee_amount=$this->invoices->sum('collection_fee_amount');
         $discount_amount=$this->invoices->sum('discount_amount');
-        $tree_amount=$this->invoices->sum('tree_amount');
-        $crane_amount=$this->reports->sum('crane_amount');
+        $third_party=$this->invoices->sum('third_party');
+        $tree_amount_total=$this->invoices->sum('tree_amount');
+        $tree_amount=$tree_amount_total-$third_party;
+        $crane_amount=$this->reports->whereIn('assignment_job_type_id', [11, 26])->sum('crane_amount');
         $settlement_amount=$this->invoices->sum('settlement_amount');
         $total_discount=($fee_amount + $discount_amount + $settlement_amount + $collection_fee_amount);
 
@@ -217,6 +219,8 @@ class AssignmentFinanceRepository extends Assignment {
                 'collection_fees' => $collection_fee_amount,
                 'settlement' => $total_discount,
                 'tree_amount' => $tree_amount,
+                'tree_amount_total' => $tree_amount_total,
+                'third_party' => $third_party,
                 'crane_amount' => $crane_amount ?? 0,
                 'discount' => $total_discount
             ],

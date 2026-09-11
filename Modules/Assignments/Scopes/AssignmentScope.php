@@ -2,6 +2,7 @@
 
 namespace Modules\Assignments\Scopes;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
 trait AssignmentScope {
@@ -12,7 +13,7 @@ trait AssignmentScope {
     }
 
     public function scopeOpen(Builder $query,
-        $status = [1, 2, 3, 4, 8, 11, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 28, 14, 29, 27, 33, 34, 35, 37,38,39,40,54,55,56,57,60])
+        $status = [1, 2, 3, 4, 8, 11, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 28, 14, 29, 27, 33, 34, 35, 37,38,39,40,54,55,56,57,60,61])
     {
 
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
@@ -83,6 +84,40 @@ trait AssignmentScope {
             ->with('finance')
             ->where('collection.days_from_billing', '<', 60)
             ->whereIn('status_id', collect($status))->whereNotNull('id');
+    }
+
+    /**
+     * SQL-side narrowing for the days-since-billed follow-up reports (Fallowup30/45/60/90 etc).
+     * `days_from_billing` itself is only computable in PHP (AssignmentFinanceRepository::getFinanceAttribute
+     * uses MIN(invoices.billed_date) plus business-status logic), so this is a *superset* filter, not the
+     * final answer: it narrows to assignments that have at least one active invoice billed within the
+     * requested day-range (plus a safety margin), and the exact PHP-side day filter must still run
+     * afterwards to get the correct final rows. This exists purely to avoid loading + computing `finance`
+     * for assignments that can't possibly qualify.
+     *
+     * getFinanceAttribute() computes days_from_billing from an *absolute* DateInterval diff, so a
+     * billed_date that ends up in the future relative to now() (dirty/imported data) still produces a
+     * "days from billing" count there. Both scopes below let billed_date > now() through unfiltered so
+     * that edge case can never be excluded here and only there.
+     */
+    public function scopeBilledDaysAgoAtLeast(Builder $query, int $minDays, int $marginDays = 3)
+    {
+        $latestQualifyingDate = Carbon::now()->subDays(max($minDays - $marginDays, 0))->endOfDay();
+
+        return $query->whereHas('invoices', function(Builder $q) use ($latestQualifyingDate) {
+            $q->where('billed_date', '<=', $latestQualifyingDate)
+              ->orWhere('billed_date', '>', Carbon::now());
+        });
+    }
+
+    public function scopeBilledDaysAgoAtMost(Builder $query, int $maxDays, int $marginDays = 3)
+    {
+        $earliestQualifyingDate = Carbon::now()->subDays($maxDays + $marginDays)->startOfDay();
+
+        return $query->whereHas('invoices', function(Builder $q) use ($earliestQualifyingDate) {
+            $q->where('billed_date', '>=', $earliestQualifyingDate)
+              ->orWhere('billed_date', '>', Carbon::now());
+        });
     }
 
     public function scopeLandline(Builder $query, $status = [30])

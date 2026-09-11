@@ -262,6 +262,7 @@
                                                         {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(27)"  type="button">LATE</button></li>--}}
                                                     @endif
                                                     <li><button class="dropdown-item" wire:click="changeStatus(20)" type="button">UPLOADING PICS</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(61)" type="button">LABELING</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatus(4)"  @if(!isset($assignment->scheduling)) disabled @endif type="button">READY TO BILL @if(!isset($assignment->scheduling))  <i class="bx bx-time-five"></i> (MISSING SCHEDULED DATE) @endif   </button></li>
                                                     <li><button class="dropdown-item" wire:click="setPreStatus(7)"  type="button">CLOSED</button></li>
                                                     <li><button class="dropdown-item" wire:click="setPreStatus(26)" type="button">NO CHARGE</button></li>

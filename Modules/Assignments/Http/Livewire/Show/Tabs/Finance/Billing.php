@@ -37,6 +37,8 @@ class Billing extends Component
     public $discount_amount_tr;
     public $settlement_amount;
     public $tree_amount;
+    public $third_party;
+    public $third_party_tr;
     public $tree_amount_tr;
     public $settlement_amount_tr;
     public $billed_date_edited;
@@ -75,7 +77,7 @@ class Billing extends Component
     }
     public function updated($field)
     {
-        $array = array('billed_amount', 'fee_amount','collection_fee_amount', 'discount_amount', 'settlement_amount', 'tree_amount');
+        $array = array('billed_amount', 'fee_amount','collection_fee_amount', 'discount_amount', 'settlement_amount', 'tree_amount', 'third_party');
 
         if (in_array($field, $array))
         {
@@ -97,6 +99,8 @@ class Billing extends Component
         $this->settlement_amount = $invoice->settlement_amount;
         $this->billed_date = $invoice->billed_date;
         $this->billed_date_edited = $invoice->billed_date;
+        $this->tree_amount = $invoice->tree_amount;
+        $this->third_party = $invoice->third_party;
 
         $this->invoiceTotal();
 
@@ -130,6 +134,10 @@ class Billing extends Component
 
         $tree_amount_tr=($this->tree_amount != '') ? preg_replace('/[^0-9.]+/', '', $this->tree_amount) : 0;
         $this->tree_amount_tr = $tree_amount_tr;
+
+        $third_party_tr=($this->third_party != '') ? preg_replace('/[^0-9.]+/', '', $this->third_party) : 0;
+        $this->third_party_tr = $third_party_tr;
+
 
         $this->invoice_total =number_format($billed_amount_tr - ($fee_amount_tr+$discount_amount_tr+$settlement_amount_tr+$collection_fee_amount_tr),2);
     }
@@ -168,7 +176,9 @@ class Billing extends Component
         if($this->job_types > 0){
             $data['tree_amount']=$this->tree_amount_tr;
         }
-
+        if($this->job_types > 0){
+            $data['third_party']=$this->third_party_tr;
+        }
         if($this->invoice_total == 0){
             $data['status'] = 'paid';
         }

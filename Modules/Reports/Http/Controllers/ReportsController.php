@@ -21,6 +21,10 @@
 		{
 			return $this->getPageInfo('Reports Info');
 		}
+        public function general()
+        {
+            return $this->getPageInfo('General Job Report Comissions', 'general');
+        }
         public function mkt()
         {
             return $this->getPageInfo('Reports Mkt', 'mkt');

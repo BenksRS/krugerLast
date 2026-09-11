@@ -92,9 +92,40 @@ class GdriveController extends Controller
                 $this->updateHistoryFiles($queue->assignment_id, 'Done:');
                 $queue->update(['status' => 'complete']);
 
+                // upload concluído -> manda o job pra etapa de labeling
+                $this->moveStatusByClass($queue->assignment_id, 'labeling');
+
             }
         }
 
+    }
+
+    /**
+     * Move o assignment pra um status pela `class` (registra pivot + integração).
+     */
+    protected function moveStatusByClass($assignmentId, $class){
+        $statusId = \Modules\Assignments\Entities\AssignmentsStatus::where('class', $class)->value('id');
+        if(!$statusId){
+            return;
+        }
+
+        $assignment = Assignment::find($assignmentId);
+        if(!$assignment){
+            return;
+        }
+
+        AssignmentsStatusPivot::create([
+            'assignment_id'        => $assignmentId,
+            'assignment_status_id' => $statusId,
+            'created_by'           => 73,
+        ]);
+        $assignment->update(['status_id' => $statusId, 'updated_by' => 73]);
+
+        try {
+            integration('assignments')->set($assignmentId);
+        } catch (Exception $e) {
+            // best effort
+        }
     }
 
     public function add_queue_files(){
@@ -113,43 +144,9 @@ class GdriveController extends Controller
                 'history' => $history
             ])->save();
 
-//if(in_array($item->job_types->toArray)
-
-
-
-            if($item->job_types->contains(11) ) {
-                $status_id = 21;
-            }elseif($item->job_types->contains(25) ) {
-                $status_id = 55;
-            }else{
-
-                $referralIds = [24];
-                $carrierIds  = [171, 496, 217];
-                if ( in_array($item->carrier_id, $carrierIds)) {
-                    $status_id= 21;
-                }else{
-                    $status_id= 4;
-                }
-
-
-
-
-            }
-
-
-            // change status
-            AssignmentsStatusPivot::create([
-                'assignment_id'=> $item->id,
-                'assignment_status_id'=> $status_id,
-                'created_by'=> 73,
-            ]);
-            $update_status=[
-                'status_id'  => $status_id,
-                'updated_by'  => 73,
-            ];
-
-            $item->update($update_status);
-            integration('assignments')->set($item->id);
+            // enquanto as fotos/PDFs sobem, segura o job em "uploading".
+            // Quando o queue_files terminar, ele vai pra "labeling" (e de lá pra preparing_billing).
+            $this->moveStatusByClass($item->id, 'uploading');
 
 
         }

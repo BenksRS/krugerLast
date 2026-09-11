@@ -1,0 +1,16 @@
+[
+  {
+    "image": "mini-skid-pov.jpg",
+    "description": "Mini Skid Working",
+    "category": "Crew and Equipment",
+    "from_vocabulary": true,
+    "note": "POV de dentro do mini skid: dois bracos paralelos + mangueiras hidraulicas + placa de engate mexendo numa arvore caida. NAO e crane (sem lanca/cabo do alto)."
+  },
+  {
+    "image": "debris-on-driveway.jpg",
+    "description": "Tree Debris on Driveway",
+    "category": "Debris and Cleanup",
+    "from_vocabulary": true,
+    "note": "Vista de cima: galhos no paver da garagem, mini skid PARADO ao fundo perto do trailer. Nao e 'Mini Skid Working' - a maquina esta idle, o assunto e o debris na garagem."
+  }
+]
