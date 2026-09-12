@@ -21,5 +21,6 @@
     "Car": true,
     "Alacrity": true,
     "Profile": true,
-    "Activity": true
+    "Activity": true,
+    "Billing": true
 }
