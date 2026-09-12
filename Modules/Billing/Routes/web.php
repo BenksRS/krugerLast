@@ -11,6 +11,11 @@
 |
 */
 
-Route::prefix('billing')->group(function() {
+Route::prefix('billing')->name('billing.')->group(function() {
     Route::get('/', 'BillingController@index');
+
+    // Disparo manual de teste do Validation Engine via URL (mesmo comportamento do
+    // artisan billing:generate-plan, sem precisar de acesso ao shell do container).
+    Route::match(['get', 'post'], '/test/{assignment}', [\Modules\Billing\Http\Controllers\BillingTestController::class, 'generatePlan'])
+        ->name('test_generate_plan');
 });
