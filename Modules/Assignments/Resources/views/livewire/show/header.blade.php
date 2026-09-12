@@ -288,6 +288,7 @@
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(58)"  type="button">ESTIMATE TO BE SENT</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(59)"  type="button">TRIP CHARGE</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(60)"  type="button">SUPER PENDING</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(62)"  type="button">READY TO REVISE</button></li>
                                                 @endif
                                             </ul>
                                         </div>
