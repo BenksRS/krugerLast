@@ -22,5 +22,6 @@
     "Alacrity":   true,
     "Profile":    true,
     "Activity":   true,
-    "Teams":      true
+    "Teams":      true,
+    "Billing":    true
 }
