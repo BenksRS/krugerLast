@@ -173,6 +173,9 @@
       @case('super_pending')
          @livewire('dashboard::list.super-pending', key('dash_list_super_pending'))
          @break
+      @case('ready_to_revise')
+         @livewire('dashboard::list.ready-to-revise', key('dash_list_ready_to_revise'))
+         @break
       @default
          <h3>OPPSSSS!!!! No list found!! </h3>
    @endswitch
