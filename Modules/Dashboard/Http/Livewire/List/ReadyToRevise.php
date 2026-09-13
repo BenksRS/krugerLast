@@ -1,11 +1,10 @@
 <?php
 
-namespace Modules\Dashboard\Http\Livewire;
+namespace Modules\Dashboard\Http\Livewire\List;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Repositories\AssignmentRepository;
 
 class ReadyToRevise extends Component
