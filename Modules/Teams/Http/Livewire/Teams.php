@@ -14,21 +14,25 @@ class Teams extends Component
     ];
 
     public $selectedTeamId = null;
+    public $mode = 'idle'; // idle | create | edit
     public $listKey = 0;
 
     public function selectTeam($teamId)
     {
         $this->selectedTeamId = $teamId;
+        $this->mode = 'edit';
     }
 
     public function newTeam()
     {
         $this->selectedTeamId = null;
+        $this->mode = 'create';
     }
 
     public function refreshList()
     {
         $this->selectedTeamId = null;
+        $this->mode = 'idle';
         $this->listKey++;
     }
 

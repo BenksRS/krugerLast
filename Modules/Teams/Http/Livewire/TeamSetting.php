@@ -13,6 +13,7 @@ class TeamSetting extends Component
     public $name;
     public $workers;
     public $selectedWorkers = [];
+    public $mode = 'idle'; // idle | create | edit
 
     public $originalName;
     public $originalSelectedWorkers = [];
@@ -21,9 +22,10 @@ class TeamSetting extends Component
         'name' => 'required|string|max:255',
     ];
 
-    public function mount($teamId = null)
+    public function mount($teamId = null, $mode = 'idle')
     {
         $this->teamId = $teamId;
+        $this->mode = $mode;
         $this->workers = Workers::with('user')->where('active', 'Y')->orderBy('order')->get();
 
         if ($this->teamId) {
