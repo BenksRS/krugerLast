@@ -352,8 +352,8 @@
                            <th scope="row">Did we use Bobcat?</th>
                            <td>{{($this->bobcat_use  == 'Y') ? 'Yes' : 'No'}}</td>
                            @if($this->bobcat_use == 'Y')
-                              <th scope="row">Type?</th>
-                              <td>{{$this->bobcat_type}}</td>
+{{--                              <th scope="row">Type?</th>
+                              <td>{{$this->bobcat_type}}</td>--}}
                               <th scope="row">How many hours :</th>
                               <td>{{$this->bobcat_hour}} hr</td>
                               <th scope="row">Bobcat Travel hours :</th>
