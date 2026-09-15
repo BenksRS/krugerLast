@@ -378,6 +378,23 @@
                            @endif
 
                         </tr>
+
+                        <tr>
+                           <th scope="row">Did we use 80-Yard Grapple Truck?</th>
+                           <td>{{($this->grapple_truck_use  == 'Y') ? 'Yes' : 'No'}}</td>
+                           @if($this->grapple_truck_use == 'Y')
+                              <th scope="row">Type?</th>
+                              <td>{{$this->grapple_truck_type}}</td>
+                              <th scope="row">How many hours of operation :</th>
+                              <td>{{$this->grapple_truck_hour}} hr</td>
+                              <th scope="row">How many hours trave time :</th>
+                              <td>{{$this->grapple_truck_travel}} hr</td>
+                           @else
+                              <td colspan="5">
+                           @endif
+
+                        </tr>
+
                         <tr>
                            <th scope="row">Workers :</th>
                            <td colspan="5">
