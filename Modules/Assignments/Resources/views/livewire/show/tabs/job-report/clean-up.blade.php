@@ -248,7 +248,7 @@
                   </div>
 
                </div>
-               @if($mini_use == 'Y')
+               @if($grapple_truck_use == 'Y')
                   <div class="col-md-3">
                      <div class="mt-4">
                         <h5 class="font-size-14 mb-4">Type?</h5>
