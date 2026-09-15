@@ -249,7 +249,7 @@
 
                </div>
                @if($grapple_truck_use == 'Y')
-                  <div class="col-md-3">
+                  <div class="col-md-3 d-none">
                      <div class="mt-4">
                         <h5 class="font-size-14 mb-4">Type?</h5>
                         <div class="form-check">
@@ -267,7 +267,7 @@
                   </div>
                   <div class="col-md-3">
                      <div class="mb-3 mt-4">
-                        <label for="formrow-firstname-input" class="form-label">How many hours Mini Bobcat?</label>
+                        <label for="formrow-firstname-input" class="form-label">How many hours of operation?</label>
                         <input type="number" class="form-control" id="formrow-firstname-input" name="grapple_truck_hour" wire:model="grapple_truck_hour">
                      </div>
                      @error('mini_hour')
@@ -277,7 +277,7 @@
                      @enderror
 
                      <div class="mb-3">
-                        <label for="formrow-firstname-input" class="form-label">How many hours Mini Bobcat Travel?</label>
+                        <label for="formrow-firstname-input" class="form-label">How many hours trave time?</label>
                         <input type="number" class="form-control" id="formrow-firstname-input" name="$grapple_truck_travel" wire:model="$grapple_truck_travel">
                      </div>
                      @error('travel_miniskid')
