@@ -52,6 +52,10 @@ class CleanUp extends Component
     public $bobcat_hour;
     public $travel_bobcat;
     public $travel_miniskid;
+    public $grapple_truck_use;
+    public $grapple_truck_type;
+    public $grapple_truck_hour;
+    public $grapple_truck_travel;
 
     public $workersSelected = [];
 
@@ -92,6 +96,10 @@ class CleanUp extends Component
             $this->mini_hour = $this->jobReport->mini_hour;
             $this->travel_bobcat = $this->jobReport->travel_bobcat;
             $this->travel_miniskid = $this->jobReport->travel_miniskid;
+            $this->grapple_truck_use = $this->jobReport->grapple_truck_use;
+            $this->grapple_truck_type = $this->jobReport->grapple_truck_type;
+            $this->grapple_truck_hour = $this->jobReport->grapple_truck_hour;
+            $this->grapple_truck_travel = $this->jobReport->grapple_truck_travel;
 
         }
         $this->getCheckboxInfo();
@@ -189,7 +197,11 @@ class CleanUp extends Component
             'travel_miniskid' =>$this->travel_miniskid,
             'job_info' =>$this->job_info,
             'created_by' => $this->user->id,
-            'updated_by' => $this->user->id
+            'updated_by' => $this->user->id,
+            'grapple_truck_use' => $this->grapple_truck_use,
+            'grapple_truck_type' => $this->grapple_truck_type,
+            'grapple_truck_hour' => $this->grapple_truck_hour,
+            'grapple_truck_travel' => $this->grapple_truck_travel
         ];
 
         if(is_null($this->jobReport)){
