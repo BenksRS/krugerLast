@@ -278,7 +278,7 @@
 
                      <div class="mb-3">
                         <label for="formrow-firstname-input" class="form-label">How many hours trave time?</label>
-                        <input type="number" class="form-control" id="formrow-firstname-input" name="grapple_truck_travel" wire:model="$grapple_truck_travel">
+                        <input type="number" class="form-control" id="formrow-firstname-input" name="grapple_truck_travel" wire:model="grapple_truck_travel">
                      </div>
                      @error('travel_miniskid')
                      <div class="invalid-feedback show">
