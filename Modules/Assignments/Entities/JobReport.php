@@ -46,7 +46,11 @@ class JobReport extends Model {
         'travel_crane',
         'travel_miniskid',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'grapple_truck_use',
+        'grapple_truck_type',
+        'grapple_truck_hour',
+        'grapple_truck_travel',
     ];
 
     protected $appends  = [
