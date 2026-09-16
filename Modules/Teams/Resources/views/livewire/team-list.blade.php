@@ -7,10 +7,10 @@
          </button>
       </div>
       <div class="card-body">
-         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             @forelse($teams as $team)
                <div class="col">
-                  <div class="card h-100 team shadow-sm " data-component="team" wire:key="team-{{ $team->id }}">
+                  <div class="card h-100 team shadow-sm m-0" data-component="team" wire:key="team-{{ $team->id }}">
                      <div class="card-header d-flex align-items-center py-3 px-3 bg-secondary  text-white">
                         <div class="d-flex align-items-center text-truncate">
                            <i class="bi bi-people-fill me-2 text-white"></i>
