@@ -226,7 +226,7 @@
                <hr>
             </div>
 
-            {{--                    // mini --}}
+            {{-- Grapple Truck --}}
             <div class="row">
                <div class="col-md-3">
                   <div class="mt-4">

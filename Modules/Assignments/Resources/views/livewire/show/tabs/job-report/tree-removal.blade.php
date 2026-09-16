@@ -436,6 +436,72 @@
                   <hr>
                </div>
 
+               {{-- Grapple Truck --}}
+               <div class="row">
+                  <div class="col-md-3">
+                     <div class="mt-4">
+                        <h5 class="font-size-14 mb-4">Did we use 80-Yard Grapple Truck ?</h5>
+                        <div class="form-check mb-3">
+                           <input class="form-check-input" type="radio" name="grapple_truck_use" wire:model="grapple_truck_use"
+                                  id="formRadios17" value="N"> <label class="form-check-label" for="formRadios17"> No </label>
+                        </div>
+                        <div class="form-check">
+                           <input class="form-check-input" type="radio" name="grapple_truck_use" wire:model="grapple_truck_use"
+                                  id="formRadios18" value="Y"> <label class="form-check-label" for="formRadios18"> Yes </label>
+                        </div>
+                        @error('mini_use')
+                        <div class="invalid-feedback show">
+                           Please select a valid option.
+                        </div>
+                        @enderror
+
+                     </div>
+
+                  </div>
+                  @if($grapple_truck_use == 'Y')
+                     <div class="col-md-3 d-none">
+                        <div class="mt-4">
+                           <h5 class="font-size-14 mb-4">Type?</h5>
+                           <div class="form-check">
+                              <input class="form-check-input" type="radio" name="grapple_truck_type" wire:model="grapple_truck_type"
+                                     id="formRadios10" value="mini_skid_loader"> <label class="form-check-label" for="formRadios10"> Mini Skid Loader </label>
+                           </div>
+                           @error('mini_type')
+                           <div class="invalid-feedback show">
+                              Please select a valid option.
+                           </div>
+                           @enderror
+
+                        </div>
+
+                     </div>
+                     <div class="col-md-3">
+                        <div class="mb-3 mt-4">
+                           <label for="formrow-firstname-input" class="form-label">How many hours of operation?</label>
+                           <input type="number" class="form-control" id="formrow-firstname-input" name="grapple_truck_hour" wire:model="grapple_truck_hour">
+                        </div>
+                        @error('mini_hour')
+                        <div class="invalid-feedback show">
+                           Please input a number > 0.
+                        </div>
+                        @enderror
+
+                        <div class="mb-3">
+                           <label for="formrow-firstname-input" class="form-label">How many hours trave time?</label>
+                           <input type="number" class="form-control" id="formrow-firstname-input" name="grapple_truck_travel" wire:model="grapple_truck_travel">
+                        </div>
+                        @error('travel_miniskid')
+                        <div class="invalid-feedback show">
+                           Please input a number > 0.
+                        </div>
+                        @enderror
+                     </div>
+                  @endif
+               </div>
+               <div class="col-lg-12">
+                  <hr>
+               </div>
+
                <div class="row">
                   <div class="col-xl-12 col-sm-12">
                      <label class="form-label">Workers</label>
@@ -574,6 +640,22 @@
                               <td>{{$this->mini_hour}} hr</td>
                               <th scope="row">Mini Bobcat Travel hours :</th>
                               <td>{{$this->travel_miniskid}} hr</td>
+                           @else
+                              <td colspan="5">
+                           @endif
+
+                        </tr>
+
+                        <tr>
+                           <th scope="row">Did we use 80-Yard Grapple Truck?</th>
+                           <td>{{($this->grapple_truck_use  == 'Y') ? 'Yes' : 'No'}}</td>
+                           @if($this->grapple_truck_use == 'Y')
+                              {{--                          <th scope="row">Type?</th>
+                                                        <td>{{$this->grapple_truck_type}}</td>--}}
+                              <th scope="row">How many hours of operation :</th>
+                              <td>{{$this->grapple_truck_hour}} hr</td>
+                              <th scope="row">How many hours trave time :</th>
+                              <td>{{$this->grapple_truck_travel}} hr</td>
                            @else
                               <td colspan="5">
                            @endif
