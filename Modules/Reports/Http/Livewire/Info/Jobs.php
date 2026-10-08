@@ -19,7 +19,7 @@ class Jobs extends Component
 
     public $columns = ['Name','Address','Job Type','Schedule','Status','Referral','City','State', 'Created At','invoice`s', 'Billied Date', 'Total Invoice Amount', 'Paid Date', 'Paid Amount', 'Balance Amount', 'Crane Amount', 'Claim Number', 'Billed By'];
     public $selectedColumns = [];
-    public $selectedRows = 100;
+    public $selectedRows = 300;
     public $searchInfo;
     public $jobs;
 
