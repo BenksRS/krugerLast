@@ -73,7 +73,7 @@
                                 @if(in_array('State', $selectedColumns))
                                     <th>State</th>
                                 @endif
-                                @if(in_array('Phone', $selectedColumns))
+                                @if(in_array('State', $selectedColumns))
                                     <th>Phone</th>
                                 @endif
                                 {{--                            @if(in_array('Invoice', $selectedColumns))--}}
@@ -206,7 +206,7 @@
                                     @if(in_array('State', $selectedColumns))
                                         <td><p>{{$row->state}}</p></td>
                                     @endif
-                                    @if(in_array('Phone', $selectedColumns))
+                                    @if(in_array('State', $selectedColumns))
                                         <td>
                                             @foreach($row->phones as $phone)
                                                 <a href="#"><small>{{$phone->phone}}</small></a>
