@@ -62,7 +62,7 @@
                                     <th>Referral</th>
                                 @endif
                                     @if(in_array('Referral', $selectedColumns))
-                                        <th>Marketing</th>
+                                        <th>E-mail</th>
                                     @endif
                                 @if(in_array('Street', $selectedColumns))
                                     <th>Street</th>
@@ -186,15 +186,17 @@
                                             @endif
                                         </td>
                                     @endif
-                                        @if(in_array('Status', $selectedColumns))
+              {{--                          @if(in_array('Status', $selectedColumns))
                                             <td><p>
                                                     @if($row->referral->marketing_id)
                                                         {{strtolower($row->referral->marketing->name)}}
                                                         @endif
                                                 </p></td>
 
-                                        @endif
-
+                                        @endif--}}
+                                       @if(in_array('Status', $selectedColumns))
+                                          <td><p>{{$row->email}}</p></td>
+                                       @endif
                                     @if(in_array('Street', $selectedColumns))
                                       <td><p>{{$row->street}}</p></td>
                                     @endif
