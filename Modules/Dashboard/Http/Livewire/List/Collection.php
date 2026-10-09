@@ -133,7 +133,8 @@
             $list             = AssignmentFinanceRepository::collection($this->selectedStatus)->search($searchAssignment)->when($this->filters, function ( $query, $search ) {
                 $search = array_filter($search);
                 foreach ( $search as $key => $value ) {
-                    $query->where($key, $value);
+                    $value = is_array($value) ? $value : [$value];
+                    $query->whereIn($key, $value);
                 }
             })->get();
 

@@ -85,8 +85,71 @@
     
                     <!-- Filter Collection -->
                     <div class="row mb-3">
-        
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
+                          <div class="mb-3" wire:ignore>
+                             <label class="form-label">State</label> <a href="#" wire:click.prevent="clearFilter('state')" onClick="clearReferral()" class="float-end">clear</a>
+                             <select class="select2 form-control select2-multiple select_state select-filter" multiple
+                                     name="state"
+                                     data-model="state"
+                                     wire:model="filters.state">
+                                <option selected value>chose...</option>
+                                <option value="AL">AL</option>
+                                <option value="AK">AK</option>
+                                <option value="AZ">AZ</option>
+                                <option value="AR">AR</option>
+                                <option value="AS">AS</option>
+                                <option value="CA">CA</option>
+                                <option value="CO">CO</option>
+                                <option value="CT">CT</option>
+                                <option value="DE">DE</option>
+                                <option value="DC">DC</option>
+                                <option value="FL">FL</option>
+                                <option value="GA">GA</option>
+                                <option value="GU">GU</option>
+                                <option value="HI">HI</option>
+                                <option value="ID">ID</option>
+                                <option value="IL">IL</option>
+                                <option value="IN">IN</option>
+                                <option value="IA">IA</option>
+                                <option value="KS">KS</option>
+                                <option value="KY">KY</option>
+                                <option value="LA">LA</option>
+                                <option value="ME">ME</option>
+                                <option value="MD">MD</option>
+                                <option value="MA">MA</option>
+                                <option value="MI">MI</option>
+                                <option value="MN">MN</option>
+                                <option value="MS">MS</option>
+                                <option value="MO">MO</option>
+                                <option value="MT">MT</option>
+                                <option value="NE">NE</option>
+                                <option value="NV">NV</option>
+                                <option value="NH">NH</option>
+                                <option value="NJ">NJ</option>
+                                <option value="NM">NM</option>
+                                <option value="NY">NY</option>
+                                <option value="NC">NC</option>
+                                <option value="ND">ND</option>
+                                <option value="CM">CM</option>
+                                <option value="OH">OH</option>
+                                <option value="OK">OK</option>
+                                <option value="OR">OR</option>
+                                <option value="PA">PA</option>
+                                <option value="SC">SC</option>
+                                <option value="TN">TN</option>
+                                <option value="TX">TX</option>
+                                <option value="UT">UT</option>
+                                <option value="VT">VT</option>
+                                <option value="VA">VA</option>
+                                <option value="VI">VI</option>
+                                <option value="WA">WA</option>
+                                <option value="WV">WV</option>
+                                <option value="WI">WI</option>
+                                <option value="WY">WY</option>
+                             </select>
+                          </div>
+                       </div>
+                        <div class="col-lg-4">
                             <div class="mb-3" wire:ignore>
                                 <label class="form-label">Referral</label>
                                 <a href="#" wire:click.prevent="clearFilter('referral_id')" onClick="clearReferral()" class="float-end">clear</a>
@@ -101,7 +164,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="mb-3" wire:ignore>
                                 <label class="form-label">Carrier</label>
                                 <a href="#" wire:click="clearFilter('carrier_id')" onClick="clearCarrier()" class="float-end">clear</a>
