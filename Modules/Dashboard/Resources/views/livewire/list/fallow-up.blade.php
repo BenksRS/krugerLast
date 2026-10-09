@@ -89,6 +89,8 @@
                           <div class="mb-3" wire:ignore>
                              <label class="form-label">State</label> <a href="#" wire:click.prevent="clearFilter('state')" onClick="clearReferral()" class="float-end">clear</a>
                              <select class="select2 form-control select2-multiple select_state select-filter" multiple
+                                     name="state"
+                                     data-model="state"
                                      wire:model="filters.state">
                                 <option selected value>chose...</option>
                                 <option value="AL">AL</option>
