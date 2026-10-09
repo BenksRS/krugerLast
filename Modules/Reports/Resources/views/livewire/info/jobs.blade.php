@@ -161,9 +161,7 @@
                                       @endif
                                     @if(in_array('Job Type', $selectedColumns))
                                         <td><p>
-                                                @foreach($row->job_types as $job)
-                                                    {{$job->name}}
-                                                @endforeach
+                                              {{ $row->job_types->pluck('name')->implode(' / ') }}
                                             </p></td>
                                     @endif
                                     @if(in_array('Schedule', $selectedColumns))
