@@ -31,7 +31,7 @@
                                         </ul>
                                     </div>
                                 </div>
-
+                               <x-button-copy target="#datatable-buttons" label="Copy table" />
                             </div>
                         </div>
                         {{--                        <div class="col-lg-4 float-end " >--}}
