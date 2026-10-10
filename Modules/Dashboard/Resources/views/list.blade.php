@@ -176,6 +176,9 @@
       @case('ready_to_revise')
          @livewire('dashboard::list.ready-to-revise', key('dash_list_ready_to_revise'))
          @break
+      @case('frontline')
+         @livewire('dashboard::list.frontline', key('dash_list_frontline'))
+         @break
       @default
          <h3>OPPSSSS!!!! No list found!! </h3>
    @endswitch
