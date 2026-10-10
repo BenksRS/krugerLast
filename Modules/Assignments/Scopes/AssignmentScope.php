@@ -246,7 +246,8 @@ trait AssignmentScope {
             ->with('job_types')
             ->whereHas('scheduling', function(Builder $q) use ($tech_id) {
                 if ($tech_id != NULL) {
-                    $q->where('tech_id', '=', $tech_id);
+                    $tech_id = is_array($tech_id) ? $tech_id : [$tech_id];
+                    $q->whereIn('tech_id', $tech_id);
                 }
             })
             ->whereHas('job_types', function(Builder $q) use ($job_type) {

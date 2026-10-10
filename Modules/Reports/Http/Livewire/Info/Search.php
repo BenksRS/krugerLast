@@ -104,7 +104,8 @@ class Search extends Component
                         $this->list=AssignmentFinanceRepository::DateBilled($date_from,$date_to,$this->techSelected,$this->commissionsSelected,$this->jtSelected)->get();
                         $this->list = $this->list->where('status_id', 5);
                         if($this->techSelected){
-                            $this->list=$this->list->where('scheduling.tech_id', $this->techSelected);
+                            $tech_id = is_array($this->techSelected) ? $this->techSelected : [$this->techSelected];
+                            $this->list=$this->list->whereIn('scheduling.tech_id', $tech_id);
                         }
                         break;
                     case 'paid':
