@@ -50,6 +50,7 @@
    @if($noTeam->isNotEmpty())
       <hr class="my-4">
       <hr class="my-4">
+      <label class="form-label">Workers: no Team</label>
       <div class="row">
          @foreach($noTeam as $wk)
             <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-4">
