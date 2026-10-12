@@ -55,7 +55,7 @@ class Search extends Component
     public $user;
 
     public  function mount(){
-        $this->techs = Techs::all();
+        $this->techs = TechsUser::where('active','Y')->get();
         $this->commissions = User::where('active','Y')->get();
         $this->marketing = Marketing::all();
         $this->events = AssignmentsEvents::all();
