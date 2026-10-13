@@ -13,7 +13,7 @@ class Show extends Component {
 
     protected $listeners = [];
 
-    public    $checklist = [1 => TRUE, 11 => TRUE, 12 => TRUE, 17 => TRUE];
+    public    $checklist = [1 => TRUE, 11 => TRUE, 12 => TRUE, 17 => TRUE, 34 => TRUE];
 
     public    $status;
 
