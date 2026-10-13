@@ -249,8 +249,8 @@
 
                                                     <li><button class="dropdown-item" wire:click="changeStatus(28)" type="button">MESSAGE SENT</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatus(29)" type="button">REQUEST DOCUSIGN</button></li>
-                                                    <li><button class="dropdown-item" wire:click="changeStatus(14)"  type="button">DOCUSIGN SENT</button></li>
-                                                    <li><button class="dropdown-item" wire:click="changeStatus(17)"  type="button">READY TO INSTALL</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(14)"  type="button">DOCUSIGN SENT</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(17)"  type="button">READY TO INSTALL</button></li>
 
                                                     @if(in_array(Auth::user()->id,[1, 2, 10, 25]))
                                                         <li><button class="dropdown-item" wire:click="changeStatusCleanUp(34, 16)"  type="button">CLEAN UP CURBSIDE</button></li>
