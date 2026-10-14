@@ -72,6 +72,13 @@
                                 </div>
                                 <div class="form-check-inline">
                                     <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
+                                           id="filter_date_rts" value="readytoinstall">
+                                    <label class="form-check-label" for="filter_date_rts">
+                                        Ready To Install
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
                                            id="filter_date_rtb" value="readytobill">
                                     <label class="form-check-label" for="filter_date_rtb">
                                         Ready To Bill
