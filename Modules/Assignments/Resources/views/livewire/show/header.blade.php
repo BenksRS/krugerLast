@@ -238,9 +238,10 @@
                                                 @else
                                                     <li><button class="dropdown-item" wire:click="setPreStatus(11)" type="button">OPEN RESCHEDULE</button></li>
                                                     <li><button class="dropdown-item" wire:click="setPreStatus(12)" type="button">PENDING</button></li>
-                                                    @if(in_array($assignment->status->id,[1, 27, 28]))
+                {{--                                    @if(in_array($assignment->status->id,[1, 27, 28]))
                                                         <li><button class="dropdown-item" wire:click="changeStatus(31)" type="button">NEXT WEEK</button></li>
-                                                    @endif
+                                                    @endif--}}
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(31)" type="button">NEXT WEEK</button></li>
                                                     {{--<li><button class="dropdown-item" wire:click="changeStatus(32)" type="button">UNIV</button></li>--}}
 
                                                     @if($assignment->status->id == 4)
