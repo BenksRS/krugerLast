@@ -145,7 +145,7 @@ trait AssignmentScope {
         return $query->whereIn('status_id', collect($status))->whereNotNull('id');
     }
 
-    public function scopeSchedJobs(Builder $query, $date, $status = [2, 3, 4, 5, 8, 7, 20])
+    public function scopeSchedJobs(Builder $query, $date, $status = [2, 3, 4, 5, 8, 20])
     {
         return $query
             ->with('scheduling')
