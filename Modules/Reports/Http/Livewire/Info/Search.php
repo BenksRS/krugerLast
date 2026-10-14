@@ -123,6 +123,9 @@ class Search extends Component
                     case 'trip_charge':
                         $this->list=AssignmentFinanceRepository::DateTripCharge($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
+                    case 'msg_sent':
+                        $this->list=AssignmentFinanceRepository::DateMsgSent($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                    break;
                 }
                 if($this->eventSelected){
 //
