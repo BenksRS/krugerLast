@@ -123,7 +123,7 @@
 													<div class="scheduled_job alert {{$job_grid->assignment->status->class}} {{($this->jobRoute == $job_grid->assignment->id)? ' job_route': ''}}" wire:key="techid_{{$tech->user->id}}_grid_{{$grid}}_{{$job_grid->assignment->id}}" wire:sortable-group.item="{{$job_grid->assignment->id}}" style="padding: 6px">
 														
 														<div class="row">
-															<div class="col-lg-12 blackfont" style="font-size: 10px; font-weight: 600">
+															<div class="col-lg-12" style="font-size: 10px; font-weight: 600">
 																#{{ $job_grid->assignment->id }}
 																<div class="position-absolute" style="font-size: 16px; right: 10px !important; top: -3px !important;">
 																	@if( !empty($job_grid->assignment->tags->toArray()) && in_array(9, collect($job_grid->assignment->tags)->pluck('id')->all()))
@@ -142,7 +142,7 @@
 																</div>
 															</div>
 															
-															<div class="col-lg-12 whitefont" style="font-size: 9px">
+															<div class="col-lg-12" style="font-size: 9px">
 																@foreach($job_grid->assignment->job_types as $job_types)
                                                                         <?php $count = 0;$count ++; ?>
 																	@if($count == 1)
@@ -153,7 +153,7 @@
 																@endforeach
 															</div>
 															<span class="float-start" style="font-size: 9px">{{ isset($job_grid->assignment->phones->first()->phone) ? $job_grid->assignment->phones->first()->phone : 'No phone'}}</span>
-															<div class="col-lg-12 blackfont" style="font-size: 9px">
+															<div class="col-lg-12" style="font-size: 9px">
 																{{$job_grid->assignment->city}} - {{$job_grid->assignment->state}}
 															</div>
 															
