@@ -230,10 +230,10 @@
 											<div class="col-lg-12 blackfont" style="font-size: {{$fontsize}}px">
 												{{ $item->job->full_name }}
 												<div class="position-absolute" style="font-size: 16px; top: -5px; right: 5px">
-													@if( !empty($job_grid->assignment->tags->toArray()) && in_array(9, collect($job_grid->assignment->tags)->pluck('id')->all()))
+													@if( !empty($item->job->tags->toArray()) && in_array(9, collect($item->job->tags)->pluck('id')->all()))
 														<i class="bx bx-like"></i>
 													@endif
-													@if( !empty($job_grid->assignment->tags->toArray()) && in_array(11, collect($job_grid->assignment->tags)->pluck('id')->all()))
+													@if( !empty($item->job->tags->toArray()) && in_array(11, collect($item->job->tags)->pluck('id')->all()))
 														<i class="bx bx-purchase-tag-alt"></i>
 													@endif
 												</div>
