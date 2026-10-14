@@ -129,15 +129,16 @@
 																	@if( !empty($job_grid->assignment->tags->toArray()) && in_array(9, collect($job_grid->assignment->tags)->pluck('id')->all()))
 																		<i class="bx bx-like"></i>
 																	@endif
+																		@if( !empty($job_grid->assignment->tags->toArray()) && in_array(31, collect($job_grid->assignment->tags)->pluck('id')->all()))
+																			<i class="bx bx-like"></i>
+																		@endif
+																		@if( !empty($job_grid->assignment->tags->toArray()) && in_array(14, collect($job_grid->assignment->tags)->pluck('id')->all()))
+																			<i class="bx bx-like"></i>
+																		@endif
 																	@if( !empty($job_grid->assignment->tags->toArray()) && in_array(11, collect($job_grid->assignment->tags)->pluck('id')->all()))
 																		<i class="bx bx-purchase-tag-alt"></i>
 																	@endif
-																		@if( !empty($job_grid->assignment->tags->toArray()) && in_array(31, collect($job_grid->assignment->tags)->pluck('id')->all()))
-																			<i class="bx bx-purchase-tag-alt"></i>
-																		@endif
-																		@if( !empty($job_grid->assignment->tags->toArray()) && in_array(14, collect($job_grid->assignment->tags)->pluck('id')->all()))
-																			<i class="bx bx-purchase-tag-alt"></i>
-																		@endif
+
 																</div>
 															</div>
 															
