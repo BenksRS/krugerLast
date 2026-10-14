@@ -125,11 +125,14 @@
 														<div class="row">
 															<div class="col-lg-12 blackfont" style="font-size: 10px; font-weight: 600">
 																#{{ $job_grid->assignment->id }}
-                                                                @if( !empty($job_grid->assignment->tags->toArray()) && in_array(11, collect($job_grid->assignment->tags)->pluck('id')->all()))
-                                                                    <div class="position-absolute top-0 end-0">
-                                                                        <i class="bx bx-purchase-tag-alt" style="font-size: 20px;"></i>
-                                                                    </div>
-                                                                @endif
+																<div class="position-absolute top-0" style="font-size: 18px; right: 10px!important;">
+																	@if( !empty($job_grid->assignment->tags->toArray()) && in_array(11, collect($job_grid->assignment->tags)->pluck('id')->all()))
+																		<i class="bx bx-purchase-tag-alt"></i>
+																	@endif
+																	@if( !empty($job_grid->assignment->tags->toArray()) && in_array(9, collect($job_grid->assignment->tags)->pluck('id')->all()))
+																		<i class="bx bx-thumb-up"></i>
+																	@endif
+																</div>
 															</div>
 															
 															<div class="col-lg-12 whitefont" style="font-size: 9px">
