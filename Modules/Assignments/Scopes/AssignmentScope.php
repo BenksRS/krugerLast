@@ -244,6 +244,7 @@ trait AssignmentScope {
         return $query
             ->with('scheduling')
             ->with('job_types')
+            ->whereNotIn('status_id', [7])
             ->whereHas('scheduling', function(Builder $q) use ($tech_id) {
                 if ($tech_id != NULL) {
                     $tech_id = is_array($tech_id) ? $tech_id : [$tech_id];
