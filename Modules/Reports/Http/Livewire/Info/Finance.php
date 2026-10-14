@@ -41,7 +41,7 @@ class Finance extends Component {
             //            dd($this->list);
             $this->result = collect($this->list);
 
-            $total_jobs_closed    = count(0);
+            $total_jobs_closed    = 0; //count($this->result->where('status_id', 7));
             $total_jobs_open      = count($this->result->whereIn('status_id', [1, 2, 3, 12, 11, 14, 17, 18, 22]));
             $total_jobs_completed = count($this->result->whereIn('status_id', [4, 5, 6, 8, 9, 10, 13, 15, 19, 20, 21, 23, 24]));
             $total_jobs           = count($this->result);
@@ -76,7 +76,7 @@ class Finance extends Component {
             $total_jobs_direct_bill           = count($jobs_direct_bill);
             $total_jobs_direct_bill_open      = count($jobs_direct_bill->whereIn('status_id', [1, 2, 3, 12, 11, 14, 17, 18, 22]));
             $total_jobs_direct_bill_completed = count($jobs_direct_bill->whereIn('status_id', [4, 5, 6, 8, 9, 10, 13, 15, 19, 20, 21, 23, 24]));
-            $total_jobs_direct_bill_closed    = count(0);
+            $total_jobs_direct_bill_closed    = 0; //count($jobs_direct_bill->where('status_id', 7));
 
             // jobs Crane
             $jobs_crane = $this->result->where('finance.invoices.crane_amount', '>', 0);
