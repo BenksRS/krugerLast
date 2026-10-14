@@ -275,7 +275,7 @@
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(40)"  type="button">TREE DONE NEED TARP</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(41)"  type="button">TREE EASY</button></li>
                                                     {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(42)"  type="button">NOT CONFIRMED</button></li>--}}
-                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(43)"  type="button">TREE SIGNED</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(43)"  type="button">WAITING REPLY</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusMissingAssignment(44)"  type="button">MISSING ASSIGNMENT</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(45)"  type="button">NADAL PROBLEM</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(46)"  type="button">CRANE APPROVED</button></li>
