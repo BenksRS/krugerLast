@@ -366,6 +366,7 @@ class HeaderScheduling extends Component
 	          case 'clean_up_haul_away':
 	          case 'ready_to_install':
 	          case 'message_sent':
+              case 'waiting_reply':
 		          $this->showSched = true;
 	            $this->showChangeTech = true;
 	            $this->showChangeSched = true;
