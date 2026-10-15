@@ -248,7 +248,7 @@
                                                         <li><button class="dropdown-item" wire:click="changeStatus(3)" type="button">IN PROGRESS</button></li>
                                                     @endif
 
-                                                    <li><button class="dropdown-item" wire:click="changeStatus(28)" type="button">MESSAGE SENT</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(28)" type="button">MESSAGE SENT</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatus(29)" type="button">REQUEST DOCUSIGN</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(14)"  type="button">DOCUSIGN SENT</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(17)"  type="button">READY TO INSTALL</button></li>
