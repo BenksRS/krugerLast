@@ -65,6 +65,13 @@
                                 </div>
                                 <div class="form-check-inline">
                                     <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
+                                           id="filter_date_nw" value="next_week">
+                                    <label class="form-check-label" for="filter_date_nw">
+                                        Next Week
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
                                            id="filter_date_ms" value="msg_sent">
                                     <label class="form-check-label" for="filter_date_ms">
                                         Msg Sent

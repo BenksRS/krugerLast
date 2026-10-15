@@ -129,6 +129,9 @@ class Search extends Component
                     case 'msg_sent':
                         $this->list=AssignmentFinanceRepository::DateMsgSent($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
+                    case 'next_week':
+                        $this->list=AssignmentFinanceRepository::DateNextWeek($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                    break;
                 }
                 if($this->eventSelected){
 //
