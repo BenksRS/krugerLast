@@ -112,6 +112,12 @@ class TreeRemoval extends Component
         if(is_null($this->jobReport)){
             $this->show =false;
             $this->workersSelected = $this->reportSelected = [];
+            $this->debris = 'leave';
+            $this->crane = 'N';
+            $this->climber = 'N';
+            $this->bobcat_use = 'N';
+            $this->mini_use = 'N';
+            $this->grapple_truck_use = 'N';
         }else{
             $this->show =true;
 
