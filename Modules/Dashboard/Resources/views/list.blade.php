@@ -179,6 +179,9 @@
       @case('frontline')
          @livewire('dashboard::list.frontline', key('dash_list_frontline'))
          @break
+        @case('roofing_estimate')
+            @livewire('dashboard::list.super-pending', key('dash_list_roofing_estimate'))
+            @break
       @default
          <h3>OPPSSSS!!!! No list found!! </h3>
    @endswitch
