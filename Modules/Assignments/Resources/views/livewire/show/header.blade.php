@@ -256,7 +256,6 @@
                                                     @if(in_array(Auth::user()->id,[1, 2, 10, 25, 75]))
                                                         <li><button class="dropdown-item" wire:click="changeStatusCleanUp(34, 16)"  type="button">CLEAN UP CURBSIDE</button></li>
                                                         <li><button class="dropdown-item" wire:click="changeStatusCleanUp(35, 17)"  type="button">CLEAN UP HAUL AWAY</button></li>
-                                                        <li><button class="dropdown-item" wire:click="changeStatusScheduling(59)"  type="button">TRIP CHARGE: NO SCHEDULE</button></li>
                                                         {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(47)"  type="button">TREE 3RD</button></li>--}}
                                                     @endif
 
@@ -288,7 +287,7 @@
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(56)"  type="button">LEAD REFUND</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(57)"  type="button">SLIDE APPROVAL</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(58)"  type="button">ESTIMATE TO BE SENT</button></li>
-                                                    <li><button class="dropdown-item" wire:click="changeStatus(59)"  type="button">TRIP CHARGE</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(59)"  type="button">TRIP CHARGE</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(60)"  type="button">SUPER PENDING</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatus(62)"  type="button">READY TO REVISE</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatus(63)"  type="button">FRONTLINE</button></li>

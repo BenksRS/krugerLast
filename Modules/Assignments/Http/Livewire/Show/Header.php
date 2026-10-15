@@ -176,8 +176,11 @@ class Header extends Component
 				'created_by'=> $this->user->id,
 				'type'=> 'assignment',
 				'notable_type'=>  Modules\Assignments\Entities\Assignment::class,
-			
 			]);
+
+            if($this->assignment->scheduling){
+                    $this->assignment->scheduling->delete();
+            }
 
 			$this->changeStatus($newStatus);
 			$this->assignment = Assignment::find($this->assignment->id);
