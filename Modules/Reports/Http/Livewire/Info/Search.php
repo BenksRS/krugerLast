@@ -132,6 +132,9 @@ class Search extends Component
                     case 'next_week':
                         $this->list=AssignmentFinanceRepository::DateNextWeek($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
+                    case 'waiting_reply':
+                        $this->list=AssignmentFinanceRepository::DateWaitingReply($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                    break;
                 }
                 if($this->eventSelected){
 //

@@ -72,6 +72,13 @@
                                 </div>
                                 <div class="form-check-inline">
                                     <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
+                                           id="filter_date_wr" value="waiting_reply">
+                                    <label class="form-check-label" for="filter_date_wr">
+                                        Waiting Reply
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
                                            id="filter_date_ms" value="msg_sent">
                                     <label class="form-check-label" for="filter_date_ms">
                                         Msg Sent
