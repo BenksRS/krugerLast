@@ -183,6 +183,9 @@
             @livewire('dashboard::list.roofing-estimate', key('dash_list_roofing_estimate'))
             @break
       @default
+        @case('tree_guardian_problem')
+            @livewire('dashboard::list.tree-guardian-problem', key('dash_list_tree_guardian_problem'))
+            @break
          <h3>OPPSSSS!!!! No list found!! </h3>
    @endswitch
 
