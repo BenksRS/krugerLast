@@ -115,28 +115,31 @@ class Search extends Component
                         $this->list=AssignmentFinanceRepository::DateCrane($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
                     case 'open-reschedule':
-                        $this->list=AssignmentFinanceRepository::DateOpenReschedule($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                        $this->list=AssignmentFinanceRepository::DateByStatus($date_from,[1,11],$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
                     case 'readytoinstall':
-                        $this->list=AssignmentFinanceRepository::DateReadytoinstall($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                        $this->list=AssignmentFinanceRepository::DateByStatus($date_from,[17],$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
                     case 'readytobill':
-                        $this->list=AssignmentFinanceRepository::DateReadytobill($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                        $this->list=AssignmentFinanceRepository::DateByStatus($date_from,[4],$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
                     case 'trip_charge':
-                        $this->list=AssignmentFinanceRepository::DateTripCharge($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                        $this->list=AssignmentFinanceRepository::DateByStatus($date_from,[59],$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
                     case 'msg_sent':
-                        $this->list=AssignmentFinanceRepository::DateMsgSent($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                        $this->list=AssignmentFinanceRepository::DateByStatus($date_from,[28],$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
                     case 'next_week':
-                        $this->list=AssignmentFinanceRepository::DateNextWeek($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                        $this->list=AssignmentFinanceRepository::DateByStatus($date_from,[31],$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
                     case 'waiting_reply':
-                        $this->list=AssignmentFinanceRepository::DateWaitingReply($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                        $this->list=AssignmentFinanceRepository::DateByStatus($date_from,[43],$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
                     case 'tree_easy':
-                        $this->list=AssignmentFinanceRepository::DateTreeEasy($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                        $this->list=AssignmentFinanceRepository::DateByStatus($date_from,[41],$date_to,$this->techSelected,$this->jtSelected)->get();
+                    break;
+                    case 'ready_to_install_tarp':
+                        $this->list=AssignmentFinanceRepository::DateByStatus($date_from,[66],$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
                 }
                 if($this->eventSelected){

@@ -574,6 +574,18 @@ trait AssignmentScope {
             });
     }
 
+    public function scopeDateByStatus(Builder $query, int|array $status, $date_from = null, $date_to = null, $tech_id = null, $job_type = null
+    ) {
+        return $query
+            ->with('job_types')
+            ->whereIn('status_id', (array) $status)
+            ->whereHas('job_types', function (Builder $q) use ($job_type) {
+                $q->when($job_type, fn (Builder $q) => $q->whereIn('assignment_job_type_id', (array) $job_type));
+            })
+            ->when($date_from, fn (Builder $q, $date_from) => $q->whereDate('created_at', '>=', $date_from))
+            ->when($date_to, fn (Builder $q, $date_to) => $q->whereDate('created_at', '<=', $date_to));
+    }
+
     public function scopeSearchTags(Builder $query, $tags = NULL)
     {
         return $query

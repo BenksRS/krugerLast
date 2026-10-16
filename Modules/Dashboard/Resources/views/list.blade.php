@@ -186,6 +186,9 @@
         @case('tree_guardian_problem')
             @livewire('dashboard::list.tree-guardian-problem', key('dash_list_tree_guardian_problem'))
             @break
+        @case('ready_to_install_tarp')
+            @livewire('dashboard::list.ready-to-install-tarp', key('dash_list_ready_to_install_tarp'))
+            @break
          <h3>OPPSSSS!!!! No list found!! </h3>
    @endswitch
 

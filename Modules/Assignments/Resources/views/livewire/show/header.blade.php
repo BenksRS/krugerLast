@@ -293,6 +293,7 @@
                                                     <li><button class="dropdown-item" wire:click="changeStatus(62)"  type="button">READY TO REVISE</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatus(63)"  type="button">FRONTLINE</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatus(64)"  type="button">ROOFING ESTIMATE</button></li>
+                                                    <li><button class="dropdown-item" wire:click="changeStatus(66)"  type="button">READY TO INSTALL TARP</button></li>
                                                 @endif
                                             </ul>
                                         </div>

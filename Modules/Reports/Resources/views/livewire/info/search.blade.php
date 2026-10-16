@@ -93,6 +93,13 @@
                                 </div>
                                 <div class="form-check-inline">
                                     <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
+                                           id="filter_date_rtit" value="ready_to_install_tarp">
+                                    <label class="form-check-label" for="filter_date_rtit">
+                                        Ready To Install Tarp
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
                                            id="filter_date_rts" value="readytoinstall">
                                     <label class="form-check-label" for="filter_date_rts">
                                         Ready To Install
