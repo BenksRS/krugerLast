@@ -248,7 +248,7 @@
                                                         <li><button class="dropdown-item" wire:click="changeStatus(3)" type="button">IN PROGRESS</button></li>
                                                     @endif
 
-                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(28)" type="button">MESSAGE SENT</button></li>
+                                                    {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(28)" type="button">MESSAGE SENT</button></li>--}}
                                                     <li><button class="dropdown-item" wire:click="changeStatus(29)" type="button">REQUEST DOCUSIGN</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(14)"  type="button">DOCUSIGN SENT</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(17)"  type="button">READY TO INSTALL</button></li>
@@ -263,7 +263,7 @@
                                                         {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(27)"  type="button">LATE</button></li>--}}
                                                     @endif
                                                     <li><button class="dropdown-item" wire:click="changeStatus(20)" type="button">UPLOADING PICS</button></li>
-                                                    <li><button class="dropdown-item" wire:click="changeStatus(61)" type="button">LABELING</button></li>
+                                                    {{--<li><button class="dropdown-item" wire:click="changeStatus(61)" type="button">LABELING</button></li>--}}
                                                     <li><button class="dropdown-item" wire:click="changeStatus(4)"  @if(!isset($assignment->scheduling)) disabled @endif type="button">READY TO BILL @if(!isset($assignment->scheduling))  <i class="bx bx-time-five"></i> (MISSING SCHEDULED DATE) @endif   </button></li>
                                                     <li><button class="dropdown-item" wire:click="setPreStatus(7)"  type="button">CLOSED</button></li>
                                                     <li><button class="dropdown-item" wire:click="setPreStatus(26)" type="button">NO CHARGE</button></li>
@@ -285,7 +285,7 @@
                                                     {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(53)"  type="button">BAD LEAD</button></li>--}}
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(54)"  type="button">WAITING ESTIMATE</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(55)"  type="button">ESTIMATE SENT</button></li>
-                                                    <li><button class="dropdown-item" wire:click="changeStatusScheduling(56)"  type="button">LEAD REFUND</button></li>
+                                                    {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(56)"  type="button">LEAD REFUND</button></li--}}>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(57)"  type="button">SLIDE APPROVAL</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(58)"  type="button">ESTIMATE TO BE SENT</button></li>
                                                     <li><button class="dropdown-item" wire:click="changeStatusScheduling(59)"  type="button">TRIP CHARGE</button></li>
