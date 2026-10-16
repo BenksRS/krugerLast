@@ -135,6 +135,9 @@ class Search extends Component
                     case 'waiting_reply':
                         $this->list=AssignmentFinanceRepository::DateWaitingReply($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
+                    case 'tree_easy':
+                        $this->list=AssignmentFinanceRepository::DateTreeEasy($date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                    break;
                 }
                 if($this->eventSelected){
 //
