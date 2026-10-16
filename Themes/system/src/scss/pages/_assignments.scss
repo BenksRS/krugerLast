@@ -202,10 +202,13 @@
     background-color: rgb(163, 2, 255) !important;
     color: #fbfbfb!important;
 }
-.uploading,
-.ready_to_install_tarp{
+.uploading{
     background-color: #373737 !important;
     color: #fbfbfb!important;
+}
+.ready_to_install_tarp{
+    background-color: #bfbfbf !important;
+    color: #373737 !important;
 }
 .scheduled_partial{
     background-color: #00FFFF!important;
