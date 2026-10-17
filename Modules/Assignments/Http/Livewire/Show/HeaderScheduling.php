@@ -367,6 +367,7 @@ class HeaderScheduling extends Component
 	          case 'ready_to_install':
 	          case 'message_sent':
               case 'waiting_reply':
+              case 'ready_to_install_tarp':
 		          $this->showSched = true;
 	            $this->showChangeTech = true;
 	            $this->showChangeSched = true;
