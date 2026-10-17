@@ -369,6 +369,7 @@ class HeaderScheduling extends Component
               case 'waiting_reply':
               case 'ready_to_install_tarp':
               case 'docusign_sent':
+              case 'next_week':
 		          $this->showSched = true;
 	            $this->showChangeTech = true;
 	            $this->showChangeSched = true;
