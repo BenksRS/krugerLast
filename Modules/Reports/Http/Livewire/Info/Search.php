@@ -141,6 +141,9 @@ class Search extends Component
                     case 'ready_to_install_tarp':
                         $this->list=AssignmentFinanceRepository::DateByStatus([66],$date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
+                    case 'docusing_sent':
+                        $this->list=AssignmentFinanceRepository::DateByStatus([14],$date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                    break;
                 }
                 if($this->eventSelected){
 //
