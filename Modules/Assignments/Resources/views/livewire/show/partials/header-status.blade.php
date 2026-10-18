@@ -169,7 +169,9 @@
                     @endif
                 </button>
             </li>
-
+            <li>
+                <button class="dropdown-item" wire:click="changeStatusScheduling(60)" type="button">SUPER PENDING</button>
+            </li>
             <li>
                 <button class="dropdown-item" wire:click="setPreStatus(7)" type="button">CLOSED</button>
             </li>
@@ -179,6 +181,9 @@
             </li>
             <li>
                 <button class="dropdown-item" wire:click="setPreStatus(12)" type="button">PENDING</button>
+            </li>
+            <li>
+                <button class="dropdown-item" wire:click="changeStatusScheduling(60)" type="button">SUPER PENDING</button>
             </li>
             {{--                                    @if(in_array($assignment->status->id,[1, 27, 28]))
                                                     <li><button class="dropdown-item" wire:click="changeStatus(31)" type="button">NEXT WEEK</button></li>
@@ -204,7 +209,20 @@
             <li>
                 <button class="dropdown-item" wire:click="changeStatusScheduling(17)" type="button">READY TO INSTALL</button>
             </li>
-
+            <li>
+                <button class="dropdown-item" wire:click="changeStatus(66)" type="button">READY TO INSTALL TARP</button>
+            </li>
+            <li>
+                <button class="dropdown-item" wire:click="changeStatus(62)" type="button">READY TO REVISE</button>
+            </li>
+            <li>
+                <button class="dropdown-item" wire:click="changeStatus(4)" @if(!isset($assignment->scheduling)) disabled @endif type="button">READY TO BILL @if(!isset($assignment->scheduling))
+                        <i class="bx bx-time-five"></i> (MISSING SCHEDULED DATE)
+                    @endif   </button>
+            </li>
+            <li>
+                <button class="dropdown-item" wire:click="changeStatusScheduling(59)" type="button">TRIP CHARGE</button>
+            </li>
             @if(in_array(Auth::user()->id,[1, 2, 10, 25, 75]))
                 <li>
                     <button class="dropdown-item" wire:click="changeStatusCleanUp(34, 16)" type="button">CLEAN UP CURBSIDE</button>
@@ -222,11 +240,7 @@
                 <button class="dropdown-item" wire:click="changeStatus(20)" type="button">UPLOADING PICS</button>
             </li>
             {{--<li><button class="dropdown-item" wire:click="changeStatus(61)" type="button">LABELING</button></li>--}}
-            <li>
-                <button class="dropdown-item" wire:click="changeStatus(4)" @if(!isset($assignment->scheduling)) disabled @endif type="button">READY TO BILL @if(!isset($assignment->scheduling))
-                        <i class="bx bx-time-five"></i> (MISSING SCHEDULED DATE)
-                    @endif   </button>
-            </li>
+
             <li>
                 <button class="dropdown-item" wire:click="setPreStatus(7)" type="button">CLOSED</button>
             </li>
@@ -245,18 +259,18 @@
                 <button class="dropdown-item" wire:click="changeStatusScheduling(38)" type="button">CRANE NEEDED</button>
             </li>
             <li>
-                <button class="dropdown-item" wire:click="changeStatusScheduling(39)" type="button">NOT ENOUGH TIME</button>
+                <button class="dropdown-item" wire:click="changeStatusScheduling(46)" type="button">CRANE APPROVED</button>
             </li>
             <li>
-                <button class="dropdown-item" wire:click="changeStatusScheduling(40)" type="button">TREE DONE NEED TARP</button>
+                <button class="dropdown-item" wire:click="changeStatusScheduling(39)" type="button">NOT ENOUGH TIME</button>
             </li>
             <li>
                 <button class="dropdown-item" wire:click="changeStatusScheduling(41)" type="button">TREE EASY</button>
             </li>
-            {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(42)"  type="button">NOT CONFIRMED</button></li>--}}
             <li>
-                <button class="dropdown-item" wire:click="changeStatusScheduling(43)" type="button">WAITING REPLY</button>
+                <button class="dropdown-item" wire:click="changeStatusScheduling(40)" type="button">TREE DONE NEED TARP</button>
             </li>
+            {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(42)"  type="button">NOT CONFIRMED</button></li>--}}
             <li>
                 <button class="dropdown-item" wire:click="changeStatusMissingAssignment(44)" type="button">MISSING ASSIGNMENT</button>
             </li>
@@ -270,42 +284,30 @@
                 <button class="dropdown-item" wire:click="changeStatusScheduling(65)" type="button">TREE GUARDIAN PROBLEM</button>
             </li>
             <li>
-                <button class="dropdown-item" wire:click="changeStatusScheduling(46)" type="button">CRANE APPROVED</button>
-            </li>
-            <li>
                 <button class="dropdown-item" wire:click="changeStatusScheduling(49)" type="button">CYNTHIA REVIEW</button>
             </li>
             {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(53)"  type="button">BAD LEAD</button></li>--}}
             <li>
+                <button class="dropdown-item" wire:click="changeStatusScheduling(43)" type="button">WAITING REPLY</button>
+            </li>
+            <li>
                 <button class="dropdown-item" wire:click="changeStatusScheduling(54)" type="button">WAITING ESTIMATE</button>
             </li>
             <li>
+                <button class="dropdown-item" wire:click="changeStatus(64)" type="button">ROOFING ESTIMATE</button>
+            </li>
+            <li>
                 <button class="dropdown-item" wire:click="changeStatusScheduling(55)" type="button">ESTIMATE SENT</button>
+            </li>
+            <li>
+                <button class="dropdown-item" wire:click="changeStatusScheduling(58)" type="button">ESTIMATE TO BE SENT</button>
             </li>
             {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(56)"  type="button">LEAD REFUND</button></li>--}}
             <li>
                 <button class="dropdown-item" wire:click="changeStatusScheduling(57)" type="button">SLIDE APPROVAL</button>
             </li>
             <li>
-                <button class="dropdown-item" wire:click="changeStatusScheduling(58)" type="button">ESTIMATE TO BE SENT</button>
-            </li>
-            <li>
-                <button class="dropdown-item" wire:click="changeStatusScheduling(59)" type="button">TRIP CHARGE</button>
-            </li>
-            <li>
-                <button class="dropdown-item" wire:click="changeStatusScheduling(60)" type="button">SUPER PENDING</button>
-            </li>
-            <li>
-                <button class="dropdown-item" wire:click="changeStatus(62)" type="button">READY TO REVISE</button>
-            </li>
-            <li>
                 <button class="dropdown-item" wire:click="changeStatus(63)" type="button">FRONTLINE</button>
-            </li>
-            <li>
-                <button class="dropdown-item" wire:click="changeStatus(64)" type="button">ROOFING ESTIMATE</button>
-            </li>
-            <li>
-                <button class="dropdown-item" wire:click="changeStatus(66)" type="button">READY TO INSTALL TARP</button>
             </li>
         @endif
 
