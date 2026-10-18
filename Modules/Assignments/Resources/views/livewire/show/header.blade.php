@@ -220,7 +220,8 @@
                                                 @else
                                                 @endif
                                             @endforeach
-                                            <ul class="dropdown-menu dropdown-menu-lg-end">
+                                            @include('assignments::livewire.show.partials.header-status')
+                                            <ul class="d-none dropdown-menu dropdown-menu-lg-end">
 
 
                                                 @if($assignment->status->id == 33)
