@@ -177,6 +177,14 @@
             </li>
         @else
             <li>
+                <button class="dropdown-item" wire:click="changeStatus(20)" type="button">UPLOADING PICS</button>
+            </li>
+            <li>
+                <button class="dropdown-item" wire:click="changeStatus(4)" @if(!isset($assignment->scheduling)) disabled @endif type="button">READY TO BILL @if(!isset($assignment->scheduling))
+                        <i class="bx bx-time-five"></i> (MISSING SCHEDULED DATE)
+                    @endif   </button>
+            </li>
+            <li>
                 <button class="dropdown-item" wire:click="setPreStatus(11)" type="button">OPEN RESCHEDULE</button>
             </li>
             <li>
@@ -215,11 +223,7 @@
             <li>
                 <button class="dropdown-item" wire:click="changeStatus(62)" type="button">READY TO REVISE</button>
             </li>
-            <li>
-                <button class="dropdown-item" wire:click="changeStatus(4)" @if(!isset($assignment->scheduling)) disabled @endif type="button">READY TO BILL @if(!isset($assignment->scheduling))
-                        <i class="bx bx-time-five"></i> (MISSING SCHEDULED DATE)
-                    @endif   </button>
-            </li>
+
             <li>
                 <button class="dropdown-item" wire:click="changeStatusScheduling(59)" type="button">TRIP CHARGE</button>
             </li>
@@ -236,9 +240,6 @@
             @if($assignment->scheduling || in_array($assignment->status->id,[28, 17]))
                 {{--<li><button class="dropdown-item" wire:click="changeStatusScheduling(27)"  type="button">LATE</button></li>--}}
             @endif
-            <li>
-                <button class="dropdown-item" wire:click="changeStatus(20)" type="button">UPLOADING PICS</button>
-            </li>
             {{--<li><button class="dropdown-item" wire:click="changeStatus(61)" type="button">LABELING</button></li>--}}
 
             <li>
