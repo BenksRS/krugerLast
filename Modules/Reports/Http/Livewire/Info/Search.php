@@ -144,6 +144,9 @@ class Search extends Component
                     case 'docusing_sent':
                         $this->list=AssignmentFinanceRepository::DateByStatus([14],$date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
+                    case 'gus_problem':
+                        $this->list=AssignmentFinanceRepository::DateByStatus([67],$date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                    break;
                 }
                 if($this->eventSelected){
 //

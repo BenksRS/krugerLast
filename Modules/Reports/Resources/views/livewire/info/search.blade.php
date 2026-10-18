@@ -65,6 +65,13 @@
                                 </div>
                                 <div class="form-check-inline">
                                     <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
+                                           id="filter_date_gp" value="gus_problem">
+                                    <label class="form-check-label" for="filter_date_gp">
+                                        GUS Problem
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tarp_situation" wire:model="filter_date"
                                            id="filter_date_nw" value="next_week">
                                     <label class="form-check-label" for="filter_date_nw">
                                         Next Week
