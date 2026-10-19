@@ -147,6 +147,9 @@ class Search extends Component
                     case 'gus_problem':
                         $this->list=AssignmentFinanceRepository::DateByStatus([67],$date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
+                    case 'frontline':
+                        $this->list=AssignmentFinanceRepository::DateByStatus([63],$date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                    break;
                 }
                 if($this->eventSelected){
 //
