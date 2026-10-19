@@ -128,12 +128,10 @@
 
     <div class="dropdown-status-header">
         <div class="dropdown-status-title">
-            <i class="bx bx-list-check" aria-hidden="true"></i>
-            <span>Change Status</span>
+            <i class="bx bx-list-check" aria-hidden="true"></i> <span>Change Status</span>
         </div>
         <div class="dropdown-status-search">
-            <i class="bx bx-search dropdown-status-search-icon" aria-hidden="true"></i>
-            <input
+            <i class="bx bx-search dropdown-status-search-icon" aria-hidden="true"></i> <input
               type="search"
               class="form-control form-control-sm js-status-search"
               placeholder="Search status..."
@@ -267,6 +265,9 @@
             </li>
             <li>
                 <button class="dropdown-item" wire:click="changeStatusScheduling(41)" type="button">TREE EASY</button>
+            </li>
+            <li>
+                <button class="dropdown-item" wire:click="changeStatusScheduling(28)" type="button">TREE SIGNED</button>
             </li>
             <li>
                 <button class="dropdown-item" wire:click="changeStatusScheduling(40)" type="button">TREE DONE NEED TARP</button>

@@ -126,7 +126,7 @@ class Search extends Component
                     case 'trip_charge':
                         $this->list=AssignmentFinanceRepository::DateByStatus([59],$date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
-                    case 'msg_sent':
+                    case 'tree_signed':
                         $this->list=AssignmentFinanceRepository::DateByStatus([28],$date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
                     case 'next_week':
