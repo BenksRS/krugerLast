@@ -150,6 +150,9 @@ class Search extends Component
                     case 'frontline':
                         $this->list=AssignmentFinanceRepository::DateByStatus([63],$date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
                     break;
+                    case 'nobody_was_home':
+                        $this->list=AssignmentFinanceRepository::DateByStatus([37],$date_from,$date_to,$this->techSelected,$this->jtSelected)->get();
+                    break;
                 }
                 if($this->eventSelected){
 //
