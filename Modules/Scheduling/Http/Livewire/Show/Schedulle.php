@@ -9,13 +9,15 @@
 	use Modules\Assignments\Entities\AssignmentsStatus;
 	use Modules\Assignments\Entities\AssignmentsStatusPivot;
 	use Modules\Assignments\Repositories\AssignmentRepository;
-	use Modules\Notes\Entities\Directions;
+    use Modules\Assignments\Traits\HandlesTechTags;
+    use Modules\Notes\Entities\Directions;
 	use Modules\User\Entities\Techs;
 	use DateTime;
 	use Auth;
 	
 	class Schedulle extends Component {
-		
+
+        use HandlesTechTags;
 		protected $listeners    = [
 			'setFilter',
 			'changeRoute',
@@ -644,6 +646,9 @@
 									
 									// add job type by tech
 									$this->checkJobTypeByTech($tech_id, $assignment);
+
+                                    // add tech tags
+                                    $this->addTagsByTech($tech_id, $assignment);
 									
 									integration('assignments')->set($assignment_id);
 									
@@ -682,6 +687,9 @@
 								
 								// add job type by tech
 								$this->checkJobTypeByTech($tech_id, $assignment);
+
+                                // add tech tags
+                                $this->addTagsByTech($tech_id, $assignment);
 								
 								integration('assignments')->set($assignment_id);
 								

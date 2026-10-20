@@ -11,13 +11,14 @@ use Modules\Assignments\Entities\AssignmentsScheduling;
 use Modules\Assignments\Entities\AssignmentsStatusPivot;
 use Modules\Assignments\Entities\JobReportTarpSizes;
 use Modules\Assignments\Traits\HandlesAssignmentRules;
+use Modules\Assignments\Traits\HandlesTechTags;
 use Modules\User\Entities\Techs;
 use Auth;
 use function Ramsey\Uuid\v1;
 
 class HeaderScheduling extends Component
 {
-    use HandlesAssignmentRules;
+    use HandlesAssignmentRules, HandlesTechTags;
     protected $listeners = [
         'showButtons' => 'toggleButtons',
         'showDuplicate' => 'toggleDuplicate',
@@ -250,9 +251,6 @@ class HeaderScheduling extends Component
 
         $Schedule->update($AssignmentsScheduling);
 
-
-
-
         // $AssignmentStatus
         $AssignmentStatus=[
             'assignment_id'  => $this->assignment->id,
@@ -268,14 +266,15 @@ class HeaderScheduling extends Component
         ];
         $this->assignment->update($update_status);
 
-
-
+        // add tags by tech
+        $this->addTagsByTech($this->techSelected, $this->assignment);
 
         $this->techSelected = $this->schedule_start = null;
 
 
         $this->assignment = Assignment::find($this->assignment->id);
         $this->emit('updateScheduling');
+        $this->emit('tagsUpdate',$this->assignment->id);
         $this->toggleButtons('back');
 
         integration('assignments')->set($this->assignment->id);
@@ -324,9 +323,13 @@ class HeaderScheduling extends Component
         ];
         $this->assignment->update($update_status);
 
+        // add tags by tech
+        $this->addTagsByTech($this->techSelected, $this->assignment);
+
         $this->assignment = Assignment::find($this->assignment->id);
 
         $this->emit('updateScheduling');
+        $this->emit('tagsUpdate',$this->assignment->id);
         $this->toggleButtons('back');
 
 
