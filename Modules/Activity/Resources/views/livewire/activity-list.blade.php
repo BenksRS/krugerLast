@@ -48,6 +48,7 @@
                            <th class="text-center" style="width: 120px;">Logs</th>
                            <th class="text-center">First Log</th>
                            <th class="text-center">Last Log</th>
+                           <th class="text-center">Total Hours</th>
                            <th class="text-center">IP</th>
                         </tr>
                      </thead>
@@ -71,13 +72,19 @@
                                  {{ \Carbon\Carbon::parse($log->last_log)->format('m/d/Y H:i:s') }}
                               </td>
                               <td class="text-center">
+                                 @php
+                                    $totalMinutes = \Carbon\Carbon::parse($log->first_log)->diffInMinutes(\Carbon\Carbon::parse($log->last_log));
+                                 @endphp
+                                 {{ sprintf('%02d:%02d', intdiv($totalMinutes, 60), $totalMinutes % 60) }}
+                              </td>
+                              <td class="text-center">
                                  {{ $log->ip }}
                               </td>
                            </tr>
                         @empty
                            <tr>
-                              <td colspan="5" class="text-center text-muted">
-                                 Nenhum log encontrado para esta data.
+                              <td colspan="6" class="text-center text-muted">
+                                 No logs found for this date.
                               </td>
                            </tr>
                         @endforelse
