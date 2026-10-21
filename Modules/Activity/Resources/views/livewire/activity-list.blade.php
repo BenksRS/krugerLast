@@ -66,16 +66,20 @@
                                  {{ $log->total }}
                               </td>
                               <td class="text-center">
-                                 {{ \Carbon\Carbon::parse($log->first_log)->format('m/d/Y H:i:s') }}
+                                 {{ $log->first_log ? \Carbon\Carbon::parse($log->first_log)->format('m/d/Y H:i:s') : 'N/A' }}
                               </td>
                               <td class="text-center">
                                  {{ \Carbon\Carbon::parse($log->last_log)->format('m/d/Y H:i:s') }}
                               </td>
                               <td class="text-center">
-                                 @php
-                                    $totalMinutes = \Carbon\Carbon::parse($log->first_log)->diffInMinutes(\Carbon\Carbon::parse($log->last_log));
-                                 @endphp
-                                 {{ sprintf('%02d:%02d', intdiv($totalMinutes, 60), $totalMinutes % 60) }}
+                                 @if($log->first_log)
+                                    @php
+                                       $totalMinutes = \Carbon\Carbon::parse($log->first_log)->diffInMinutes(\Carbon\Carbon::parse($log->last_log));
+                                    @endphp
+                                    {{ sprintf('%02d:%02d', intdiv($totalMinutes, 60), $totalMinutes % 60) }}
+                                 @else
+                                    N/A
+                                 @endif
                               </td>
                               <td class="text-center">
                                  {{ $log->ip }}

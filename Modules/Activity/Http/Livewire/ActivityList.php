@@ -63,7 +63,7 @@ class ActivityList extends Component {
             ->select([
                 'user_id',
                 DB::raw('COUNT(*) as total'),
-                DB::raw('MIN(created_at) as first_log'),
+                DB::raw("MIN(CASE WHEN event = 'login' THEN created_at END) as first_log"),
                 DB::raw('MAX(created_at) as last_log'),
                 DB::raw('MAX(ip) as ip')
             ])
