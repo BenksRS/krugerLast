@@ -17,9 +17,15 @@ class ActivityList extends Component
     public $perPage = 100;
 
     // Preserve the same users included in the original daily report.
+    // Entries before 06:00 are not considered for any hour calculation.
+    private const HOURS_START = '06:00:00';
+
+    // An interval strictly greater than one hour counts as idle time in full.
+    private const MAX_LOG_GAP_SECONDS = 3600;
+
     private const TRACKED_USER_IDS = [
         10, 25, 4, 56, 54, 118, 120, 104, 148, 145, 105,
-        13, 43, 102, 151, 171, 173, 174, 178, 181, 182,
+        13, 43, 102, 151, 171, 173, 174, 178, 181, 182
     ];
 
     public $date;
@@ -159,6 +165,86 @@ class ActivityList extends Component
         return sprintf('%02d:%02d', intdiv($minutes, 60), $minutes % 60);
     }
 
+    /**
+     * Calculate effective logged hours per user and calendar date.
+     *
+     * Business rules:
+     * - Only events occurring from 06:00:00 through 23:59:59 are eligible.
+     * - The clock begins with the first `login` event at/after 06:00.
+     * - For each pair of consecutive events after that login, count the
+     *   elapsed seconds ONLY if the gap is <= 60 minutes. If the gap is
+     *   longer than 60 minutes, exclude the ENTIRE gap.
+     * - Never carry hours or a previous event over to the next calendar day.
+     * - Return null if no qualifying login was found on that date.
+     *
+     * Read events as a cursor to avoid loading an entire week's raw event
+     * records into memory. Use the same calculation for daily and weekly.
+     *
+     * @return array<int, array<string, int|null>>
+     */
+    private function calculateDailyMinutes(Carbon $start, Carbon $end): array
+    {
+        $activityByDay = [];
+
+        $records = ActivityLog::query()
+            ->select(['user_id', 'event', 'created_at'])
+            ->whereIn('user_id', self::TRACKED_USER_IDS)
+            ->whereBetween('created_at', [
+                $start->copy()->startOfDay(),
+                $end->copy()->endOfDay(),
+            ])
+            ->whereTime('created_at', '>=', self::HOURS_START)
+            ->orderBy('user_id')
+            ->orderBy('created_at')
+            ->cursor();
+
+        foreach ($records as $record) {
+            $userId = (int) $record->user_id;
+            $timestamp = Carbon::parse($record->created_at);
+            $date = $timestamp->toDateString();
+
+            if (!isset($activityByDay[$userId][$date])) {
+                $activityByDay[$userId][$date] = [
+                    'previous_at' => null,
+                    'seconds' => 0,
+                ];
+            }
+
+            $daily = &$activityByDay[$userId][$date];
+
+            // A user must have a qualifying login to start the daily clock.
+            if ($daily['previous_at'] === null) {
+                if (strcasecmp((string) $record->event, 'login') === 0) {
+                    $daily['previous_at'] = $timestamp;
+                }
+                unset($daily);
+                continue;
+            }
+
+            $gapSeconds = (int) $daily['previous_at']->diffInSeconds($timestamp);
+
+            // Do not just subtract the excess: exclude the whole idle gap.
+            if ($gapSeconds <= self::MAX_LOG_GAP_SECONDS) {
+                $daily['seconds'] += $gapSeconds;
+            }
+
+            // Resume counting from this event for subsequent short gaps.
+            $daily['previous_at'] = $timestamp;
+            unset($daily);
+        }
+
+        $minutesByDay = [];
+        foreach ($activityByDay as $userId => $dates) {
+            foreach ($dates as $date => $daily) {
+                $minutesByDay[$userId][$date] = $daily['previous_at'] === null
+                    ? null
+                    : intdiv($daily['seconds'], 60);
+            }
+        }
+
+        return $minutesByDay;
+    }
+
     public function render()
     {
         $logs = collect();
@@ -171,12 +257,12 @@ class ActivityList extends Component
         $weekEnd = $weekStart->copy()->endOfWeek(Carbon::SUNDAY);
 
         if ($this->mode === 'daily') {
-            // Keep the existing daily view and its calculation unchanged.
+            // Preserve the raw daily log count, while constraining first login and calculated hours.
             $logs = ActivityLog::query()
                 ->select([
                     'user_id',
                     DB::raw('COUNT(*) as total'),
-                    DB::raw("MIN(CASE WHEN event = 'login' THEN created_at END) as first_log"),
+                    DB::raw("MIN(CASE WHEN event = 'login' AND TIME(created_at) >= '" . self::HOURS_START . "' THEN created_at END) as first_log"),
                     DB::raw('MAX(created_at) as last_log'),
                     DB::raw('MAX(ip) as ip'),
                 ])
@@ -186,6 +272,15 @@ class ActivityList extends Component
                 ->with('user')
                 ->orderBy('last_log', 'desc')
                 ->get();
+
+            $dailyMinutes = $this->calculateDailyMinutes(
+                Carbon::parse($this->date),
+                Carbon::parse($this->date)
+            );
+
+            foreach ($logs as $log) {
+                $log->worked_minutes = $dailyMinutes[(int) $log->user_id][$this->date] ?? null;
+            }
         } else {
             // Every tracked user with at least one historical activity record
             // remains available in the dropdown, even when absent this week.
@@ -214,15 +309,13 @@ class ActivityList extends Component
                 ];
             }
 
-            // Only one grouped query for all seven days and all users.
-            // Same semantics as the daily report: first *login* -> last event.
+            // Preserve raw log counts in the weekly views. The hours calculation
+            // below ignores pre-06:00 records and long inactive intervals.
             $dailyLogs = ActivityLog::query()
                 ->select([
                     'user_id',
                     DB::raw('DATE(created_at) as log_date'),
                     DB::raw('COUNT(*) as log_count'),
-                    DB::raw("MIN(CASE WHEN event = 'login' THEN created_at END) as first_log"),
-                    DB::raw('MAX(created_at) as last_log'),
                 ])
                 ->whereIn('user_id', self::TRACKED_USER_IDS)
                 ->whereBetween('created_at', [
@@ -232,16 +325,15 @@ class ActivityList extends Component
                 ->groupBy('user_id', DB::raw('DATE(created_at)'))
                 ->get();
 
+            $dailyMinutes = $this->calculateDailyMinutes($weekStart, $weekEnd);
             $dailyLookup = [];
 
             foreach ($dailyLogs as $dailyLog) {
-                $minutes = $dailyLog->first_log
-                    ? Carbon::parse($dailyLog->first_log)
-                        ->diffInMinutes(Carbon::parse($dailyLog->last_log))
-                    : null;
+                $userId = (int) $dailyLog->user_id;
+                $logDate = $dailyLog->log_date;
 
-                $dailyLookup[(int) $dailyLog->user_id][$dailyLog->log_date] = [
-                    'minutes' => $minutes,
+                $dailyLookup[$userId][$logDate] = [
+                    'minutes' => $dailyMinutes[$userId][$logDate] ?? null,
                     'logCount' => (int) $dailyLog->log_count,
                 ];
             }

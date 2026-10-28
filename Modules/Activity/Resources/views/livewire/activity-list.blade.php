@@ -79,15 +79,9 @@
                                     {{ \Carbon\Carbon::parse($log->last_log)->format('m/d/Y H:i:s') }}
                                  </td>
                                  <td class="text-center">
-                                    @if($log->first_log)
-                                       @php
-                                          $totalMinutes = \Carbon\Carbon::parse($log->first_log)
-                                              ->diffInMinutes(\Carbon\Carbon::parse($log->last_log));
-                                       @endphp
-                                       {{ sprintf('%02d:%02d', intdiv($totalMinutes, 60), $totalMinutes % 60) }}
-                                    @else
-                                       N/A
-                                    @endif
+                                    {{ $log->worked_minutes !== null
+                                        ? sprintf('%02d:%02d', intdiv($log->worked_minutes, 60), $log->worked_minutes % 60)
+                                        : 'N/A' }}
                                  </td>
                                  <td class="text-center">{{ $log->ip }}</td>
                               </tr>
@@ -96,6 +90,11 @@
                            @endforelse
                         </tbody>
                      </table>
+                  </div>
+                  <div class="small text-muted mt-3">
+                     Hours only include activity from 06:00 onward. Gaps between consecutive logs longer than
+                     60 minutes are excluded in full. The Logs column shows all raw events.
+                     N/A means no login after 06:00.
                   </div>
                @else
                   {{-- Example 1: week navigation with arrows. Example 2: pick any date in a week. --}}
@@ -262,7 +261,7 @@
                         </div>
                         @if($selectedWeeklyRow['incompleteDays'] > 0)
                            <div class="alert alert-warning py-2 mt-3 mb-0 small">
-                              {{ $selectedWeeklyRow['incompleteDays'] }} day(s) have logs but no login event;
+                              {{ $selectedWeeklyRow['incompleteDays'] }} day(s) have logs but no login event after 06:00;
                               their hours could not be calculated and are excluded from the total.
                            </div>
                         @endif
@@ -273,9 +272,10 @@
                      @endif
                   </div>
                   <div class="small text-muted mt-3">
-                     Hours = time between the first login and last recorded event of each day.
-                     A dash means no logs; N/A means logs exist but no login was recorded.
-                     This is an activity span, not verified active working time.
+                     Hours are calculated from the first login at/after 06:00, summing intervals between
+                     consecutive logs of up to 60 minutes. Longer gaps are fully excluded.
+                     A dash means no logs; N/A means logs exist but no login after 06:00 was recorded.
+                     These totals estimate logged activity, not verified active working time.
                   </div>
                @endif
             </div>
