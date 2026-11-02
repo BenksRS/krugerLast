@@ -9,9 +9,11 @@ use Modules\Activity\Entities\ActivityLog;
 class ActivityList extends Component
 {
     public $date;
-    public $viewMode = 'daily';        // daily | weekly
-    public $weeklyMode = 'all';        // all | individual
-    public $selectedUserId = '';      // Only used for the individual weekly view
+    public $viewMode = 'daily';        // daily | weekly | range
+    public $weeklyMode = 'all';        // all | individual (weekly and custom range)
+    public $selectedUserId = '';      // Selected for the individual view
+    public $rangeStart;               // Custom range: inclusive start date
+    public $rangeEnd;                 // Custom range: inclusive end date
 
     private const USER_IDS = [
         10, 25, 4, 56, 54, 118, 120, 104, 148, 145, 105,
@@ -21,10 +23,13 @@ class ActivityList extends Component
     // Hours start at 06:00:00. Gaps of more than 60 minutes are not counted.
     private const START_TIME = '06:00:00';
     private const MAX_GAP_SECONDS = 3600;
+    private const RANGE_MATRIX_MAX_DAYS = 31;
 
     public function mount()
     {
         $this->date = Carbon::today()->toDateString();
+        $this->rangeStart = Carbon::today()->startOfWeek(Carbon::MONDAY)->toDateString();
+        $this->rangeEnd = Carbon::today()->toDateString();
     }
 
     public function updatedDate($value)
@@ -36,7 +41,7 @@ class ActivityList extends Component
 
     public function setViewMode($mode)
     {
-        if (in_array($mode, ['daily', 'weekly'], true)) {
+        if (in_array($mode, ['daily', 'weekly', 'range'], true)) {
             $this->viewMode = $mode;
         }
     }
@@ -50,7 +55,8 @@ class ActivityList extends Component
 
     public function changeDate($direction)
     {
-        if (! in_array($direction, ['prev', 'next'], true)) {
+        // The custom range is controlled by its start and end date inputs.
+        if ($this->viewMode === 'range' || ! in_array($direction, ['prev', 'next'], true)) {
             return;
         }
 
@@ -76,6 +82,10 @@ class ActivityList extends Component
 
     public function getCanMoveNextProperty()
     {
+        if ($this->viewMode === 'range') {
+            return false;
+        }
+
         if ($this->viewMode === 'weekly') {
             return $this->selectedDate()->startOfWeek(Carbon::MONDAY)
                 ->lt(Carbon::today()->startOfWeek(Carbon::MONDAY));
@@ -124,8 +134,38 @@ class ActivityList extends Component
             ? $this->date : Carbon::today()->toDateString())->startOfDay();
     }
 
+    // Validate Livewire input server-side as well as via HTML date controls.
+    public function getRangeErrorProperty()
+    {
+        if ($this->viewMode !== 'range') {
+            return null;
+        }
+
+        if (! $this->isValidDate($this->rangeStart) || ! $this->isValidDate($this->rangeEnd)) {
+            return 'Select a valid start date and end date.';
+        }
+
+        $start = Carbon::parse($this->rangeStart)->startOfDay();
+        $end = Carbon::parse($this->rangeEnd)->startOfDay();
+        if ($start->gt($end)) {
+            return 'Start date must be earlier than or equal to end date.';
+        }
+        if ($end->gt(Carbon::today())) {
+            return 'End date cannot be later than today.';
+        }
+
+        return null;
+    }
+
     private function dateRange()
     {
+        if ($this->viewMode === 'range') {
+            // reportData/exportCsv will reject invalid ranges before any query.
+            $start = $this->isValidDate($this->rangeStart) ? $this->rangeStart : Carbon::today()->toDateString();
+            $end = $this->isValidDate($this->rangeEnd) ? $this->rangeEnd : Carbon::today()->toDateString();
+            return [Carbon::parse($start)->startOfDay(), Carbon::parse($end)->endOfDay()];
+        }
+
         $date = $this->selectedDate();
         if ($this->viewMode === 'weekly') {
             return [
@@ -161,7 +201,10 @@ class ActivityList extends Component
             $query->where('user_id', (int) $selectedUserId);
         }
 
-        return $query->orderBy('user_id')->orderBy('created_at')->get();
+        // Laravel 8 LazyCollection: eager-load relations in batches instead of loading
+        // every event from a potentially long custom period into memory.
+        return $query->orderBy('user_id')->orderBy('created_at')->orderBy('id')
+            ->lazy(500);
     }
 
     // This method is the ONLY source of the daily hours used by the UI and export.
@@ -240,59 +283,68 @@ class ActivityList extends Component
     private function reportData()
     {
         [$start, $end] = $this->dateRange();
+        $rangeError = $this->rangeError;
         $users = $this->listUsers();
-        $weekly = $this->viewMode === 'weekly';
+        $isPeriod = $this->viewMode !== 'daily';
+        $isIndividual = $isPeriod && $this->weeklyMode === 'individual';
+        $rangeColumns = $this->viewMode === 'range' && ! $rangeError
+                        && $start->diffInDays($end) < self::RANGE_MATRIX_MAX_DAYS;
 
-        $selectedUserId = $weekly && $this->weeklyMode === 'individual'
+        $selectedUserId = $isIndividual
                           && ctype_digit((string) $this->selectedUserId)
                           && isset($users[(int) $this->selectedUserId])
             ? (int) $this->selectedUserId : null;
 
-        // If no user was chosen, individual view will display a selection prompt.
-        $missingUser = $weekly && $this->weeklyMode === 'individual'
-                       && $selectedUserId === null;
-
-        $dailyRows = $missingUser ? [] : $this->summarizeLogs(
+        $missingUser = $isIndividual && $selectedUserId === null;
+        $dailyRows = ($missingUser || $rangeError) ? [] : $this->summarizeLogs(
             $this->queryLogs($start, $end, $selectedUserId)
         );
 
-        // Daily report: keep only users who have at least one log that day.
-        if (! $weekly) {
+        if (! $isPeriod) {
             usort($dailyRows, function ($a, $b) {
                 return strcmp($b['last_log'] ?: '', $a['last_log'] ?: '');
             });
-            return compact('start', 'end', 'users', 'dailyRows') + [
-                    'weeklyRows' => [], 'weekDays' => [], 'missingUser' => false,
+            return compact('start', 'end', 'users', 'dailyRows', 'missingUser', 'rangeError') + [
+                    'weeklyRows' => [], 'weekDays' => [], 'rangeColumns' => false,
                 ];
         }
 
+        // Only make the list of calendar days when displaying daily columns/rows.
+        // Range > All Users stays compact even for long date spans.
         $weekDays = [];
-        for ($i = 0; $i < 7; $i++) {
-            $weekDays[] = $start->copy()->addDays($i)->toDateString();
+        if (! $rangeError && ($this->viewMode === 'weekly' || $isIndividual || $rangeColumns)) {
+            for ($day = $start->copy()->startOfDay(); $day->lte($end); $day->addDay()) {
+                $weekDays[] = $day->toDateString();
+            }
         }
 
-        // Show all configured users, including those with no activity during the week.
         $weeklyRows = [];
-        foreach ($users as $userId => $name) {
+        // Individual view with no selection should not reveal an unfiltered report.
+        foreach ($missingUser ? [] : $users as $userId => $name) {
             if ($selectedUserId !== null && $selectedUserId !== (int) $userId) {
                 continue;
             }
             $weeklyRows[$userId] = [
-                'user_id' => $userId,
+                'user_id' => (int) $userId,
                 'user_name' => $name,
-                'days' => array_fill_keys($weekDays, null),
+                'days' => [],
                 'seconds' => 0,
                 'hours' => '00:00',
+                'log_count' => 0,
+                'active_days' => 0,
             ];
         }
 
         foreach ($dailyRows as $row) {
             $id = $row['user_id'];
-            if (isset($weeklyRows[$id])) {
-                $weeklyRows[$id]['days'][$row['date']] = $row;
-                if ($row['first_log'] !== null) {
-                    $weeklyRows[$id]['seconds'] += $row['seconds'];
-                }
+            if (! isset($weeklyRows[$id])) {
+                continue;
+            }
+            $weeklyRows[$id]['days'][$row['date']] = $row;
+            $weeklyRows[$id]['log_count'] += $row['total'];
+            if ($row['first_log'] !== null) {
+                $weeklyRows[$id]['active_days']++;
+                $weeklyRows[$id]['seconds'] += $row['seconds'];
             }
         }
 
@@ -301,7 +353,7 @@ class ActivityList extends Component
         }
         unset($row);
 
-        return compact('start', 'end', 'users', 'dailyRows', 'weeklyRows', 'weekDays', 'missingUser');
+        return compact('start', 'end', 'users', 'dailyRows', 'weeklyRows', 'weekDays', 'missingUser', 'rangeError', 'rangeColumns');
     }
 
     // One button/dropdown, two exports: displayed summary and original detailed events.
@@ -312,6 +364,10 @@ class ActivityList extends Component
         }
 
         $data = $this->reportData();
+        if ($data['rangeError']) {
+            session()->flash('activityExportError', $data['rangeError']);
+            return;
+        }
         if ($data['missingUser']) {
             session()->flash('activityExportError', 'Select a user before exporting.');
             return;
@@ -319,11 +375,12 @@ class ActivityList extends Component
 
         $start = $data['start'];
         $end = $data['end'];
-        $mode = $this->viewMode === 'weekly' ? 'weekly' : 'daily';
+        $mode = in_array($this->viewMode, ['daily', 'weekly', 'range'], true)
+            ? $this->viewMode : 'daily';
         $filename = 'activity-' . $mode . '-' . $type . '-'
                     . $start->format('Ymd') . '-' . $end->format('Ymd') . '.csv';
 
-        $userId = $this->viewMode === 'weekly' && $this->weeklyMode === 'individual'
+        $userId = $this->viewMode !== 'daily' && $this->weeklyMode === 'individual'
             ? (int) $this->selectedUserId : null;
 
         return response()->streamDownload(function () use ($type, $data, $start, $end, $userId) {
@@ -357,7 +414,7 @@ class ActivityList extends Component
                 return;
             }
 
-            if ($this->viewMode !== 'weekly') {
+            if ($this->viewMode === 'daily') {
                 $this->writeCsvRow($out, [
                     'User', 'Logs', 'First Log', 'Last Log', 'Total Hours', 'IP',
                 ]);
@@ -369,11 +426,49 @@ class ActivityList extends Component
                         $row['hours'], $row['ip'],
                     ]);
                 }
+            } elseif ($this->viewMode === 'range' && $this->weeklyMode === 'all' && $data['rangeColumns']) {
+                $headers = ['User'];
+                foreach ($data['weekDays'] as $day) {
+                    $headers[] = Carbon::parse($day)->format('D m/d');
+                }
+                $headers[] = 'Period Total';
+                $this->writeCsvRow($out, $headers);
+                foreach ($data['weeklyRows'] as $row) {
+                    $cells = [$row['user_name']];
+                    foreach ($data['weekDays'] as $day) {
+                        $record = $row['days'][$day] ?? null;
+                        $cells[] = $record ? $record['hours'] : '—';
+                    }
+                    $cells[] = $row['hours'];
+                    $this->writeCsvRow($out, $cells);
+                }
+            } elseif ($this->viewMode === 'range' && $this->weeklyMode === 'all') {
+                $this->writeCsvRow($out, ['User', 'Active Days', 'Logs', 'Total Hours']);
+                foreach ($data['weeklyRows'] as $row) {
+                    $this->writeCsvRow($out, [
+                        $row['user_name'], $row['active_days'],
+                        $row['log_count'], $row['hours'],
+                    ]);
+                }
+            } elseif ($this->viewMode === 'range') {
+                $this->writeCsvRow($out, ['User', 'Date', 'Day', 'Logs', 'Total Hours']);
+                foreach ($data['weeklyRows'] as $row) {
+                    foreach ($data['weekDays'] as $day) {
+                        $record = $row['days'][$day] ?? null;
+                        $this->writeCsvRow($out, [
+                            $row['user_name'], Carbon::parse($day)->format('m/d/Y'),
+                            Carbon::parse($day)->format('l'),
+                            $record ? $record['total'] : 0,
+                            $record ? $record['hours'] : '—',
+                        ]);
+                    }
+                    $this->writeCsvRow($out, [$row['user_name'], '', 'Period Total', $row['log_count'], $row['hours']]);
+                }
             } elseif ($this->weeklyMode === 'individual') {
                 $this->writeCsvRow($out, ['User', 'Date', 'Day', 'Total Hours']);
                 foreach ($data['weeklyRows'] as $row) {
                     foreach ($data['weekDays'] as $day) {
-                        $record = $row['days'][$day];
+                        $record = $row['days'][$day] ?? null;
                         $this->writeCsvRow($out, [
                             $row['user_name'], Carbon::parse($day)->format('m/d/Y'),
                             Carbon::parse($day)->format('l'),
@@ -393,7 +488,7 @@ class ActivityList extends Component
                 foreach ($data['weeklyRows'] as $row) {
                     $cells = [$row['user_name']];
                     foreach ($data['weekDays'] as $day) {
-                        $record = $row['days'][$day];
+                        $record = $row['days'][$day] ?? null;
                         $cells[] = $record ? $record['hours'] : '—';
                     }
                     $cells[] = $row['hours'];

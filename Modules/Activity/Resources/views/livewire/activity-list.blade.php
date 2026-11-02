@@ -3,7 +3,7 @@
       <div class="col-12">
          <div class="card">
             <div class="card-body">
-               {{-- The daily/weekly navigation and export always use the same selection. --}}
+               {{-- The selected daily, weekly or custom period also controls both CSV exports. --}}
                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
                   <div class="btn-group btn-group-sm" role="group" aria-label="Report view">
                      <button type="button"
@@ -16,37 +16,57 @@
                              wire:click="setViewMode('weekly')">
                         Weekly
                      </button>
+                     <button type="button"
+                             class="btn {{ $viewMode === 'range' ? 'btn-primary' : 'btn-outline-primary' }}"
+                             wire:click="setViewMode('range')">
+                        Custom Range
+                     </button>
                   </div>
 
                   <div class="d-flex align-items-center flex-wrap gap-2">
-                     <div class="btn-group" role="group" aria-label="Change period">
-                        <button type="button" class="btn btn-primary btn-sm btn-rounded"
-                                wire:click="changeDate('prev')"
-                                wire:loading.attr="disabled" wire:target="changeDate">
-                           <i class="mdi mdi-chevron-left"></i>
-                        </button>
-                        <button type="button" class="btn btn-primary btn-sm btn-rounded"
-                                wire:click="changeDate('next')"
-                                wire:loading.attr="disabled" wire:target="changeDate"
-                          {{ ! $this->canMoveNext ? 'disabled' : '' }}>
-                           <i class="mdi mdi-chevron-right"></i>
-                        </button>
-                     </div>
+                     @if($viewMode !== 'range')
+                        <div class="btn-group" role="group" aria-label="Change period">
+                           <button type="button" class="btn btn-primary btn-sm btn-rounded"
+                                   wire:click="changeDate('prev')"
+                                   wire:loading.attr="disabled" wire:target="changeDate">
+                              <i class="mdi mdi-chevron-left"></i>
+                           </button>
+                           <button type="button" class="btn btn-primary btn-sm btn-rounded"
+                                   wire:click="changeDate('next')"
+                                   wire:loading.attr="disabled" wire:target="changeDate"
+                             {{ ! $this->canMoveNext ? 'disabled' : '' }}>
+                              <i class="mdi mdi-chevron-right"></i>
+                           </button>
+                        </div>
 
-                     <h5 class="m-0 fw-bold text-nowrap">
-                        @if($viewMode === 'weekly')
-                           {{ $start->format('M d, Y') }} – {{ $end->format('M d, Y') }}
-                        @else
-                           {{ $start->format('F d, Y') }}
-                           <span class="ms-1 text-secondary opacity-50 fw-normal">
+                        <h5 class="m-0 fw-bold text-nowrap">
+                           @if($viewMode === 'weekly')
+                              {{ $start->format('M d, Y') }} – {{ $end->format('M d, Y') }}
+                           @else
+                              {{ $start->format('F d, Y') }}
+                              <span class="ms-1 text-secondary opacity-50 fw-normal">
                                         {{ $start->format('l') }}
                                     </span>
-                        @endif
-                     </h5>
+                           @endif
+                        </h5>
 
-                     <input type="date" class="form-control form-control-sm"
-                            aria-label="Choose date" style="max-width: 155px;"
-                            wire:model.lazy="date" max="{{ now()->toDateString() }}">
+                        <input type="date" class="form-control form-control-sm"
+                               aria-label="Choose date" style="max-width: 155px;"
+                               wire:model.lazy="date" max="{{ now()->toDateString() }}">
+                     @else
+                        <div class="d-flex flex-wrap align-items-end gap-2">
+                           <div>
+                              <label for="activityRangeStart" class="form-label small text-muted mb-1">Start Date</label>
+                              <input id="activityRangeStart" type="date" class="form-control form-control-sm"
+                                     wire:model.lazy="rangeStart" max="{{ now()->toDateString() }}">
+                           </div>
+                           <div>
+                              <label for="activityRangeEnd" class="form-label small text-muted mb-1">End Date</label>
+                              <input id="activityRangeEnd" type="date" class="form-control form-control-sm"
+                                     wire:model.lazy="rangeEnd" max="{{ now()->toDateString() }}">
+                           </div>
+                        </div>
+                     @endif
                   </div>
 
                   <div class="dropdown">
@@ -60,14 +80,14 @@
                         <li>
                            <button type="button" class="dropdown-item"
                                    wire:click="exportCsv('summary')"
-                             {{ $missingUser ? 'disabled' : '' }}>
+                             {{ ($missingUser || $rangeError) ? 'disabled' : '' }}>
                               <i class="bx bx-table align-middle me-2"></i> Summary (CSV)
                            </button>
                         </li>
                         <li>
                            <button type="button" class="dropdown-item"
                                    wire:click="exportCsv('details')"
-                             {{ $missingUser ? 'disabled' : '' }}>
+                             {{ ($missingUser || $rangeError) ? 'disabled' : '' }}>
                               <i class="bx bx-list-ul align-middle me-2"></i> Detailed Logs (CSV)
                            </button>
                         </li>
@@ -81,7 +101,13 @@
                   </div>
                @endif
 
-               @if($viewMode === 'weekly')
+               @if($viewMode === 'range' && $rangeError)
+                  <div class="alert alert-warning py-2" role="alert">
+                     <i class="bx bx-error-circle align-middle me-1"></i> {{ $rangeError }}
+                  </div>
+               @endif
+
+               @if($viewMode !== 'daily')
                   <div class="d-flex flex-wrap align-items-end gap-3 mb-3">
                      <div>
                         <label class="form-label small text-muted mb-1" for="activityWeeklyMode">View</label>
@@ -108,15 +134,17 @@
                @endif
 
                <div wire:loading.flex
-                    wire:target="changeDate,date,setViewMode,weeklyMode,selectedUserId"
+                    wire:target="changeDate,date,setViewMode,weeklyMode,selectedUserId,rangeStart,rangeEnd"
                     class="align-items-center justify-content-center py-4">
                   <div class="spinner-border text-primary" role="status">
                      <span class="visually-hidden">Loading...</span>
                   </div>
                </div>
 
-               <div wire:loading.remove wire:target="changeDate,date,setViewMode,weeklyMode,selectedUserId">
-                  @if($viewMode === 'daily')
+               <div wire:loading.remove wire:target="changeDate,date,setViewMode,weeklyMode,selectedUserId,rangeStart,rangeEnd">
+                  @if($rangeError)
+                     <div class="text-center text-muted py-4">Choose a valid date range to view the report.</div>
+                  @elseif($viewMode === 'daily')
                      <div class="table-responsive">
                         <table class="table table-striped table-bordered table-nowrap align-middle table-hover mb-0">
                            <thead>
@@ -158,6 +186,79 @@
                            </tbody>
                         </table>
                      </div>
+                  @elseif($viewMode === 'range' && $weeklyMode === 'all' && $rangeColumns)
+                     <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-nowrap align-middle table-hover mb-0">
+                           <thead>
+                              <tr>
+                                 <th>User</th>
+                                 @foreach($weekDays as $day)
+                                    <th class="text-center">
+                                       {{ \Carbon\Carbon::parse($day)->format('D') }}<br>
+                                       <small class="fw-normal text-muted">{{ \Carbon\Carbon::parse($day)->format('m/d') }}</small>
+                                    </th>
+                                 @endforeach
+                                 <th class="text-center">Period Total</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              @forelse($weeklyRows as $row)
+                                 <tr wire:key="range-matrix-user-{{ $row['user_id'] }}">
+                                    <td class="fw-semibold">{{ $row['user_name'] }}</td>
+                                    @foreach($weekDays as $day)
+                                       @php $record = $row['days'][$day] ?? null; @endphp
+                                       <td class="text-center">
+                                          @if($record && $record['first_log'] !== null)
+                                             <a href="javascript:void(0);" class="text-primary"
+                                                wire:click="openDayLogs({{ $row['user_id'] }}, '{{ $day }}')">
+                                                {{ $record['hours'] }}
+                                             </a>
+                                          @else
+                                             <span class="text-muted">—</span>
+                                          @endif
+                                       </td>
+                                    @endforeach
+                                    <td class="text-center fw-bold">{{ $row['hours'] }}</td>
+                                 </tr>
+                              @empty
+                                 <tr>
+                                    <td colspan="{{ count($weekDays) + 2 }}" class="text-center text-muted py-4">No users available.</td>
+                                 </tr>
+                              @endforelse
+                           </tbody>
+                        </table>
+                     </div>
+                  @elseif($viewMode === 'range' && $weeklyMode === 'all')
+                     <p class="small text-muted mb-2">Periods longer than 31 days show totals by user. Select Individual User for a daily breakdown.</p>
+                     <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-nowrap align-middle table-hover mb-0">
+                           <thead>
+                              <tr>
+                                 <th>User</th>
+                                 <th class="text-center">Active Days</th>
+                                 <th class="text-center">Logs</th>
+                                 <th class="text-center">Total Hours</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              @forelse($weeklyRows as $row)
+                                 <tr wire:key="range-user-{{ $row['user_id'] }}">
+                                    <td class="fw-semibold">{{ $row['user_name'] }}</td>
+                                    <td class="text-center">{{ $row['active_days'] }}</td>
+                                    <td class="text-center">{{ $row['log_count'] }}</td>
+                                    <td class="text-center fw-bold">{{ $row['hours'] }}</td>
+                                 </tr>
+                              @empty
+                                 <tr>
+                                    <td colspan="4" class="text-center text-muted py-4">No users available.</td>
+                                 </tr>
+                              @endforelse
+                           </tbody>
+                        </table>
+                     </div>
+                     <p class="small text-muted mt-2 mb-0">
+                        Active Days counts days with a valid login at or after 06:00.
+                     </p>
                   @elseif($weeklyMode === 'all')
                      <div class="table-responsive">
                         <table class="table table-striped table-bordered table-nowrap align-middle table-hover mb-0">
@@ -178,7 +279,7 @@
                                  <tr wire:key="weekly-user-{{ $row['user_id'] }}">
                                     <td class="fw-semibold">{{ $row['user_name'] }}</td>
                                     @foreach($weekDays as $day)
-                                       @php $record = $row['days'][$day]; @endphp
+                                       @php $record = $row['days'][$day] ?? null; @endphp
                                        <td class="text-center">
                                           @if($record && $record['first_log'] !== null)
                                              <a href="javascript:void(0);" class="text-primary"
@@ -205,12 +306,12 @@
                   @else
                      @if($missingUser)
                         <div class="text-center text-muted py-4">
-                           Select a user to see their weekly activity.
+                           Select a user to see their {{ $viewMode === 'range' ? 'activity during the selected period' : 'weekly activity' }}.
                         </div>
                      @else
                         @forelse($weeklyRows as $row)
                            <div class="rounded border bg-light p-3 text-center mb-3">
-                              <div class="text-muted small">{{ $row['user_name'] }} · Weekly Total</div>
+                              <div class="text-muted small">{{ $row['user_name'] }} · {{ $viewMode === 'range' ? 'Period Total' : 'Weekly Total' }}</div>
                               <h3 class="fw-bold mb-0">{{ $row['hours'] }}</h3>
                            </div>
                            <div class="table-responsive">
@@ -219,15 +320,21 @@
                                     <tr>
                                        <th>Day</th>
                                        <th>Date</th>
+                                       @if($viewMode === 'range')
+                                          <th class="text-center">Logs</th>
+                                       @endif
                                        <th class="text-end">Total Hours</th>
                                     </tr>
                                  </thead>
                                  <tbody>
                                     @foreach($weekDays as $day)
-                                       @php $record = $row['days'][$day]; @endphp
+                                       @php $record = $row['days'][$day] ?? null; @endphp
                                        <tr wire:key="individual-day-{{ $row['user_id'] }}-{{ $day }}">
                                           <td>{{ \Carbon\Carbon::parse($day)->format('l') }}</td>
                                           <td>{{ \Carbon\Carbon::parse($day)->format('m/d/Y') }}</td>
+                                          @if($viewMode === 'range')
+                                             <td class="text-center">{{ $record ? $record['total'] : 0 }}</td>
+                                          @endif
                                           <td class="text-end fw-semibold">
                                              @if($record && $record['first_log'] !== null)
                                                 <a href="javascript:void(0);" class="text-primary"
@@ -241,7 +348,10 @@
                                        </tr>
                                     @endforeach
                                     <tr>
-                                       <td colspan="2" class="fw-bold">Weekly Total</td>
+                                       <td colspan="2" class="fw-bold">{{ $viewMode === 'range' ? 'Period Total' : 'Weekly Total' }}</td>
+                                       @if($viewMode === 'range')
+                                          <td class="text-center fw-bold">{{ $row['log_count'] }}</td>
+                                       @endif
                                        <td class="text-end fw-bold">{{ $row['hours'] }}</td>
                                     </tr>
                                  </tbody>
