@@ -3,395 +3,431 @@
 namespace Modules\Activity\Http\Livewire;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use Livewire\WithPagination;
 use Modules\Activity\Entities\ActivityLog;
 
 class ActivityList extends Component
 {
-    use WithPagination;
+    public $date;
+    public $viewMode = 'daily';        // daily | weekly
+    public $weeklyMode = 'all';        // all | individual
+    public $selectedUserId = '';      // Only used for the individual weekly view
 
-    protected $paginationTheme = 'bootstrap';
-
-    public $perPage = 100;
-
-    // Preserve the same users included in the original daily report.
-    // Entries before 06:00 are not considered for any hour calculation.
-    private const HOURS_START = '06:00:00';
-
-    // An interval strictly greater than one hour counts as idle time in full.
-    private const MAX_LOG_GAP_SECONDS = 3600;
-
-    private const TRACKED_USER_IDS = [
+    private const USER_IDS = [
         10, 25, 4, 56, 54, 118, 120, 104, 148, 145, 105,
-        13, 43, 102, 151, 171, 173, 174, 178, 181, 182
+        13, 43, 102, 151, 171, 173, 174, 178, 181, 182,
     ];
 
-    public $date;
-    public $weekDate;
-    public $mode = 'daily'; // 'daily' or 'weekly'
-    public $weeklyView = 'all'; // 'all' or 'individual'
-    public $selectedUserId = '';
+    // Hours start at 06:00:00. Gaps of more than 60 minutes are not counted.
+    private const START_TIME = '06:00:00';
+    private const MAX_GAP_SECONDS = 3600;
 
     public function mount()
     {
         $this->date = Carbon::today()->toDateString();
-        $this->weekDate = $this->date;
     }
 
-    public function setMode($mode)
+    public function updatedDate($value)
+    {
+        if (! $this->isValidDate($value)) {
+            $this->date = Carbon::today()->toDateString();
+        }
+    }
+
+    public function setViewMode($mode)
     {
         if (in_array($mode, ['daily', 'weekly'], true)) {
-            $this->mode = $mode;
+            $this->viewMode = $mode;
         }
     }
 
-    public function setWeeklyView($view)
+    public function updatedWeeklyMode($mode)
     {
-        if (in_array($view, ['all', 'individual'], true)) {
-            $this->weeklyView = $view;
+        if (! in_array($mode, ['all', 'individual'], true)) {
+            $this->weeklyMode = 'all';
         }
-    }
-
-    // Backwards-compatible wrappers kept for existing Livewire consumers.
-    public function previousDay()
-    {
-        $this->changeDate('prev');
-    }
-
-    public function nextDay()
-    {
-        $this->changeDate('next');
     }
 
     public function changeDate($direction)
     {
-        if (!in_array($direction, ['prev', 'next'], true)) {
+        if (! in_array($direction, ['prev', 'next'], true)) {
             return;
         }
 
-        $selected = Carbon::parse($this->date);
+        $date = $this->selectedDate();
+        $days = $this->viewMode === 'weekly' ? 7 : 1;
 
-        if ($direction === 'next' && $selected->isToday()) {
-            return;
-        }
-
-        $this->date = $selected
-            ->addDays($direction === 'next' ? 1 : -1)
-            ->toDateString();
-        $this->resetPage();
-    }
-
-    public function changeWeek($direction)
-    {
-        if (!in_array($direction, ['prev', 'next'], true)) {
-            return;
-        }
-
-        $start = Carbon::parse($this->weekDate)->startOfWeek(Carbon::MONDAY);
-
-        if ($direction === 'next' && $start->greaterThanOrEqualTo(Carbon::today()->startOfWeek(Carbon::MONDAY))) {
-            return;
-        }
-
-        $this->weekDate = $start
-            ->addWeeks($direction === 'next' ? 1 : -1)
-            ->toDateString();
-    }
-
-    public function updatedWeekDate($value)
-    {
-        // The date input is only a week selector; cap future dates at today.
-        try {
-            $selected = Carbon::createFromFormat('!Y-m-d', $value);
-            if (!$selected || $selected->format('Y-m-d') !== $value) {
-                throw new \InvalidArgumentException('Invalid date');
+        if ($direction === 'prev') {
+            $date->subDays($days);
+        } else {
+            $date->addDays($days);
+            if ($date->isFuture()) {
+                $date = Carbon::today();
             }
-            $this->weekDate = $selected->greaterThan(Carbon::today())
-                ? Carbon::today()->toDateString()
-                : $selected->toDateString();
-        } catch (\Exception $e) {
-            $this->weekDate = Carbon::today()->toDateString();
         }
+
+        $this->date = $date->toDateString();
     }
 
     public function getIsTodayProperty()
     {
-        return $this->date === Carbon::today()->toDateString();
+        return $this->selectedDate()->isSameDay(Carbon::today());
     }
 
-    public function getIsCurrentWeekProperty()
+    public function getCanMoveNextProperty()
     {
-        return Carbon::parse($this->weekDate)
-            ->startOfWeek(Carbon::MONDAY)
-            ->greaterThanOrEqualTo(Carbon::today()->startOfWeek(Carbon::MONDAY));
+        if ($this->viewMode === 'weekly') {
+            return $this->selectedDate()->startOfWeek(Carbon::MONDAY)
+                ->lt(Carbon::today()->startOfWeek(Carbon::MONDAY));
+        }
+
+        return $this->selectedDate()->lt(Carbon::today());
     }
 
-    /**
-     * Opens the existing daily log modal, including from a weekly table cell.
-     * Resolve the user name on the server so it never needs HTML/JS escaping.
-     */
-    public function showUserLogs($userId, $date)
+    public function openDayLogs($userId, $day)
     {
         $userId = (int) $userId;
-
-        if (!in_array($userId, self::TRACKED_USER_IDS, true)) {
+        if (! in_array($userId, self::USER_IDS, true) || ! $this->isValidDate($day)) {
             return;
+        }
+
+        [$start, $end] = $this->dateRange();
+        $target = Carbon::parse($day);
+        if ($target->lt($start) || $target->gt($end)) {
+            return;
+        }
+
+        $log = ActivityLog::query()->with('user')
+            ->where('user_id', $userId)->first();
+        $name = $log && $log->user ? $log->user->name : 'User #' . $userId;
+
+        // Keep the existing ActivityUser modal unchanged.
+        $this->emit('openUserLogs', $userId, $name, $target->toDateString());
+    }
+
+    private function isValidDate($date)
+    {
+        if (! is_string($date) || ! preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            return false;
         }
 
         try {
-            $day = Carbon::createFromFormat('!Y-m-d', $date);
-            if (!$day || $day->format('Y-m-d') !== $date) {
-                return;
-            }
-        } catch (\Exception $e) {
-            return;
+            return Carbon::createFromFormat('!Y-m-d', $date)->format('Y-m-d') === $date;
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
+
+    private function selectedDate()
+    {
+        return Carbon::parse($this->isValidDate($this->date)
+            ? $this->date : Carbon::today()->toDateString())->startOfDay();
+    }
+
+    private function dateRange()
+    {
+        $date = $this->selectedDate();
+        if ($this->viewMode === 'weekly') {
+            return [
+                $date->copy()->startOfWeek(Carbon::MONDAY)->startOfDay(),
+                $date->copy()->endOfWeek(Carbon::SUNDAY)->endOfDay(),
+            ];
         }
 
-        $firstActivity = ActivityLog::query()
-            ->where('user_id', $userId)
-            ->with('user')
-            ->first();
-
-        $name = optional(optional($firstActivity)->user)->name ?? 'N/A';
-
-        $this->emit('openUserLogs', $userId, $name, $date);
+        return [$date->copy()->startOfDay(), $date->copy()->endOfDay()];
     }
 
-    private function formatMinutes($minutes)
+    private function listUsers()
     {
-        $minutes = max(0, (int) $minutes);
-        return sprintf('%02d:%02d', intdiv($minutes, 60), $minutes % 60);
+        // User model namespace is not assumed: use the existing ActivityLog->user relation.
+        return ActivityLog::query()
+            ->select('user_id')->distinct()->with('user')
+            ->whereIn('user_id', self::USER_IDS)->get()
+            ->mapWithKeys(function ($log) {
+                return [(int) $log->user_id => optional($log->user)->name
+                    ?: 'User #' . $log->user_id];
+            })->sort(SORT_NATURAL | SORT_FLAG_CASE)->all();
     }
 
-    /**
-     * Calculate effective logged hours per user and calendar date.
-     *
-     * Business rules:
-     * - Only events occurring from 06:00:00 through 23:59:59 are eligible.
-     * - The clock begins with the first `login` event at/after 06:00.
-     * - For each pair of consecutive events after that login, count the
-     *   elapsed seconds ONLY if the gap is <= 60 minutes. If the gap is
-     *   longer than 60 minutes, exclude the ENTIRE gap.
-     * - Never carry hours or a previous event over to the next calendar day.
-     * - Return null if no qualifying login was found on that date.
-     *
-     * Read events as a cursor to avoid loading an entire week's raw event
-     * records into memory. Use the same calculation for daily and weekly.
-     *
-     * @return array<int, array<string, int|null>>
-     */
-    private function calculateDailyMinutes(Carbon $start, Carbon $end): array
+    private function queryLogs(Carbon $start, Carbon $end, $selectedUserId = null)
     {
-        $activityByDay = [];
-
-        $records = ActivityLog::query()
-            ->select(['user_id', 'event', 'created_at'])
-            ->whereIn('user_id', self::TRACKED_USER_IDS)
+        $query = ActivityLog::query()->with('user')
+            ->whereIn('user_id', self::USER_IDS)
             ->whereBetween('created_at', [
-                $start->copy()->startOfDay(),
-                $end->copy()->endOfDay(),
-            ])
-            ->whereTime('created_at', '>=', self::HOURS_START)
-            ->orderBy('user_id')
-            ->orderBy('created_at')
-            ->cursor();
+                $start->toDateTimeString(), $end->toDateTimeString(),
+            ]);
 
-        foreach ($records as $record) {
-            $userId = (int) $record->user_id;
-            $timestamp = Carbon::parse($record->created_at);
-            $date = $timestamp->toDateString();
+        if ($selectedUserId !== null) {
+            $query->where('user_id', (int) $selectedUserId);
+        }
 
-            if (!isset($activityByDay[$userId][$date])) {
-                $activityByDay[$userId][$date] = [
-                    'previous_at' => null,
+        return $query->orderBy('user_id')->orderBy('created_at')->get();
+    }
+
+    // This method is the ONLY source of the daily hours used by the UI and export.
+    private function summarizeLogs($logs)
+    {
+        $days = [];
+
+        foreach ($logs as $log) {
+            $userId = (int) $log->user_id;
+            $time = Carbon::parse($log->created_at);
+            $dayKey = $time->toDateString();
+            $key = $userId . ':' . $dayKey;
+
+            if (! isset($days[$key])) {
+                $days[$key] = [
+                    'user_id' => $userId,
+                    'user_name' => optional($log->user)->name ?: 'User #' . $userId,
+                    'date' => $dayKey,
+                    'total' => 0,
+                    'first_log' => null,
+                    'last_log' => null,
+                    'ip' => null,
                     'seconds' => 0,
+                    'previous_at' => null,
                 ];
             }
 
-            $daily = &$activityByDay[$userId][$date];
+            $row = &$days[$key];
+            $row['total']++;
+            $row['ip'] = $log->ip ?: $row['ip'];
 
-            // A user must have a qualifying login to start the daily clock.
-            if ($daily['previous_at'] === null) {
-                if (strcasecmp((string) $record->event, 'login') === 0) {
-                    $daily['previous_at'] = $timestamp;
-                }
-                unset($daily);
+            // Raw records before 06:00 remain accessible in ActivityUser (audit).
+            if ($time->format('H:i:s') < self::START_TIME) {
+                unset($row);
                 continue;
             }
 
-            $gapSeconds = (int) $daily['previous_at']->diffInSeconds($timestamp);
-
-            // Do not just subtract the excess: exclude the whole idle gap.
-            if ($gapSeconds <= self::MAX_LOG_GAP_SECONDS) {
-                $daily['seconds'] += $gapSeconds;
+            // A day only starts when a real login event occurs at/after 06:00.
+            if ($row['first_log'] === null) {
+                if ($log->event === 'login') {
+                    $row['first_log'] = $time->toDateTimeString();
+                    $row['last_log'] = $time->toDateTimeString();
+                    $row['previous_at'] = $time;
+                }
+                unset($row);
+                continue;
             }
 
-            // Resume counting from this event for subsequent short gaps.
-            $daily['previous_at'] = $timestamp;
-            unset($daily);
+            $elapsed = $row['previous_at']->diffInSeconds($time);
+            if ($elapsed <= self::MAX_GAP_SECONDS) {
+                $row['seconds'] += $elapsed;
+            }
+
+            // Resume counting after each log even if the previous gap was ignored.
+            $row['last_log'] = $time->toDateTimeString();
+            $row['previous_at'] = $time;
+            unset($row);
         }
 
-        $minutesByDay = [];
-        foreach ($activityByDay as $userId => $dates) {
-            foreach ($dates as $date => $daily) {
-                $minutesByDay[$userId][$date] = $daily['previous_at'] === null
-                    ? null
-                    : intdiv($daily['seconds'], 60);
+        foreach ($days as &$row) {
+            unset($row['previous_at']);
+            $row['hours'] = $row['first_log'] !== null
+                ? $this->formatHours($row['seconds']) : 'N/A';
+        }
+        unset($row);
+
+        return array_values($days);
+    }
+
+    private function formatHours($seconds)
+    {
+        $minutes = intdiv((int) $seconds, 60);
+        return sprintf('%02d:%02d', intdiv($minutes, 60), $minutes % 60);
+    }
+
+    private function reportData()
+    {
+        [$start, $end] = $this->dateRange();
+        $users = $this->listUsers();
+        $weekly = $this->viewMode === 'weekly';
+
+        $selectedUserId = $weekly && $this->weeklyMode === 'individual'
+                          && ctype_digit((string) $this->selectedUserId)
+                          && isset($users[(int) $this->selectedUserId])
+            ? (int) $this->selectedUserId : null;
+
+        // If no user was chosen, individual view will display a selection prompt.
+        $missingUser = $weekly && $this->weeklyMode === 'individual'
+                       && $selectedUserId === null;
+
+        $dailyRows = $missingUser ? [] : $this->summarizeLogs(
+            $this->queryLogs($start, $end, $selectedUserId)
+        );
+
+        // Daily report: keep only users who have at least one log that day.
+        if (! $weekly) {
+            usort($dailyRows, function ($a, $b) {
+                return strcmp($b['last_log'] ?: '', $a['last_log'] ?: '');
+            });
+            return compact('start', 'end', 'users', 'dailyRows') + [
+                    'weeklyRows' => [], 'weekDays' => [], 'missingUser' => false,
+                ];
+        }
+
+        $weekDays = [];
+        for ($i = 0; $i < 7; $i++) {
+            $weekDays[] = $start->copy()->addDays($i)->toDateString();
+        }
+
+        // Show all configured users, including those with no activity during the week.
+        $weeklyRows = [];
+        foreach ($users as $userId => $name) {
+            if ($selectedUserId !== null && $selectedUserId !== (int) $userId) {
+                continue;
+            }
+            $weeklyRows[$userId] = [
+                'user_id' => $userId,
+                'user_name' => $name,
+                'days' => array_fill_keys($weekDays, null),
+                'seconds' => 0,
+                'hours' => '00:00',
+            ];
+        }
+
+        foreach ($dailyRows as $row) {
+            $id = $row['user_id'];
+            if (isset($weeklyRows[$id])) {
+                $weeklyRows[$id]['days'][$row['date']] = $row;
+                if ($row['first_log'] !== null) {
+                    $weeklyRows[$id]['seconds'] += $row['seconds'];
+                }
             }
         }
 
-        return $minutesByDay;
+        foreach ($weeklyRows as &$row) {
+            $row['hours'] = $this->formatHours($row['seconds']);
+        }
+        unset($row);
+
+        return compact('start', 'end', 'users', 'dailyRows', 'weeklyRows', 'weekDays', 'missingUser');
+    }
+
+    // One button/dropdown, two exports: displayed summary and original detailed events.
+    public function exportCsv($type = 'summary')
+    {
+        if (! in_array($type, ['summary', 'details'], true)) {
+            return;
+        }
+
+        $data = $this->reportData();
+        if ($data['missingUser']) {
+            session()->flash('activityExportError', 'Select a user before exporting.');
+            return;
+        }
+
+        $start = $data['start'];
+        $end = $data['end'];
+        $mode = $this->viewMode === 'weekly' ? 'weekly' : 'daily';
+        $filename = 'activity-' . $mode . '-' . $type . '-'
+                    . $start->format('Ymd') . '-' . $end->format('Ymd') . '.csv';
+
+        $userId = $this->viewMode === 'weekly' && $this->weeklyMode === 'individual'
+            ? (int) $this->selectedUserId : null;
+
+        return response()->streamDownload(function () use ($type, $data, $start, $end, $userId) {
+            $out = fopen('php://output', 'w');
+            fwrite($out, "\xEF\xBB\xBF"); // Excel UTF-8 BOM
+            fwrite($out, "sep=;\r\n");   // Recognized by Excel as the CSV delimiter
+
+            if ($type === 'details') {
+                $this->writeCsvRow($out, ['User', 'Event', 'URL', 'IP', 'Date']);
+
+                // Chunk rather than load the entire history into memory.
+                $query = ActivityLog::query()->with('user')
+                    ->whereIn('user_id', self::USER_IDS)
+                    ->whereBetween('created_at', [
+                        $start->toDateTimeString(), $end->toDateTimeString(),
+                    ]);
+                if ($userId !== null) {
+                    $query->where('user_id', $userId);
+                }
+                $query->orderBy('created_at')->orderBy('id')
+                    ->chunk(500, function ($logs) use ($out) {
+                        foreach ($logs as $log) {
+                            $this->writeCsvRow($out, [
+                                optional($log->user)->name ?: 'User #' . $log->user_id,
+                                $log->event, $log->url, $log->ip,
+                                Carbon::parse($log->created_at)->format('m/d/Y H:i:s'),
+                            ]);
+                        }
+                    });
+                fclose($out);
+                return;
+            }
+
+            if ($this->viewMode !== 'weekly') {
+                $this->writeCsvRow($out, [
+                    'User', 'Logs', 'First Log', 'Last Log', 'Total Hours', 'IP',
+                ]);
+                foreach ($data['dailyRows'] as $row) {
+                    $this->writeCsvRow($out, [
+                        $row['user_name'], $row['total'],
+                        $this->formatDateTime($row['first_log']),
+                        $this->formatDateTime($row['last_log']),
+                        $row['hours'], $row['ip'],
+                    ]);
+                }
+            } elseif ($this->weeklyMode === 'individual') {
+                $this->writeCsvRow($out, ['User', 'Date', 'Day', 'Total Hours']);
+                foreach ($data['weeklyRows'] as $row) {
+                    foreach ($data['weekDays'] as $day) {
+                        $record = $row['days'][$day];
+                        $this->writeCsvRow($out, [
+                            $row['user_name'], Carbon::parse($day)->format('m/d/Y'),
+                            Carbon::parse($day)->format('l'),
+                            $record ? $record['hours'] : '—',
+                        ]);
+                    }
+                    $this->writeCsvRow($out, [$row['user_name'], '', 'Weekly Total', $row['hours']]);
+                }
+            } else {
+                $headers = ['User'];
+                foreach ($data['weekDays'] as $day) {
+                    $headers[] = Carbon::parse($day)->format('D m/d');
+                }
+                $headers[] = 'Weekly Total';
+                $this->writeCsvRow($out, $headers);
+
+                foreach ($data['weeklyRows'] as $row) {
+                    $cells = [$row['user_name']];
+                    foreach ($data['weekDays'] as $day) {
+                        $record = $row['days'][$day];
+                        $cells[] = $record ? $record['hours'] : '—';
+                    }
+                    $cells[] = $row['hours'];
+                    $this->writeCsvRow($out, $cells);
+                }
+            }
+
+            fclose($out);
+        }, $filename, ['Content-Type' => 'text/csv; charset=UTF-8']);
+    }
+
+    private function formatDateTime($date)
+    {
+        return $date ? Carbon::parse($date)->format('m/d/Y H:i:s') : 'N/A';
+    }
+
+    private function writeCsvRow($stream, $cells)
+    {
+        // Prevent Excel/Sheets from evaluating untrusted strings as formulas.
+        $cells = array_map(function ($value) {
+            if ($value === null) {
+                return '';
+            }
+            $value = (string) $value;
+            if (preg_match('/^[\s]*[=+@\-]/u', $value)) {
+                return "'" . $value;
+            }
+            return $value;
+        }, $cells);
+        fputcsv($stream, $cells, ';');
     }
 
     public function render()
     {
-        $logs = collect();
-        $weekDays = [];
-        $weeklyRows = collect();
-        $userOptions = collect();
-        $selectedWeeklyRow = null;
-
-        $weekStart = Carbon::parse($this->weekDate)->startOfWeek(Carbon::MONDAY);
-        $weekEnd = $weekStart->copy()->endOfWeek(Carbon::SUNDAY);
-
-        if ($this->mode === 'daily') {
-            // Preserve the raw daily log count, while constraining first login and calculated hours.
-            $logs = ActivityLog::query()
-                ->select([
-                    'user_id',
-                    DB::raw('COUNT(*) as total'),
-                    DB::raw("MIN(CASE WHEN event = 'login' AND TIME(created_at) >= '" . self::HOURS_START . "' THEN created_at END) as first_log"),
-                    DB::raw('MAX(created_at) as last_log'),
-                    DB::raw('MAX(ip) as ip'),
-                ])
-                ->whereIn('user_id', self::TRACKED_USER_IDS)
-                ->whereDate('created_at', $this->date)
-                ->groupBy('user_id')
-                ->with('user')
-                ->orderBy('last_log', 'desc')
-                ->get();
-
-            $dailyMinutes = $this->calculateDailyMinutes(
-                Carbon::parse($this->date),
-                Carbon::parse($this->date)
-            );
-
-            foreach ($logs as $log) {
-                $log->worked_minutes = $dailyMinutes[(int) $log->user_id][$this->date] ?? null;
-            }
-        } else {
-            // Every tracked user with at least one historical activity record
-            // remains available in the dropdown, even when absent this week.
-            $userOptions = ActivityLog::query()
-                ->select('user_id')
-                ->whereIn('user_id', self::TRACKED_USER_IDS)
-                ->groupBy('user_id')
-                ->with('user')
-                ->get()
-                ->map(function ($activity) {
-                    return [
-                        'id' => (int) $activity->user_id,
-                        'name' => optional($activity->user)->name ?? 'User #' . $activity->user_id,
-                    ];
-                })
-                ->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
-                ->values();
-
-            for ($dayOffset = 0; $dayOffset < 7; $dayOffset++) {
-                $day = $weekStart->copy()->addDays($dayOffset);
-                $weekDays[] = [
-                    'date' => $day->toDateString(),
-                    'label' => $day->format('D'),
-                    'shortDate' => $day->format('m/d'),
-                    'fullDate' => $day->format('m/d/Y'),
-                ];
-            }
-
-            // Preserve raw log counts in the weekly views. The hours calculation
-            // below ignores pre-06:00 records and long inactive intervals.
-            $dailyLogs = ActivityLog::query()
-                ->select([
-                    'user_id',
-                    DB::raw('DATE(created_at) as log_date'),
-                    DB::raw('COUNT(*) as log_count'),
-                ])
-                ->whereIn('user_id', self::TRACKED_USER_IDS)
-                ->whereBetween('created_at', [
-                    $weekStart->copy()->startOfDay(),
-                    $weekEnd->copy()->endOfDay(),
-                ])
-                ->groupBy('user_id', DB::raw('DATE(created_at)'))
-                ->get();
-
-            $dailyMinutes = $this->calculateDailyMinutes($weekStart, $weekEnd);
-            $dailyLookup = [];
-
-            foreach ($dailyLogs as $dailyLog) {
-                $userId = (int) $dailyLog->user_id;
-                $logDate = $dailyLog->log_date;
-
-                $dailyLookup[$userId][$logDate] = [
-                    'minutes' => $dailyMinutes[$userId][$logDate] ?? null,
-                    'logCount' => (int) $dailyLog->log_count,
-                ];
-            }
-
-            $weeklyRows = $userOptions->map(function ($user) use ($weekDays, $dailyLookup) {
-                $days = [];
-                $totalMinutes = 0;
-                $daysWithLogs = 0;
-                $incompleteDays = 0;
-
-                foreach ($weekDays as $weekDay) {
-                    $data = $dailyLookup[$user['id']][$weekDay['date']] ?? null;
-                    $minutes = $data['minutes'] ?? null;
-                    $hasLogs = $data !== null;
-
-                    if ($hasLogs) {
-                        $daysWithLogs++;
-                        if ($minutes === null) {
-                            $incompleteDays++;
-                        } else {
-                            $totalMinutes += $minutes;
-                        }
-                    }
-
-                    $days[] = [
-                        'date' => $weekDay['date'],
-                        'label' => $weekDay['label'],
-                        'fullDate' => $weekDay['fullDate'],
-                        'hasLogs' => $hasLogs,
-                        'logCount' => $data['logCount'] ?? 0,
-                        'hours' => $minutes === null
-                            ? ($hasLogs ? 'N/A' : '—')
-                            : $this->formatMinutes($minutes),
-                    ];
-                }
-
-                return [
-                    'id' => $user['id'],
-                    'name' => $user['name'],
-                    'days' => $days,
-                    'daysWithLogs' => $daysWithLogs,
-                    'incompleteDays' => $incompleteDays,
-                    'totalMinutes' => $totalMinutes,
-                    'totalHours' => $this->formatMinutes($totalMinutes),
-                ];
-            });
-
-            $selectedWeeklyRow = $weeklyRows->firstWhere('id', (int) $this->selectedUserId);
-        }
-
-        return view('activity::livewire.activity-list', [
-            'logs' => $logs,
-            'weekStart' => $weekStart,
-            'weekEnd' => $weekEnd,
-            'weekDays' => $weekDays,
-            'weeklyRows' => $weeklyRows,
-            'userOptions' => $userOptions,
-            'selectedWeeklyRow' => $selectedWeeklyRow,
-        ]);
+        return view('activity::livewire.activity-list', $this->reportData());
     }
 }
