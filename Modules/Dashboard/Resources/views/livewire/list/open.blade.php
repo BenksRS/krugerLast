@@ -188,7 +188,15 @@
                                             </td>
                                         @endif
                                         @if(in_array('Email', $selectedColumns))
-                                            <td><p>{{$row->email ?? 'NO E-MAIL ADDRESS FOUND'}}</p></td>
+                                            <td>
+                                                <p>
+                                                    @if($row->email)
+                                                        <a href="mailto:{{$row->email}}">{{$row->email}}</a>
+                                                    @else
+                                                        <span class="text-muted">NO E-MAIL ADDRESS FOUND</span>
+                                                    @endif
+                                                </p>
+                                            </td>
                                         @endif
 
                                         @if(in_array('Created by', $selectedColumns))
