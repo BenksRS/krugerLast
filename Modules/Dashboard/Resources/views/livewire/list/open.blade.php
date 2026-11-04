@@ -189,13 +189,11 @@
                                         @endif
                                         @if(in_array('Email', $selectedColumns))
                                             <td>
-                                                <p>
-                                                    @if($row->email)
-                                                        <a href="mailto:{{$row->email}}">{{$row->email}}</a>
-                                                    @else
-                                                        <span class="text-muted">NO E-MAIL ADDRESS FOUND</span>
-                                                    @endif
-                                                </p>
+                                                @if($row->email)
+                                                    <a href="mailto:{{ $row->email }}">{{ $row->email }}</a>
+                                                @else
+                                                    <span class="text-muted">NO E-MAIL ADDRESS FOUND</span>
+                                                @endif
                                             </td>
                                         @endif
 
