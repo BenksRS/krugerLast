@@ -14,7 +14,7 @@ class Open extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $searchAssignment;
-    public $columns = ['Name','Job Type','Schedule','Status','Referral','Address','Street','City','State', 'Phone', 'Created by', 'Created At', 'Update By','Update At'];
+    public $columns = ['Name','Job Type','Schedule','Status','Referral','Address','Street','City','State', 'Phone', 'Created by', 'Created At', 'Update By','Update At', 'Email'];
     public $selectedColumns = [];
     public $selectedRows = 100;
 
