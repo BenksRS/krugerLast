@@ -85,7 +85,7 @@
                                         <th>State</th>
                                     @endif
                                     @if(in_array('Phone', $selectedColumns))
-                                        <th>Phone</th>
+                                        <th width="110px">Phone</th>
                                     @endif
                                     @if(in_array('Email', $selectedColumns))
                                         <th>E-mail</th>
@@ -97,7 +97,7 @@
                                         <th>Created by</th>
                                     @endif
                                     @if(in_array('Created At', $selectedColumns))
-                                        <th>Created At</th>
+                                        <th width="110px">Created At</th>
                                     @endif
                                 </tr>
 
