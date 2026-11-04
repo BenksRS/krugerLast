@@ -183,7 +183,7 @@
                                         @if(in_array('Phone', $selectedColumns))
                                             <td>
                                                 @foreach($row->phones as $phone)
-                                                    <a href="#"><small>{{$phone->phone}}</small></a>
+                                                    <a href="#" class="d-block"><small>{{$phone->phone}}</small></a>
                                                 @endforeach
                                             </td>
                                         @endif
