@@ -99,6 +99,7 @@
                                     @if(in_array('Created At', $selectedColumns))
                                         <th width="110px">Created At</th>
                                     @endif
+                                        <th></th>
                                 </tr>
 
                             </thead>
@@ -115,7 +116,7 @@
                                 </tr>
                                 @foreach($list as $row)
 
-                                    <tr>
+                                    <tr id="job-row-{{ $row->id }}">
                                         @if(in_array('Name', $selectedColumns))
                                             <td><a href="{{url('assignments/show/'.$row->id)}}">{{$row->last_name}}, {{$row->first_name}} #{{$row->id}}
 
@@ -204,6 +205,9 @@
                                             <td><p class="font-size-14" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Dol Date">
                                                     <i class="bx bx-calendar me-1 text-muted"></i>{{$row->created_date}}</p></td>
                                         @endif
+                                            <td class="text-center">
+                                                <x-button-copy-job :target="'#job-row-' . $row->id" />
+                                            </td>
                                     </tr>
                                 @endforeach
                             </tbody>
