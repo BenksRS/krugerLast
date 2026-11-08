@@ -4,13 +4,16 @@ namespace Modules\Assignments\Traits;
 
 use Modules\Assignments\Entities\Assignment;
 use Modules\Assignments\Entities\AssignmentsRules;
+use Modules\Assignments\Entities\AssignmentsStatusPivot;
 
 trait HandlesAssignmentRules {
 
     public function processAssignmentRules($id)
     {
         $assignment = Assignment::find($id);
-        $rules = $this->getAssignmentRules($assignment);
+        $rules      = $this->getAssignmentRules($assignment);
+
+        $this->addRuleStatus($assignment);
 
         if (empty($rules)) {
             return;
@@ -48,7 +51,7 @@ trait HandlesAssignmentRules {
             ->where(function($query) use ($assignment) {
                 $referral = $assignment->referral_id ?? 0;
                 $carrier  = $assignment->carrier_id ?? 0;
-                
+
                 $query
                     ->where(function($q) use ($referral, $carrier) {
                         $q->where('referral_id', $referral)->where('carrier_id', $carrier);
@@ -78,6 +81,36 @@ trait HandlesAssignmentRules {
             'created_by'   => 73,
             'notable_type' => Assignment::class,
         ]);
+    }
+
+    protected function addRuleStatus($assignment)
+    {
+        $status   = $assignment->status_id;
+        $referral = $assignment->referral_id ?? 0;
+        $carrier  = $assignment->carrier_id ?? 0;
+
+        if ($status == 1 && ($referral == 66 || $carrier == 66)) {
+
+            $update_status = [
+                'status_id'  => 12,
+                'updated_by' => 73,
+            ];
+            $assignment->update($update_status);
+
+            $assignment->notes()->create([
+                'text'         => "### CHANGE STATUS TO: pending ###",
+                'notable_id'   => $assignment->id,
+                'created_by'   => 73,
+                'type'         => 'assignment',
+                'notable_type' => Assignment::class,
+            ]);
+
+            AssignmentsStatusPivot::create([
+                'assignment_id'        => $assignment->id,
+                'assignment_status_id' => 12,
+                'created_by'           => 73,
+            ]);
+        }
     }
 
 }

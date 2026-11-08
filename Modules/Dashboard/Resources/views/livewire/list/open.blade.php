@@ -99,7 +99,7 @@
                                     @if(in_array('Created At', $selectedColumns))
                                         <th width="110px">Created At</th>
                                     @endif
-                                        <th></th>
+                                        <th>Copy</th>
                                 </tr>
 
                             </thead>
