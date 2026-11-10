@@ -374,9 +374,10 @@ class HeaderScheduling extends Component
               case 'docusign_sent':
               case 'next_week':
               case 'not_enough_time':
-		          $this->showSched = true;
-	            $this->showChangeTech = true;
-	            $this->showChangeSched = true;
+              case 'nadal_problem':
+		            $this->showSched = true;
+	                $this->showChangeTech = true;
+	                $this->showChangeSched = true;
 		          break;
             default:
                 break;
