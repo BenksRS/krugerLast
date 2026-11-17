@@ -189,6 +189,7 @@
             @livewire('dashboard::list.ready-to-install-tarp', key('dash_list_ready_to_install_tarp'))
             @break
         @case('gus_problem')
+	    @case('duda_problem')
             @livewire('dashboard::list.gus-problem', key('dash_list_gus_problem'))
             @break
         @default
