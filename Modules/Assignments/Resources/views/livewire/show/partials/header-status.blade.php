@@ -277,7 +277,7 @@
                 <button class="dropdown-item" wire:click="changeStatusMissingAssignment(44)" type="button">MISSING ASSIGNMENT</button>
             </li>
             <li>
-                <button class="dropdown-item" wire:click="changeStatusScheduling(67)" type="button">GUS PROBLEM</button>
+                <button class="dropdown-item" wire:click="changeStatusScheduling(67)" type="button">DUDA PROBLEM</button>
             </li>
             <li>
                 <button class="dropdown-item" wire:click="changeStatusScheduling(45)" type="button">NADAL PROBLEM</button>
