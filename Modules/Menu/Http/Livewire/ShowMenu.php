@@ -23,33 +23,25 @@ class ShowMenu extends Component {
 
     public function getLinkGroup ()
     {
+        $links = collect();
 
-        if ( $this->user->group ) {
-            $links = MenuLink::query();
-            $group = $links->with(['group'])->whereHas('group', function ($query) {
-                return $query->where('group_id', $this->user->group->id)->where('visible', 'Y');
-            })->get();
-            $links = $group->map(function ($value) {
-                if ( !empty($value->group) ) {
+        if ($groupId = $this->user->group?->id) {
+            $filter = fn ($q) => $q->where('group_id', $groupId)->where('visible', 'Y');
 
-                    $group = $value->group;
-
-                    $value->order  = $group->order;
-                }
-
-                return $value;
-            });
+            $links = MenuLink::with(['group' => $filter])
+                ->whereHas('group', $filter)
+                ->get()
+                ->each(fn ($link) => $link->order = $link->group?->order);
         }
 
-        $links = $links
-            ->map(function ($value) use ($links) {
-                $value->children = $links->where('link_id', $value->id);
-
-                return $value;
-
-            })->whereNull('link_id');
-
-        $this->links = $links;
+        $this->links = $links
+            ->each(fn ($link) => $link->children = $links
+                ->where('link_id', $link->id)
+                ->sortBy('order')
+                ->values()
+            )
+            ->whereNull('link_id')
+            ->values();
     }
 
     public
@@ -59,4 +51,3 @@ class ShowMenu extends Component {
     }
 
 }
-
