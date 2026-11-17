@@ -21,7 +21,7 @@ class ShowMenu extends Component {
         $this->getLinkGroup();
     }
 
-    public function getLinkGroup ()
+    public function getLinkGroup()
     {
         $links = collect();
 
@@ -30,8 +30,7 @@ class ShowMenu extends Component {
 
             $links = MenuLink::with(['group' => $filter])
                 ->whereHas('group', $filter)
-                ->get()
-                ->each(fn ($link) => $link->order = $link->group?->order);
+                ->get();
         }
 
         $this->links = $links
