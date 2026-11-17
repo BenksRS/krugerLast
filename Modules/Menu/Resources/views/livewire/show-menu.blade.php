@@ -10,7 +10,7 @@
 				@endif
 			</a>
 			@if(count($menu['children']) > 0)
-				<div class="dropdown-menu" aria-labelledby="topnav-dashboard">
+				<div class="dropdown-menu test" aria-labelledby="topnav-dashboard">
 					@foreach($menu['children'] as $child)
                             <?php $child_link = $child['url']; ?>
 						<a href="{{url("$child_link") ?? '#' }}" class="dropdown-item" key="t-default">{{ $child['title'] }}</a>
